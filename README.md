@@ -1,2 +1,2 @@
 "# AssetManager" 
-test중
+jin test중
