@@ -20,7 +20,9 @@
     "react": "18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-native": "0.71.8",
-    "react-router-dom": "^6.11.2"
+    "react-router-dom": "^6.11.2",
+    "react-native-web": "~0.18.10",
+    "@expo/webpack-config": "^18.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
