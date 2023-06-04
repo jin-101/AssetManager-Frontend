@@ -21,7 +21,6 @@ function MainPage() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.top}></View>
       {pageState == 0 ? (
         <HomeContainer />
       ) : pageState == 1 ? (
