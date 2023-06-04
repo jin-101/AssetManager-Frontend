@@ -4,6 +4,7 @@ import { Center, HStack, Icon, Text } from "native-base";
 import { Pressable, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { pageUpdate } from "../action";
+import { useNavigation } from "@react-navigation/native";
 
 const styles = StyleSheet.create({
   footer: {
@@ -15,8 +16,9 @@ const styles = StyleSheet.create({
   },
 });
 
-function Footerbar(props) {
+function Footerbar() {
   const { pageState } = useSelector((state) => state.footerNav);
+  const navigation = useNavigation();
 
   const dispatch = useDispatch();
   const footNaviAction = useCallback(
@@ -40,7 +42,10 @@ function Footerbar(props) {
           opacity={pageState === 0 ? 1 : 0.5}
           py="3"
           flex={1}
-          onPress={() => footNaviAction(0)}
+          onPress={() => {
+            footNaviAction(0);
+            navigation.setOptions({ title: "Home" });
+          }}
         >
           <Center>
             <Icon
@@ -61,7 +66,10 @@ function Footerbar(props) {
           opacity={pageState === 1 ? 1 : 0.5}
           py="2"
           flex={1}
-          onPress={() => footNaviAction(1)}
+          onPress={() => {
+            footNaviAction(1);
+            navigation.setOptions({ title: "Search" });
+          }}
         >
           <Center>
             <Icon
@@ -78,7 +86,10 @@ function Footerbar(props) {
           opacity={pageState === 2 ? 1 : 0.6}
           py="2"
           flex={1}
-          onPress={() => footNaviAction(2)}
+          onPress={() => {
+            footNaviAction(2);
+            navigation.setOptions({ title: "Asset" });
+          }}
         >
           <Center>
             <Icon
@@ -99,7 +110,10 @@ function Footerbar(props) {
           opacity={pageState === 3 ? 1 : 0.5}
           py="2"
           flex={1}
-          onPress={() => footNaviAction(3)}
+          onPress={() => {
+            footNaviAction(3);
+            navigation.setOptions({ title: "Account Book" });
+          }}
         >
           <Center>
             <Icon

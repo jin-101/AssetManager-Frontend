@@ -5,11 +5,14 @@ import {
   Button,
   HStack,
   Text,
+  View,
   useDisclose,
 } from "native-base";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 function DropdownModal({ content }) {
+  const navigation = useNavigation();
   const { isOpen, onOpen, onClose } = useDisclose();
   const dropdownInit = {};
   content.map((el, i) => {
@@ -30,9 +33,8 @@ function DropdownModal({ content }) {
       >
         <Actionsheet.Content>
           {content?.map((el, i) => (
-            <>
+            <View w="100%" key={el.index}>
               <Actionsheet.Item
-                key={i}
                 onTouchEnd={() => {
                   setDropdown({
                     ...dropdownInit,
@@ -57,8 +59,8 @@ function DropdownModal({ content }) {
               </Actionsheet.Item>
               <>
                 {dropdown["item" + i] ? (
-                  <Box w="100%">
-                    {el.list?.map((li, j) => (
+                  <Box w="100%" key={i}>
+                    {el?.list?.map((li, j) => (
                       <Box
                         key={j}
                         w="100%"
@@ -66,16 +68,18 @@ function DropdownModal({ content }) {
                         px={4}
                         justifyContent="center"
                         onTouchEnd={() => {
-                          console.log(li);
+                          setDropdown(dropdownInit);
+                          onClose();
+                          navigation.navigate("Login");
                         }}
                       >
-                        <Actionsheet.Item>{li}</Actionsheet.Item>
+                        <Actionsheet.Item key={j}>{li}</Actionsheet.Item>
                       </Box>
                     ))}
                   </Box>
                 ) : undefined}
               </>
-            </>
+            </View>
           ))}
         </Actionsheet.Content>
       </Actionsheet>

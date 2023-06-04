@@ -17,7 +17,7 @@ const style = StyleSheet.create({
   },
   footer: {
     height: 50,
-    backgroundColor: "beige",
+    backgroundColor: "#4f69c6",
     justifyContent: "center",
   },
 });
@@ -113,7 +113,7 @@ function Login() {
       </View>
       <View style={style.footer}>
         <Stack alignItems="center">
-          <Text>Asset Manager</Text>
+          <Text color="white">Asset Manager</Text>
         </Stack>
       </View>
     </View>
