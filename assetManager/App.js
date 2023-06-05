@@ -1,34 +1,75 @@
 import { NativeBaseProvider } from "native-base";
-import Login from "@views/Login";
-import MainPage from "@views/MainPage";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import { Provider } from "react-redux";
 import { applyMiddleware, legacy_createStore as createStore } from "redux";
 import rootReducer from "./reducers";
 import { createLogger } from "redux-logger";
-import { headerStyle } from "./styles";
 
-const Stack = createNativeStackNavigator();
+import { Login, MainPage, DepartAddPage } from "./views";
+import { commonHeaderStyle } from "./styles";
 
 export default function App() {
   const logger = createLogger();
   const store = createStore(rootReducer, applyMiddleware(logger));
+  const Stack = createNativeStackNavigator();
 
   return (
     <Provider store={store}>
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator>
+            {/* 메인 페이지 */}
             <Stack.Screen
               name="Home"
               component={MainPage}
-              options={headerStyle}
+              options={commonHeaderStyle}
             />
+
+            {/* 로그인 페이지 */}
             <Stack.Screen
               name="Login"
               component={Login}
-              options={headerStyle}
+              options={commonHeaderStyle}
+            />
+
+            {/* 모달 이동 페이지 - 자산 */}
+            <Stack.Screen
+              name="예적금"
+              component={DepartAddPage}
+              options={{ ...commonHeaderStyle, title: "예적금 추가" }}
+            />
+            <Stack.Screen
+              name="자동차"
+              component={DepartAddPage}
+              options={{ ...commonHeaderStyle, title: "자동차 추가" }}
+            />
+            <Stack.Screen
+              name="부동산"
+              component={DepartAddPage}
+              options={{ ...commonHeaderStyle, title: "부동산 추가" }}
+            />
+            <Stack.Screen
+              name="금"
+              component={DepartAddPage}
+              options={{ ...commonHeaderStyle, title: "금 추가" }}
+            />
+            <Stack.Screen
+              name="외환"
+              component={DepartAddPage}
+              options={{ ...commonHeaderStyle, title: "외환 추가" }}
+            />
+            <Stack.Screen
+              name="주식"
+              component={DepartAddPage}
+              options={{ ...commonHeaderStyle, title: "주식 추가" }}
+            />
+            <Stack.Screen
+              name="코인"
+              component={DepartAddPage}
+              options={{ ...commonHeaderStyle, title: "코인 추가" }}
             />
           </Stack.Navigator>
         </NavigationContainer>
