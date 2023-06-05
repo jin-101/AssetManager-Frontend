@@ -70,7 +70,7 @@ function DropdownModal({ content }) {
                         onTouchEnd={() => {
                           setDropdown(dropdownInit);
                           onClose();
-                          navigation.navigate("Login");
+                          navigation.navigate(li); //page 이동 (App.js에서 mapping)
                         }}
                       >
                         <Actionsheet.Item key={j}>{li}</Actionsheet.Item>
