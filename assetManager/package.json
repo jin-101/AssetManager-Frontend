@@ -26,6 +26,7 @@
     "expo-router": "^1.5.3",
     "expo-status-bar": "~1.4.4",
     "native-base": "^3.4.28",
+    "number-format.js": "^2.0.9",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-bootstrap": "^2.7.4",

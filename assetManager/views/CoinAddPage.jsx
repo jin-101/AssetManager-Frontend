@@ -21,6 +21,7 @@ import {
   View,
   IconButton,
   CloseIcon,
+  Container,
 } from "native-base";
 import { Alert } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
 import axios from "axios";
@@ -33,9 +34,16 @@ function CoinAddPage(props) {
   //const baseUrl2 = "http://10.0.2.2:8888/app/coin/add";
   const [market, setMarket] = useState("");
   const [name, setName] = useState("");
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(0); // input에서 0을 입력하면 String이더라고. 그래서 초기값도 그냥 "0"으로 줘버림
   const [price, setPrice] = useState(0);
   const [formData, setFormData] = useState({});
+  const handleReset = () => {
+    setSelectedValue(""); // 이게 있어야 초기화시 '거래소를 선택해주세요'가 뜸
+    setMarket("");
+    setName("");
+    setQuantity(0);
+    setPrice(0);
+  };
   const handleSubmit = () => {
     let formData = {
       market: market,
@@ -44,9 +52,19 @@ function CoinAddPage(props) {
       price: price,
     };
 
-    // 코인 이름 입력했는지 check
-    if (name === "") {
+    // 입력값 유효한지 check
+    if (market === "") {
+      Alert.alert("Error", "거래소를 선택해주세요");
+      return;
+    } else if (name === "") {
       Alert.alert("Error", "코인 이름을 입력해주세요");
+      return;
+    } else if (quantity === 0 || price === 0) {
+      // input에서 0을 입력하면 String이더라고. 그래서 초기값도 그냥 "0"으로 줘버림
+      Alert.alert("Error", "수량과 가격을 입력해주세요");
+      return;
+    } else if (quantity === "0" || price === "0") {
+      Alert.alert("Error", "0이 아닌 값을 입력해주세요");
       return;
     }
 
@@ -73,7 +91,7 @@ function CoinAddPage(props) {
         console.log(`Error Msg : ${err}`);
       });
     // 입력값 초기화 (★ 한꺼번에 하는 방법은 없나??)
-    setMarket("");
+    // setMarket(""); // 여러번 입력하는 경우를 생각하면 얘는 굳이 초기화해줄 필요가 없네
     setName("");
     setQuantity(0);
     setPrice(0);
@@ -94,13 +112,13 @@ function CoinAddPage(props) {
           <FormControl>
             <Box mb="10">
               <HStack alignItems="center">
-                <FormControl.Label w="40%">
-                  코인 자산 입력하기
+                <FormControl.Label w="100%">
+                  보유중인 코인을 추가하세요.
                 </FormControl.Label>
               </HStack>
-              <FormControl.HelperText>
+              {/* <FormControl.HelperText>
                 보유중인 코인을 추가하세요.
-              </FormControl.HelperText>
+              </FormControl.HelperText> */}
             </Box>
             <Box mb="10">
               <FormControl.Label>거래소</FormControl.Label>
@@ -108,12 +126,13 @@ function CoinAddPage(props) {
                 selectedValue={selectedValue}
                 onValueChange={handleValueChange}
               >
+                <Picker.Item label="거래소를 선택해주세요" value="" />
                 <Picker.Item label="업비트" value="업비트" market="업비트" />
                 <Picker.Item label="빗썸" value="빗썸" market="빗썸" />
               </Picker>
               <FormControl.Label>코인 이름</FormControl.Label>
               <Input
-                isRequired="true"
+                isRequired="true" // Required 이거 왜 안 먹히지??
                 placeholder="코인을 검색하세요"
                 value={name}
                 onChangeText={(name) => setName(name)}
@@ -130,37 +149,54 @@ function CoinAddPage(props) {
                 isRequired="true"
                 keyboardType="numeric"
                 value={price}
-                onChangeText={(price) => setPrice(price)}
+                onChangeText={(price) => setPrice(inputPriceFormat(price))}
               />
             </Box>
-            <Box>
-              <Stack
-                mb="2.5"
-                mt="1.5"
-                direction={{
-                  base: "column",
-                  md: "row",
-                }}
-                space={2}
-                /* 이거 적용하면 버튼 너비가 줄어듦.
-                mx={{
-                  base: "auto",
-                  md: "0",
-                }}*/
+            <Stack
+              mb="2.5"
+              mt="1.5"
+              direction="row" // direction="row" => "column"으로 바꾸면 수직으로 쌓이게 됨
+              space={2}
+              // mx 이거 적용하면 버튼 너비가 줄어듦.
+              mx={{
+                base: "auto",
+                md: "0",
+              }}
+            >
+              <Button
+                size="lg"
+                variant="subtle"
+                colorScheme="secondary"
+                onPress={handleReset}
               >
-                <Button size="lg" variant="subtle" onPress={handleSubmit}>
-                  추가
-                </Button>
-              </Stack>
-              <Box>
-                <AlertExample></AlertExample>
-              </Box>
-            </Box>
+                초기화
+              </Button>
+              <Button size="lg" variant="subtle" onPress={handleSubmit}>
+                추가
+              </Button>
+            </Stack>
+            {/* <Box>
+              <AlertExample></AlertExample>
+            </Box> */}
           </FormControl>
         </Box>
       </VStack>
     </ScrollView>
   );
 }
+
+// 가격표시 코드 (3자리마다 콤마 넣기) => onChangeText={(price) => setPrice(inputPriceFormat(price))}
+const inputPriceFormat = (str) => {
+  //console.log("s", str);
+  const comma = (str) => {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+  };
+  const uncomma = (str) => {
+    str = String(str);
+    return str.replace(/[^\d]+/g, "");
+  };
+  return comma(uncomma(str));
+};
 
 export default CoinAddPage;
