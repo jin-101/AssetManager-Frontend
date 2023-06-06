@@ -27,7 +27,7 @@ import {
   InputRightAddon,
 } from "native-base";
 import axios from "axios";
-import { TextInput, FlatList, Alert } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
+import { TextInput, FlatList, Alert, TouchableOpacity } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
 import { Picker } from "@react-native-picker/picker";
 import AlertExample from "../components/AlertExample";
 
@@ -107,6 +107,12 @@ function CoinAddPage(props) {
     setMarket(market);
     console.log("Selected Market:", market);
   };
+  const insertCoinName = (value) => {
+    console.log("Text pressed!", value); // value => BTC
+    // key가 아니라 value값을 바로 받으므로 필요 없어졌음. const realCoinName = value.key; // value.key => BTC
+    console.log(value);
+    setCoinName(value);
+  };
 
   // ★★★★★ 검색 기능을 위한 코드 시작
   const [dataMap, setDataMap] = useState(new Map());
@@ -143,8 +149,10 @@ function CoinAddPage(props) {
     // 검색 로직 및 결과 설정
     setSearchKeyword(searchKeyword);
     const filteredMap = new Map(
-      Array.from(dataMap.entries()).filter(([key, value]) =>
-        key.toLowerCase().includes(searchKeyword.toLowerCase())
+      Array.from(dataMap.entries()).filter(
+        ([key, value]) =>
+          value.toLowerCase().includes(searchKeyword.toLowerCase())
+        // key.toLowerCase().includes(searchKeyword.toLowerCase())
       )
     );
     setFilteredData(filteredMap);
@@ -192,7 +200,14 @@ function CoinAddPage(props) {
               />
               {searchKeyword !== "" &&
                 Array.from(filteredData.keys()).map((key) => (
-                  <Text fontSize="xs" key={key}>{`${key}`}</Text>
+                  <TouchableOpacity
+                    key={key}
+                    onPress={() => {
+                      insertCoinName(`${filteredData.get(key)}`); // ★ key값 대신 value값을 보내주면 되는 거 아닌가??
+                    }}
+                  >
+                    <Text fontSize="xs" key={key}>{`${key}`}</Text>
+                  </TouchableOpacity>
                   // <Text key={key}>{`${key}: ${filteredData.get(key)}`}</Text>
                 ))}
               {/*  ★★★★★ 검색기능 끝 */}
