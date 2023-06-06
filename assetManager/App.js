@@ -10,6 +10,8 @@ import { createLogger } from "redux-logger";
 
 import { Login, MainPage, DepartAddPage } from "./views";
 import { commonHeaderStyle } from "./styles";
+import AptAddPage from "./views/AptAddPage";
+import CoinAddPage from "./views/CoinAddPage";
 
 export default function App() {
   const logger = createLogger();
@@ -48,7 +50,7 @@ export default function App() {
             />
             <Stack.Screen
               name="부동산"
-              component={DepartAddPage}
+              component={AptAddPage}
               options={{ ...commonHeaderStyle, title: "부동산 추가" }}
             />
             <Stack.Screen
@@ -68,7 +70,7 @@ export default function App() {
             />
             <Stack.Screen
               name="코인"
-              component={DepartAddPage}
+              component={CoinAddPage}
               options={{ ...commonHeaderStyle, title: "코인 추가" }}
             />
           </Stack.Navigator>
