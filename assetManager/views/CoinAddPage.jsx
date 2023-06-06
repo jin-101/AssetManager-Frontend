@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Center,
@@ -22,10 +22,12 @@ import {
   IconButton,
   CloseIcon,
   Container,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon,
 } from "native-base";
-import { Alert } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
 import axios from "axios";
-import { useState } from "react";
+import { TextInput, FlatList, Alert } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
 import { Picker } from "@react-native-picker/picker";
 import AlertExample from "../components/AlertExample";
 
@@ -33,21 +35,21 @@ function CoinAddPage(props) {
   //const baseUrl = "http://10.0.2.15:8888/app/coin/add";
   //const baseUrl2 = "http://10.0.2.2:8888/app/coin/add";
   const [market, setMarket] = useState("");
-  const [name, setName] = useState("");
+  const [coinName, setCoinName] = useState("");
   const [quantity, setQuantity] = useState(0); // input에서 0을 입력하면 String이더라고. 그래서 초기값도 그냥 "0"으로 줘버림
   const [price, setPrice] = useState(0);
   const [formData, setFormData] = useState({});
   const handleReset = () => {
     setSelectedValue(""); // 이게 있어야 초기화시 '거래소를 선택해주세요'가 뜸
     setMarket("");
-    setName("");
+    setCoinName("");
     setQuantity(0);
     setPrice(0);
   };
   const handleSubmit = () => {
     let formData = {
       market: market,
-      name: name,
+      coinName: coinName,
       quantity: quantity,
       price: price,
     };
@@ -56,7 +58,7 @@ function CoinAddPage(props) {
     if (market === "") {
       Alert.alert("Error", "거래소를 선택해주세요");
       return;
-    } else if (name === "") {
+    } else if (coinName === "") {
       Alert.alert("Error", "코인 이름을 입력해주세요");
       return;
     } else if (quantity === 0 || price === 0) {
@@ -92,7 +94,7 @@ function CoinAddPage(props) {
       });
     // 입력값 초기화 (★ 한꺼번에 하는 방법은 없나??)
     // setMarket(""); // 여러번 입력하는 경우를 생각하면 얘는 굳이 초기화해줄 필요가 없네
-    setName("");
+    setCoinName("");
     setQuantity(0);
     setPrice(0);
     //setFormData({});
@@ -105,6 +107,52 @@ function CoinAddPage(props) {
     setMarket(market);
     console.log("Selected Market:", market);
   };
+
+  // ★★★★★ 검색 기능을 위한 코드 시작
+  const [dataMap, setDataMap] = useState(new Map());
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [filteredData, setFilteredData] = useState(new Map());
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    let data = { market: market };
+    console.log(market);
+    try {
+      const response = await axios.post(
+        "http://192.168.0.5:8888/app/coin/getCoinList",
+        JSON.stringify(data),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const responseData = response.data;
+      const mapData = new Map(Object.entries(responseData));
+      setDataMap(mapData);
+      //console.log(response.data); // response.data : 스프링에서 넘긴 데이터(여기선 Map)를 얻는 법
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSearch = (searchKeyword) => {
+    // 검색 로직 및 결과 설정
+    setSearchKeyword(searchKeyword);
+    const filteredMap = new Map(
+      Array.from(dataMap.entries()).filter(([key, value]) =>
+        key.toLowerCase().includes(searchKeyword.toLowerCase())
+      )
+    );
+    setFilteredData(filteredMap);
+    if (searchKeyword === "") {
+    }
+  };
+  // ★★★★★ 검색 기능을 위한 코드 끝
+
   return (
     <ScrollView bg="red.100">
       <VStack mt="10" mb="10" alignItems="center">
@@ -120,7 +168,7 @@ function CoinAddPage(props) {
                 보유중인 코인을 추가하세요.
               </FormControl.HelperText> */}
             </Box>
-            <Box mb="10">
+            <Box mb="5">
               <FormControl.Label>거래소</FormControl.Label>
               <Picker
                 selectedValue={selectedValue}
@@ -130,21 +178,45 @@ function CoinAddPage(props) {
                 <Picker.Item label="업비트" value="업비트" market="업비트" />
                 <Picker.Item label="빗썸" value="빗썸" market="빗썸" />
               </Picker>
+            </Box>
+            <Box mb="5">
+              <FormControl.Label>코인 검색하기</FormControl.Label>
+              {/*  ★★★★★ 검색기능 시작 */}
+              <Input
+                value={searchKeyword} // value는 내가 주고 싶은 거 줘도 되는 듯??
+                onChangeText={handleSearch}
+
+                // 검색란이 공백인 경우 검색 결과를 초기화하는 예시
+                //onChangeText={setSearchKeyword}
+                //onSubmitEditing={handleSearch}
+              />
+              {searchKeyword !== "" &&
+                Array.from(filteredData.keys()).map((key) => (
+                  <Text fontSize="xs" key={key}>{`${key}`}</Text>
+                  // <Text key={key}>{`${key}: ${filteredData.get(key)}`}</Text>
+                ))}
+              {/*  ★★★★★ 검색기능 끝 */}
+            </Box>
+            <Box mb="5">
               <FormControl.Label>코인 이름</FormControl.Label>
               <Input
                 isRequired="true" // Required 이거 왜 안 먹히지??
-                placeholder="코인을 검색하세요"
-                value={name}
-                onChangeText={(name) => setName(name)}
+                placeholder="검색한 코인을 입력하세요"
+                value={coinName}
+                onChangeText={(coinName) => setCoinName(coinName)}
               />
+            </Box>
+            <Box mb="5">
               <FormControl.Label>매수 수량</FormControl.Label>
               <Input
-                isRequired="true"
+                isRequired="true" // Required 이거 왜 안 먹히지??
                 keyboardType="numeric"
                 value={quantity}
                 onChangeText={(quantity) => setQuantity(quantity)}
               />
-              <FormControl.Label>매수 가격</FormControl.Label>
+            </Box>
+            <Box mb="5">
+              <FormControl.Label>매수 가격 (원)</FormControl.Label>
               <Input
                 isRequired="true"
                 keyboardType="numeric"
