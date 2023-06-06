@@ -174,9 +174,6 @@ function CoinAddPage(props) {
                   보유중인 코인을 추가하세요.
                 </FormControl.Label>
               </HStack>
-              <FormControl.Label w="100%">
-                컴포넌트들 위치 및 디자인은 나중에 합시다
-              </FormControl.Label>
               {/* <FormControl.HelperText>
                 보유중인 코인을 추가하세요.
               </FormControl.HelperText> */}

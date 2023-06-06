@@ -24,85 +24,21 @@ import axios from "axios";
 //import { AptSidoSelect, AptGuSelect } from "../components/AptSidoSelect";
 
 function AptAddPage(props) {
-  // 1. 시/도 선택시 => 구를 얻는
-  // Picker 컴포넌트를 선택했을 때 Axios 요청을 실행
+  // AptSidoSelect 컴포넌트로 분리하고 싶은 부분
   const [sido, setSido] = useState("");
-  const [guMap, setGuMap] = useState(new Map());
-
-  const handlePickerChange = (sido) => {
-    console.log("내가 선택한 시/도 Picker 컴포넌트 : " + sido);
-    setSido(sido);
-
-    // Axios 요청 실행 (if문 : 시/도 선택 클릭시엔 axios 실행 안하게끔)
-    if (sido !== "") {
-      axios // ★★ `${itemValue}` : 백틱을 써서 이렇게 간단한 파라미터 바로 넘길 수도 있구나. 굳이 JSON으로 넘기는 게 아니라
-        .get(`http://192.168.0.5:8888/app/apt/getGu/${sido}`)
-        .then((response) => {
-          // 응답 처리 (Map 데이터를 useState에)
-          console.log("axios 실행하여 온 데이터 : " + response.data);
-          const responseData = response.data;
-          const guMap = new Map(Object.entries(responseData));
-          setGuMap(guMap);
-        })
-        .catch((error) => {
-          // 에러 처리
-          console.error(error);
-        });
-    }
+  const handleSido = (value) => {
+    setSido(value);
+    //getGu(value);
   };
+  console.log(sido); // setSido(value) 아래 있어야 제대로 콘솔에 찍히네
 
-  // 2. 구 선택시 => 동/읍/면을 얻는
+  // AptGuSelect 컴포넌트로 분리하고 싶은 부분
   const [gu, setGu] = useState("");
-  const [dongMap, setDongMap] = useState(new Map());
-
-  const handlePickerChange2 = (gu) => {
-    console.log("내가 선택한 구 Picker 컴포넌트 : " + gu);
-    setGu(gu);
-
-    // Axios 요청 실행 (if문 : 시/도 선택 클릭시엔 axios 실행 안하게끔)
-    if (gu !== "") {
-      axios // ★★ `${itemValue}` : 백틱을 써서 이렇게 간단한 파라미터 바로 넘길 수도 있구나. 굳이 JSON으로 넘기는 게 아니라
-        .get(`http://192.168.0.5:8888/app/apt/getDong/${gu}`)
-        .then((response) => {
-          // 응답 처리 (Map 데이터를 useState에)
-          console.log("getDong 성공");
-          const responseData = response.data;
-          const dongMap = new Map(Object.entries(responseData));
-          setDongMap(dongMap);
-        })
-        .catch((error) => {
-          // 에러 처리
-          console.error(error);
-        });
-    }
+  const handleGu = (value) => {
+    setGu(value);
   };
-
-  // 3. 동/읍/면 선택시 => 아파트 검색 가능하게끔
-  const [dong, setDong] = useState("");
-  //const [dongMap, setDongMap] = useState(new Map());
-
-  const handlePickerChange3 = (dong) => {
-    console.log("내가 선택한 구 Picker 컴포넌트 : " + gu);
-    setDong(dong);
-
-    // Axios 요청 실행 (if문 : 시/도 선택 클릭시엔 axios 실행 안하게끔)
-    if (dong !== "") {
-      axios // ★★ `${itemValue}` : 백틱을 써서 이렇게 간단한 파라미터 바로 넘길 수도 있구나. 굳이 JSON으로 넘기는 게 아니라
-        .get(`http://192.168.0.5:8888/app/apt/getAptName/${dong}`)
-        .then((response) => {
-          // 응답 처리 (Map 데이터를 useState에)
-          console.log("getAptName 성공");
-          const responseData = response.data;
-          const dongMap = new Map(Object.entries(responseData));
-          //setDongMap(dongMap);
-        })
-        .catch((error) => {
-          // 에러 처리
-          console.error(error);
-        });
-    }
-  };
-
+  console.log(gu);
+  const { dataList } = props;
   return (
     <ScrollView bg="red.100">
       <VStack mt="10" mb="10" alignItems="center">
@@ -115,16 +51,13 @@ function AptAddPage(props) {
                 </FormControl.Label>
               </HStack>
             </Box>
-
             <Box mb="10">
               <FormControl.Label>시/도</FormControl.Label>
               {/* AptSidoSelect 컴포넌트로 분리하고 싶은 부분 */}
               <View style={styles.container}>
                 <Picker
                   selectedValue={sido}
-                  onValueChange={handlePickerChange}
-                  // selectedValue={sido}
-                  // onValueChange={handleSido}
+                  onValueChange={handleSido}
                   style={styles.picker}
                   itemStyle={styles.pickerItem}
                 >
@@ -147,66 +80,24 @@ function AptAddPage(props) {
                   <Picker.Item label="경상남도" value="경상남도" />
                   <Picker.Item label="제주도" value="제주도" />
                 </Picker>
-                {/* ★★★★★
-                굳이 버튼을 누르지 않아도 '구' 정보를 얻을 수 있는 이유는
-                Picker 속성에 onValueChange={handlePickerChange}를 이용하여 
-                값이 바뀌면 axios를 실행하도록 handlePickerChange 함수에 axios를 넣어줬기 때문
-
-                <Button
-                  title="Submit"
-                  onPress={() => {
-                    handlePickerChange(selectedValue);
-                  }}
-                /> 
-                */}
+                {/* 버튼을 Picker 바로 오른쪽에 두고 싶은데.. */}
+                <Button title="Submit" onPress={getGu} />
               </View>
-
               {/* AptGuSelect 컴포넌트로 분리하고 싶은 부분 */}
               <FormControl.Label>구</FormControl.Label>
               {/* <AptGuSelect></AptGuSelect> */}
-              <Picker
-                selectedValue={gu}
-                onValueChange={handlePickerChange2}
-                style={styles.picker}
-                itemStyle={styles.pickerItem}
-              >
-                <Picker.Item label="구 선택" value=""></Picker.Item>
-                {/* ★★★★★(ChatGPT 참조) 
-                1. dataMap.entries()를 사용하여 Map의 키-값 쌍을 배열로 변환
-                2. Array.map() 메서드(여기선 [...dataMap.entries()].map을 의미)를 사용하여 각 쌍을 Picker.Item 컴포넌트로 변환
-                */}
-                {[...guMap.entries()].map(([key, value]) => (
-                  <Picker.Item key={key} label={key} value={key} />
-                ))}
-              </Picker>
-
               <FormControl.Label>동/읍/면</FormControl.Label>
-              <Picker
-                selectedValue={dong}
-                onValueChange={handlePickerChange3}
-                style={styles.picker}
-                itemStyle={styles.pickerItem}
-              >
-                <Picker.Item label="동 선택" value=""></Picker.Item>
-                {[...dongMap.entries()].map(([key, value]) => (
-                  <Picker.Item key={key} label={key} value={key} />
-                ))}
-              </Picker>
-
+              <Input placeholder="select로" />
               <FormControl.Label>아파트 이름</FormControl.Label>
-              <Input placeholder="Coin에서 만들었던 검색 기능으로" />
-
+              <Input placeholder="검색 기능으로" />
               <FormControl.Label>전용면적</FormControl.Label>
               <Input placeholder="select로" />
-
               <FormControl.Label>매입가격 (원)</FormControl.Label>
               {/* 일단 원으로 하고 나중에 상황봐서 억원, 천만원으로 바꾸자 */}
               <Input keyboardType="numeric" />
-
               <FormControl.Label>매입시점</FormControl.Label>
               <Input placeholder="달력으로??" />
             </Box>
-
             <HStack alignItems="center">
               <FormControl.Label w="100%">
                 대출이 있을 경우에만 입력해주세요.
