@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { HStack, Text, FormControl, Input } from "native-base";
+import React, { useCallback } from "react";
+import { HStack, Text, FormControl } from "native-base";
 import { TextInput, Alert } from "react-native";
 import { inputTagCommonStyle } from "../utils";
 import { useDispatch } from "react-redux";
