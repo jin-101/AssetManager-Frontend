@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-function HouseholdAcc(props) {
+function AccountBookContainer() {
   const [breakdown, setBreakdown] = useState([]);
 
   const [data, setData] = useState(null);
@@ -189,4 +189,4 @@ function HouseholdAcc(props) {
   );
 }
 
-export default HouseholdAcc;
+export default AccountBookContainer;
