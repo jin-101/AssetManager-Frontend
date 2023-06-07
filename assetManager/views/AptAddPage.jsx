@@ -16,9 +16,9 @@ import {
   Divider,
   Button,
 } from "native-base";
-import { Alert, StyleSheet, View } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
+import { Alert, StyleSheet, View, TouchableOpacity } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
 import { Picker } from "@react-native-picker/picker";
-import MyComponent from "../components/MyComponent";
+import ShowHideBox from "../components/ShowHideBox";
 import { useState, useEffect } from "react";
 import axios from "axios";
 //import { AptSidoSelect, AptGuSelect } from "../components/AptSidoSelect";
@@ -77,24 +77,32 @@ function AptAddPage(props) {
     }
   };
 
+  // ★★★★★ 검색 기능을 위한 코드 시작
   // 3. 동/읍/면 선택시 => 아파트 검색 가능하게끔
   const [dong, setDong] = useState("");
-  //const [dongMap, setDongMap] = useState(new Map());
+  const [aptMap, setAptMap] = useState(new Map());
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [filteredData, setFilteredData] = useState(new Map());
 
   const handlePickerChange3 = (dong) => {
-    console.log("내가 선택한 구 Picker 컴포넌트 : " + gu);
+    console.log("내가 선택한 동 Picker 컴포넌트 : " + dong);
+    console.log(sido);
+    console.log(gu);
     setDong(dong);
 
     // Axios 요청 실행 (if문 : 시/도 선택 클릭시엔 axios 실행 안하게끔)
     if (dong !== "") {
       axios // ★★ `${itemValue}` : 백틱을 써서 이렇게 간단한 파라미터 바로 넘길 수도 있구나. 굳이 JSON으로 넘기는 게 아니라
-        .get(`http://192.168.0.82:8888/app/apt/getAptName/${dong}`)
+        .get(
+          `http://192.168.0.82:8888/app/apt/getAptName/${sido}/${gu}/${dong}`
+        )
         .then((response) => {
           // 응답 처리 (Map 데이터를 useState에)
           console.log("getAptName 성공");
+          // 아파트 Map 데이터 setting
           const responseData = response.data;
-          const dongMap = new Map(Object.entries(responseData));
-          //setDongMap(dongMap);
+          const aptMap = new Map(Object.entries(responseData));
+          setAptMap(aptMap);
         })
         .catch((error) => {
           // 에러 처리
@@ -102,6 +110,31 @@ function AptAddPage(props) {
         });
     }
   };
+  const handleSearch = (searchKeyword) => {
+    // 검색 로직 및 결과 설정
+    setSearchKeyword(searchKeyword);
+    const filteredMap = new Map(
+      Array.from(aptMap.entries()).filter(
+        ([key, value]) =>
+          value.toLowerCase().includes(searchKeyword.toLowerCase())
+        // key.toLowerCase().includes(searchKeyword.toLowerCase())
+      )
+    );
+    setFilteredData(filteredMap);
+    if (searchKeyword === "") {
+    }
+  };
+  // ★★★★★ 검색 기능을 위한 코드 끝
+
+  // 검색된 아파트 클릭시 => 아파트 이름 입력란에 쏙 들어가게
+  const [aptName, setAptName] = useState("");
+  const insertAptName = (value) => {
+    // key가 아니라 value값을 바로 받으므로 필요 없어졌음. const realCoinName = value.key; // value.key => BTC
+    console.log(value);
+    setAptName(value);
+  };
+
+  const [aaaa, setAaaa] = useState({ price: "11", rate: "11", date: "11" });
 
   return (
     <ScrollView bg="red.100">
@@ -120,7 +153,7 @@ function AptAddPage(props) {
               <FormControl.Label>시/도</FormControl.Label>
               {/* AptSidoSelect 컴포넌트로 분리하고 싶은 부분 */}
               <View style={styles.container}>
-                <Picker
+                <Select
                   selectedValue={sido}
                   onValueChange={handlePickerChange}
                   // selectedValue={sido}
@@ -128,25 +161,25 @@ function AptAddPage(props) {
                   style={styles.picker}
                   itemStyle={styles.pickerItem}
                 >
-                  <Picker.Item label="시/도 선택" value="" />
-                  <Picker.Item label="서울특별시" value="서울특별시" />
-                  <Picker.Item label="부산광역시" value="부산광역시" />
-                  <Picker.Item label="대구광역시" value="대구광역시" />
-                  <Picker.Item label="인천광역시" value="인천광역시" />
-                  <Picker.Item label="광주광역시" value="광주광역시" />
-                  <Picker.Item label="대전광역시" value="대전광역시" />
-                  <Picker.Item label="울산광역시" value="울산광역시" />
-                  <Picker.Item label="세종특별자치시" value="세종특별자치시" />
-                  <Picker.Item label="경기도" value="경기도" />
-                  <Picker.Item label="강원도" value="강원도" />
-                  <Picker.Item label="충청북도" value="충청북도" />
-                  <Picker.Item label="충청남도" value="충청남도" />
-                  <Picker.Item label="전라북도" value="전라북도" />
-                  <Picker.Item label="전라남도" value="전라남도" />
-                  <Picker.Item label="경상북도" value="경상북도" />
-                  <Picker.Item label="경상남도" value="경상남도" />
-                  <Picker.Item label="제주도" value="제주도" />
-                </Picker>
+                  <Select.Item label="시/도 선택" value="" />
+                  <Select.Item label="서울특별시" value="서울특별시" />
+                  <Select.Item label="부산광역시" value="부산광역시" />
+                  <Select.Item label="대구광역시" value="대구광역시" />
+                  <Select.Item label="인천광역시" value="인천광역시" />
+                  <Select.Item label="광주광역시" value="광주광역시" />
+                  <Select.Item label="대전광역시" value="대전광역시" />
+                  <Select.Item label="울산광역시" value="울산광역시" />
+                  <Select.Item label="세종특별자치시" value="세종특별자치시" />
+                  <Select.Item label="경기도" value="경기도" />
+                  <Select.Item label="강원도" value="강원도" />
+                  <Select.Item label="충청북도" value="충청북도" />
+                  <Select.Item label="충청남도" value="충청남도" />
+                  <Select.Item label="전라북도" value="전라북도" />
+                  <Select.Item label="전라남도" value="전라남도" />
+                  <Select.Item label="경상북도" value="경상북도" />
+                  <Select.Item label="경상남도" value="경상남도" />
+                  <Select.Item label="제주도" value="제주도" />
+                </Select>
                 {/* ★★★★★
                 굳이 버튼을 누르지 않아도 '구' 정보를 얻을 수 있는 이유는
                 Picker 속성에 onValueChange={handlePickerChange}를 이용하여 
@@ -164,37 +197,58 @@ function AptAddPage(props) {
               {/* AptGuSelect 컴포넌트로 분리하고 싶은 부분 */}
               <FormControl.Label>구</FormControl.Label>
               {/* <AptGuSelect></AptGuSelect> */}
-              <Picker
+              <Select
                 selectedValue={gu}
                 onValueChange={handlePickerChange2}
                 style={styles.picker}
                 itemStyle={styles.pickerItem}
               >
-                <Picker.Item label="구 선택" value=""></Picker.Item>
+                <Select.Item label="구 선택" value=""></Select.Item>
                 {/* ★★★★★(ChatGPT 참조) 
                 1. dataMap.entries()를 사용하여 Map의 키-값 쌍을 배열로 변환
                 2. Array.map() 메서드(여기선 [...dataMap.entries()].map을 의미)를 사용하여 각 쌍을 Picker.Item 컴포넌트로 변환
                 */}
                 {[...guMap.entries()].map(([key, value]) => (
-                  <Picker.Item key={key} label={key} value={key} />
+                  <Select.Item key={key} label={value} value={key} /> // 화면에 보이는게 label , 여기서 처리할 값은 value
                 ))}
-              </Picker>
+              </Select>
 
               <FormControl.Label>동/읍/면</FormControl.Label>
-              <Picker
+              <Select
                 selectedValue={dong}
                 onValueChange={handlePickerChange3}
                 style={styles.picker}
                 itemStyle={styles.pickerItem}
               >
-                <Picker.Item label="동 선택" value=""></Picker.Item>
+                <Select.Item label="동 선택" value=""></Select.Item>
                 {[...dongMap.entries()].map(([key, value]) => (
-                  <Picker.Item key={key} label={key} value={key} />
+                  <Select.Item key={key} label={key} value={key} />
                 ))}
-              </Picker>
+              </Select>
 
-              <FormControl.Label>아파트 이름</FormControl.Label>
-              <Input placeholder="Coin에서 만들었던 검색 기능으로" />
+              {/*  ★★★★★ 검색기능 시작 */}
+              <Box mb="5">
+                <FormControl.Label>아파트 이름 검색하기</FormControl.Label>
+                <Input value={searchKeyword} onChangeText={handleSearch} />
+                {searchKeyword !== "" &&
+                  Array.from(filteredData.keys()).map((key) => (
+                    <TouchableOpacity
+                      key={key}
+                      onPress={() => {
+                        insertAptName(`${filteredData.get(key)}`); // ★ key값 대신 value값을 보내주면 되는 거 아닌가??
+                      }}
+                    >
+                      <Text fontSize="xs" key={key}>{`${key}`}</Text>
+                    </TouchableOpacity>
+                    // <Text key={key}>{`${key}: ${filteredData.get(key)}`}</Text>
+                  ))}
+                {/*  ★★★★★ 검색기능 끝 */}
+              </Box>
+              <Input
+                label={aptName}
+                value={aptName}
+                placeholder="검색된 아파트명 클릭시 자동 입력됨"
+              />
 
               <FormControl.Label>전용면적</FormControl.Label>
               <Input placeholder="select로" />
@@ -207,46 +261,13 @@ function AptAddPage(props) {
               <Input placeholder="달력으로??" />
             </Box>
 
-            <HStack alignItems="center">
-              <FormControl.Label w="100%">
-                대출이 있을 경우에만 입력해주세요.
-              </FormControl.Label>
-            </HStack>
-            <MyComponent></MyComponent>
-            <Box mb="10">
-              <FormControl.Label>대출금액 (원)</FormControl.Label>
-              <Input keyboardType="numeric" />
-              <FormControl.Label>대출금리 (%)</FormControl.Label>
-              <Input keyboardType="numeric" />
-              <FormControl.Label>대출만기</FormControl.Label>
-              <Input placeholder="달력으로??" />
-            </Box>
+            <ShowHideBox state={aaaa} setState={setAaaa}></ShowHideBox>
           </FormControl>
         </Box>
       </VStack>
     </ScrollView>
   );
 }
-
-const getGu = ({ sido }) => {
-  let data = { sido: "서울특별시" };
-  console.log("getGu에서 시/도: " + data.sido);
-  // ★★★ axios 문법
-  // axios.post(url, data, {Content-Type 설정})
-  axios
-    .post("http://192.168.0.82:8888/app/apt/getGu", JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => {
-      console.log(res.data); // ★ 스프링에서 보낸 List<String>이 옴!
-      console.log("구를 얻었음");
-    })
-    .catch((err) => {
-      console.log(`Error Message: ${err}`);
-    });
-};
 
 const styles = StyleSheet.create({
   container: {

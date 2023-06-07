@@ -183,14 +183,14 @@ function CoinAddPage(props) {
             </Box>
             <Box mb="5">
               <FormControl.Label>거래소</FormControl.Label>
-              <Picker
+              <Select
                 selectedValue={selectedValue}
                 onValueChange={handleValueChange}
               >
-                <Picker.Item label="거래소를 선택해주세요" value="" />
-                <Picker.Item label="업비트" value="업비트" market="업비트" />
-                <Picker.Item label="빗썸" value="빗썸" market="빗썸" />
-              </Picker>
+                <Select.Item label="거래소를 선택해주세요" value="" />
+                <Select.Item label="업비트" value="업비트" market="업비트" />
+                <Select.Item label="빗썸" value="빗썸" market="빗썸" />
+              </Select>
             </Box>
             <Box mb="5">
               <FormControl.Label>코인 검색하기</FormControl.Label>

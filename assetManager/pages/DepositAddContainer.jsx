@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback } from "react";
 import { Box, HStack, VStack, Text } from "native-base";
 import InputRadioComponent from "@components/InputRadioComponent";
 import InputTextComponent from "@components/InputTextComponent";
@@ -10,20 +10,9 @@ import { IconButton } from "react-native-paper";
 function DepositAddContainer({ item, isOnlyOne }) {
   console.log("DepoAddContainer >>", item);
   const dispatch = useDispatch();
-  // const [oneAdd, setOneAdd] = useState({ ...item });
-  const didMount = useRef(false); //처음 마운트시 실횅 안되게 하기 위해
-
-  // useEffect(() => {
-  //   if (didMount.current) dispatch(depositUpdate(oneAdd));
-  //   else didMount.current = true;
-  // }, [oneAdd]);
 
   const deleteButton = useCallback(() => {
     dispatch(depositDelete(item.index));
-  }, []);
-
-  const parentFunction = useCallback((name, value) => {
-    // setOneAdd((prevState) => ({ ...prevState, [name]: value }));
   }, []);
 
   return (

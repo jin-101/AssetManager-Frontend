@@ -14,40 +14,13 @@ import { Login, MainPage, DepositAddPage } from "./views";
 import { commonHeaderStyle } from "./styles";
 import AptAddPage from "@views/AptAddPage";
 import CoinAddPage from "@views/CoinAddPage";
-import { useState } from "react";
-import { ActivityIndicator, View } from "react-native";
-import { StyleSheet } from "react-native";
 import AccountBookContainer from "@pages/AccountBookContainer";
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  horizontal: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10,
-  },
-});
+import CarAddPage from "./views/CarAddPage";
 
 export default function App() {
   const logger = createLogger();
   const store = createStore(rootReducer, applyMiddleware(logger));
   const Stack = createNativeStackNavigator();
-
-  // const [isLoading, setIsLoading] = useState(true);
-
-  // setTimeout(() => {
-  //   setIsLoading(false);
-  // }, 3000);
-
-  // console.log("app.js입니다");
-  // if (isLoading)
-  //   return (
-  //     <View style={[styles.container, styles.horizontal]}>
-  //       <ActivityIndicator size="large" />
-  //     </View>
-  //   );
 
   return (
     <Provider store={store}>
@@ -82,7 +55,7 @@ export default function App() {
               />
               <Stack.Screen
                 name="자동차"
-                component={DepositAddPage}
+                component={CarAddPage}
                 options={{ ...commonHeaderStyle, title: "자동차 추가" }}
               />
               <Stack.Screen
