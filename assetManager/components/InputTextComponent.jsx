@@ -8,8 +8,8 @@ const keyBoardType = (type) => {
   let keyboard;
   switch (type) {
     case "number":
-    // keyboard = "number-pad";
-    // break;
+      keyboard = "numeric";
+      break;
     case "double":
       keyboard = "decimal-pad";
       break;
@@ -33,19 +33,20 @@ function InputTextComponent({
   name,
   id,
   value,
+  placeholder = "",
   dispatchF,
   parentSetState,
-  title,
-  helperText,
+  title = "",
+  helperText = "",
   inputType = "text",
-  formControlStyle, //native-base에 formControl 속성 모두 입력가능
-  labelStyle, // native-base에 formControl.label _text 속성 모두 입력가능
+  formControlStyle = {}, //native-base에 formControl 속성 모두 입력가능
+  labelStyle = {}, // native-base에 formControl.label _text 속성 모두 입력가능
   textLabel, // frontText, endText, frontTextSize, endTextSize
-  inputStyle, // style 속성 입력가능
+  inputStyle = {}, // style 속성 입력가능
   alertTitle = "주의",
   alertContent = "올바른 값을 입력해주세요.",
 }) {
-  console.log("InputTextComponent >>>", "index", id, " value", value);
+  console.log("InputTextComponent >>>");
   const dispatch = useDispatch();
 
   const isNumType = inputType === "number" || inputType === "double" || false;
@@ -105,6 +106,7 @@ function InputTextComponent({
             paddingRight: isNumType ? 10 : 0,
             ...inputStyle,
           }}
+          placeholder={placeholder}
           value={value}
           onChangeText={onChangeText}
         />
