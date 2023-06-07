@@ -73,7 +73,7 @@ function CoinAddPage(props) {
 
     // 입력값이 유효한 경우 처리 로직
     axios({
-      url: "http://192.168.0.5:8888/app/coin/add",
+      url: "http://192.168.0.82:8888/app/coin/add",
       method: "POST",
       headers: { "Content-Type": `application/json` },
       data: JSON.stringify(formData),
@@ -130,7 +130,7 @@ function CoinAddPage(props) {
     console.log(market);
     try {
       const response = await axios.post(
-        "http://192.168.0.5:8888/app/coin/getCoinList",
+        "http://192.168.0.82:8888/app/coin/getCoinList",
         JSON.stringify(data),
         {
           headers: {

@@ -36,7 +36,7 @@ function AptAddPage(props) {
     // Axios 요청 실행 (if문 : 시/도 선택 클릭시엔 axios 실행 안하게끔)
     if (sido !== "") {
       axios // ★★ `${itemValue}` : 백틱을 써서 이렇게 간단한 파라미터 바로 넘길 수도 있구나. 굳이 JSON으로 넘기는 게 아니라
-        .get(`http://192.168.0.5:8888/app/apt/getGu/${sido}`)
+        .get(`http://192.168.0.82:8888/app/apt/getGu/${sido}`)
         .then((response) => {
           // 응답 처리 (Map 데이터를 useState에)
           console.log("axios 실행하여 온 데이터 : " + response.data);
@@ -62,7 +62,7 @@ function AptAddPage(props) {
     // Axios 요청 실행 (if문 : 시/도 선택 클릭시엔 axios 실행 안하게끔)
     if (gu !== "") {
       axios // ★★ `${itemValue}` : 백틱을 써서 이렇게 간단한 파라미터 바로 넘길 수도 있구나. 굳이 JSON으로 넘기는 게 아니라
-        .get(`http://192.168.0.5:8888/app/apt/getDong/${gu}`)
+        .get(`http://192.168.0.82:8888/app/apt/getDong/${gu}`)
         .then((response) => {
           // 응답 처리 (Map 데이터를 useState에)
           console.log("getDong 성공");
@@ -88,7 +88,7 @@ function AptAddPage(props) {
     // Axios 요청 실행 (if문 : 시/도 선택 클릭시엔 axios 실행 안하게끔)
     if (dong !== "") {
       axios // ★★ `${itemValue}` : 백틱을 써서 이렇게 간단한 파라미터 바로 넘길 수도 있구나. 굳이 JSON으로 넘기는 게 아니라
-        .get(`http://192.168.0.5:8888/app/apt/getAptName/${dong}`)
+        .get(`http://192.168.0.82:8888/app/apt/getAptName/${dong}`)
         .then((response) => {
           // 응답 처리 (Map 데이터를 useState에)
           console.log("getAptName 성공");
@@ -234,7 +234,7 @@ const getGu = ({ sido }) => {
   // ★★★ axios 문법
   // axios.post(url, data, {Content-Type 설정})
   axios
-    .post("http://192.168.0.5:8888/app/apt/getGu", JSON.stringify(data), {
+    .post("http://192.168.0.82:8888/app/apt/getGu", JSON.stringify(data), {
       headers: {
         "Content-Type": "application/json",
       },
