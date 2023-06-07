@@ -7,6 +7,7 @@ import { depositAdd, depositInitialize } from "../action";
 import { IconButton } from "react-native-paper";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import { apiPath } from "../services";
 
 function DepositAddPage() {
   console.log("DepoAddPage >>>");
@@ -44,7 +45,7 @@ function DepositAddPage() {
       });
       console.log(newDeopsitStateList);
       axios({
-        url: "http://192.168.0.24:8888/app/deposit/add.do",
+        url: apiPath + "/deposit/add.do",
         method: "POST",
         // headers: { "Content-Type": `application/json` },
         // data: JSON.stringify({ depositStateList }),
