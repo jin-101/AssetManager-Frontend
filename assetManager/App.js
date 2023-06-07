@@ -12,6 +12,8 @@ import { createLogger } from "redux-logger";
 
 import { Login, MainPage, DepositAddPage } from "./views";
 import { commonHeaderStyle } from "./styles";
+import AptAddPage from "./views/AptAddPage";
+import CoinAddPage from "./views/CoinAddPage";
 import { useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { StyleSheet } from "react-native";
@@ -27,7 +29,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function App() {
+export default function App() { 
   const logger = createLogger();
   const store = createStore(rootReducer, applyMiddleware(logger));
   const Stack = createNativeStackNavigator();
@@ -79,7 +81,7 @@ export default function App() {
               />
               <Stack.Screen
                 name="부동산"
-                component={DepositAddPage}
+                component={AptAddPage}
                 options={{ ...commonHeaderStyle, title: "부동산 추가" }}
               />
               <Stack.Screen
@@ -99,7 +101,7 @@ export default function App() {
               />
               <Stack.Screen
                 name="코인"
-                component={DepositAddPage}
+                component={CoinAddPage}
                 options={{ ...commonHeaderStyle, title: "코인 추가" }}
               />
             </Stack.Navigator>
