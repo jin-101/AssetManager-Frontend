@@ -7,10 +7,10 @@ import { useDispatch } from "react-redux";
 
 function InputDateComponent({
   name,
-  parentFunction = undefined,
   id,
   value,
   dispatchF,
+  parentSetState,
   title,
   mode = "date",
   helperText,
@@ -28,7 +28,7 @@ function InputDateComponent({
     const currentDate = selectedDate;
     const dateFormat = makeDateString(currentDate);
 
-    // if (parentFunction) parentFunction(name, dateFormat);
+    if (parentSetState) parentSetState(dateFormat);
     if (dispatchF) dispatch(dispatchF(id, name, dateFormat));
 
     setShow(false);

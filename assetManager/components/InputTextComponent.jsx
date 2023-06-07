@@ -31,10 +31,10 @@ const keyBoardType = (type) => {
 
 function InputTextComponent({
   name,
-  parentFunction = undefined,
   id,
   value,
   dispatchF,
+  parentSetState,
   title,
   helperText,
   inputType = "text",
@@ -50,7 +50,6 @@ function InputTextComponent({
 
   const isNumType = inputType === "number" || inputType === "double" || false;
   const keyboardType = keyBoardType(inputType);
-  const initialState = isNumType ? 0 : "";
 
   const onChangeText = useCallback((text) => {
     if (inputType === "number") {
@@ -67,8 +66,8 @@ function InputTextComponent({
         return;
       }
     }
+    if (parentSetState) parentSetState(text);
     if (dispatchF) dispatch(dispatchF(id, name, text));
-    // if (parentFunction) parentFunction(name, text);
   }, []);
 
   return (

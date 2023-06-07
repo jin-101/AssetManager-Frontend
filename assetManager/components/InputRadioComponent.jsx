@@ -4,10 +4,10 @@ import { RadioButton } from "react-native-paper";
 import { useDispatch } from "react-redux";
 function InputRadioComponent({
   name,
-  parentFunction = undefined,
   id,
   value,
   dispatchF,
+  parentSetState,
   title,
   list,
   formControlStyle,
@@ -18,7 +18,7 @@ function InputRadioComponent({
   const dispatch = useDispatch();
 
   const onChange = useCallback((newValue) => {
-    // if (parentFunction) parentFunction(name, newValue);
+    if (parentSetState) parentSetState(newValue);
     if (dispatchF) dispatch(dispatchF(id, name, newValue));
   }, []);
 
