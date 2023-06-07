@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, FormControl, Input, HStack } from "native-base";
 import { View, Button, StyleSheet } from "react-native";
+import InputTextComponent from "./InputTextComponent";
 
 const ShowHideBox = ({ state, setState }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -12,21 +13,11 @@ const ShowHideBox = ({ state, setState }) => {
     setIsVisible(false);
   };
 
-  //
-  const onChangePrice = (text) => {
-    console.log(text);
-    setState({ ...state, price: text });
-  };
-  //
-  const onChangeRate = (text) => {
-    console.log(text);
-    setState({ ...state, rate: text });
-  };
-  //
-  const onChangeDate = (text) => {
-    console.log(text);
-    setState({ ...state, date: text });
-  };
+  const [price, setPrice] = useState(0);
+  const [rate, setRate] = useState(0);
+  const [date, setDate] = useState(0);
+  console.log({ price, rate, date });
+
   return (
     <>
       <HStack alignItems="center">
@@ -36,32 +27,40 @@ const ShowHideBox = ({ state, setState }) => {
       </HStack>
       <View style={styles.container}>
         {isVisible ? (
-          <Button title="대출 정보 가리기" onPress={hideButtonClick} />
+          <Button title="숨기기" onPress={hideButtonClick} />
         ) : (
-          <Button title="대출 입력 보이기" onPress={showButtonClick} />
+          <Button title="대출 정보 입력하기" onPress={showButtonClick} />
         )}
 
         {isVisible && (
           <View style={styles.box}>
             <Box mb="10">
               <FormControl.Label>대출금액 (원)</FormControl.Label>
-              <Input
-                keyboardType="numeric"
-                value={state.price}
-                onChangeText={onChangePrice}
-                id="price"
-              />
+              <InputTextComponent
+                inputType="double"
+                // textLabel={{ endText: "%" }}
+                inputStyle={{ width: "100%" }}
+                value={price}
+                parentSetState={setPrice}
+              ></InputTextComponent>
               <FormControl.Label>대출금리 (%)</FormControl.Label>
-              <Input
+              <InputTextComponent
+                inputType="double"
+                inputStyle={{ width: "100%" }}
+                value={rate}
+                parentSetState={setRate}
+              ></InputTextComponent>
+              {/* <Input
                 keyboardType="numeric"
                 value={state.rate}
                 onChangeText={onChangeRate}
-              />
-              <FormControl.Label>대출만기</FormControl.Label>
-              <Input
-                placeholder="달력으로??"
-                value={state.date}
-                onChangeText={onChangeDate}
+              /> */}
+              <FormControl.Label>대출만기 (남은 기간)</FormControl.Label>
+              <InputTextComponent
+                placeholder="1~50년 사이로??"
+                inputType="double"
+                value={date}
+                parentSetState={setDate}
               />
             </Box>
           </View>
@@ -74,6 +73,7 @@ const ShowHideBox = ({ state, setState }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
