@@ -31,7 +31,9 @@
     "react-native-screens": "^3.20.0",
     "react-redux": "^8.0.7",
     "react-router-dom": "^6.11.2",
-    "redux": "^4.2.1"
+    "redux": "^4.2.1",
+    "react-native-web": "~0.18.10",
+    "@expo/webpack-config": "^18.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
