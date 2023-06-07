@@ -3,21 +3,12 @@
 import { Select } from "native-base";
 import React from "react";
 
-function SelectComponent({}) {
+function SelectComponent({ selectProps = {}, selectItemProps = [] }) {
   return (
-    <Select
-      selectedValue={"service"}
-      minWidth="200"
-      accessibilityLabel="Choose Service"
-      placeholder="Choose Service"
-      mt={1}
-      onValueChange={(itemValue) => {}}
-    >
-      <Select.Item label="UX Research" value="ux" />
-      <Select.Item label="Web Development" value="web" />
-      <Select.Item label="Cross Platform Development" value="cross" />
-      <Select.Item label="UI Designing" value="ui" />
-      <Select.Item label="Backend Development" value="backend" />
+    <Select {...selectProps}>
+      {selectItemProps.map((el, i) => (
+        <Select.Item key={i} {...el} />
+      ))}
     </Select>
   );
 }

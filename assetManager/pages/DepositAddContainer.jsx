@@ -42,9 +42,21 @@ function DepositAddContainer({ item, isOnlyOne }) {
         </HStack>
         <InputRadioComponent
           name="depositType"
-          formControlStyle={{ mb: "5" }}
+          formControlProps={{ mb: "5", isDisabled: true }}
+          formControlLabelProps={{
+            w: "40%",
+            _disabled: {
+              ...{
+                _text: {
+                  fontSize: "lg",
+                  color: "black",
+                  fontWeight: "bold",
+                },
+              },
+            },
+          }}
           title={"상품 선택"}
-          list={[
+          radioButtonList={[
             {
               text: "예금",
               value: "deposit",
