@@ -1,5 +1,5 @@
 import Login from "@views/Login";
 import MainPage from "@views/MainPage";
-import DepartAddPage from "@views/DepartAddPage";
+import DepositAddPage from "@views/DepositAddPage";
 
-export { Login, MainPage, DepartAddPage };
+export { Login, MainPage, DepositAddPage };
