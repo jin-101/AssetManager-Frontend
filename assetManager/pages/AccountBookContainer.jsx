@@ -20,6 +20,7 @@ import {
   Modal,
 } from "react-native";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
+import { apiPath } from "../services";
 
 function AccountBookContainer() {
   const [service, setService] = React.useState("");
@@ -40,7 +41,7 @@ function AccountBookContainer() {
   useEffect(() => {
     axios({
       method: "post",
-      url: "http://192.168.0.91:8888/app/rest/webboard/list.do",
+      url: apiPath + "/rest/webboard/list.do",
       data: JSON.stringify({
         year: currentYear,
         month: currentMonth,
