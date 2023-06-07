@@ -39,18 +39,24 @@ function DepositAddPage() {
     console.log("날짜 체크", dateCheck);
     if (dateCheck) {
       console.log("데이터 전송", depositStateList);
-      // axios({
-      //   url: "",
-      //   method: "POST",
-      //   data: depositStateList,
-      // })
-      //   .then((res) => {
-      //     console.log(res);
-      //     navigation.navigate("Home");
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
+      const newDeopsitStateList = depositStateList.map(({ index, ...rest }) => {
+        return rest;
+      });
+      console.log(newDeopsitStateList);
+      axios({
+        url: "http://192.168.0.24:8888/app/deposit/add.do",
+        method: "POST",
+        // headers: { "Content-Type": `application/json` },
+        // data: JSON.stringify({ depositStateList }),
+        data: newDeopsitStateList,
+      })
+        .then((res) => {
+          console.log(res);
+          navigation.navigate("Home");
+        })
+        .catch((err) => {
+          console.log(err, "//");
+        });
     } else {
       Alert.alert("주의", "가입일이 만기일보다 큰 경우가 있습니다.");
     }
