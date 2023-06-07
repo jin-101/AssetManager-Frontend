@@ -30,18 +30,22 @@ const keyBoardType = (type) => {
 };
 
 function InputTextComponent({
-  name,
-  id,
-  value,
+  name = "",
+  id = "0",
+  value = "",
   placeholder = "",
-  dispatchF,
-  parentSetState,
+  dispatchF = undefined,
+  parentSetState = undefined,
   title = "",
   helperText = "",
   inputType = "text",
+  formControlProps = {},
+  formControlLabelProps = {},
+  textInputProps = {},
+  formHelperTextProps = {},
   formControlStyle = {}, //native-base에 formControl 속성 모두 입력가능
   labelStyle = {}, // native-base에 formControl.label _text 속성 모두 입력가능
-  textLabel, // frontText, endText, frontTextSize, endTextSize
+  textLabel = {}, // frontText, endText, frontTextSize, endTextSize
   inputStyle = {}, // style 속성 입력가능
   alertTitle = "주의",
   alertContent = "올바른 값을 입력해주세요.",
@@ -72,7 +76,7 @@ function InputTextComponent({
   }, []);
 
   return (
-    <FormControl isDisabled {...formControlStyle}>
+    <FormControl isDisabled {...formControlStyle} {...formControlProps}>
       {/* Label */}
       <FormControl.Label
         _disabled={{
@@ -83,6 +87,7 @@ function InputTextComponent({
             ...labelStyle,
           },
         }}
+        {...formControlLabelProps}
       >
         {title}
       </FormControl.Label>
@@ -107,8 +112,10 @@ function InputTextComponent({
             ...inputStyle,
           }}
           placeholder={placeholder}
+          placeholderTextColor="lightgray"
           value={value}
           onChangeText={onChangeText}
+          {...textInputProps}
         />
 
         {/* input 뒤에 텍스트 삽입 */}
@@ -120,7 +127,9 @@ function InputTextComponent({
       </HStack>
 
       {/* 부연설명 text */}
-      <FormControl.HelperText>{helperText}</FormControl.HelperText>
+      <FormControl.HelperText {...formHelperTextProps}>
+        {helperText}
+      </FormControl.HelperText>
     </FormControl>
   );
 }

@@ -6,6 +6,7 @@ import InputDateComponent from "@components/InputDateComponent";
 import { useDispatch } from "react-redux";
 import { depositDelete, depositUpdate } from "../action";
 import { IconButton } from "react-native-paper";
+import { makeDateString } from "../utils";
 
 function DepositAddContainer({ item, isOnlyOne }) {
   console.log("DepoAddContainer >>", item);
@@ -80,6 +81,10 @@ function DepositAddContainer({ item, isOnlyOne }) {
           id={item.index}
           value={item["startDate"]}
           dispatchF={depositUpdate}
+          dateViewerProps={{
+            placeholder: makeDateString(new Date()),
+            placeholderTextColor: "lightgray",
+          }}
         />
         <InputDateComponent
           name="endDate"
@@ -89,11 +94,15 @@ function DepositAddContainer({ item, isOnlyOne }) {
           id={item.index}
           value={item["endDate"]}
           dispatchF={depositUpdate}
+          dateViewerProps={{
+            placeholder: makeDateString(new Date()),
+            placeholderTextColor: "lightgray",
+          }}
         />
         <InputTextComponent
           name="price"
           inputType={"number"}
-          formControlStyle={{ mb: "5" }}
+          formControlProps={{ mb: "5" }}
           textLabel={{ endText: "원" }}
           inputStyle={{ width: "90%" }}
           title={"금액"}
@@ -101,6 +110,7 @@ function DepositAddContainer({ item, isOnlyOne }) {
           alertContent={"정확한 금액을 입력해주세요."}
           id={item.index}
           value={item["price"] || ""}
+          placeholder="0"
           dispatchF={depositUpdate}
         />
         <InputTextComponent
@@ -114,6 +124,7 @@ function DepositAddContainer({ item, isOnlyOne }) {
           alertContent={"금리를 올바르게 입력해주세요."}
           id={item.index}
           value={item["rate"] || ""}
+          placeholder="0"
           dispatchF={depositUpdate}
         />
       </Box>
