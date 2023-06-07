@@ -2,6 +2,14 @@ import axios from "axios";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState, useEffect } from "react";
 import {
+  FormControl,
+  Select,
+  CheckIcon,
+  WarningOutlineIcon,
+  Box,
+  Button,
+} from "native-base";
+import {
   SafeAreaView,
   Text,
   FlatList,
@@ -9,54 +17,42 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Modal,
 } from "react-native";
+import { useSafeAreaFrame } from "react-native-safe-area-context";
 
 function AccountBookContainer() {
-  const [breakdown, setBreakdown] = useState([]);
+  const [service, setService] = React.useState("");
 
+  const today = new Date();
+  const year = today.getFullYear(); // 연도
+  const month = today.getMonth() + 1; // 월 (0부터 시작하므로 1을 더함)
+  const day = today.getDate(); // 일
+
+  const [currentYear, setCurrentYear] = useState(year);
+  const [currentMonth, setCurrentMonth] = useState(month);
+  const [selectedYear, setSelectedYear] = useState(year);
+  const [selectedMonth, setSelectedMonth] = useState(month);
   const [data, setData] = useState(null);
+
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     axios({
-      method: "get",
+      method: "post",
       url: "http://192.168.0.91:8888/app/rest/webboard/list.do",
-      data: {
-        year: year,
-        month: month,
-      },
+      data: JSON.stringify({
+        year: currentYear,
+        month: currentMonth,
+      }),
+      headers: { "Content-Type": `application/json` },
     })
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         setData(response.data);
       })
       .catch((error) => {});
-  }, []);
-
-  // useEffect(() => {
-  //   fetch("http://localhost:8888/rest/webboard/list.do")
-  //     .then((response) => response.json())
-  //     .then((breakdown) => {
-  //       setBreakdown(breakdown);
-  //       //setLoading(false);
-  //     });
-  // });
-
-  // useEffect(() => {
-  //   // 데이터를 가져오는 함수를 정의합니다.
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         "http://192.168.0.91:8888/rest/webboard/list.do"
-  //       );
-  //       setData(response.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   // 컴포넌트가 마운트되었을 때 데이터를 가져옵니다.
-  //   fetchData();
-  // }, []);
+  }, [currentYear, currentMonth]);
 
   const styles = StyleSheet.create({
     margin: {
@@ -67,14 +63,6 @@ function AccountBookContainer() {
       color: "gray",
     },
   });
-
-  const today = new Date();
-  const year = today.getFullYear(); // 연도
-  const month = today.getMonth() + 1; // 월 (0부터 시작하므로 1을 더함)
-  const day = today.getDate(); // 일
-
-  const [currentYear, setCurrentYear] = useState(year);
-  const [currentMonth, setCurrentMonth] = useState(month);
 
   const handleMinusMonth = () => {
     if (currentMonth === 1) {
@@ -94,6 +82,18 @@ function AccountBookContainer() {
     }
   };
 
+  const handleToggleModal = () => {
+    setShowModal((prevState) => !prevState);
+    setSelectedYear(currentYear);
+    setSelectedMonth(currentMonth);
+  };
+
+  const handleSelectMonth = () => {
+    setCurrentYear(selectedYear);
+    setCurrentMonth(selectedMonth);
+    setShowModal(false);
+  };
+
   return (
     <SafeAreaView
       style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
@@ -101,7 +101,7 @@ function AccountBookContainer() {
       <View
         style={{
           flexDirection: "row",
-          marginTop: 30,
+          marginTop: 20,
         }}
       >
         <View style={{ flex: 1, marginLeft: 15, marginBottom: 10 }}>
@@ -109,16 +109,113 @@ function AccountBookContainer() {
             <TouchableOpacity onPress={handleMinusMonth}>
               <Ionicons
                 name="caret-back-outline"
-                style={{ marginTop: 9, marginRight: 5 }}
+                style={{ marginTop: 9, marginRight: 10, fontSize: 13 }}
               ></Ionicons>
             </TouchableOpacity>
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-              {currentYear}년 {currentMonth}월
-            </Text>
+
+            <TouchableOpacity onPress={handleToggleModal}>
+              <Text style={{ fontSize: 18, fontWeight: "bold", marginTop: 3 }}>
+                {currentYear}년 {currentMonth}월
+              </Text>
+            </TouchableOpacity>
+
+            {/*  */}
+            <Modal visible={showModal} animationType="slide" transparent={true}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    padding: 20,
+                    borderRadius: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Select
+                      selectedValue={selectedYear}
+                      minWidth={100}
+                      accessibilityLabel="년도 선택"
+                      onValueChange={(value) => setSelectedYear(value)}
+                    >
+                      {[2020, 2021, 2022, 2023].map((year) => (
+                        <Select.Item
+                          key={year}
+                          label={year.toString() + "년"}
+                          value={year}
+                        />
+                      ))}
+                    </Select>
+
+                    <Select
+                      selectedValue={selectedMonth}
+                      minWidth={100}
+                      accessibilityLabel="월 선택"
+                      onValueChange={(value) => setSelectedMonth(value)}
+                    >
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((month) => (
+                        <Select.Item
+                          key={month}
+                          label={month.toString() + "월"}
+                          value={month}
+                        />
+                      ))}
+                    </Select>
+                  </View>
+
+                  <View style={{ flexDirection: "row" }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        marginLeft: 45,
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={handleSelectMonth}
+                        style={{ marginTop: 20 }}
+                      >
+                        <Text style={{ fontSize: 16, color: "blue" }}>
+                          적용
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: "flex-end",
+                        marginRight: 45,
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={handleToggleModal}
+                        style={{ marginTop: 20 }}
+                      >
+                        <Text style={{ fontSize: 16, color: "blue" }}>
+                          닫기
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+            {/*  */}
+
             <TouchableOpacity onPress={handlePlusMonth}>
               <Ionicons
                 name="caret-forward-outline"
-                style={{ marginTop: 9, marginLeft: 5 }}
+                style={{ marginTop: 9, marginLeft: 10, fontSize: 13 }}
               ></Ionicons>
             </TouchableOpacity>
           </View>
