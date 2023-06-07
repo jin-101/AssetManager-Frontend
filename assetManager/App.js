@@ -12,11 +12,12 @@ import { createLogger } from "redux-logger";
 
 import { Login, MainPage, DepositAddPage } from "./views";
 import { commonHeaderStyle } from "./styles";
-import AptAddPage from "./views/AptAddPage";
-import CoinAddPage from "./views/CoinAddPage";
+import AptAddPage from "@views/AptAddPage";
+import CoinAddPage from "@views/CoinAddPage";
 import { useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { StyleSheet } from "react-native";
+import AccountBookContainer from "@pages/AccountBookContainer";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function App() { 
+export default function App() {
   const logger = createLogger();
   const store = createStore(rootReducer, applyMiddleware(logger));
   const Stack = createNativeStackNavigator();
@@ -61,6 +62,11 @@ export default function App() {
                 options={commonHeaderStyle}
               />
 
+              <Stack.Screen
+                name="AccountBook"
+                component={AccountBookContainer}
+                options={commonHeaderStyle}
+              />
               {/* 로그인 페이지 */}
               <Stack.Screen
                 name="Login"
