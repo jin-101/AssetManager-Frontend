@@ -1,15 +1,43 @@
 //제작중
-
 import { Select } from "native-base";
 import React from "react";
+import { StyleSheet } from "react-native";
 
-function SelectComponent({}) {
+function SelectComponent({
+  placeholder = "",
+  color,
+  placeholderTextColor,
+  defaultValue = "",
+  isDisabled = false,
+  isHovered = false,
+  isFocused = false,
+  isFocusVisible = false,
+  dropdownIcon = undefined,
+  dropdownOpenIcon = undefined,
+  dropdownCloseIcon = undefined,
+  variant = "outline",
+  onOpen = () => {},
+  onClose = () => {},
+}) {
   return (
     <Select
       selectedValue={"service"}
       minWidth="200"
-      accessibilityLabel="Choose Service"
-      placeholder="Choose Service"
+      accessibilityLabel="Choos"
+      placeholder={placeholder}
+      color={color}
+      placeholderTextColor={placeholderTextColor}
+      defaultValue={defaultValue}
+      isDisabled={isDisabled}
+      isHovered={isHovered}
+      isFocused={isFocused}
+      isFocusVisible={isFocusVisible}
+      dropdownIcon={dropdownIcon}
+      dropdownOpenIcon={dropdownOpenIcon}
+      dropdownCloseIcon={dropdownCloseIcon}
+      variant={variant}
+      onOpen={opOpen}
+      onClose={onClose}
       mt={1}
       onValueChange={(itemValue) => {}}
     >
