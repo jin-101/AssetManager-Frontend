@@ -51,6 +51,7 @@ function DepositAddPage() {
       })
         .then((res) => {
           console.log(res);
+          Alert.alert(res.data);
           navigation.navigate("Home");
         })
         .catch((err) => {

@@ -16,12 +16,12 @@ function InputRadioComponent({
   radioButtonGroupProps = {}, //RadioButton.Group 속성적용
   inputStyle = {}, //HStack 속성적용
 }) {
-  console.log("InputRadioComponent >>>", "index", id, " value", value);
+  console.log("InputRadioComponent >>>");
   const dispatch = useDispatch();
 
   const onChange = useCallback((newValue) => {
     if (parentSetState) parentSetState(newValue);
-    if (dispatchF) dispatch(dispatchF(id, name, newValue));
+    if (dispatchF) dispatch(dispatchF(newValue, id, name));
   }, []);
 
   return (
