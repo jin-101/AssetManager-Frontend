@@ -1,22 +1,27 @@
 import React, { useCallback, useState } from "react";
-import { Button, FormControl, HStack } from "native-base";
+import { Button, FormControl, HStack, Stack } from "native-base";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { inputTagCommonStyle, makeDateString } from "../utils";
 import { TextInput } from "react-native";
 import { useDispatch } from "react-redux";
 
 function InputDateComponent({
-  name,
-  id,
-  value,
-  dispatchF,
-  parentSetState,
-  title,
-  mode = "date",
-  helperText,
-  formControlStyle,
-  labelStyle,
-  inputStyle,
+  name = "",
+  id = "0",
+  value = "",
+  dispatchF = undefined,
+  parentSetState = undefined,
+  title = "",
+  helperText = "",
+  formControlProps = {},
+  formControlLabelProps = {},
+  dateViewerProps = {},
+  dateSelectProps = {},
+  dateHelperTextProps = {},
+  dateTimePicker = {},
+  formControlStyle = {}, //기존 제작 파라매타
+  labelStyle = {}, //기존 제작 파라매타
+  inputStyle = {}, //기존 제작 파라매타
 }) {
   console.log("InputDateComponent >>>", "index", id, " value", value);
   const dispatch = useDispatch();
@@ -37,7 +42,7 @@ function InputDateComponent({
 
   return (
     <>
-      <FormControl isDisabled {...formControlStyle}>
+      <FormControl isDisabled {...formControlStyle} {...formControlProps}>
         <FormControl.Label
           _disabled={{
             _text: {
@@ -47,6 +52,7 @@ function InputDateComponent({
               ...labelStyle,
             },
           }}
+          {...formControlLabelProps}
         >
           {title}
         </FormControl.Label>
@@ -59,19 +65,30 @@ function InputDateComponent({
             }}
             value={value}
             readOnly={true}
+            {...dateViewerProps}
           />
-          <Button h="45" ml="2" onTouchEnd={() => setShow(true)}>
+          <Button
+            h="45"
+            ml="2"
+            onTouchEnd={() => setShow(true)}
+            {...dateSelectProps}
+          >
             날짜를 선택하세요.
           </Button>
         </HStack>
-        <FormControl.HelperText>{helperText}</FormControl.HelperText>
+        <FormControl.HelperText {...dateHelperTextProps}>
+          {helperText}
+        </FormControl.HelperText>
         {show && (
           <DateTimePicker
             testID="dateTimePicker"
             value={date}
-            mode={mode}
-            is24Hour={true}
+            mode="date"
             onChange={onChange}
+            display="calendar"
+            // positiveButton={{ label: "확인" }}
+            // negativeButton={{ label: "취소" }}
+            {...dateTimePicker}
           />
         )}
       </FormControl>
