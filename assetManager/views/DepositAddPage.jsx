@@ -47,8 +47,6 @@ function DepositAddPage() {
       axios({
         url: apiPath + "/deposit/add.do",
         method: "POST",
-        // headers: { "Content-Type": `application/json` },
-        // data: JSON.stringify({ depositStateList }),
         data: newDeopsitStateList,
       })
         .then((res) => {
