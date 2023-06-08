@@ -19,9 +19,22 @@ import axios from "axios";
 import { apiPath } from "../services";
 import InputDateComponent from "../components/InputDateComponent";
 import InputTextComponent from "../components/InputTextComponent";
+import { makeDateString } from "../utils";
+import { setRef } from "@mui/material";
 //import { AptSidoSelect, AptGuSelect } from "../components/AptSidoSelect";
 
 function AptAddPage(props) {
+  // 0. 입력값 초기화 함수
+  const resetAll = () => {
+    setAptName("");
+    setNetLeasableArea("");
+    setPurchasePrice(0);
+    setPurchaseDate("");
+    setLoanAmount(0);
+    setRate(0);
+    setMaturityDate(0);
+  };
+
   // 1. 시/도 선택시 => 구를 얻는
   // Picker 컴포넌트를 선택했을 때 Axios 요청을 실행
   const [sido, setSido] = useState("");
@@ -129,12 +142,17 @@ function AptAddPage(props) {
     console.log(b); // b == map의 value값
     setAptName(b);
     const startNum = a.indexOf("_");
-    const 전용면적 = a.substring(startNum + 1, a.length) + " 제곱미터";
+    const 전용면적 = a.substring(startNum + 1, a.length);
     setNetLeasableArea(전용면적);
   };
 
-  // 5. 매입날짜 관련 코드
-  const [purchaseDate, setPurchaseDate] = useState(""); // 매입날짜
+  // 5. 매입가격, 매입날짜 관련 코드
+  const [purchasePrice, setPurchasePrice] = useState(0); // 매입가격
+  const today = makeDateString(new Date());
+  const [purchaseDate, setPurchaseDate] = useState(today); // 매입날짜 (디폴트로 오늘 날짜인 걸 보여주기 위해 util의 makeDateString을 이용?!)
+  const aa = (purchaseDate) => {
+    setPurchaseDate(purchaseDate);
+  };
 
   // 6. 대출 Show/Hide 코드
   const [isVisible, setIsVisible] = useState(false);
@@ -147,17 +165,19 @@ function AptAddPage(props) {
   const [loanAmount, setLoanAmount] = useState(0); // 대출금액
   const [rate, setRate] = useState(0); // 대출금리
   const [maturityDate, setMaturityDate] = useState(0); // 대출만기
-  console.log({ loanAmount, rate, purchaseDate, maturityDate });
 
-  // 7. 추가 및 초기화 버튼
-  const handleReset = () => {};
+  // 7. 추가 버튼
   const handleSubmit = () => {
-    // let formData = {
-    //   market: market,
-    //   coinName: coinName,
-    //   quantity: quantity,
-    //   price: price,
-    // };
+    let data = {
+      aptName: aptName,
+      netLeasableArea: netLeasableArea,
+      purchasePrice: purchasePrice,
+      purchaseDate: purchaseDate,
+      loanAmount: loanAmount,
+      rate: rate,
+      maturityDate: maturityDate,
+    };
+    console.log(data);
     // // 입력값 유효한지 check
     // if (market === "") {
     //   Alert.alert("Error", "거래소를 선택해주세요");
@@ -173,36 +193,31 @@ function AptAddPage(props) {
     //   Alert.alert("Error", "0이 아닌 값을 입력해주세요");
     //   return;
     // }
-    // // 입력값이 유효한 경우 처리 로직
-    // axios({
-    //   url: `${apiPath}/coin/add`,
-    //   method: "POST",
-    //   headers: { "Content-Type": `application/json` },
-    //   data: JSON.stringify(formData),
-    // })
-    //   .then(function (res) {
-    //     console.log(formData);
-    //     console.log("데이터 전송 성공!!");
-    //     // 스프링에서 제대로 Insert 됐는지 check
-    //     console.log(res.data); // ★ res.data : 스프링에서 보낸 데이터를 읽는 것!
-    //     if (res.data === "성공") {
-    //       Alert.alert("Success", "자산 입력에 성공하였습니다");
-    //     } else {
-    //       Alert.alert("Error", "코인명을 제대로 입력해주세요");
-    //     }
-    //   })
-    //   .catch(function (err) {
-    //     console.log(`Error Msg : ${err}`);
-    //   });
-    // // 입력값 초기화 (★ 한꺼번에 하는 방법은 없나??)
-    // // setMarket(""); // 여러번 입력하는 경우를 생각하면 얘는 굳이 초기화해줄 필요가 없네
-    // setCoinName("");
-    // setQuantity(0);
-    // setPrice(0);
-    // setSearchKeyword(""); // 코인 검색란도 초기화되게끔 설정
-    // //setFormData({});
+    // 입력값이 유효한 경우 처리 로직
+    axios({
+      url: `${apiPath}/apt/add`,
+      method: "POST",
+      headers: { "Content-Type": `application/json` },
+      data: JSON.stringify(data),
+    })
+      .then((res) => {
+        console.log("데이터 전송 성공!!");
+        // 스프링에서 제대로 Insert 됐는지 check
+        console.log(res.data); // ★ res.data : 스프링에서 보낸 데이터를 읽는 것!
+        if (res.data === "성공") {
+          Alert.alert("Success", "자산 입력에 성공하였습니다");
+        } else {
+          Alert.alert("Error", "??을 제대로 입력해주세요");
+        }
+      })
+      .catch((err) => {
+        console.log(`Error Msg : ${err}`);
+      });
+    // 입력값 초기화
+    resetAll();
   };
 
+  //
   return (
     <ScrollView bg="red.100">
       <VStack mt="10" mb="10" alignItems="center">
@@ -327,35 +342,41 @@ function AptAddPage(props) {
             </Box>
 
             <Box mb="5">
-              <FormControl.Label>전용면적</FormControl.Label>
+              <FormControl.Label>전용면적 (제곱미터)</FormControl.Label>
               <Input
                 value={netLeasableArea}
                 label={netLeasableArea}
                 placeholder="전용면적"
                 isReadOnly="true"
-              >
-                {/* {netLeasableArea !== [] &&
-                  netLeasableArea.map((value) => {
-                    <Text label={value} value={value}></Text>;
-                  })} */}
-              </Input>
+              ></Input>
             </Box>
 
             <Box mb="5">
               <FormControl.Label>매입가격 (원)</FormControl.Label>
               {/* 일단 원으로 하고 나중에 상황봐서 억원, 천만원으로 바꾸자 */}
-              <Input keyboardType="numeric" />
+              <Input
+                value={purchasePrice}
+                onChangeText={(purchasePrice) =>
+                  setPurchasePrice(purchasePrice)
+                }
+                keyboardType="numeric"
+              />
             </Box>
 
             <Box mb="5">
-              <FormControl.Label>매입날짜</FormControl.Label>
+              <FormControl.Label>
+                매입날짜 - 미입력시 오늘날짜 디폴트로
+              </FormControl.Label>
               <InputDateComponent
+                dateTimePicker={{ display: "spinner" }}
                 value={purchaseDate}
                 parentSetState={setPurchaseDate}
+                // ★ 상태를 변경하려면 (1)value와 (2)parentSetState 2개 모두 필요
+                //onValueChange={aa}
+                //onChangeText={aa}
+                inputStyle={{ color: "gray" }}
                 formControlStyle={{ w: "100%", mb: "5" }}
                 helperText={"아파트 매입 날짜를 선택하세요."}
-                //title={"매입날짜"}
-                //id={item.index}
               ></InputDateComponent>
             </Box>
 
@@ -379,37 +400,29 @@ function AptAddPage(props) {
 
                 {isVisible && (
                   <View style={styles.box}>
-                    <Box mb="10">
-                      <FormControl.Label>대출금액 (원)</FormControl.Label>
-                      <InputTextComponent
-                        inputType="double"
-                        // textLabel={{ endText: "%" }}
-                        inputStyle={{ width: "100%" }}
-                        value={loanAmount}
-                        parentSetState={setLoanAmount}
-                      ></InputTextComponent>
-                      <FormControl.Label>대출금리 (%)</FormControl.Label>
-                      <InputTextComponent
-                        inputType="double"
-                        inputStyle={{ width: "100%" }}
-                        value={rate}
-                        parentSetState={setRate}
-                      ></InputTextComponent>
-                      {/* <Input
-                keyboardType="numeric"
-                value={state.rate}
-                onChangeText={onChangeRate}
-              /> */}
-                      <FormControl.Label>
-                        대출만기 (남은 기간)
-                      </FormControl.Label>
-                      <InputTextComponent
-                        placeholder="1~50년 사이로??"
-                        inputType="double"
-                        value={maturityDate}
-                        parentSetState={setMaturityDate}
-                      />
-                    </Box>
+                    <FormControl.Label>대출금액 (원)</FormControl.Label>
+                    <InputTextComponent
+                      inputType="double"
+                      // textLabel={{ endText: "%" }}
+                      inputStyle={{ width: "100%" }}
+                      value={loanAmount}
+                      parentSetState={setLoanAmount}
+                    ></InputTextComponent>
+                    <FormControl.Label>대출금리 (%)</FormControl.Label>
+                    <InputTextComponent
+                      inputType="double"
+                      inputStyle={{ width: "100%" }}
+                      value={rate}
+                      parentSetState={setRate}
+                    ></InputTextComponent>
+
+                    <FormControl.Label>대출만기 (남은 기간)</FormControl.Label>
+                    <InputTextComponent
+                      placeholder="1년 ~ 50년"
+                      inputType="double"
+                      value={maturityDate}
+                      parentSetState={setMaturityDate}
+                    />
                   </View>
                 )}
               </View>
@@ -436,7 +449,12 @@ function AptAddPage(props) {
               >
                 초기화
               </Button> */}
-              <Button size="lg" variant="subtle" onPress={handleSubmit}>
+              <Button
+                width={"100%"} // 버튼 너비
+                size="lg"
+                variant="subtle"
+                onPress={handleSubmit}
+              >
                 추가
               </Button>
             </Stack>
