@@ -1,13 +1,14 @@
 import React from "react";
-import { View } from "react-native";
-import SelectComponent from "../components/SelectComponent";
+import { VStack } from "native-base";
+import CarSearchContainer from "../pages/CarSearchContainer";
+import CarAddContainer from "../pages/CarAddContainer";
 
 function CarAddPage(props) {
   return (
-    <View>
-      <SelectComponent />
-    </View>
+    <VStack alignItems="center">
+      <CarSearchContainer />
+      <CarAddContainer />
+    </VStack>
   );
 }
-
 export default CarAddPage;
