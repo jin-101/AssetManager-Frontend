@@ -1,26 +1,24 @@
 import React from "react";
 import {
   Box,
-  Center,
   FormControl,
   HStack,
   Input,
-  Radio,
   ScrollView,
-  Stack,
   Text,
   VStack,
   Select,
-  CheckIcon,
-  WarningOutlineIcon,
-  Divider,
-  Button,
+  Stack,
+  Button, // as NativeBaseButton (별명으로 지정해줄 수도 있다! by 역시한신)
 } from "native-base";
 import { Alert, StyleSheet, View, TouchableOpacity } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
 import { Picker } from "@react-native-picker/picker";
 import ShowHideBox from "../components/ShowHideBox";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { apiPath } from "../services";
+import InputDateComponent from "../components/InputDateComponent";
+import InputTextComponent from "../components/InputTextComponent";
 //import { AptSidoSelect, AptGuSelect } from "../components/AptSidoSelect";
 
 function AptAddPage(props) {
@@ -36,7 +34,7 @@ function AptAddPage(props) {
     // Axios 요청 실행 (if문 : 시/도 선택 클릭시엔 axios 실행 안하게끔)
     if (sido !== "") {
       axios // ★★ `${itemValue}` : 백틱을 써서 이렇게 간단한 파라미터 바로 넘길 수도 있구나. 굳이 JSON으로 넘기는 게 아니라
-        .get(`http://192.168.0.82:8888/app/apt/getGu/${sido}`)
+        .get(`${apiPath}/apt/getGu/${sido}`)
         .then((response) => {
           // 응답 처리 (Map 데이터를 useState에)
           console.log("axios 실행하여 온 데이터 : " + response.data);
@@ -62,7 +60,7 @@ function AptAddPage(props) {
     // Axios 요청 실행 (if문 : 시/도 선택 클릭시엔 axios 실행 안하게끔)
     if (gu !== "") {
       axios // ★★ `${itemValue}` : 백틱을 써서 이렇게 간단한 파라미터 바로 넘길 수도 있구나. 굳이 JSON으로 넘기는 게 아니라
-        .get(`http://192.168.0.82:8888/app/apt/getDong/${gu}`)
+        .get(`${apiPath}/apt/getDong/${gu}`)
         .then((response) => {
           // 응답 처리 (Map 데이터를 useState에)
           console.log("getDong 성공");
@@ -77,12 +75,13 @@ function AptAddPage(props) {
     }
   };
 
-  // ★★★★★ 검색 기능을 위한 코드 시작
   // 3. 동/읍/면 선택시 => 아파트 검색 가능하게끔
+  // ★★★★★ 검색 기능을 위한 코드 시작
   const [dong, setDong] = useState("");
   const [aptMap, setAptMap] = useState(new Map());
   const [searchKeyword, setSearchKeyword] = useState("");
   const [filteredData, setFilteredData] = useState(new Map());
+  const [netLeasableArea, setNetLeasableArea] = useState(""); //
 
   const handlePickerChange3 = (dong) => {
     console.log("내가 선택한 동 Picker 컴포넌트 : " + dong);
@@ -93,9 +92,7 @@ function AptAddPage(props) {
     // Axios 요청 실행 (if문 : 시/도 선택 클릭시엔 axios 실행 안하게끔)
     if (dong !== "") {
       axios // ★★ `${itemValue}` : 백틱을 써서 이렇게 간단한 파라미터 바로 넘길 수도 있구나. 굳이 JSON으로 넘기는 게 아니라
-        .get(
-          `http://192.168.0.82:8888/app/apt/getAptName/${sido}/${gu}/${dong}`
-        )
+        .get(`${apiPath}/apt/getAptName/${sido}/${gu}/${dong}`)
         .then((response) => {
           // 응답 처리 (Map 데이터를 useState에)
           console.log("getAptName 성공");
@@ -121,20 +118,90 @@ function AptAddPage(props) {
       )
     );
     setFilteredData(filteredMap);
-    if (searchKeyword === "") {
-    }
   };
   // ★★★★★ 검색 기능을 위한 코드 끝
 
-  // 검색된 아파트 클릭시 => 아파트 이름 입력란에 쏙 들어가게
+  // 4. 검색된 아파트 클릭시 => 아파트 이름 입력란에 쏙 들어가게
   const [aptName, setAptName] = useState("");
-  const insertAptName = (value) => {
-    // key가 아니라 value값을 바로 받으므로 필요 없어졌음. const realCoinName = value.key; // value.key => BTC
-    console.log(value);
-    setAptName(value);
+  const insertAptName = (a, b) => {
+    // ★ (2) 순서대로 파라미터를 받는 거임! (따라서 파라미터 이름은 중요치 X, 순서가 중요. 객체로 쓸 거면 객체의 키값을 따로 줘야 하는 거고)
+    console.log(a); // a == map의 key값
+    console.log(b); // b == map의 value값
+    setAptName(b);
+    const startNum = a.indexOf("_");
+    const 전용면적 = a.substring(startNum + 1, a.length) + " 제곱미터";
+    setNetLeasableArea(전용면적);
   };
 
-  const [aaaa, setAaaa] = useState({ price: "11", rate: "11", date: "11" });
+  // 5. 매입날짜 관련 코드
+  const [purchaseDate, setPurchaseDate] = useState(""); // 매입날짜
+
+  // 6. 대출 Show/Hide 코드
+  const [isVisible, setIsVisible] = useState(false);
+  const showButtonClick = () => {
+    setIsVisible(true);
+  };
+  const hideButtonClick = () => {
+    setIsVisible(false);
+  };
+  const [loanAmount, setLoanAmount] = useState(0); // 대출금액
+  const [rate, setRate] = useState(0); // 대출금리
+  const [maturityDate, setMaturityDate] = useState(0); // 대출만기
+  console.log({ loanAmount, rate, purchaseDate, maturityDate });
+
+  // 7. 추가 및 초기화 버튼
+  const handleReset = () => {};
+  const handleSubmit = () => {
+    // let formData = {
+    //   market: market,
+    //   coinName: coinName,
+    //   quantity: quantity,
+    //   price: price,
+    // };
+    // // 입력값 유효한지 check
+    // if (market === "") {
+    //   Alert.alert("Error", "거래소를 선택해주세요");
+    //   return;
+    // } else if (coinName === "") {
+    //   Alert.alert("Error", "코인 이름을 입력해주세요");
+    //   return;
+    // } else if (quantity === 0 || price === 0) {
+    //   // input에서 0을 입력하면 String이더라고. 그래서 초기값도 그냥 "0"으로 줘버림
+    //   Alert.alert("Error", "수량과 가격을 입력해주세요");
+    //   return;
+    // } else if (quantity === "0" || price === "0") {
+    //   Alert.alert("Error", "0이 아닌 값을 입력해주세요");
+    //   return;
+    // }
+    // // 입력값이 유효한 경우 처리 로직
+    // axios({
+    //   url: `${apiPath}/coin/add`,
+    //   method: "POST",
+    //   headers: { "Content-Type": `application/json` },
+    //   data: JSON.stringify(formData),
+    // })
+    //   .then(function (res) {
+    //     console.log(formData);
+    //     console.log("데이터 전송 성공!!");
+    //     // 스프링에서 제대로 Insert 됐는지 check
+    //     console.log(res.data); // ★ res.data : 스프링에서 보낸 데이터를 읽는 것!
+    //     if (res.data === "성공") {
+    //       Alert.alert("Success", "자산 입력에 성공하였습니다");
+    //     } else {
+    //       Alert.alert("Error", "코인명을 제대로 입력해주세요");
+    //     }
+    //   })
+    //   .catch(function (err) {
+    //     console.log(`Error Msg : ${err}`);
+    //   });
+    // // 입력값 초기화 (★ 한꺼번에 하는 방법은 없나??)
+    // // setMarket(""); // 여러번 입력하는 경우를 생각하면 얘는 굳이 초기화해줄 필요가 없네
+    // setCoinName("");
+    // setQuantity(0);
+    // setPrice(0);
+    // setSearchKeyword(""); // 코인 검색란도 초기화되게끔 설정
+    // //setFormData({});
+  };
 
   return (
     <ScrollView bg="red.100">
@@ -149,7 +216,7 @@ function AptAddPage(props) {
               </HStack>
             </Box>
 
-            <Box mb="10">
+            <Box mb="5">
               <FormControl.Label>시/도</FormControl.Label>
               {/* AptSidoSelect 컴포넌트로 분리하고 싶은 부분 */}
               <View style={styles.container}>
@@ -193,7 +260,9 @@ function AptAddPage(props) {
                 /> 
                 */}
               </View>
+            </Box>
 
+            <Box mb="5">
               {/* AptGuSelect 컴포넌트로 분리하고 싶은 부분 */}
               <FormControl.Label>구</FormControl.Label>
               {/* <AptGuSelect></AptGuSelect> */}
@@ -212,7 +281,9 @@ function AptAddPage(props) {
                   <Select.Item key={key} label={value} value={key} /> // 화면에 보이는게 label , 여기서 처리할 값은 value
                 ))}
               </Select>
+            </Box>
 
+            <Box mb="5">
               <FormControl.Label>동/읍/면</FormControl.Label>
               <Select
                 selectedValue={dong}
@@ -225,43 +296,150 @@ function AptAddPage(props) {
                   <Select.Item key={key} label={key} value={key} />
                 ))}
               </Select>
+            </Box>
 
-              {/*  ★★★★★ 검색기능 시작 */}
-              <Box mb="5">
-                <FormControl.Label>아파트 이름 검색하기</FormControl.Label>
-                <Input value={searchKeyword} onChangeText={handleSearch} />
-                {searchKeyword !== "" &&
-                  Array.from(filteredData.keys()).map((key) => (
-                    <TouchableOpacity
-                      key={key}
-                      onPress={() => {
-                        insertAptName(`${filteredData.get(key)}`); // ★ key값 대신 value값을 보내주면 되는 거 아닌가??
-                      }}
-                    >
-                      <Text fontSize="xs" key={key}>{`${key}`}</Text>
-                    </TouchableOpacity>
-                    // <Text key={key}>{`${key}: ${filteredData.get(key)}`}</Text>
-                  ))}
-                {/*  ★★★★★ 검색기능 끝 */}
-              </Box>
+            {/*  ★★★★★ 검색기능 시작 */}
+            <Box mb="5">
+              <FormControl.Label>아파트 이름 검색하기</FormControl.Label>
+              <Input value={searchKeyword} onChangeText={handleSearch} />
+              {searchKeyword !== "" &&
+                Array.from(filteredData.keys()).map((key) => (
+                  <TouchableOpacity
+                    key={key}
+                    onPress={() => {
+                      insertAptName(key, filteredData.get(key)); // ★ (1) insertAptName(a, b) 그냥 이런 식으로 파라미터를 넣고
+                    }}
+                  >
+                    <Text fontSize="xs" key={key}>{`${key}`}</Text>
+                  </TouchableOpacity>
+                  // <Text key={key}>{`${key}: ${filteredData.get(key)}`}</Text>
+                ))}
+              {/*  ★★★★★ 검색기능 끝 */}
+            </Box>
+
+            <Box mb="5">
+              <FormControl.Label>아파트 이름</FormControl.Label>
               <Input
                 label={aptName}
                 value={aptName}
-                placeholder="검색된 아파트명 클릭시 자동 입력됨"
+                placeholder="(1)검색 통해서 입력, (2)직접입력 구현해야 할 듯"
               />
+            </Box>
 
+            <Box mb="5">
               <FormControl.Label>전용면적</FormControl.Label>
-              <Input placeholder="select로" />
+              <Input
+                value={netLeasableArea}
+                label={netLeasableArea}
+                placeholder="전용면적"
+                isReadOnly="true"
+              >
+                {/* {netLeasableArea !== [] &&
+                  netLeasableArea.map((value) => {
+                    <Text label={value} value={value}></Text>;
+                  })} */}
+              </Input>
+            </Box>
 
+            <Box mb="5">
               <FormControl.Label>매입가격 (원)</FormControl.Label>
               {/* 일단 원으로 하고 나중에 상황봐서 억원, 천만원으로 바꾸자 */}
               <Input keyboardType="numeric" />
-
-              <FormControl.Label>매입시점</FormControl.Label>
-              <Input placeholder="달력으로??" />
             </Box>
 
-            <ShowHideBox state={aaaa} setState={setAaaa}></ShowHideBox>
+            <Box mb="5">
+              <FormControl.Label>매입날짜</FormControl.Label>
+              <InputDateComponent
+                value={purchaseDate}
+                parentSetState={setPurchaseDate}
+                formControlStyle={{ w: "100%", mb: "5" }}
+                helperText={"아파트 매입 날짜를 선택하세요."}
+                //title={"매입날짜"}
+                //id={item.index}
+              ></InputDateComponent>
+            </Box>
+
+            {/* 6. 대출 Show/Hide 코드 */}
+            <Box mb="5">
+              <HStack alignItems="center">
+                <FormControl.Label w="100%">
+                  대출이 있을 경우에만 입력해주세요.
+                </FormControl.Label>
+              </HStack>
+              <View style={styles.container}>
+                {isVisible ? (
+                  <Button size="lg" onPress={hideButtonClick}>
+                    숨기기
+                  </Button>
+                ) : (
+                  <Button size="lg" onPress={showButtonClick}>
+                    대출 정보 입력하기
+                  </Button>
+                )}
+
+                {isVisible && (
+                  <View style={styles.box}>
+                    <Box mb="10">
+                      <FormControl.Label>대출금액 (원)</FormControl.Label>
+                      <InputTextComponent
+                        inputType="double"
+                        // textLabel={{ endText: "%" }}
+                        inputStyle={{ width: "100%" }}
+                        value={loanAmount}
+                        parentSetState={setLoanAmount}
+                      ></InputTextComponent>
+                      <FormControl.Label>대출금리 (%)</FormControl.Label>
+                      <InputTextComponent
+                        inputType="double"
+                        inputStyle={{ width: "100%" }}
+                        value={rate}
+                        parentSetState={setRate}
+                      ></InputTextComponent>
+                      {/* <Input
+                keyboardType="numeric"
+                value={state.rate}
+                onChangeText={onChangeRate}
+              /> */}
+                      <FormControl.Label>
+                        대출만기 (남은 기간)
+                      </FormControl.Label>
+                      <InputTextComponent
+                        placeholder="1~50년 사이로??"
+                        inputType="double"
+                        value={maturityDate}
+                        parentSetState={setMaturityDate}
+                      />
+                    </Box>
+                  </View>
+                )}
+              </View>
+            </Box>
+
+            {/* <ShowHideBox state={aaaa} setState={setAaaa}></ShowHideBox> */}
+            <Stack
+              mb="2.5"
+              mt="1.5"
+              direction="row" // direction="row" => "column"으로 바꾸면 수직으로 쌓이게 됨
+              space={2}
+              // mx 이거 적용하면 버튼 너비가 줄어듦.
+              mx={{
+                base: "auto",
+                md: "0",
+              }}
+            >
+              {/* 초기화 버튼 필요 없을 듯 
+              <Button
+                size="lg"
+                variant="subtle"
+                colorScheme="secondary"
+                onPress={handleReset}
+              >
+                초기화
+              </Button> */}
+              <Button size="lg" variant="subtle" onPress={handleSubmit}>
+                추가
+              </Button>
+            </Stack>
           </FormControl>
         </Box>
       </VStack>
@@ -272,6 +450,9 @@ function AptAddPage(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%",
+    // justifyContent: "center",
+    // alignItems: "center",
   },
   picker: {
     height: 50,
@@ -280,6 +461,9 @@ const styles = StyleSheet.create({
   },
   pickerItem: {
     fontSize: 10, // 글씨 크기 조정
+  },
+  box: {
+    width: "100%",
   },
 });
 
