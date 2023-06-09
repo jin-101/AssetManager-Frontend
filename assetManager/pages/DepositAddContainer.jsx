@@ -10,7 +10,12 @@ import { makeDateString } from "../utils";
 
 function DepositAddContainer({ item, isOnlyOne }) {
   console.log("DepoAddContainer >>", item);
+
   const dispatch = useDispatch();
+  const startDate = item["startDate"];
+  const endDate = item["endDate"];
+  const currentDate = makeDateString(new Date());
+  const year = Number(currentDate.substring(0, 4));
 
   const deleteButton = useCallback(() => {
     dispatch(depositDelete(item.index));
@@ -75,15 +80,22 @@ function DepositAddContainer({ item, isOnlyOne }) {
         />
         <InputDateComponent
           name="startDate"
-          formControlStyle={{ w: "100%", mb: "5" }}
+          formControlStyle={{ mb: "5" }}
           title={"가입일"}
           helperText={"상품 가입일을 선택하세요."}
           id={item.index}
-          value={item["startDate"]}
+          value={startDate || currentDate}
           dispatchF={depositUpdate}
-          dateViewerProps={{
-            placeholder: makeDateString(new Date()),
-            placeholderTextColor: "lightgray",
+          inputStyle={{ color: startDate ? "black" : "lightgray" }}
+          datePickerProps={{
+            type: "YYYY-MM-DD",
+            minDate: `${year - 5}-01-01`,
+            maxDate: `${year + 5}-12-31`,
+            daySuffix: "일",
+            width: 300,
+            rowHeight: 60,
+            selectedBorderLineWidth: "2",
+            toolBarCancelStyle: { color: "black" },
           }}
         />
         <InputDateComponent
@@ -92,11 +104,18 @@ function DepositAddContainer({ item, isOnlyOne }) {
           title={"만기일"}
           helperText={"상품 만기일을 입력하세요."}
           id={item.index}
-          value={item["endDate"]}
+          value={endDate || currentDate}
           dispatchF={depositUpdate}
-          dateViewerProps={{
-            placeholder: makeDateString(new Date()),
-            placeholderTextColor: "lightgray",
+          inputStyle={{ color: endDate ? "black" : "lightgray" }}
+          datePickerProps={{
+            type: "YYYY-MM-DD",
+            minDate: `${year - 5}-01-01`,
+            maxDate: `${year + 5}-12-31`,
+            daySuffix: "일",
+            width: 300,
+            rowHeight: 60,
+            selectedBorderLineWidth: "2",
+            toolBarCancelStyle: { color: "black" },
           }}
         />
         <InputTextComponent

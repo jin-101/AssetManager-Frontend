@@ -1,5 +1,5 @@
-import { Button, ScrollView, VStack } from "native-base";
-import { Alert } from "react-native";
+import { Button, VStack } from "native-base";
+import { Alert, ScrollView } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import DepositAddContainer from "@pages/DepositAddContainer";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,6 +51,7 @@ function DepositAddPage() {
       })
         .then((res) => {
           console.log(res);
+          Alert.alert(res.data);
           navigation.navigate("Home");
         })
         .catch((err) => {
