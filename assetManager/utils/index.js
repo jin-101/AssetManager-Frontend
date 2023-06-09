@@ -1,5 +1,30 @@
 //초기 설정 값 및 util성 변수 및 함수
 
+export const keyBoardType = (type) => {
+  let keyboard;
+  switch (type) {
+    case "number":
+      keyboard = "numeric";
+      break;
+    case "double":
+      keyboard = "decimal-pad";
+      break;
+    case "email":
+      keyboard = "email-address";
+      break;
+    case "pad":
+      keyboard = "phone-pad";
+      break;
+    case "url":
+      keyboard = "url";
+      break;
+    default:
+      keyboard = "default";
+      break;
+  }
+  return keyboard;
+};
+
 //기기가 안드로이드 인지 체크
 export const isAndroid = Platform.OS === "android";
 
