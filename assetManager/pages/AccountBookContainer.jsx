@@ -23,10 +23,14 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
+  Image,
+  Dimensions,
+  ScrollView,
 } from "react-native";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { apiPath } from "../services";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { red } from "@mui/material/colors";
 
 function AccountBookContainer() {
   const [service, setService] = React.useState("");
@@ -40,10 +44,12 @@ function AccountBookContainer() {
   const [currentMonth, setCurrentMonth] = useState(month);
   const [selectedYear, setSelectedYear] = useState(year);
   const [selectedMonth, setSelectedMonth] = useState(month);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
+  const [categoryData, setCategoryData] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
+  const [Category, setCategory] = useState("카테고리 입력");
 
   useEffect(() => {
     axios({
@@ -62,13 +68,75 @@ function AccountBookContainer() {
       .catch((error) => {});
   }, [currentYear, currentMonth]);
 
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: apiPath + "/rest/webboard/categorylist.do",
+    })
+      .then((response) => {
+        setCategoryData(response.data);
+      })
+      .catch((error) => {});
+  }, []);
+
   const styles = StyleSheet.create({
+    categorytouchable: {
+      flex: 1,
+      flexDirection: "row",
+    },
     margin: {
       marginLeft: 150,
     },
     smallgray: {
       fontSize: 13,
       color: "gray",
+    },
+    leftSpace: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginLeft: 10,
+    },
+    row: {
+      flexDirection: "row",
+      marginBottom: 10,
+    },
+    modalBg: {
+      position: "absolute",
+      top: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "gray",
+      opacity: 0.5,
+    },
+    modalContaniner: {
+      position: "absolute",
+      top: 0,
+      width: "100%",
+      height: "100%",
+      flex: 1,
+      justifyContent: "flex-end",
+    },
+    modalTitle: {
+      height: 60,
+      backgroundColor: "white",
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      justifyContent: "space-around",
+      alignItems: "center",
+      borderBottomWidth: 0.5,
+      borderColor: "lightgray",
+    },
+    modalTitleText: {
+      fontSize: 20,
+      fontWeight: 700,
+    },
+    modalContent: {
+      backgroundColor: "white",
+    },
+    modalFooter: {
+      height: isAndroid ? 0 : 20,
+      backgroundColor: "white",
     },
   });
 
@@ -108,6 +176,11 @@ function AccountBookContainer() {
 
   const handleBackdropPress = () => {
     setShowModal(false);
+  };
+
+  const InputCategory = (text) => {
+    setShowModal2(false);
+    setCategory(text);
   };
 
   return (
@@ -266,17 +339,14 @@ function AccountBookContainer() {
         </View>
       </View>
 
-      <FlatList
-        data={data}
-        renderItem={({ item, index }) => {
-          // 인덱스 = 0 즉, 첫번째 순서에는 null 할당
-          // 그 이후 애들한테는 그 전의 아이템 할당
+      <ScrollView>
+        {data.map((item, index) => {
           const previousItem = index > 0 ? data[index - 1] : null;
           const showDate =
             !previousItem || previousItem.exchangeDate !== item.exchangeDate;
 
           return (
-            <View>
+            <View key={item.detailCode}>
               {showDate && (
                 <View>
                   <Text style={{ marginTop: 30 }}>{item.exchangeDate}</Text>
@@ -317,60 +387,92 @@ function AccountBookContainer() {
 
               <View style={{ flexDirection: "row" }}>
                 <TouchableOpacity onPress={openCategoryModal}>
-                  <Text style={{ color: "gray" }}>카테고리 작성</Text>
+                  <Text style={{ color: "gray" }}>{Category}</Text>
                 </TouchableOpacity>
                 <View style={{ flex: 1, alignItems: "flex-end" }}>
-                  <TextInput placeholder="메모 작성" />
+                  <TextInput placeholder="메모 입력" />
                 </View>
               </View>
             </View>
           );
-        }}
-        keyExtractor={(item) => item.detailCode}
-      ></FlatList>
+        })}
+      </ScrollView>
+
       {/* 카테고리 모달!!! */}
       <View>
-        <Button onPress={() => setShowModal2(true)}>Button</Button>
         <BaseModal isOpen={showModal2} onClose={() => setShowModal2(false)}>
           <BaseModal.Content
-            maxWidth="600px"
+            maxWidth="800px"
             width="100%"
             style={{
               marginBottom: 0,
               marginTop: "auto",
             }}
           >
-            <BaseModal.CloseButton />
-            <BaseModal.Header>Contact Us</BaseModal.Header>
+            {/* <BaseModal.CloseButton /> */}
+            <BaseModal.Header>
+              <View style={{ flexDirection: "row" }}>
+                <View>
+                  <Text style={{ fontWeight: "bold", fontSize: 15 }}>
+                    카테고리
+                  </Text>
+                </View>
+
+                <View style={{ flex: 1, alignItems: "flex-end" }}>
+                  <TouchableOpacity>
+                    <Text>추가(커밍쑨)</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </BaseModal.Header>
+
             <BaseModal.Body>
-              <FormControl>
-                <FormControl.Label>Name</FormControl.Label>
-                <Input />
-              </FormControl>
-              <FormControl mt="3">
-                <FormControl.Label>Email</FormControl.Label>
-                <Input />
-              </FormControl>
+              <FlatList
+                Style
+                columnWrapperStyle={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                data={categoryData}
+                numColumns={4}
+                renderItem={({ item, index }) => {
+                  return (
+                    <View
+                      style={{
+                        borderRadius: 10,
+                        padding: 5,
+                        borderWidth: 1,
+                        borderColor: "gray",
+                        margin: 10,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "20%",
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() => InputCategory(item.category)}
+                      >
+                        <View
+                          style={{
+                            alignItems: "center",
+                          }}
+                        >
+                          <Image
+                            source={require("../assets/rockcrab.png")}
+                            style={{ width: 45, height: 45 }}
+                          />
+                          <Text>{item.category}</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  );
+                }}
+                keyExtractor={(item, index) => index.toString()}
+              ></FlatList>
             </BaseModal.Body>
+
             <BaseModal.Footer>
-              <Button.Group space={2}>
-                <Button
-                  variant="ghost"
-                  colorScheme="blueGray"
-                  onPress={() => {
-                    setShowModal2(false);
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onPress={() => {
-                    setShowModal2(false);
-                  }}
-                >
-                  Save
-                </Button>
-              </Button.Group>
+              <Button.Group space={1}></Button.Group>
             </BaseModal.Footer>
           </BaseModal.Content>
         </BaseModal>
