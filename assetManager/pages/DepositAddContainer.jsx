@@ -86,7 +86,7 @@ function DepositAddContainer({ item, isOnlyOne }) {
           id={item.index}
           value={startDate || currentDate}
           dispatchF={depositUpdate}
-          inputStyle={{ color: startDate ? "black" : "gray.100" }}
+          inputStyle={{ color: startDate ? "black" : "lightgray" }}
           datePickerProps={{
             type: "YYYY-MM-DD",
             minDate: `${year - 5}-01-01`,
@@ -94,7 +94,6 @@ function DepositAddContainer({ item, isOnlyOne }) {
             daySuffix: "일",
             width: 300,
             rowHeight: 60,
-            toolBarStyle: { borderWidth: 0 },
             selectedBorderLineWidth: "2",
             toolBarCancelStyle: { color: "black" },
           }}
@@ -107,7 +106,7 @@ function DepositAddContainer({ item, isOnlyOne }) {
           id={item.index}
           value={endDate || currentDate}
           dispatchF={depositUpdate}
-          inputStyle={{ color: endDate ? "black" : "gray.100" }}
+          inputStyle={{ color: endDate ? "black" : "lightgray" }}
           datePickerProps={{
             type: "YYYY-MM-DD",
             minDate: `${year - 5}-01-01`,
