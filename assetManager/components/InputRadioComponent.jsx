@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { FormControl, HStack, Text } from "native-base";
 import { RadioButton } from "react-native-paper";
 import { useDispatch } from "react-redux";
+import { formControlLableBasicStyle } from "../styles";
 function InputRadioComponent({
   name = "",
   id = "0",
@@ -26,20 +27,12 @@ function InputRadioComponent({
 
   return (
     <FormControl isDisabled {...formControlProps}>
-      <FormControl.Label
-        w="40%"
-        _disabled={{
-          _text: {
-            fontSize: "lg",
-            color: "black",
-            fontWeight: "bold",
-            ...labelStyle,
-          },
-        }}
+      <Text
+        style={{ ...formControlLableBasicStyle.label, ...labelStyle }}
         {...formControlLabelProps}
       >
         {title}
-      </FormControl.Label>
+      </Text>
       <RadioButton.Group
         onValueChange={onChange}
         value={value}

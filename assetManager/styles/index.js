@@ -1,3 +1,5 @@
+import { StyleSheet } from "react-native";
+
 //custom styles
 export const commonHeaderStyle = {
   headerStyle: {
@@ -8,3 +10,12 @@ export const commonHeaderStyle = {
     fontWeight: "bold",
   },
 };
+
+export const formControlLableBasicStyle = StyleSheet.create({
+  label: {
+    marginBottom: 5,
+    color: "black",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+});

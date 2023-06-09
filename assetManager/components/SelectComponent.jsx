@@ -1,60 +1,95 @@
-//제작중
-import { Select } from "native-base";
-import React from "react";
-import { StyleSheet } from "react-native";
+import { FormControl, HStack, Select, VStack } from "native-base";
+import React, { useCallback, useMemo } from "react";
+import { Text, View } from "react-native";
+import { formControlLableBasicStyle } from "../styles";
 
 function SelectComponent({
-  placeholder = "",
-  color,
-  placeholderTextColor,
-  defaultValue = "",
-  isDisabled = false,
-  isHovered = false,
-  isFocused = false,
-  isFocusVisible = false,
-  dropdownIcon = undefined,
-  dropdownOpenIcon = undefined,
-  dropdownCloseIcon = undefined,
-  variant = "outline",
-  onOpen = () => {},
-  onClose = () => {},
+  isVertical = true,
+  formControlProps = {}, //{FormControl 속성}
+  formControlLabelProps = {}, // {Text 속성}
+  formControlHelperProps = {}, // {FormControl.HelperText 속성}
+  selectProps = {}, //placeholder = "", color,placeholderTextColor,defaultValue = "",isDisabled = false, isHovered = false,isFocused = false,isFocusVisible = false,dropdownIcon = undefined,dropdownOpenIcon = undefined,dropdownCloseIcon = undefined,variant = "outline", onOpen = () => {}, onClose = () => {},
+  selectItem = [], // 선택 item
+  selectItemStyle = {}, // 선택 item들의 공통스타일
 }) {
+  const { text: formControlLabelText = "", ...formControlLabelStyleProps } =
+    useMemo(() => formControlLabelProps);
+  const { text: FormControlHelperText = "", ...FormControlHelperStyleProps } =
+    useMemo(() => formControlHelperProps);
+
+  const titleLable = useCallback(() => {
+    return (
+      <Text
+        style={formControlLableBasicStyle.label}
+        {...formControlLabelStyleProps}
+      >
+        {formControlLabelText}
+      </Text>
+    );
+  }, []);
+
+  const selector = useCallback((isVertical) => {
+    return (
+      <Select placeholder="선택해주세요." {...selectProps}>
+        {selectItem.map((el, index) => (
+          <Select.Item key={index} {...el} style={{ ...selectItemStyle }} />
+        ))}
+      </Select>
+    );
+  }, []);
+
   return (
-    <Select
-      selectedValue={"service"}
-      minWidth="200"
-      accessibilityLabel="Choos"
-      placeholder={placeholder}
-      color={color}
-      placeholderTextColor={placeholderTextColor}
-      defaultValue={defaultValue}
-      isDisabled={isDisabled}
-      isHovered={isHovered}
-      isFocused={isFocused}
-      isFocusVisible={isFocusVisible}
-      dropdownIcon={dropdownIcon}
-      dropdownOpenIcon={dropdownOpenIcon}
-      dropdownCloseIcon={dropdownCloseIcon}
-      variant={variant}
-      onOpen={opOpen}
-      onClose={onClose}
-      mt={1}
-      onValueChange={(itemValue) => {}}
+    <FormControl
+      bg="coolGray.700"
+      maxW="100%"
+      {...formControlProps}
+      style={{ width: "100%" }}
     >
-      <Select.Item label="UX Research" value="ux" />
-      <Select.Item label="Web Development" value="web" />
-      <Select.Item label="Cross Platform Development" value="cross" />
-      <Select.Item label="UI Designing" value="ui" />
-      <Select.Item label="Backend Development" value="backend" />
-    </Select>
+      {isVertical ? (
+        <VStack
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              width: "100%",
+            }}
+          >
+            {titleLable()}
+            {selector(true)}
+          </View>
+        </VStack>
+      ) : (
+        <View style={{ width: "100%" }}>
+          <HStack>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                width: "30%",
+              }}
+            >
+              {titleLable()}
+            </View>
+            <View
+              style={{
+                width: "70%",
+              }}
+            >
+              {selector(false)}
+            </View>
+          </HStack>
+        </View>
+      )}
+      <FormControl.HelperText {...FormControlHelperStyleProps}>
+        {FormControlHelperText}
+      </FormControl.HelperText>
+    </FormControl>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 40,
-    alignItems: "center",
-  },
-});
 export default SelectComponent;
