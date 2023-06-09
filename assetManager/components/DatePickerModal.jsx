@@ -4,6 +4,8 @@ import { Feather } from "@expo/vector-icons";
 import { Modal, StyleSheet, View, Text } from "react-native";
 import { DatePicker, CalendarList } from "react-native-common-date-picker";
 import { useDispatch } from "react-redux";
+import { Platform } from "react-native";
+import { isAndroid } from "../utils";
 
 const styles = StyleSheet.create({
   modalBg: {
@@ -37,6 +39,10 @@ const styles = StyleSheet.create({
     fontWeight: 700,
   },
   modalContent: {
+    backgroundColor: "white",
+  },
+  modalFooter: {
+    height: isAndroid ? 0 : 20,
     backgroundColor: "white",
   },
 });
@@ -77,7 +83,16 @@ function DatePickerModal({
           </Text>
           <Pressable cursor="pointer" onPress={modalControlState.setState}>
             <Center>
-              <Icon as={<Feather name="x" size={35} color="black" />} />
+              <Icon
+                as={
+                  <Feather
+                    name="x"
+                    size={25}
+                    color="black"
+                    style={{ fontWeight: 700 }}
+                  />
+                }
+              />
             </Center>
           </Pressable>
         </HStack>
@@ -92,7 +107,9 @@ function DatePickerModal({
               toolBarStyle={{
                 justifyContent: "space-around",
                 borderTopWidth: 0.5,
+                borderBottomWidth: 0,
                 borderColor: "lightgray",
+                height: 60,
               }}
               rowHeight={60}
               selectedBorderLineWidth="3"
@@ -117,6 +134,7 @@ function DatePickerModal({
             />
           )}
         </View>
+        <View style={styles.modalFooter}></View>
       </View>
     </Modal>
   );
