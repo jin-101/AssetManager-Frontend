@@ -28,6 +28,13 @@ export default function App() {
         <PaperProvider>
           <NavigationContainer>
             <Stack.Navigator>
+              {/* 로그인 페이지 */}
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={commonHeaderStyle}
+              />
+
               {/* 메인 페이지 */}
               <Stack.Screen
                 name="Home"
@@ -40,12 +47,12 @@ export default function App() {
                 component={AccountBookContainer}
                 options={commonHeaderStyle}
               />
-              {/* 로그인 페이지 */}
+              {/* 로그인 페이지
               <Stack.Screen
                 name="Login"
                 component={Login}
                 options={commonHeaderStyle}
-              />
+              /> */}
 
               {/* 모달 이동 페이지 - 자산 */}
               <Stack.Screen
