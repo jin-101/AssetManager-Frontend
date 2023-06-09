@@ -1,5 +1,8 @@
 //초기 설정 값 및 util성 변수 및 함수
 
+//기기가 안드로이드 인지 체크
+export const isAndroid = Platform.OS === "android";
+
 // date를 yyyy-mm-dd 형태의 string으로 변환하는 함수
 export const makeDateString = (date) => {
   const year = date.getFullYear();

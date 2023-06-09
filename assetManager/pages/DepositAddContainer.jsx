@@ -114,7 +114,6 @@ function DepositAddContainer({ item, isOnlyOne }) {
             daySuffix: "일",
             width: 300,
             rowHeight: 60,
-            toolBarStyle: { borderWidth: 0 },
             selectedBorderLineWidth: "2",
             toolBarCancelStyle: { color: "black" },
           }}
