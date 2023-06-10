@@ -2,8 +2,15 @@ import { FormControl, HStack, Select, VStack } from "native-base";
 import React, { useCallback, useMemo } from "react";
 import { Text, View } from "react-native";
 import { formControlLableBasicStyle } from "../styles";
+import { useDispatch } from "react-redux";
 
 function SelectComponent({
+  name = "",
+  id = "0",
+  value = "",
+  dispatchF = undefined,
+  parentSetState = undefined,
+
   isVertical = true,
   formControlProps = {}, //{FormControl 속성}
   formControlLabelProps = {}, // {Text 속성}
@@ -12,39 +19,55 @@ function SelectComponent({
   selectItem = [], // 선택 item
   selectItemStyle = {}, // 선택 item들의 공통스타일
 }) {
+  console.log("SelectComponent >>>");
+
+  const dispatch = useDispatch();
   const { text: formControlLabelText = "", ...formControlLabelStyleProps } =
     useMemo(() => formControlLabelProps);
   const { text: FormControlHelperText = "", ...FormControlHelperStyleProps } =
     useMemo(() => formControlHelperProps);
 
+  const onChange = (text) => {
+    console.log("change", text);
+    if (parentSetState) parentSetState(text);
+    if (dispatchF) dispatch(dispatchF(text, id, name));
+  };
+
   const titleLable = useCallback(() => {
     return (
       <Text
-        style={formControlLableBasicStyle.label}
-        {...formControlLabelStyleProps}
+        style={{
+          ...formControlLableBasicStyle.label,
+          ...formControlLabelStyleProps,
+        }}
       >
         {formControlLabelText}
       </Text>
     );
   }, []);
 
-  const selector = useCallback((isVertical) => {
+  const selector = () => {
     return (
-      <Select placeholder="선택해주세요." {...selectProps}>
+      <Select
+        selectedValue={value}
+        onValueChange={onChange}
+        placeholder="선택해주세요."
+        {...selectProps}
+      >
         {selectItem.map((el, index) => (
-          <Select.Item key={index} {...el} style={{ ...selectItemStyle }} />
+          <Select.Item
+            key={index}
+            label={el}
+            value={el}
+            style={{ ...selectItemStyle }}
+          />
         ))}
       </Select>
     );
-  }, []);
+  };
 
   return (
-    <FormControl
-      bg="coolGray.700"
-      maxW="100%"
-      {...formControlProps}
-      style={{ width: "100%" }}
-    >
+    <FormControl maxW="100%" {...formControlProps} style={{ width: "100%" }}>
       {isVertical ? (
         <VStack
           style={{
@@ -59,7 +82,7 @@ function SelectComponent({
             }}
           >
             {titleLable()}
-            {selector(true)}
+            {selector()}
           </View>
         </VStack>
       ) : (
@@ -80,7 +103,7 @@ function SelectComponent({
                 width: "70%",
               }}
             >
-              {selector(false)}
+              {selector()}
             </View>
           </HStack>
         </View>

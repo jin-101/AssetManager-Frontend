@@ -37,8 +37,11 @@ function InputDateComponent({
     <>
       <FormControl isDisabled {...formControlStyle} {...formControlProps}>
         <Text
-          style={{ ...formControlLableBasicStyle.label, ...labelStyle }}
-          {...formControlLabelProps}
+          style={{
+            ...formControlLableBasicStyle.label,
+            ...labelStyle,
+            ...formControlLabelProps,
+          }}
         >
           {title}
         </Text>

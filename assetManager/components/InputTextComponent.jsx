@@ -54,8 +54,11 @@ function InputTextComponent({
   return (
     <FormControl {...formControlStyle} {...formControlProps}>
       <Text
-        style={{ ...formControlLableBasicStyle.label, ...labelStyle }}
-        {...formControlLabelProps}
+        style={{
+          ...formControlLableBasicStyle.label,
+          ...labelStyle,
+          ...formControlLabelProps,
+        }}
       >
         {title}
       </Text>

@@ -28,8 +28,11 @@ function InputRadioComponent({
   return (
     <FormControl isDisabled {...formControlProps}>
       <Text
-        style={{ ...formControlLableBasicStyle.label, ...labelStyle }}
-        {...formControlLabelProps}
+        style={{
+          ...formControlLableBasicStyle.label,
+          ...labelStyle,
+          ...formControlLabelProps,
+        }}
       >
         {title}
       </Text>
