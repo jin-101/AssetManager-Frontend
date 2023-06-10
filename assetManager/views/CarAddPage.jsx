@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView, VStack } from "native-base";
 import CarSearchContainer from "../pages/CarSearchContainer";
 import CarAddContainer from "../pages/CarAddContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { carInitialize } from "../action";
-import { useEffect } from "react";
 import { Alert } from "react-native";
 import axios from "axios";
 import { apiPath } from "../services";

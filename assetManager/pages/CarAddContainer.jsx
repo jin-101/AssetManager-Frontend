@@ -18,6 +18,7 @@ import {
 
 function CarAddContainer({ register }) {
   console.log("CarAddContainer >>>");
+
   const dispatch = useDispatch();
   const { companyList, modelList } = useSelector((state) => state.carList);
   const { carCompany, carModel, carYear } = useSelector((state) => state.car);

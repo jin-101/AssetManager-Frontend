@@ -1,7 +1,4 @@
 import React from "react";
-import { apiPath } from "../services";
-import axios from "axios";
-import { Alert } from "react-native";
 import InputTextComponent from "@components/InputTextComponent";
 import { Box, Button, Stack } from "native-base";
 import { useSelector } from "react-redux";
