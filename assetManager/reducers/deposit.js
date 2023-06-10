@@ -38,13 +38,6 @@ export default function deposit(state = initialData, action) {
           li.index === action.id ? { ...li, [action.key]: action.value } : li
         ),
       };
-    // case DEPOSIT_UPDATE:
-    //   return {
-    //     ...state,
-    //     depositStateList: state.depositStateList.map((li) =>
-    //       li.index === action.data.index ? { ...li, ...action.data } : li
-    //     ),
-    //   };
     case DEPOSIT_DELETE:
       return {
         ...state,
