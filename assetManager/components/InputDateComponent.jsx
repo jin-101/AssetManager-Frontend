@@ -40,8 +40,8 @@ function InputDateComponent({
           style={{
             ...formControlLableBasicStyle.label,
             ...labelStyle,
-            ...formControlLabelProps,
           }}
+          {...formControlLabelProps}
         >
           {title}
         </Text>
