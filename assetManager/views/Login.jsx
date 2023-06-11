@@ -2,8 +2,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
 import { Box, Button, Icon, Input, Pressable, Stack, Text } from "native-base";
 import React, { useState } from "react";
-import { StyleSheet, View, Alert } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { apiPath } from "../services";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { loginStateUpdate } from "../action";
 
 const style = StyleSheet.create({
   container: {
@@ -25,6 +28,8 @@ const style = StyleSheet.create({
 });
 
 function Login() {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
@@ -41,7 +46,8 @@ function Login() {
     })
       .then((res) => {
         console.log(res.data);
-        //Alert.alert(res.data);
+        //로그인성공 시 dispatch 실행
+        dispatch(loginStateUpdate(true));
       })
       .catch((err) => {
         console.log(err);
@@ -50,27 +56,8 @@ function Login() {
 
   // 회원가입
   const signUpBtn = () => {
-    const signUpData = { userId: userId, userPw: userPw };
-    console.log(signUpData);
-    axios({
-      url: `${apiPath}/user/signUp`,
-      method: "POST",
-      headers: { "Content-Type": `application/json` },
-      data: JSON.stringify(signUpData),
-    })
-      .then((res) => {
-        console.log(res.data);
-        const result = res.data;
-        if (result === "로그인 성공") {
-          Alert.alert(result);
-          // 그리고 화면 넘어가게끔
-        } else {
-          Alert.alert(result);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log("회원가입 양식으로 이동>>");
+    navigation.navigate("Signin");
   };
   return (
     <View style={style.container}>

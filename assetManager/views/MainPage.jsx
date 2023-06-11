@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+
 import Footerbar from "@components/Footerbar";
-import { useSelector } from "react-redux";
 import HomeContainer from "@pages/HomeContainer";
 import SearchContainer from "@pages/SearchContainer";
 import AssetContainer from "@pages/AssetContainer";
 import AccountBookContainer from "@pages/AccountBookContainer";
+import { Button } from "native-base";
+import { loginStateUpdate } from "../action";
 
 const styles = StyleSheet.create({
   container: {
@@ -17,19 +21,47 @@ const styles = StyleSheet.create({
 });
 
 function MainPage() {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const { pageState } = useSelector((state) => state.footerNav);
+
+  const logoutBtn = () => {
+    return (
+      <Button
+        bg="red.500"
+        color="white"
+        borderRadius="lg"
+        onPress={() => dispatch(loginStateUpdate(false))}
+      >
+        {"로그아웃"}
+      </Button>
+    );
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: logoutBtn,
+    });
+  }, [navigation]);
+
+  const returnComponent = () => {
+    switch (pageState) {
+      case 0:
+        return <HomeContainer />;
+      case 1:
+        return <SearchContainer />;
+      case 2:
+        return <AssetContainer />;
+      case 3:
+        return <AccountBookContainer />;
+      default:
+        return <HomeContainer />;
+    }
+  };
 
   return (
     <View style={styles.container}>
-      {pageState == 0 ? (
-        <HomeContainer />
-      ) : pageState == 1 ? (
-        <SearchContainer />
-      ) : pageState == 2 ? (
-        <AssetContainer />
-      ) : (
-        <AccountBookContainer />
-      )}
+      {returnComponent()}
       <Footerbar />
     </View>
   );

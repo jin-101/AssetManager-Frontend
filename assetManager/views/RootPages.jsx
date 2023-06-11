@@ -4,28 +4,41 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { commonHeaderStyle } from "../styles";
 
 import Login from "@views/Login";
+import Signin from "@views/Signin";
 import MainPage from "@views/MainPage";
 import DepositAddPage from "@views/DepositAddPage";
 import AptAddPage from "@views/AptAddPage";
 import CoinAddPage from "@views/CoinAddPage";
 import AccountBookContainer from "@pages/AccountBookContainer";
 import CarAddPage from "@views/CarAddPage";
+import { useSelector } from "react-redux";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
+  const { isLoggedIn } = useSelector((state) => state.login);
+  console.log(isLoggedIn);
   return (
     <Stack.Navigator>
-      {/* 로그인 페이지 */}
-      {/* <Stack.Screen
-                name="Login"
-                component={Login}
-                options={commonHeaderStyle}
-              /> */}
+      {
+        isLoggedIn ? (
+          <Stack.Screen
+            name="Home"
+            component={MainPage}
+            options={commonHeaderStyle}
+          /> // 메인 페이지
+        ) : (
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={commonHeaderStyle}
+          />
+        ) //로그인 페이지
+      }
 
-      {/* 메인 페이지 */}
+      {/* 회원가입 페이지 */}
       <Stack.Screen
-        name="Home"
-        component={MainPage}
+        name="Signin"
+        component={Signin}
         options={commonHeaderStyle}
       />
 
