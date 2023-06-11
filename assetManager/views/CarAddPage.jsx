@@ -44,6 +44,7 @@ function CarAddPage(props) {
       })
         .then((res) => {
           const { price, year, className } = res.data;
+          console.log("고객정보", className, year, price);
           if (!price || !year || !className) warnFunction(className);
           else successFunction();
         })
