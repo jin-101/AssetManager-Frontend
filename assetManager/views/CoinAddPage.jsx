@@ -10,6 +10,8 @@ import {
   VStack,
   Select,
   Button,
+  Icon,
+  Ionicons,
 } from "native-base";
 import axios from "axios";
 import { TextInput, FlatList, Alert, TouchableOpacity } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
@@ -130,8 +132,8 @@ function CoinAddPage(props) {
         }
       );
       const responseData = response.data;
-      const mapData = new Map(Object.entries(responseData));
-      setDataMap(mapData);
+      const dataMap = new Map(Object.entries(responseData));
+      setDataMap(dataMap);
       //console.log(response.data); // response.data : 스프링에서 넘긴 데이터(여기선 Map)를 얻는 법
     } catch (error) {
       console.error(error);
@@ -189,10 +191,6 @@ function CoinAddPage(props) {
               <Input
                 value={searchKeyword} // value는 내가 주고 싶은 거 줘도 되는 듯??
                 onChangeText={handleSearch}
-
-                // 검색란이 공백인 경우 검색 결과를 초기화하는 예시
-                //onChangeText={setSearchKeyword}
-                //onSubmitEditing={handleSearch}
               />
               {searchKeyword !== "" &&
                 Array.from(filteredData.keys()).map((key) => (
@@ -202,7 +200,12 @@ function CoinAddPage(props) {
                       insertCoinName(`${filteredData.get(key)}`); // ★ key값 대신 value값을 보내주면 되는 거 아닌가??
                     }}
                   >
-                    <Text fontSize="xs" key={key}>{`${key}`}</Text>
+                    {/* ★ 선택한 market의 코인만 Text화 */}
+                    {key.includes(market) && (
+                      <Text fontSize="xs" key={key}>
+                        {key}
+                      </Text>
+                    )}
                   </TouchableOpacity>
                   // <Text key={key}>{`${key}: ${filteredData.get(key)}`}</Text>
                 ))}
