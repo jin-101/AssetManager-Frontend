@@ -1,6 +1,6 @@
 import { LOGIN_STATE_UPDATE } from "../constants";
 
-export const loginStateUpdate = (id) => ({
+export const loginStateUpdate = (token) => ({
   type: LOGIN_STATE_UPDATE,
-  id,
+  token,
 });

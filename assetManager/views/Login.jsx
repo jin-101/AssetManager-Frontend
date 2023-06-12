@@ -32,8 +32,10 @@ function Login() {
     })
       .then((res) => {
         console.log(res.data);
-        if (res.data === "로그인 성공") dispatch(loginStateUpdate(userId));
-        else Alert.alert("", res.data);
+        if (res.data.length > 50) {
+          const token = res.data;
+          dispatch(loginStateUpdate(token));
+        } else Alert.alert("", res.data);
         //로그인성공 시 dispatch 실행
       })
       .catch((err) => {
