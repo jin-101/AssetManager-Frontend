@@ -41,7 +41,7 @@ function Login() {
     })
       .then((res) => {
         console.log(res.data);
-        //Alert.alert(res.data);
+        Alert.alert(res.data);
       })
       .catch((err) => {
         console.log(err);
