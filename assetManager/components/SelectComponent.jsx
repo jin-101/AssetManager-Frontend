@@ -29,7 +29,7 @@ function SelectComponent({
 
   const onChange = (text) => {
     console.log("change", text);
-    if (parentSetState) parentSetState(text);
+    if (parentSetState) parentSetState(text, id, name);
     if (dispatchF) dispatch(dispatchF(text, id, name));
   };
 

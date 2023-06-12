@@ -21,7 +21,7 @@ function InputRadioComponent({
   const dispatch = useDispatch();
 
   const onChange = useCallback((newValue) => {
-    if (parentSetState) parentSetState(newValue);
+    if (parentSetState) parentSetState(newValue, id, name);
     if (dispatchF) dispatch(dispatchF(newValue, id, name));
   }, []);
 

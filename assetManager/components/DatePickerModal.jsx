@@ -4,7 +4,6 @@ import { Feather } from "@expo/vector-icons";
 import { Modal, StyleSheet, View, Text } from "react-native";
 import { DatePicker, CalendarList } from "react-native-common-date-picker";
 import { useDispatch } from "react-redux";
-import { Platform } from "react-native";
 import { isAndroid } from "../utils";
 
 const styles = StyleSheet.create({
@@ -64,7 +63,7 @@ function DatePickerModal({
   const dispatch = useDispatch();
   const currentDate = new Date();
   const onChange = useCallback((val) => {
-    if (parentSetState) parentSetState(val);
+    if (parentSetState) parentSetState(val, id, name);
     if (dispatchF) dispatch(dispatchF(val, id, name));
     modalControlState.setState();
   }, []);
