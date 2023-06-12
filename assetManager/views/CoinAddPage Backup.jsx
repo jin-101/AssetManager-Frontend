@@ -30,6 +30,7 @@ import axios from "axios";
 import { TextInput, FlatList, Alert, TouchableOpacity } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
 import { Picker } from "@react-native-picker/picker";
 import AlertExample from "../components/AlertExample";
+import { apiPath } from "../services";
 
 function CoinAddPage(props) {
   //const baseUrl = "http://10.0.2.15:8888/app/coin/add";
@@ -73,7 +74,7 @@ function CoinAddPage(props) {
 
     // 입력값이 유효한 경우 처리 로직
     axios({
-      url: "http://192.168.0.5:8888/app/coin/add",
+      url: `${apiPath}/app/coin/add`,
       method: "POST",
       headers: { "Content-Type": `application/json` },
       data: JSON.stringify(formData),
@@ -130,7 +131,7 @@ function CoinAddPage(props) {
     console.log(market);
     try {
       const response = await axios.post(
-        "http://192.168.0.5:8888/app/coin/getCoinList",
+        `${apiPath}/app/coin/getCoinList`,
         JSON.stringify(data),
         {
           headers: {

@@ -1,33 +1,9 @@
 import React, { useCallback } from "react";
 import { HStack, Text, FormControl } from "native-base";
 import { TextInput, Alert } from "react-native";
-import { inputTagCommonStyle } from "../utils";
+import { inputTagCommonStyle, keyBoardType } from "../utils";
 import { useDispatch } from "react-redux";
-
-const keyBoardType = (type) => {
-  let keyboard;
-  switch (type) {
-    case "number":
-      keyboard = "numeric";
-      break;
-    case "double":
-      keyboard = "decimal-pad";
-      break;
-    case "email":
-      keyboard = "email-address";
-      break;
-    case "pad":
-      keyboard = "phone-pad";
-      break;
-    case "url":
-      keyboard = "url";
-      break;
-    default:
-      keyboard = "default";
-      break;
-  }
-  return keyboard;
-};
+import { formControlLableBasicStyle } from "../styles";
 
 function InputTextComponent({
   name = "",
@@ -71,26 +47,21 @@ function InputTextComponent({
         return;
       }
     }
-    if (parentSetState) parentSetState(text);
+    if (parentSetState) parentSetState(text, id, name);
     if (dispatchF) dispatch(dispatchF(text, id, name));
   }, []);
 
   return (
-    <FormControl isDisabled {...formControlStyle} {...formControlProps}>
-      {/* Label */}
-      <FormControl.Label
-        _disabled={{
-          _text: {
-            fontSize: "lg",
-            color: "black",
-            fontWeight: "bold",
-            ...labelStyle,
-          },
+    <FormControl {...formControlStyle} {...formControlProps}>
+      <Text
+        style={{
+          ...formControlLableBasicStyle.label,
+          ...labelStyle,
         }}
         {...formControlLabelProps}
       >
         {title}
-      </FormControl.Label>
+      </Text>
 
       <HStack alignItems="center">
         {/* input 앞에 텍스트 삽입 */}
@@ -133,5 +104,4 @@ function InputTextComponent({
     </FormControl>
   );
 }
-
 export default React.memo(InputTextComponent);

@@ -1,29 +1,49 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import axios from "axios";
 import { Box, Button, Icon, Input, Pressable, Stack, Text } from "native-base";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    height: 50,
-  },
-  content: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  footer: {
-    height: 50,
-    backgroundColor: "#4f69c6",
-    justifyContent: "center",
-  },
-});
+import { apiPath } from "../services";
+import { loginStateUpdate } from "../action";
+import { loginLayoutStyle } from "../styles";
+
+const style = StyleSheet.create(loginLayoutStyle);
 
 function Login() {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [userPw, setUserPw] = useState("");
+
+  // 로그인
+  const loginBtn = () => {
+    const loginData = { userId: userId, userPw: userPw };
+    console.log(loginData);
+    axios({
+      url: `${apiPath}/user/login`,
+      method: "POST",
+      headers: { "Content-Type": `application/json` },
+      data: JSON.stringify(loginData),
+    })
+      .then((res) => {
+        console.log(res.data);
+        //로그인성공 시 dispatch 실행
+        dispatch(loginStateUpdate(true));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // 회원가입
+  const signUpBtn = () => {
+    console.log("회원가입 양식으로 이동>>");
+    navigation.navigate("회원가입");
+  };
   return (
     <View style={style.container}>
       <View style={style.header}></View>
@@ -46,6 +66,8 @@ function Login() {
           >
             <Stack alignItems="center" space={4}>
               <Input
+                value={userId}
+                onChangeText={(userId) => setUserId(userId)}
                 bg="white"
                 size="xl"
                 mt="5"
@@ -64,6 +86,8 @@ function Login() {
                 placeholder="Id"
               />
               <Input
+                value={userPw}
+                onChangeText={(userPw) => setUserPw(userPw)}
                 bg="white"
                 w={{
                   base: "90%",
@@ -95,10 +119,10 @@ function Login() {
                 }}
                 space={5}
               >
-                <Button size="md" colorScheme="primary">
+                <Button size="md" colorScheme="primary" onPress={signUpBtn}>
                   회원가입
                 </Button>
-                <Button size="md" colorScheme="primary">
+                <Button size="md" colorScheme="primary" onPress={loginBtn}>
                   로그인
                 </Button>
               </Stack>

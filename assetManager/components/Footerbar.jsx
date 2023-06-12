@@ -44,7 +44,7 @@ function Footerbar() {
           flex={1}
           onPress={() => {
             footNaviAction(0);
-            navigation.setOptions({ title: "Home" });
+            navigation.setOptions({ title: "홈" });
           }}
         >
           <Center>
@@ -68,7 +68,7 @@ function Footerbar() {
           flex={1}
           onPress={() => {
             footNaviAction(1);
-            navigation.setOptions({ title: "Search" });
+            navigation.setOptions({ title: "검색" });
           }}
         >
           <Center>
@@ -88,7 +88,7 @@ function Footerbar() {
           flex={1}
           onPress={() => {
             footNaviAction(2);
-            navigation.setOptions({ title: "Asset" });
+            navigation.setOptions({ title: "자산" });
           }}
         >
           <Center>
@@ -112,7 +112,7 @@ function Footerbar() {
           flex={1}
           onPress={() => {
             footNaviAction(3);
-            navigation.setOptions({ title: "Account Book" });
+            navigation.setOptions({ title: "가계부" });
           }}
         >
           <Center>

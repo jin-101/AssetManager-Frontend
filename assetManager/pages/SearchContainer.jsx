@@ -1,78 +1,46 @@
 //연습중..
-import { Button, Modal } from "native-base";
-import React, { useCallback, useState } from "react";
+import { Box, Button, VStack } from "native-base";
+import React from "react";
 import { StyleSheet, Text } from "react-native";
-import { DatePicker, CalendarList } from "react-native-common-date-picker";
 import { ScrollView } from "react-native";
+import SelectComponent from "../components/SelectComponent";
+import { Picker } from "@react-native-picker/picker";
 
-function SearchContainer({
-  buttonProps = {},
-  modalProps = {},
-  modalHeaderText = "",
-  isScroll = true,
-  datePickerProps = {},
-}) {
-  console.log("InputDateComponent >>>");
-  const currentDate = new Date();
-  const [show, setShow] = useState(false);
+function SearchContainer({}) {
+  console.log("SeachContainer >>>");
 
-  const onChange = useCallback((val) => {
-    setShow(false);
-  }, []);
+  const selectItem = [
+    { label: "UX Research", value: "ux" },
+    { label: "UX Research", value: "ux" },
+    { label: "UX Research", value: "ux" },
+    { label: "UX Research", value: "ux" },
+    { label: "UX Research", value: "ux" },
+    { label: "UX Research", value: "ux" },
+    { label: "UX Research", value: "ux" },
+    { label: "UX Research", value: "ux" },
+    { label: "UX Research", value: "ux" },
+    { label: "UX Research", value: "ux" },
+    { label: "UX Research", value: "ux" },
+    { label: "UX Research", value: "ux" },
+  ];
   return (
     <ScrollView>
-      <Text style={{ height: 1000, backgroundColor: "red" }}></Text>
-
-      <Button h="45" ml="2" onTouchEnd={() => setShow(true)} {...buttonProps}>
-        날짜를 선택하세요.aa
-      </Button>
-
-      <Modal
-        isOpen={show}
-        onClose={() => setShow(false)}
-        avoidKeyboard
-        justifyContent="flex-end"
-        bottom="4"
-        size="lg"
-        {...modalProps}
-      >
-        <Modal.Content bg="white">
-          <Modal.CloseButton />
-          <Modal.Header>
-            {modalHeaderText || "날짜를 선택해주세요."}
-          </Modal.Header>
-          <Modal.Body>
-            {isScroll ? (
-              <DatePicker
-                type="YYYY-MM" // 스크롤 유형
-                minDate="2000-01-01" //시작일
-                maxDate="2099-12-31" //종료일
-                defaultDate={currentDate} // 처음 보여지는 날짜
-                toolBarPosition="bottom" // 확인 취소 박스 위치
-                cancelText="취소"
-                confirmText="확인"
-                yearSuffix="년"
-                monthSuffix="월"
-                confirm={onChange} // 확인 클릭 시 콜백함수
-                cancel={() => {
-                  setShow(false);
-                }}
-                {...datePickerProps}
-              />
-            ) : (
-              //추후 업데이트 예정(기본달력모드)
-              <CalendarList
-                containerStyle={{ flex: 1 }}
-                cancel={() => setShow(false)}
-                confirm={(data) => {
-                  console.log(data);
-                  // onChange();
-                }}
-              />
-            )}
-          </Modal.Body>
-        </Modal.Content>
-      </Modal>
+      <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+        <Box w="100%" bg="amber.100">
+          <SelectComponent
+            formControlProps={{}}
+            formControlLabelProps={{
+              text: "제목",
+              fontWeight: 700,
+              color: "black",
+            }}
+            FormControlHelperProps={{}}
+            selectProps={{}}
+            selectItem={selectItem}
+            selectItemStyle={{}}
+          />
+        </Box>
+      </Box>
     </ScrollView>
   );
 }

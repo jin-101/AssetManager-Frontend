@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Button, FormControl, HStack } from "native-base";
+import { Button, FormControl, HStack, Text } from "native-base";
 import { inputTagCommonStyle } from "../utils";
 import { TextInput } from "react-native";
 import DatePickerModal from "./DatePickerModal";
+import { formControlLableBasicStyle } from "../styles";
 
 function InputDateComponent({
   name = "",
@@ -35,19 +36,15 @@ function InputDateComponent({
   return (
     <>
       <FormControl isDisabled {...formControlStyle} {...formControlProps}>
-        <FormControl.Label
-          _disabled={{
-            _text: {
-              fontSize: "lg",
-              color: "black",
-              fontWeight: "bold",
-              ...labelStyle,
-            },
+        <Text
+          style={{
+            ...formControlLableBasicStyle.label,
+            ...labelStyle,
           }}
           {...formControlLabelProps}
         >
           {title}
-        </FormControl.Label>
+        </Text>
         <HStack alignItems="center" justifyContent="center" h="50" mb="1">
           <TextInput
             style={{
