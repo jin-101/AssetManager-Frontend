@@ -10,6 +10,8 @@ import AssetContainer from "@pages/AssetContainer";
 import AccountBookContainer from "@pages/AccountBookContainer";
 import { Button } from "native-base";
 import { loginStateUpdate } from "../action";
+import axios from "axios";
+import { apiPath } from "../services";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,8 +24,25 @@ const styles = StyleSheet.create({
 
 function MainPage() {
   const navigation = useNavigation();
+
   const dispatch = useDispatch();
   const { pageState } = useSelector((state) => state.footerNav);
+  const { id } = useSelector((state) => state.login);
+
+  const logoutOnPress = () => {
+    axios({
+      url: `${apiPath}/user/logout`,
+      method: "POST",
+      headers: { "Content-Type": `application/json` },
+      data: JSON.stringify(id),
+    })
+      .then((res) => {
+        dispatch(loginStateUpdate(""));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const logoutBtn = () => {
     return (
@@ -31,7 +50,7 @@ function MainPage() {
         bg="red.500"
         color="white"
         borderRadius="lg"
-        onPress={() => dispatch(loginStateUpdate(""))}
+        onPress={logoutOnPress}
       >
         {"로그아웃"}
       </Button>
