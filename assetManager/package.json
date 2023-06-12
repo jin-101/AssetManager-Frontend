@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@actbase/react-daum-postcode": "^1.0.4",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@expo/vector-icons": "^13.0.0",
@@ -44,6 +45,7 @@
     "react-native-screens": "~3.20.0",
     "react-native-svg": "13.4.0",
     "react-native-web": "~0.18.10",
+    "react-native-webview": "11.26.0",
     "react-redux": "^8.0.7",
     "react-router-dom": "^6.11.2",
     "redux": "^4.2.1",

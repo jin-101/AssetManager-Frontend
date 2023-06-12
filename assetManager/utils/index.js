@@ -6,6 +6,9 @@ export const keyBoardType = (type) => {
     case "number":
       keyboard = "numeric";
       break;
+    case "number2":
+      keyboard = "number-pad";
+      break;
     case "double":
       keyboard = "decimal-pad";
       break;

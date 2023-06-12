@@ -47,14 +47,17 @@ function InputTextComponent({
         return;
       }
     }
-    if (parentSetState) parentSetState(text);
+    if (parentSetState) parentSetState(text, id, name);
     if (dispatchF) dispatch(dispatchF(text, id, name));
   }, []);
 
   return (
     <FormControl {...formControlStyle} {...formControlProps}>
       <Text
-        style={{ ...formControlLableBasicStyle.label, ...labelStyle }}
+        style={{
+          ...formControlLableBasicStyle.label,
+          ...labelStyle,
+        }}
         {...formControlLabelProps}
       >
         {title}

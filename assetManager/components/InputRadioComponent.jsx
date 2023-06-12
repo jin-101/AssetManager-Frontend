@@ -21,14 +21,17 @@ function InputRadioComponent({
   const dispatch = useDispatch();
 
   const onChange = useCallback((newValue) => {
-    if (parentSetState) parentSetState(newValue);
+    if (parentSetState) parentSetState(newValue, id, name);
     if (dispatchF) dispatch(dispatchF(newValue, id, name));
   }, []);
 
   return (
     <FormControl isDisabled {...formControlProps}>
       <Text
-        style={{ ...formControlLableBasicStyle.label, ...labelStyle }}
+        style={{
+          ...formControlLableBasicStyle.label,
+          ...labelStyle,
+        }}
         {...formControlLabelProps}
       >
         {title}
