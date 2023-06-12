@@ -31,7 +31,7 @@ function MainPage() {
         bg="red.500"
         color="white"
         borderRadius="lg"
-        onPress={() => dispatch(loginStateUpdate(false))}
+        onPress={() => dispatch(loginStateUpdate(""))}
       >
         {"로그아웃"}
       </Button>

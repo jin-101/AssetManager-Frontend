@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { apiPath } from "../services";
 import { loginStateUpdate } from "../action";
 import { loginLayoutStyle } from "../styles";
+import { Alert } from "react-native";
 
 const style = StyleSheet.create(loginLayoutStyle);
 
@@ -31,8 +32,9 @@ function Login() {
     })
       .then((res) => {
         console.log(res.data);
+        if (res.data === "로그인 성공") dispatch(loginStateUpdate(userId));
+        else Alert.alert("", res.data);
         //로그인성공 시 dispatch 실행
-        dispatch(loginStateUpdate(true));
       })
       .catch((err) => {
         console.log(err);
