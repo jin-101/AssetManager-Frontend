@@ -11,6 +11,7 @@ import AptAddPage from "@views/AptAddPage";
 import CoinAddPage from "@views/CoinAddPage";
 import AccountBookContainer from "@pages/AccountBookContainer";
 import CarAddPage from "@views/CarAddPage";
+import StockAddPage from "./StockAddPage";
 import { useSelector } from "react-redux";
 
 function RootPages() {
@@ -82,7 +83,7 @@ function RootPages() {
       />
       <Stack.Screen
         name="주식"
-        component={DepositAddPage}
+        component={StockAddPage}
         options={{ ...commonHeaderStyle, title: "주식 추가" }}
       />
       <Stack.Screen

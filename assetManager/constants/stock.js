@@ -1,0 +1,1 @@
+export const STOCK_UPDATE = "STOCK_UPDATE";
