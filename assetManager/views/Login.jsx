@@ -3,29 +3,14 @@ import axios from "axios";
 import { Box, Button, Icon, Input, Pressable, Stack, Text } from "native-base";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { apiPath } from "../services";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-import { loginStateUpdate } from "../action";
 
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    height: 50,
-  },
-  content: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  footer: {
-    height: 50,
-    backgroundColor: "#4f69c6",
-    justifyContent: "center",
-  },
-});
+import { apiPath } from "../services";
+import { loginStateUpdate } from "../action";
+import { loginLayoutStyle } from "../styles";
+
+const style = StyleSheet.create(loginLayoutStyle);
 
 function Login() {
   const navigation = useNavigation();
@@ -57,7 +42,7 @@ function Login() {
   // 회원가입
   const signUpBtn = () => {
     console.log("회원가입 양식으로 이동>>");
-    navigation.navigate("Signin");
+    navigation.navigate("회원가입");
   };
   return (
     <View style={style.container}>

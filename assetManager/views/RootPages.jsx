@@ -22,13 +22,13 @@ function RootPages() {
       {
         isLoggedIn ? (
           <Stack.Screen
-            name="Home"
+            name="홈"
             component={MainPage}
             options={commonHeaderStyle}
           /> // 메인 페이지
         ) : (
           <Stack.Screen
-            name="Login"
+            name="로그인"
             component={Login}
             options={commonHeaderStyle}
           />
@@ -37,7 +37,7 @@ function RootPages() {
 
       {/* 회원가입 페이지 */}
       <Stack.Screen
-        name="Signin"
+        name="회원가입"
         component={Signin}
         options={commonHeaderStyle}
       />
