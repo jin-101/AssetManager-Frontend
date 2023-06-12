@@ -2,14 +2,14 @@ import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
 import { Box, Button, Icon, Input, Pressable, Stack, Text } from "native-base";
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 
 import { apiPath } from "../services";
 import { loginStateUpdate } from "../action";
 import { loginLayoutStyle } from "../styles";
-import { Alert } from "react-native";
+import { signinInitialize } from "../action/signin";
 
 const style = StyleSheet.create(loginLayoutStyle);
 
@@ -46,6 +46,7 @@ function Login() {
   // 회원가입
   const signUpBtn = () => {
     console.log("회원가입 양식으로 이동>>");
+    dispatch(signinInitialize());
     navigation.navigate("회원가입");
   };
   return (
