@@ -47,12 +47,12 @@ function DepositAddPage() {
       axios({
         url: apiPath + "/deposit/add.do",
         method: "POST",
-        data: newDeopsitStateList,
+        data: newDeopsitStateList, //id도 넘겨줘야됨
       })
         .then((res) => {
           console.log(res);
           Alert.alert(res.data);
-          navigation.navigate("Home");
+          navigation.navigate("홈");
         })
         .catch((err) => {
           console.log(err, "//");
