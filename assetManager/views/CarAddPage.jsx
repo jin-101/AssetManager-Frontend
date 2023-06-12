@@ -41,7 +41,7 @@ function CarAddPage(props) {
       axios({
         url: apiPath + `/car/mySearch.do/${carId}`,
         method: "POST",
-      })
+      }) //id 넘겨줘야됨
         .then((res) => {
           const { price, year, className } = res.data;
           console.log("고객정보", className, year, price);

@@ -47,7 +47,7 @@ function DepositAddPage() {
       axios({
         url: apiPath + "/deposit/add.do",
         method: "POST",
-        data: newDeopsitStateList,
+        data: newDeopsitStateList, //id도 넘겨줘야됨
       })
         .then((res) => {
           console.log(res);

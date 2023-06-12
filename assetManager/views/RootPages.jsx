@@ -15,12 +15,12 @@ import { useSelector } from "react-redux";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
-  const { isLoggedIn } = useSelector((state) => state.login);
-  console.log(isLoggedIn);
+  const { id } = useSelector((state) => state.login);
+  console.log(id);
   return (
     <Stack.Navigator>
       {
-        isLoggedIn ? (
+        id !== "" ? (
           <Stack.Screen
             name="홈"
             component={MainPage}
