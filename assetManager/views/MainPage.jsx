@@ -27,16 +27,17 @@ function MainPage() {
 
   const dispatch = useDispatch();
   const { pageState } = useSelector((state) => state.footerNav);
-  const { id } = useSelector((state) => state.login);
+  const { token } = useSelector((state) => state.login);
 
   const logoutOnPress = () => {
     axios({
       url: `${apiPath}/user/logout`,
       method: "POST",
       headers: { "Content-Type": `application/json` },
-      data: JSON.stringify(id),
+      data: JSON.stringify(token),
     })
       .then((res) => {
+        console.log("로그아웃 성공");
         dispatch(loginStateUpdate(""));
       })
       .catch((err) => {
