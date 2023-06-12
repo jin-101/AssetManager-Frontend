@@ -1,4 +1,5 @@
-import stock from '../constants'
-import { STOCK_UPDATE } from '../constants/stock';
+import {STOCK_UPDATE} from '../constants';
 
-export const stockInfoUpdate = (name,value) => ({type:STOCK_UPDATE,name,value});
+export const stockInputUpdate = (value,id,key) => ({type:STOCK_UPDATE,value,id,key});
+
+
