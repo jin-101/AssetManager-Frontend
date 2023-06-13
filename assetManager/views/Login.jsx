@@ -68,6 +68,11 @@ function Login() {
   const searchPw = () => {
     navigation.navigate("비밀번호 찾기");
   };
+
+  //비회원 시세 조회
+  const guestBtn = () => {
+    navigation.navigate("비회원 시세조회");
+  };
   return (
     <View style={style.container}>
       <View style={style.header}></View>
@@ -150,12 +155,12 @@ function Login() {
                   로그인
                 </Button>
               </Stack>
-              <HStack>
-                <Button mt="3" size="md" variant="ghost" onPress={searchId}>
+              <HStack mt="3" alignItems="center">
+                <Button size="md" variant="ghost" onPress={searchId}>
                   아이디 찾기
                 </Button>
-                <Text mt="5">{"/"}</Text>
-                <Button mt="3" size="md" variant="ghost" onPress={searchPw}>
+                <Text>{"/"}</Text>
+                <Button size="md" variant="ghost" onPress={searchPw}>
                   비밀번호 찾기
                 </Button>
               </HStack>
@@ -163,7 +168,7 @@ function Login() {
           </Box>
         </Box>
         <Box mt="2">
-          <Button size="lg" variant="ghost">
+          <Button size="lg" variant="ghost" onPress={guestBtn}>
             비회원 시세조회
           </Button>
         </Box>

@@ -58,6 +58,13 @@ function RootPages() {
         options={commonHeaderStyle}
       />
 
+      {/* 비밀번호 찾기 페이지 */}
+      <Stack.Screen
+        name="비회원 시세조회"
+        component={SearchPwPage}
+        options={commonHeaderStyle}
+      />
+
       <Stack.Screen
         name="AccountBook"
         component={AccountBookContainer}
