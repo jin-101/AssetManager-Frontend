@@ -1,15 +1,24 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
-import { Box, Button, Icon, Input, Pressable, Stack, Text } from "native-base";
+import {
+  Box,
+  Button,
+  HStack,
+  Icon,
+  Input,
+  Pressable,
+  Stack,
+  Text,
+} from "native-base";
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 
 import { apiPath } from "../services";
 import { loginStateUpdate } from "../action";
 import { loginLayoutStyle } from "../styles";
-import { Alert } from "react-native";
+import { signinInitialize } from "../action/signin";
 
 const style = StyleSheet.create(loginLayoutStyle);
 
@@ -32,8 +41,10 @@ function Login() {
     })
       .then((res) => {
         console.log(res.data);
-        if (res.data === "로그인 성공") dispatch(loginStateUpdate(userId));
-        else Alert.alert("", res.data);
+        if (res.data.length > 50) {
+          const token = res.data;
+          dispatch(loginStateUpdate(token));
+        } else Alert.alert("", res.data);
         //로그인성공 시 dispatch 실행
       })
       .catch((err) => {
@@ -44,7 +55,23 @@ function Login() {
   // 회원가입
   const signUpBtn = () => {
     console.log("회원가입 양식으로 이동>>");
+    dispatch(signinInitialize());
     navigation.navigate("회원가입");
+  };
+
+  //아이디 찾기 버튼
+  const searchId = () => {
+    navigation.navigate("아이디 찾기");
+  };
+
+  //비밀번호 찾기 버튼
+  const searchPw = () => {
+    navigation.navigate("비밀번호 찾기");
+  };
+
+  //비회원 시세 조회
+  const guestBtn = () => {
+    navigation.navigate("비회원 시세조회");
   };
   return (
     <View style={style.container}>
@@ -128,13 +155,22 @@ function Login() {
                   로그인
                 </Button>
               </Stack>
-              <Box mt="2">
-                <Button size="lg" variant="ghost">
-                  비회원 시세조회
+              <HStack mt="3" alignItems="center">
+                <Button size="md" variant="ghost" onPress={searchId}>
+                  아이디 찾기
                 </Button>
-              </Box>
+                <Text>{"/"}</Text>
+                <Button size="md" variant="ghost" onPress={searchPw}>
+                  비밀번호 찾기
+                </Button>
+              </HStack>
             </Stack>
           </Box>
+        </Box>
+        <Box mt="2">
+          <Button size="lg" variant="ghost" onPress={guestBtn}>
+            비회원 시세조회
+          </Button>
         </Box>
       </View>
       <View style={style.footer}>

@@ -5,16 +5,10 @@ import { Modal, StyleSheet, View, Text } from "react-native";
 import { DatePicker, CalendarList } from "react-native-common-date-picker";
 import { useDispatch } from "react-redux";
 import { isAndroid } from "../utils";
+import { modalBg } from "../styles";
 
 const styles = StyleSheet.create({
-  modalBg: {
-    position: "absolute",
-    top: 0,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "gray",
-    opacity: 0.5,
-  },
+  modalBg: modalBg,
   modalContaniner: {
     position: "absolute",
     top: 0,

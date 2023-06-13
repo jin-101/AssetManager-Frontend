@@ -6,9 +6,6 @@ import footerNav from "./footerNav";
 import deposit from "./deposit";
 import carList from "./carList";
 import car from "./car";
-import stock from "./stock";
-import signin from "./signin";
-
 const rootReducer = combineReducers({
   // 리듀서들을 입력한다.
   login,
@@ -16,8 +13,6 @@ const rootReducer = combineReducers({
   deposit,
   carList,
   car,
-  stock,
-  signin
 });
 
 export default rootReducer;

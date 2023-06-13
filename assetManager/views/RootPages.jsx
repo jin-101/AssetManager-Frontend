@@ -13,18 +13,15 @@ import AccountBookContainer from "@pages/AccountBookContainer";
 import CarAddPage from "@views/CarAddPage";
 import StockAddPage from "./StockAddPage";
 import { useSelector } from "react-redux";
+import SearchIdPage from "./SearchIdPage";
+import SearchPwPage from "./SearchPwPage";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
-  const { id } = useSelector((state) => state.login);
-  
-  const { token } = useSelector((state) => state.login);
-  console.log(token);
-
   return (
     <Stack.Navigator>
       {
-        id !== "" ? (
+        token !== "" ? (
           <Stack.Screen
             name="홈"
             component={MainPage}
@@ -43,6 +40,27 @@ function RootPages() {
       <Stack.Screen
         name="회원가입"
         component={Signin}
+        options={commonHeaderStyle}
+      />
+
+      {/* 아이디 찾기 페이지 */}
+      <Stack.Screen
+        name="아이디 찾기"
+        component={SearchIdPage}
+        options={commonHeaderStyle}
+      />
+
+      {/* 비밀번호 찾기 페이지 */}
+      <Stack.Screen
+        name="비밀번호 찾기"
+        component={SearchPwPage}
+        options={commonHeaderStyle}
+      />
+
+      {/* 비밀번호 찾기 페이지 */}
+      <Stack.Screen
+        name="비회원 시세조회"
+        component={SearchPwPage}
         options={commonHeaderStyle}
       />
 
