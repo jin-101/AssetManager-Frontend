@@ -68,3 +68,15 @@ export const inputTagCommonStyle = {
   fontSize: 18,
   color: "black",
 };
+
+// 숫자 정규표현식
+export const req = {
+  num: /^[0-9]/,
+};
+
+export const alertText = {
+  basic: {
+    title: "주의",
+    content: "올바른 값을 입력해주세요.",
+  },
+};
