@@ -21,15 +21,17 @@ import InputDateComponent from "../components/InputDateComponent";
 import InputTextComponent from "../components/InputTextComponent";
 import { makeDateString } from "../utils";
 import { setRef } from "@mui/material";
+import { useSelector } from "react-redux";
 //import { AptSidoSelect, AptGuSelect } from "../components/AptSidoSelect";
 
 function AptAddPage(props) {
+  const { token } = useSelector((state) => state.login);
   // 0. 입력값 초기화 함수
   const resetAll = () => {
     setAptName("");
     setNetLeasableArea("");
     setPurchasePrice(0);
-    setPurchaseDate("");
+    //setPurchaseDate("");
     setLoanAmount(0);
     setRate(0);
     setMaturityDate(0);
@@ -178,24 +180,31 @@ function AptAddPage(props) {
       maturityDate: maturityDate,
     };
     console.log(data);
-    // // 입력값 유효한지 check
-    // if (market === "") {
-    //   Alert.alert("Error", "거래소를 선택해주세요");
-    //   return;
-    // } else if (coinName === "") {
-    //   Alert.alert("Error", "코인 이름을 입력해주세요");
-    //   return;
-    // } else if (quantity === 0 || price === 0) {
-    //   // input에서 0을 입력하면 String이더라고. 그래서 초기값도 그냥 "0"으로 줘버림
-    //   Alert.alert("Error", "수량과 가격을 입력해주세요");
-    //   return;
-    // } else if (quantity === "0" || price === "0") {
-    //   Alert.alert("Error", "0이 아닌 값을 입력해주세요");
-    //   return;
-    // }
+    // 입력값 유효한지 check
+    // (i)대출정보를 아예 입력하지 않은 경우
+    if (loanAmount === 0 && rate === 0 && maturityDate === 0) {
+      if (aptName === "") {
+        Alert.alert("", "아파트 이름을 입력해주세요");
+        return;
+      } else if (purchasePrice === 0) {
+        Alert.alert("", "매입가격을 입력해주세요");
+        return;
+      }
+    } else {
+      if (loanAmount === 0) {
+        Alert.alert("", "모든 대출정보를 입력해주세요");
+        return;
+      } else if (rate === 0) {
+        Alert.alert("", "모든 대출정보를 입력해주세요");
+        return;
+      } else if (maturityDate === 0) {
+        Alert.alert("", "모든 대출정보를 입력해주세요");
+        return;
+      }
+    }
     // 입력값이 유효한 경우 처리 로직
     axios({
-      url: `${apiPath}/apt/add`,
+      url: `${apiPath}/apt/add/${token}`,
       method: "POST",
       headers: { "Content-Type": `application/json` },
       data: JSON.stringify(data),
@@ -347,7 +356,7 @@ function AptAddPage(props) {
                 value={netLeasableArea}
                 label={netLeasableArea}
                 placeholder="전용면적"
-                isReadOnly="true"
+                isReadOnly={true}
               ></Input>
             </Box>
 
@@ -355,7 +364,7 @@ function AptAddPage(props) {
               <FormControl.Label>매입가격 (원)</FormControl.Label>
               {/* 일단 원으로 하고 나중에 상황봐서 억원, 천만원으로 바꾸자 */}
               <Input
-                value={purchasePrice}
+                value={String(purchasePrice)} //value={purchasePrice}
                 onChangeText={(purchasePrice) =>
                   setPurchasePrice(purchasePrice)
                 }
@@ -364,10 +373,8 @@ function AptAddPage(props) {
             </Box>
 
             <Box mb="5">
-              <FormControl.Label>
-                매입날짜 - 미입력시 오늘날짜 디폴트로
-              </FormControl.Label>
               <InputDateComponent
+                title="매입날짜 - 미입력시 오늘날짜 디폴트로"
                 dateTimePicker={{ display: "spinner" }}
                 value={purchaseDate}
                 parentSetState={setPurchaseDate}
@@ -400,26 +407,26 @@ function AptAddPage(props) {
 
                 {isVisible && (
                   <View style={styles.box}>
-                    <FormControl.Label>대출금액 (원)</FormControl.Label>
                     <InputTextComponent
-                      inputType="double"
+                      title="대출금액 (원)"
+                      inputType="number"
                       // textLabel={{ endText: "%" }}
                       inputStyle={{ width: "100%" }}
                       value={loanAmount}
                       parentSetState={setLoanAmount}
                     ></InputTextComponent>
-                    <FormControl.Label>대출금리 (%)</FormControl.Label>
                     <InputTextComponent
+                      title="대출금리 (%)"
                       inputType="double"
                       inputStyle={{ width: "100%" }}
                       value={rate}
                       parentSetState={setRate}
                     ></InputTextComponent>
 
-                    <FormControl.Label>대출만기 (남은 기간)</FormControl.Label>
                     <InputTextComponent
+                      title="대출만기 (남은 기간)"
                       placeholder="1년 ~ 50년"
-                      inputType="double"
+                      inputType="number"
                       value={maturityDate}
                       parentSetState={setMaturityDate}
                     />
