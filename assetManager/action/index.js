@@ -22,6 +22,11 @@ import {
   stockInputReset
 } from './stock'
 
+import {
+  currencyInputUpdate,
+  currencyRest
+} from './currency'
+
 export {
   loginStateUpdate,
   pageUpdate,
@@ -37,5 +42,7 @@ export {
   carModelUpdate,
   carYearUpdate,
   stockInputUpdate,
-  stockInputReset
+  stockInputReset,
+  currencyInputUpdate,
+  currencyRest
 };
