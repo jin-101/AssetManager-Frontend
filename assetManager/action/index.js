@@ -17,7 +17,10 @@ import {
 } from "./car";
 // Redeux를 사용할 떄, action 함수
 
-import {stockInputUpdate} from './stock'
+import {
+  stockInputUpdate,
+  stockInputReset
+} from './stock'
 
 export {
   loginStateUpdate,
@@ -33,5 +36,6 @@ export {
   carCompanyUpdate,
   carModelUpdate,
   carYearUpdate,
-  stockInputUpdate
+  stockInputUpdate,
+  stockInputReset
 };

@@ -1,4 +1,4 @@
-import {STOCK_UPDATE} from '../constants';
+import {STOCK_UPDATE,STOCK_RESET} from '../constants';
 
 const initialState = {
     stockName:"",
@@ -14,6 +14,10 @@ export default  function stock(state=initialState,action) {
                 ...state,
                 [action.key]:action.value
             };
+        case STOCK_RESET:
+            return {
+                ...initialState
+            }
         default:
             return state;
     }

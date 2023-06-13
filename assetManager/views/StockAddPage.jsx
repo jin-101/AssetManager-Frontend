@@ -1,44 +1,49 @@
 import React,{useState} from 'react';
 import {
     Box,
-    Center,
     FormControl,
-    HStack,
-    Input,
-    Radio,
     ScrollView,
-    Stack,
-    Text,
     VStack,
-    Select,
-    CheckIcon,
-    WarningOutlineIcon,
-    Button,
-    Divider,
-    Heading,
-    Link,
-    string,
-    View,
-    IconButton,
-    CloseIcon,
-    Container,
-    InputGroup,
-    InputLeftAddon,
-    InputRightAddon,
+    Button
   } from "native-base";
 import InputDateComponent from "@components/InputDateComponent";
 import InputTextComponent from "@components/InputTextComponent";
 import { makeDateString } from "../utils";
+import { Alert } from "react-native";
 import { useSelector,useDispatch } from 'react-redux';
-import {stockInputUpdate} from '../action'
+import {stockInputUpdate,stockInputReset} from '../action'
 import axios from "axios";
 
 function StockAddPage(){
     const currentDate = makeDateString(new Date());
     const year = Number(currentDate.substring(0, 4));
     const {stockName,buyPrice,buyQuantity,buyDate} = useSelector((state) =>state.stock)
+    const {token} = useSelector(state=>state.token);
     const dispatch = useDispatch();
 
+
+
+    const onRest = () =>(
+        dispatch(stockInputReset())
+    );
+
+    const onSubmit = () => {
+        Alert.alert("자산등록완료")
+        const buyDay  = buyDate.replaceAll("-","");
+        
+        console.log(token);
+        const stockInputDTO = {stockName,price:buyPrice,buyDay,shares:buyQuantity};
+
+        /*
+        axios.post('http://192.168.0.81:8888/app/stock/stockAssetInput',null,{params:stockInputDTO})
+        .then(function (response) {
+          setReesponseMessage(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        */
+    };
 
     
 
@@ -65,8 +70,8 @@ function StockAddPage(){
                             dispatchF={stockInputUpdate}
                             datePickerProps={{
                                 type: "YYYY-MM-DD",
-                                minDate: `${year - 5}-01-01`,
-                                maxDate: `${year + 5}-12-31`,
+                                minDate: `${year - 30}-01-01`,
+                                maxDate: `${year + 10}-12-31`,
                                 daySuffix: "일",
                                 width: 300,
                                 rowHeight: 60,
@@ -93,8 +98,8 @@ function StockAddPage(){
                             value={buyQuantity}
                             dispatchF={stockInputUpdate}                       
                         />
-                        <Button mb="5">자산등록</Button>
-                        <Button>초기화</Button>                                                         
+                        <Button mb="5" onPress={onSubmit}>자산등록</Button>
+                        <Button onPress={onRest}>초기화</Button>                                                         
                     </FormControl>
                 </Box>
             </VStack>
