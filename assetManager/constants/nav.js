@@ -1,1 +1,2 @@
+export const PAGE_INITIALIZE = "PAGE_INITIALIZE";
 export const PAGE_UPDATE = "PAGE_UPDATE";

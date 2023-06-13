@@ -1,6 +1,6 @@
 //상수와 관련된 파일
 import { LOGIN_STATE_UPDATE } from "./login";
-import { PAGE_UPDATE } from "./nav";
+import { PAGE_INITIALIZE, PAGE_UPDATE } from "./nav";
 import {
   DEPOSIT_INITIALIZE,
   DEPOSIT_ADD,
@@ -17,18 +17,13 @@ import {
   CAR_YEAR_UPDATE,
 } from "./car";
 
-import {
-  STOCK_UPDATE,
-  STOCK_RESET
-} from './stock'
+import { STOCK_UPDATE, STOCK_RESET } from "./stock";
 
-import {
-  CURRENCY_UPDATE,
-  CURRENCY_RESET
-} from './currency'
+import { CURRENCY_UPDATE, CURRENCY_RESET } from "./currency";
 
 export {
   LOGIN_STATE_UPDATE,
+  PAGE_INITIALIZE,
   PAGE_UPDATE,
   DEPOSIT_INITIALIZE,
   DEPOSIT_ADD,
@@ -44,5 +39,5 @@ export {
   STOCK_UPDATE,
   STOCK_RESET,
   CURRENCY_UPDATE,
-  CURRENCY_RESET
+  CURRENCY_RESET,
 };

@@ -1,5 +1,7 @@
 //초기 설정 값 및 util성 변수 및 함수
 
+import { Alert } from "react-native";
+
 // 금액 처리 세자리 마다(,)
 export const inputPriceFormat = (str) => {
   const comma = (str) => {
@@ -79,4 +81,82 @@ export const alertText = {
     title: "주의",
     content: "올바른 값을 입력해주세요.",
   },
+};
+
+export const inputFormCheckFunction = (key, val1, val2, val3) => {
+  let block = false;
+  switch (key) {
+    case "userId":
+      if (val1 === "") {
+        Alert.alert("", "아이디를 입력하세요.");
+        block = true;
+      }
+      return block;
+    case "userPw":
+      if (val1 === "") {
+        Alert.alert("", "비밀번호를 입력하세요.");
+        block = true;
+      } else if (val2 === "") {
+        Alert.alert("", "비밀번호 확인을 입력하세요.");
+        block = true;
+      } else if (val1 !== val2) {
+        Alert.alert("", "입력한 비밀번호가 같지 않습니다.");
+        block = true;
+      }
+      return block;
+    case "userName":
+      if (val1 === "") {
+        Alert.alert("", "이름을 입력하세요.");
+        block = true;
+      }
+      return block;
+    case "securityNumber":
+      if (val1 === "" || val2 === "") {
+        Alert.alert("", "주민등록번호를 입력하세요.");
+        block = true;
+      } else if (
+        Number(val2[0]) > 4 ||
+        val1.length !== 6 ||
+        val2.length !== 7
+      ) {
+        Alert.alert("", "주민등록번호를 형식이 잘못되었습니다.");
+        block = true;
+      } else {
+        const dateRegex = /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])$/;
+        if (!dateRegex.test(val1)) {
+          Alert.alert("", "주민등록번호의 생년월일이 올바르지 않습니다.");
+          block = true;
+        }
+      }
+      return block;
+    case "phoneNumber":
+      if (val2 === "" || val3 === "") {
+        Alert.alert("", "전화번호를 입력하세요.");
+        block = true;
+      } else {
+        if (val2.length < 4 || val3.length < 4) {
+          Alert.alert("", "전화번호의 형식이 잘못되었습니다.");
+          block = true;
+        }
+      }
+      return block;
+    case "email":
+      if (val1 === "") {
+        Alert.alert("", "이메일을 입력하세요.");
+        block = true;
+      } else {
+        const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+        if (!emailRegex.test(val1)) {
+          Alert.alert("", "이메일을 형식이 잘못되었습니다.");
+          block = true;
+        }
+      }
+      return block;
+    case "zonePost":
+      if (val1 === "") {
+        Alert.alert("", "주소를 입력하세요.");
+        block = true;
+      }
+      return block;
+  }
 };
