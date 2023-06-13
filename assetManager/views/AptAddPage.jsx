@@ -31,11 +31,11 @@ function AptAddPage(props) {
   const resetAll = () => {
     setAptName("");
     setNetLeasableArea("");
-    setPurchasePrice(0);
+    setPurchasePrice("");
     //setPurchaseDate("");
-    setLoanAmount(0);
-    setRate(0);
-    setMaturityDate(0);
+    setLoanAmount("");
+    setRate("");
+    setMaturityDate("");
   };
 
   // 0. 로딩 페이지를 이용하기 위한 useState
@@ -162,9 +162,10 @@ function AptAddPage(props) {
   };
 
   // 5. 매입가격, 매입날짜 관련 코드
-  const [purchasePrice, setPurchasePrice] = useState(0); // 매입가격
+  const [purchasePrice, setPurchasePrice] = useState(""); // 매입가격
   const today = makeDateString(new Date());
-  const [purchaseDate, setPurchaseDate] = useState(today); // 매입날짜 (디폴트로 오늘 날짜인 걸 보여주기 위해 util의 makeDateString을 이용?!)
+  const year = Number(today.substring(0, 4));
+  const [purchaseDate, setPurchaseDate] = useState(today.substring(0, 7)); // 매입날짜 (디폴트로 오늘 날짜인 걸 보여주기 위해 util의 makeDateString을 이용?!)
   const aa = (purchaseDate) => {
     setPurchaseDate(purchaseDate);
   };
@@ -177,9 +178,9 @@ function AptAddPage(props) {
   const hideButtonClick = () => {
     setIsVisible(false);
   };
-  const [loanAmount, setLoanAmount] = useState(0); // 대출금액
-  const [rate, setRate] = useState(0); // 대출금리
-  const [maturityDate, setMaturityDate] = useState(0); // 대출만기
+  const [loanAmount, setLoanAmount] = useState(""); // 대출금액
+  const [rate, setRate] = useState(""); // 대출금리
+  const [maturityDate, setMaturityDate] = useState(""); // 대출만기
 
   // 7. 추가 버튼
   const handleSubmit = () => {
@@ -195,22 +196,22 @@ function AptAddPage(props) {
     console.log(data);
     // 입력값 유효한지 check
     // (i)대출정보를 아예 입력하지 않은 경우
-    if (loanAmount === 0 && rate === 0 && maturityDate === 0) {
+    if (loanAmount === "" && rate === "" && maturityDate === "") {
       if (aptName === "") {
         Alert.alert("", "아파트 이름을 입력해주세요");
         return;
-      } else if (purchasePrice === 0) {
+      } else if (purchasePrice === "") {
         Alert.alert("", "매입가격을 입력해주세요");
         return;
       }
     } else {
-      if (loanAmount === 0) {
+      if (loanAmount === "") {
         Alert.alert("", "모든 대출정보를 입력해주세요");
         return;
-      } else if (rate === 0) {
+      } else if (rate === "") {
         Alert.alert("", "모든 대출정보를 입력해주세요");
         return;
-      } else if (maturityDate === 0) {
+      } else if (maturityDate === "") {
         Alert.alert("", "모든 대출정보를 입력해주세요");
         return;
       }
@@ -226,11 +227,7 @@ function AptAddPage(props) {
         console.log("데이터 전송 성공!!");
         // 스프링에서 제대로 Insert 됐는지 check
         console.log(res.data); // ★ res.data : 스프링에서 보낸 데이터를 읽는 것!
-        if (res.data === "성공") {
-          Alert.alert("Success", "자산 입력에 성공하였습니다");
-        } else {
-          Alert.alert("Error", "??을 제대로 입력해주세요");
-        }
+        Alert.alert("Success", "자산 입력에 성공하였습니다");
       })
       .catch((err) => {
         console.log(`Error Msg : ${err}`);
@@ -241,8 +238,8 @@ function AptAddPage(props) {
 
   if (isLoading) return <Loading />;
   return (
-    <ScrollView bg="red.100">
-      <VStack mt="10" mb="10" alignItems="center">
+    <ScrollView>
+      <VStack mt="5" mb="5" alignItems="center">
         <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mb="5">
           <FormControl>
             <Box mb="10">
@@ -257,6 +254,22 @@ function AptAddPage(props) {
               <FormControl.Label>시/도</FormControl.Label>
               {/* AptSidoSelect 컴포넌트로 분리하고 싶은 부분 */}
               <View style={styles.container}>
+                {/* <SelectComponent
+                  isVertical={true}
+                  formControlProps={{ marginBottom: 10 }}
+                  formControlLabelProps={{
+                    text: "제조사 조회",
+                    fontSize: 15,
+                    fontWeight: "normal",
+                    color: "black",
+                  }}
+                  formControlHelperProps={{
+                    text: "소유차량의 제조사를 선택하세요.",
+                  }}
+                  selectItem={companyList}
+                  value={carCompany}
+                  dispatchF={carCompanyUpdate}
+                /> */}
                 <Select
                   selectedValue={sido}
                   onValueChange={handlePickerChange}
@@ -334,11 +347,28 @@ function AptAddPage(props) {
                 ))}
               </Select>
             </Box>
+            {/*  */}
+          </FormControl>
+        </Box>
+      </VStack>
 
+      <VStack alignItems="center">
+        <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mb="5">
+          <FormControl>
             {/*  ★★★★★ 검색기능 시작 */}
-            <Box mb="5">
-              <FormControl.Label>아파트 이름 검색하기</FormControl.Label>
-              <Input value={searchKeyword} onChangeText={handleSearch} />
+            <Box>
+              <InputTextComponent
+                title="아파트 이름 검색하기"
+                value={searchKeyword}
+                parentSetState={handleSearch}
+                //onChangeText={handleSearch}
+                // 스타일 적용
+                labelStyle={{
+                  fontSize: 15,
+                  fontWeight: "normal",
+                  color: "black",
+                }}
+              ></InputTextComponent>
               {searchKeyword !== "" &&
                 Array.from(filteredData.keys()).map((key) => (
                   <TouchableOpacity
@@ -352,51 +382,71 @@ function AptAddPage(props) {
                   // <Text key={key}>{`${key}: ${filteredData.get(key)}`}</Text>
                 ))}
               {/*  ★★★★★ 검색기능 끝 */}
+
+              <Box mb="5">
+                <FormControl.Label>아파트 이름</FormControl.Label>
+                <Input
+                  label={aptName}
+                  value={aptName}
+                  placeholder="(1)검색 통해서 입력, (2)직접입력 구현해야 할 듯"
+                />
+              </Box>
+
+              <Box mb="5">
+                <FormControl.Label>전용면적 (제곱미터)</FormControl.Label>
+                <Input
+                  value={netLeasableArea}
+                  label={netLeasableArea}
+                  placeholder="전용면적"
+                  isReadOnly={true}
+                ></Input>
+              </Box>
             </Box>
 
-            <Box mb="5">
-              <FormControl.Label>아파트 이름</FormControl.Label>
-              <Input
-                label={aptName}
-                value={aptName}
-                placeholder="(1)검색 통해서 입력, (2)직접입력 구현해야 할 듯"
-              />
-            </Box>
-
-            <Box mb="5">
-              <FormControl.Label>전용면적 (제곱미터)</FormControl.Label>
-              <Input
-                value={netLeasableArea}
-                label={netLeasableArea}
-                placeholder="전용면적"
-                isReadOnly={true}
-              ></Input>
-            </Box>
-
-            <Box mb="5">
-              <FormControl.Label>매입가격 (원)</FormControl.Label>
-              {/* 일단 원으로 하고 나중에 상황봐서 억원, 천만원으로 바꾸자 */}
-              <Input
-                value={String(purchasePrice)} //value={purchasePrice}
-                onChangeText={(purchasePrice) =>
-                  setPurchasePrice(purchasePrice)
-                }
-                keyboardType="numeric"
-              />
-            </Box>
+            {/* <Box mb="5"> */}
+            {/* 일단 원으로 하고 나중에 상황봐서 억원, 천만원으로 바꾸자 */}
+            <InputTextComponent
+              title="매입가격 (원)"
+              inputType="number"
+              priceFormat="true"
+              value={String(purchasePrice)}
+              parentSetState={setPurchasePrice}
+              // 스타일 적용
+              labelStyle={{
+                fontSize: 15,
+                fontWeight: "normal",
+                color: "black",
+              }}
+            ></InputTextComponent>
+            {/* </Box> */}
 
             <Box mb="5">
               <InputDateComponent
-                title="매입날짜 - 미입력시 오늘날짜 디폴트로"
+                title="매입날짜"
                 dateTimePicker={{ display: "spinner" }}
                 value={purchaseDate}
                 parentSetState={setPurchaseDate}
                 // ★ 상태를 변경하려면 (1)value와 (2)parentSetState 2개 모두 필요
-                //onValueChange={aa}
-                //onChangeText={aa}
                 inputStyle={{ color: "gray" }}
                 formControlStyle={{ w: "100%", mb: "5" }}
                 helperText={"아파트 매입 날짜를 선택하세요."}
+                // 달력 모양 설정
+                datePickerProps={{
+                  type: "YYYY-MM",
+                  minDate: `1990-01`,
+                  maxDate: `${year}-12`,
+                  daySuffix: "일",
+                  width: 300,
+                  rowHeight: 60,
+                  selectedBorderLineWidth: "2",
+                  toolBarCancelStyle: { color: "black" },
+                }}
+                // 스타일 적용
+                labelStyle={{
+                  fontSize: 15,
+                  fontWeight: "normal",
+                  color: "black",
+                }}
               ></InputDateComponent>
             </Box>
 
@@ -418,33 +468,53 @@ function AptAddPage(props) {
                   </Button>
                 )}
 
-                {isVisible && (
-                  <View style={styles.box}>
-                    <InputTextComponent
-                      title="대출금액 (원)"
-                      inputType="number"
-                      // textLabel={{ endText: "%" }}
-                      inputStyle={{ width: "100%" }}
-                      value={loanAmount}
-                      parentSetState={setLoanAmount}
-                    ></InputTextComponent>
-                    <InputTextComponent
-                      title="대출금리 (%)"
-                      inputType="double"
-                      inputStyle={{ width: "100%" }}
-                      value={rate}
-                      parentSetState={setRate}
-                    ></InputTextComponent>
+                <Box mt="5">
+                  {isVisible && (
+                    <View style={styles.box}>
+                      <InputTextComponent
+                        title="대출금액 (원)"
+                        inputType="number"
+                        priceFormat="true" // 금액표시(,) true로 설정
+                        inputStyle={{ width: "100%" }}
+                        value={loanAmount}
+                        parentSetState={setLoanAmount}
+                        // 스타일 적용
+                        labelStyle={{
+                          fontSize: 15,
+                          fontWeight: "normal",
+                          color: "black",
+                        }}
+                      ></InputTextComponent>
+                      <InputTextComponent
+                        title="대출금리 (%)"
+                        inputType="double"
+                        inputStyle={{ width: "100%" }}
+                        value={rate}
+                        parentSetState={setRate}
+                        // 스타일 적용
+                        labelStyle={{
+                          fontSize: 15,
+                          fontWeight: "normal",
+                          color: "black",
+                        }}
+                      ></InputTextComponent>
 
-                    <InputTextComponent
-                      title="대출만기 (남은 기간)"
-                      placeholder="1년 ~ 50년"
-                      inputType="number"
-                      value={maturityDate}
-                      parentSetState={setMaturityDate}
-                    />
-                  </View>
-                )}
+                      <InputTextComponent
+                        title="대출만기 (남은 기간)"
+                        placeholder="1년 ~ 50년"
+                        inputType="number"
+                        value={maturityDate}
+                        parentSetState={setMaturityDate}
+                        // 스타일 적용
+                        labelStyle={{
+                          fontSize: 15,
+                          fontWeight: "normal",
+                          color: "black",
+                        }}
+                      />
+                    </View>
+                  )}
+                </Box>
               </View>
             </Box>
 
@@ -493,16 +563,45 @@ const styles = StyleSheet.create({
     // alignItems: "center",
   },
   picker: {
-    height: 50,
-    width: 200,
-    fontSize: 10, // 글씨 크기 조정
+    // height: 50,
+    // width: 200,
+    fontSize: 15, // 글씨 크기 조정
+    backgroundColor: "white",
   },
   pickerItem: {
     fontSize: 10, // 글씨 크기 조정
   },
+  searchBox: {
+    mt: 10,
+    mb: 10,
+  },
   box: {
     width: "100%",
   },
+  input: {
+    fontSize: 15,
+    fontWeight: "normal",
+    color: "black",
+  },
+  labelStyle: {
+    fontSize: 15,
+    fontWeight: "normal",
+    color: "black",
+  },
 });
+
+// 가격표시 코드 (3자리마다 콤마 넣기) => onChangeText={(price) => setPrice(inputPriceFormat(price))}
+const inputPriceFormat = (str) => {
+  //console.log("s", str);
+  const comma = (str) => {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+  };
+  const uncomma = (str) => {
+    str = String(str);
+    return str.replace(/[^\d]+/g, "");
+  };
+  return comma(uncomma(str));
+};
 
 export default AptAddPage;
