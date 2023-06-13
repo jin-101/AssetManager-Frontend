@@ -17,8 +17,10 @@ import { useSelector } from "react-redux";
 function RootPages() {
   const Stack = createNativeStackNavigator();
   const { id } = useSelector((state) => state.login);
-  //const id = "jin";
-  console.log(id);
+  
+  const { token } = useSelector((state) => state.login);
+  console.log(token);
+
   return (
     <Stack.Navigator>
       {
