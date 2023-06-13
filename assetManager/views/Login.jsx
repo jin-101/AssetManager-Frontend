@@ -41,11 +41,15 @@ function Login() {
     })
       .then((res) => {
         console.log(res.data);
-        if (res.data.length > 50) {
-          const token = res.data;
-          dispatch(loginStateUpdate(token));
+        if (res.data === "로그인성공") {
+          dispatch(loginStateUpdate(loginData.userId));
         } else Alert.alert("", res.data);
-        //로그인성공 시 dispatch 실행
+
+        // token 사용 시 코드
+        // if (res.data.length > 50) {
+        //   const token = res.data;
+        //   dispatch(loginStateUpdate(token));
+        // } else Alert.alert("", res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -56,22 +60,22 @@ function Login() {
   const signUpBtn = () => {
     console.log("회원가입 양식으로 이동>>");
     dispatch(signinInitialize());
-    navigation.navigate("회원가입");
+    navigation.navigate("Signin");
   };
 
   //아이디 찾기 버튼
   const searchId = () => {
-    navigation.navigate("아이디 찾기");
+    navigation.navigate("SearchId");
   };
 
   //비밀번호 찾기 버튼
   const searchPw = () => {
-    navigation.navigate("비밀번호 찾기");
+    navigation.navigate("SearchPassword");
   };
 
   //비회원 시세 조회
   const guestBtn = () => {
-    navigation.navigate("비회원 시세조회");
+    navigation.navigate("Guest");
   };
   return (
     <View style={style.container}>

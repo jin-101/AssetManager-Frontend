@@ -15,6 +15,7 @@ function DropdownModal({ content }) {
   const navigation = useNavigation();
   const { isOpen, onOpen, onClose } = useDisclose();
   const dropdownInit = {};
+  console.log(content);
   content.map((el, i) => {
     dropdownInit["item" + i] = false;
   });
