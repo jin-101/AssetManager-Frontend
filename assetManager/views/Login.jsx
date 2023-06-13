@@ -41,11 +41,15 @@ function Login() {
     })
       .then((res) => {
         console.log(res.data);
-        if (res.data.length > 50) {
-          const token = res.data;
-          dispatch(loginStateUpdate(token));
+        if (res.data === "로그인성공") {
+          dispatch(loginStateUpdate(loginData.userId));
         } else Alert.alert("", res.data);
-        //로그인성공 시 dispatch 실행
+
+        // token 사용 시 코드
+        // if (res.data.length > 50) {
+        //   const token = res.data;
+        //   dispatch(loginStateUpdate(token));
+        // } else Alert.alert("", res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -56,17 +60,22 @@ function Login() {
   const signUpBtn = () => {
     console.log("회원가입 양식으로 이동>>");
     dispatch(signinInitialize());
-    navigation.navigate("회원가입");
+    navigation.navigate("Signin");
   };
 
   //아이디 찾기 버튼
   const searchId = () => {
-    navigation.navigate("아이디 찾기");
+    navigation.navigate("SearchId");
   };
 
   //비밀번호 찾기 버튼
   const searchPw = () => {
-    navigation.navigate("비밀번호 찾기");
+    navigation.navigate("SearchPassword");
+  };
+
+  //비회원 시세 조회
+  const guestBtn = () => {
+    navigation.navigate("Guest");
   };
   return (
     <View style={style.container}>
@@ -150,12 +159,12 @@ function Login() {
                   로그인
                 </Button>
               </Stack>
-              <HStack>
-                <Button mt="3" size="md" variant="ghost" onPress={searchId}>
+              <HStack mt="3" alignItems="center">
+                <Button size="md" variant="ghost" onPress={searchId}>
                   아이디 찾기
                 </Button>
-                <Text mt="5">{"/"}</Text>
-                <Button mt="3" size="md" variant="ghost" onPress={searchPw}>
+                <Text>{"/"}</Text>
+                <Button size="md" variant="ghost" onPress={searchPw}>
                   비밀번호 찾기
                 </Button>
               </HStack>
@@ -163,7 +172,7 @@ function Login() {
           </Box>
         </Box>
         <Box mt="2">
-          <Button size="lg" variant="ghost">
+          <Button size="lg" variant="ghost" onPress={guestBtn}>
             비회원 시세조회
           </Button>
         </Box>

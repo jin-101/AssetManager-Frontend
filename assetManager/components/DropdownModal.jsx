@@ -15,6 +15,7 @@ function DropdownModal({ content }) {
   const navigation = useNavigation();
   const { isOpen, onOpen, onClose } = useDisclose();
   const dropdownInit = {};
+  console.log(content);
   content.map((el, i) => {
     dropdownInit["item" + i] = false;
   });
@@ -70,10 +71,10 @@ function DropdownModal({ content }) {
                         onTouchEnd={() => {
                           setDropdown(dropdownInit);
                           onClose();
-                          navigation.navigate(li); //page 이동 (App.js에서 mapping)
+                          navigation.navigate(li.key); //page 이동 (App.js에서 mapping)
                         }}
                       >
-                        <Actionsheet.Item key={j}>{li}</Actionsheet.Item>
+                        <Actionsheet.Item key={j}>{li.title}</Actionsheet.Item>
                       </Box>
                     ))}
                   </Box>

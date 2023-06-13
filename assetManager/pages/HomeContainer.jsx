@@ -42,19 +42,23 @@ function HomeContainer() {
                 index: 0,
                 title: "자산",
                 list: [
-                  "예적금",
-                  "부동산",
-                  "자동차",
-                  "금",
-                  "외환",
-                  "주식",
-                  "코인",
+                  { title: "예적금", key: "AddDeposit" },
+                  { title: "부동산", key: "AddApt" },
+                  { title: "자동차", key: "AddCar" },
+                  { title: "금", key: "AddGold" },
+                  { title: "외환", key: "AddExchange" },
+                  { title: "주식", key: "AddStock" },
+                  { title: "코인", key: "AddCoin" },
                 ],
               },
               {
                 index: 1,
                 title: "부채",
-                list: ["부채항목1", "부채항목2", "부채항목3"],
+                list: [
+                  { title: "부채항목1", key: "Addtest1" },
+                  { title: "부채항목2", key: "Addtest2" },
+                  { title: "부채항목3", key: "Addtest3" },
+                ],
               },
             ]}
           />

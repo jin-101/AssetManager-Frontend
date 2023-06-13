@@ -52,7 +52,7 @@ function DepositAddPage() {
         .then((res) => {
           console.log(res);
           Alert.alert(res.data);
-          navigation.navigate("홈");
+          navigation.navigate("Home");
         })
         .catch((err) => {
           console.log(err, "//");
