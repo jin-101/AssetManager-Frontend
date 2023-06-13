@@ -88,7 +88,6 @@ function AccountBookList({ item, setItemList, itemList, index }) {
       url: apiPath + "/rest/webboard/categorylist.do",
     })
       .then((response) => {
-        //console.log(response.data);
         setCategoryData(response.data);
       })
       .catch((error) => {});
@@ -96,7 +95,6 @@ function AccountBookList({ item, setItemList, itemList, index }) {
 
   const modalShow = (e) => {
     setShow((prev) => !prev);
-    //console.log(data2);
   };
 
   const InputCategory = (category) => {
@@ -106,8 +104,15 @@ function AccountBookList({ item, setItemList, itemList, index }) {
     // itemList.forEach((data) => {
     //   if (Number(data.detailCode) === index) data.category = category;
     // });
+    // ===는 타입과 값이 모두 같아야 한다.
+    // ==는 값만 같으면 된다.
+    // AccountBookContainer에서 item 값을 보내주었기 때문에
+    // item의 detail code 사용가능
+    // 아이템마다 detail code 다르기 때문에 키 값으로 사용 가능
     itemList.map((data) => {
-      if (Number(data.detailCode) === index) data.category = category;
+      if (Number(data.detailCode) == item.detailCode) {
+        data.category = category;
+      }
     });
     setItemList(itemList);
   };
@@ -118,31 +123,36 @@ function AccountBookList({ item, setItemList, itemList, index }) {
     //마지막 글자가 잘리지 않는다.
     setMemo(text);
     itemList.map((data) => {
-      if (Number(data.detailCode) == index) data.memo = text;
+      if (Number(data.detailCode) === Number(item.detailCode)) data.memo = text;
     });
     setItemList(itemList);
   };
 
-  console.log("/////", index, show);
+  console.log("/////", index);
 
-  const previousItem = index > 1 ? item[index - 1] : null;
-  //console.log("아이템 하나!!!" + item[1]);
+  const previousItem = index > 0 ? itemList[index - 1] : null;
+  const showDate =
+    !previousItem || previousItem.exchangeDate !== item.exchangeDate; //!null은 true
 
   return (
     <>
       <View>
-        <View>
-          <Text style={{ marginTop: 30 }}>{item.exchangeDate}</Text>
+        {showDate && (
+          <View>
+            <Text style={{ marginTop: index === 0 ? 5 : 30 }}>
+              {item.exchangeDate}
+            </Text>
 
-          <View
-            style={{
-              backgroundColor: "gray",
-              height: 1,
-              marginTop: 10,
-              width: 350,
-            }}
-          />
-        </View>
+            <View
+              style={{
+                backgroundColor: "gray",
+                height: 1,
+                marginTop: 10,
+                width: 350,
+              }}
+            />
+          </View>
+        )}
 
         <View style={{ flexDirection: "row", marginTop: 15 }}>
           <Text>{item.content}</Text>
@@ -171,15 +181,14 @@ function AccountBookList({ item, setItemList, itemList, index }) {
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
             onPress={() => {
-              //console.log({ index });
               setShow((prev) => !prev);
             }}
           >
             <Text style={{ color: "gray" }}>
               {category !== null ? category : "카테고리 입력"}
             </Text>
-            {/* <Text>{index}</Text> */}
           </TouchableOpacity>
+
           <View style={{ flex: 1, alignItems: "flex-end" }}>
             <TextInput
               style={{ color: "gray" }}
@@ -202,6 +211,7 @@ function AccountBookList({ item, setItemList, itemList, index }) {
         <View style={styles.modalContaniner}>
           <HStack style={styles.modalTitle}>
             <Text style={styles.modalTitleText}>{"카테고리"}</Text>
+
             <Pressable cursor="pointer" onPress={modalShow}>
               <Center>
                 <Icon
