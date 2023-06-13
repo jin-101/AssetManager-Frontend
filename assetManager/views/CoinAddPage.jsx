@@ -10,19 +10,23 @@ import {
   VStack,
   Select,
   Button,
+  Icon,
+  Ionicons,
 } from "native-base";
 import axios from "axios";
 import { TextInput, FlatList, Alert, TouchableOpacity } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
-import { Picker } from "@react-native-picker/picker";
-import AlertExample from "../components/AlertExample";
 import { apiPath } from "../services";
+import { useSelector } from "react-redux";
+import { makeDateString } from "../utils";
 
 function CoinAddPage(props) {
   const [market, setMarket] = useState("");
   const [coinName, setCoinName] = useState("");
   const [quantity, setQuantity] = useState(0); // input에서 0을 입력하면 String이더라고. 그래서 초기값도 그냥 "0"으로 줘버림
   const [price, setPrice] = useState(0);
+  const [date, setDate] = useState(makeDateString(new Date()));
   const [formData, setFormData] = useState({});
+  const { token } = useSelector((state) => state.login);
   const handleReset = () => {
     setSelectedValue(""); // 이게 있어야 초기화시 '거래소를 선택해주세요'가 뜸
     setMarket("");
@@ -37,7 +41,9 @@ function CoinAddPage(props) {
       coinName: coinName,
       quantity: quantity,
       price: price,
+      date: date,
     };
+    console.log(formData);
 
     // 입력값 유효한지 check
     if (market === "") {
@@ -59,7 +65,10 @@ function CoinAddPage(props) {
     axios({
       url: `${apiPath}/coin/add`,
       method: "POST",
-      headers: { "Content-Type": `application/json` },
+      headers: {
+        "Content-Type": `application/json`,
+        Authorization: `${token}`,
+      },
       data: JSON.stringify(formData),
     })
       .then(function (res) {
@@ -123,8 +132,8 @@ function CoinAddPage(props) {
         }
       );
       const responseData = response.data;
-      const mapData = new Map(Object.entries(responseData));
-      setDataMap(mapData);
+      const dataMap = new Map(Object.entries(responseData));
+      setDataMap(dataMap);
       //console.log(response.data); // response.data : 스프링에서 넘긴 데이터(여기선 Map)를 얻는 법
     } catch (error) {
       console.error(error);
@@ -172,8 +181,8 @@ function CoinAddPage(props) {
                 onValueChange={handleValueChange}
               >
                 <Select.Item label="거래소를 선택해주세요" value="" />
-                <Select.Item label="업비트" value="업비트" market="업비트" />
-                <Select.Item label="빗썸" value="빗썸" market="빗썸" />
+                <Select.Item label="업비트" value="upbit" />
+                <Select.Item label="빗썸" value="bithumb" />
               </Select>
             </Box>
             <Box mb="5">
@@ -182,10 +191,6 @@ function CoinAddPage(props) {
               <Input
                 value={searchKeyword} // value는 내가 주고 싶은 거 줘도 되는 듯??
                 onChangeText={handleSearch}
-
-                // 검색란이 공백인 경우 검색 결과를 초기화하는 예시
-                //onChangeText={setSearchKeyword}
-                //onSubmitEditing={handleSearch}
               />
               {searchKeyword !== "" &&
                 Array.from(filteredData.keys()).map((key) => (
@@ -195,7 +200,12 @@ function CoinAddPage(props) {
                       insertCoinName(`${filteredData.get(key)}`); // ★ key값 대신 value값을 보내주면 되는 거 아닌가??
                     }}
                   >
-                    <Text fontSize="xs" key={key}>{`${key}`}</Text>
+                    {/* ★ 선택한 market의 코인만 Text화 */}
+                    {key.includes(market) && (
+                      <Text fontSize="xs" key={key}>
+                        {key}
+                      </Text>
+                    )}
                   </TouchableOpacity>
                   // <Text key={key}>{`${key}: ${filteredData.get(key)}`}</Text>
                 ))}

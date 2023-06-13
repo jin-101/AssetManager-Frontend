@@ -2,6 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { commonHeaderStyle } from "../styles";
+import { useSelector } from "react-redux";
 
 import Login from "@views/Login";
 import Signin from "@views/Signin";
@@ -11,41 +12,65 @@ import AptAddPage from "@views/AptAddPage";
 import CoinAddPage from "@views/CoinAddPage";
 import AccountBookContainer from "@pages/AccountBookContainer";
 import CarAddPage from "@views/CarAddPage";
-import { useSelector } from "react-redux";
+import StockAddPage from "./StockAddPage";
+import SearchIdPage from "./SearchIdPage";
+import SearchPwPage from "./SearchPwPage";
+import GuestPage from "./GuestPage";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
-  const { id } = useSelector((state) => state.login);
-  console.log(id);
+  const { token } = useSelector((state) => state.login);
+  console.log(token);
   return (
     <Stack.Navigator>
       {
-        id !== "" ? (
+        token !== "" ? (
           <Stack.Screen
-            name="홈"
+            name="Home"
             component={MainPage}
-            options={commonHeaderStyle}
+            options={{ ...commonHeaderStyle, title: "홈" }}
           /> // 메인 페이지
         ) : (
           <Stack.Screen
-            name="로그인"
+            name="Login"
             component={Login}
-            options={commonHeaderStyle}
+            options={{ ...commonHeaderStyle, title: "로그인" }}
           />
         ) //로그인 페이지
       }
 
       {/* 회원가입 페이지 */}
       <Stack.Screen
-        name="회원가입"
+        name="Signin"
         component={Signin}
-        options={commonHeaderStyle}
+        options={{ ...commonHeaderStyle, title: "회원가입" }}
+      />
+
+      {/* 아이디 찾기 페이지 */}
+      <Stack.Screen
+        name="SearchId"
+        component={SearchIdPage}
+        options={{ ...commonHeaderStyle, title: "아이디 찾기" }}
+      />
+
+      {/* 비밀번호 찾기 페이지 */}
+      <Stack.Screen
+        name="SearchPassword"
+        component={SearchPwPage}
+        options={{ ...commonHeaderStyle, title: "비밀번호 찾기" }}
+      />
+
+      {/* 비밀번호 찾기 페이지 */}
+      <Stack.Screen
+        name="Guest"
+        component={GuestPage}
+        options={{ ...commonHeaderStyle, title: "비회원 시세조회" }}
       />
 
       <Stack.Screen
         name="AccountBook"
         component={AccountBookContainer}
-        options={commonHeaderStyle}
+        options={{ ...commonHeaderStyle, title: "가계부" }}
       />
       {/* 로그인 페이지
               <Stack.Screen
@@ -56,37 +81,37 @@ function RootPages() {
 
       {/* 모달 이동 페이지 - 자산 */}
       <Stack.Screen
-        name="예적금"
+        name="AddDeposit"
         component={DepositAddPage}
         options={{ ...commonHeaderStyle, title: "예적금 추가" }}
       />
       <Stack.Screen
-        name="자동차"
-        component={CarAddPage}
-        options={{ ...commonHeaderStyle, title: "자동차 추가" }}
-      />
-      <Stack.Screen
-        name="부동산"
+        name="AddApt"
         component={AptAddPage}
         options={{ ...commonHeaderStyle, title: "부동산 추가" }}
       />
       <Stack.Screen
-        name="금"
+        name="AddCar"
+        component={CarAddPage}
+        options={{ ...commonHeaderStyle, title: "자동차 추가" }}
+      />
+      <Stack.Screen
+        name="AddGold"
         component={DepositAddPage}
         options={{ ...commonHeaderStyle, title: "금 추가" }}
       />
       <Stack.Screen
-        name="외환"
+        name="AddExchange"
         component={DepositAddPage}
         options={{ ...commonHeaderStyle, title: "외환 추가" }}
       />
       <Stack.Screen
-        name="주식"
-        component={DepositAddPage}
+        name="AddStock"
+        component={StockAddPage}
         options={{ ...commonHeaderStyle, title: "주식 추가" }}
       />
       <Stack.Screen
-        name="코인"
+        name="AddCoin"
         component={CoinAddPage}
         options={{ ...commonHeaderStyle, title: "코인 추가" }}
       />

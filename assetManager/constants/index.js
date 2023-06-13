@@ -17,6 +17,11 @@ import {
   CAR_YEAR_UPDATE,
 } from "./car";
 
+import {
+  STOCK_UPDATE,
+  STOCK_RESET
+} from './stock'
+
 export {
   LOGIN_STATE_UPDATE,
   PAGE_UPDATE,
@@ -31,4 +36,6 @@ export {
   CAR_COMPANY_UPDATE,
   CAR_MODEL_UPDATE,
   CAR_YEAR_UPDATE,
+  STOCK_UPDATE,
+  STOCK_RESET
 };

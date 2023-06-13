@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -27,17 +27,21 @@ function MainPage() {
 
   const dispatch = useDispatch();
   const { pageState } = useSelector((state) => state.footerNav);
-  const { id } = useSelector((state) => state.login);
+  const { token } = useSelector((state) => state.login);
 
   const logoutOnPress = () => {
+    console.log(token);
     axios({
       url: `${apiPath}/user/logout`,
       method: "POST",
       headers: { "Content-Type": `application/json` },
-      data: JSON.stringify(id),
+      data: JSON.stringify({ userId: token }),
     })
       .then((res) => {
+        console.log("로그아웃 성공");
+        Alert.alert("", res.data);
         dispatch(loginStateUpdate(""));
+        navigation.navigate("Login");
       })
       .catch((err) => {
         console.log(err);

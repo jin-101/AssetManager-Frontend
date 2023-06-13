@@ -49,6 +49,7 @@ function InputTextComponent({
     }
     if (parentSetState) parentSetState(text, id, name);
     if (dispatchF) dispatch(dispatchF(text, id, name));
+    
   }, []);
 
   return (
