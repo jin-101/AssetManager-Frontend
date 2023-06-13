@@ -4,14 +4,29 @@ import React, { useState } from "react";
 import { signinStates } from "../../action/signin";
 import { useDispatch, useSelector } from "react-redux";
 
-function UserPassword() {
+function UserPassword({
+  parentState = undefined,
+  parentSetState = undefined,
+  title = "비밀번호",
+  HelperText = "사용할 비밀번호를 입력해주세요.",
+  title2 = "비밀번호 확인",
+  HelperText2 = "사용할 비밀번호를 입력해주세요.",
+}) {
   const dispatch = useDispatch();
-  const { userPw, userPwCheck } = useSelector((state) => state.signin);
+  const { userPw, userPwCheck } =
+    parentState || useSelector((state) => state.signin);
   const [pwShow, setPwShow] = useState(false);
   const [pwCheckShow, setPwCheckShow] = useState(false);
 
   const setterFunction = (key, text) => {
-    dispatch(signinStates(key, text));
+    if (parentSetState) {
+      parentSetState({
+        ...parentState,
+        [key]: text,
+      });
+    } else {
+      dispatch(signinStates(key, text));
+    }
   };
 
   return (
@@ -25,7 +40,7 @@ function UserPassword() {
       >
         <FormControl w="90%">
           <Text fontSize="lg" fontWeight="bold" mb={1}>
-            {"비밀번호"}
+            {title}
           </Text>
           <Input
             value={userPw}
@@ -64,9 +79,7 @@ function UserPassword() {
             placeholder="Password"
           />
           {/* 부연설명 text */}
-          <FormControl.HelperText>
-            {"사용할 비밀번호를 입력해주세요."}
-          </FormControl.HelperText>
+          <FormControl.HelperText>{HelperText}</FormControl.HelperText>
         </FormControl>
       </Stack>
       <Stack
@@ -78,7 +91,7 @@ function UserPassword() {
       >
         <FormControl w="90%">
           <Text fontSize="lg" fontWeight="bold" mb={1}>
-            {"비밀번호 확인"}
+            {title2}
           </Text>
           <Input
             value={userPwCheck}
@@ -117,9 +130,7 @@ function UserPassword() {
             placeholder="Password"
           />
           {/* 부연설명 text */}
-          <FormControl.HelperText>
-            {"사용할 비밀번호를 입력해주세요."}
-          </FormControl.HelperText>
+          <FormControl.HelperText>{HelperText2}</FormControl.HelperText>
         </FormControl>
       </Stack>
     </>
