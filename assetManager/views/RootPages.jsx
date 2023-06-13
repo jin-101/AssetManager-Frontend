@@ -81,37 +81,37 @@ function RootPages() {
 
       {/* 모달 이동 페이지 - 자산 */}
       <Stack.Screen
-        name="예적금"
+        name="AddDeposit"
         component={DepositAddPage}
         options={{ ...commonHeaderStyle, title: "예적금 추가" }}
       />
       <Stack.Screen
-        name="자동차"
-        component={CarAddPage}
-        options={{ ...commonHeaderStyle, title: "자동차 추가" }}
-      />
-      <Stack.Screen
-        name="부동산"
+        name="AddApt"
         component={AptAddPage}
         options={{ ...commonHeaderStyle, title: "부동산 추가" }}
       />
       <Stack.Screen
-        name="금"
+        name="AddCar"
+        component={CarAddPage}
+        options={{ ...commonHeaderStyle, title: "자동차 추가" }}
+      />
+      <Stack.Screen
+        name="AddGold"
         component={DepositAddPage}
         options={{ ...commonHeaderStyle, title: "금 추가" }}
       />
       <Stack.Screen
-        name="외환"
+        name="AddExchange"
         component={DepositAddPage}
         options={{ ...commonHeaderStyle, title: "외환 추가" }}
       />
       <Stack.Screen
-        name="주식"
+        name="AddStock"
         component={StockAddPage}
         options={{ ...commonHeaderStyle, title: "주식 추가" }}
       />
       <Stack.Screen
-        name="코인"
+        name="AddCoin"
         component={CoinAddPage}
         options={{ ...commonHeaderStyle, title: "코인 추가" }}
       />
