@@ -18,7 +18,7 @@ function StockAddPage(){
     const currentDate = makeDateString(new Date());
     const year = Number(currentDate.substring(0, 4));
     const {stockName,buyPrice,buyQuantity,buyDate} = useSelector((state) =>state.stock)
-    const {token} = useSelector(state=>state.token);
+    const {token} = useSelector(state=>state.login);
     const dispatch = useDispatch();
 
 
@@ -31,9 +31,10 @@ function StockAddPage(){
         Alert.alert("자산등록완료")
         const buyDay  = buyDate.replaceAll("-","");
         console.log(token);
-        const stockInputDTO = {stockName,price:buyPrice,buyDay,shares:buyQuantity};
+        const stockInputDTO = {userId:token,stockName,price:buyPrice,buyDay,shares:buyQuantity};
+        console.log(stockInputDTO)
 
-        /*
+        
         axios.post('http://192.168.0.81:8888/app/stock/stockAssetInput',null,{params:stockInputDTO})
         .then(function (response) {
           setReesponseMessage(response.data);
@@ -41,7 +42,7 @@ function StockAddPage(){
         .catch(function (error) {
           console.log(error);
         });
-        */
+        
     };
 
     
