@@ -203,6 +203,9 @@ function CoinAddPage(props) {
                     {/* ★ 선택한 market의 코인만 Text화 */}
                     {key.includes(market) && (
                       <Text fontSize="xs" key={key}>
+                        {/* 뒤에 붙어있는 _upbit, _bithumb 등을 제거하기 위해
+                          {key.substring(0, key.indexOf("_", 0))}
+                          */}
                         {key}
                       </Text>
                     )}
