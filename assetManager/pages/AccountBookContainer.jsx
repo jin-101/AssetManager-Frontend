@@ -7,9 +7,17 @@ import { Text, View, TouchableOpacity, Modal, ScrollView } from "react-native";
 import { apiPath } from "../services";
 import AccountBookList from "../components/AccountBookList";
 import { Button } from "native-base";
+import { StyleSheet } from "react-native";
 
 function AccountBookContainer() {
-  // const [service, setService] = React.useState("");
+  const styles = StyleSheet.create({
+    depositandwithdraw: {
+      fontSize: 16,
+      fontWeight: "bold",
+      marginTop: 3,
+      marginLeft: 10,
+    },
+  });
 
   const today = new Date();
   const year = today.getFullYear(); // 연도
@@ -100,7 +108,34 @@ function AccountBookContainer() {
   }, [data]);
 
   const [itemList, setItemList] = useState(data);
-  //console.log({ data });
+
+  const calculateWithdrawTotal = () => {
+    return itemList.reduce(
+      (total, currentItem) => total + currentItem.withdraw,
+      0
+    );
+  };
+
+  const calculateDepositTotal = () => {
+    return itemList.reduce(
+      (total, currentItem) => total + currentItem.deposit,
+      0
+    );
+  };
+
+  const inputPriceFormat = (str) => {
+    //console.log("s", str);
+    const comma = (str) => {
+      str = String(str);
+      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    };
+    const uncomma = (str) => {
+      str = String(str);
+      return str.replace(/[^\d]+/g, "");
+    };
+    return comma(uncomma(str));
+  };
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <View
@@ -258,6 +293,14 @@ function AccountBookContainer() {
               <Button onPress={ListSave}>{"저장"}</Button>
             </View>
           </View>
+          <View>
+            <Text style={styles.depositandwithdraw}>
+              지출 : {inputPriceFormat(calculateWithdrawTotal())}원
+            </Text>
+            <Text style={styles.depositandwithdraw}>
+              수입 : {inputPriceFormat(calculateDepositTotal())}원
+            </Text>
+          </View>
         </View>
       </View>
 
@@ -270,7 +313,7 @@ function AccountBookContainer() {
               item={item}
               itemList={itemList}
               setItemList={setItemList}
-              index={index + 1}
+              index={index}
             />
           );
         })}
