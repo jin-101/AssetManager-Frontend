@@ -11,14 +11,13 @@ import AptAddPage from "@views/AptAddPage";
 import CoinAddPage from "@views/CoinAddPage";
 import AccountBookContainer from "@pages/AccountBookContainer";
 import CarAddPage from "@views/CarAddPage";
+import StockAddPage from "./StockAddPage";
 import { useSelector } from "react-redux";
 import SearchIdPage from "./SearchIdPage";
 import SearchPwPage from "./SearchPwPage";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
-  const { token } = useSelector((state) => state.login);
-  console.log(token);
   return (
     <Stack.Navigator>
       {
@@ -105,7 +104,7 @@ function RootPages() {
       />
       <Stack.Screen
         name="주식"
-        component={DepositAddPage}
+        component={StockAddPage}
         options={{ ...commonHeaderStyle, title: "주식 추가" }}
       />
       <Stack.Screen
