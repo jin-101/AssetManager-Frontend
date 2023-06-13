@@ -2,6 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { commonHeaderStyle } from "../styles";
+import { useSelector } from "react-redux";
 
 import Login from "@views/Login";
 import Signin from "@views/Signin";
@@ -12,9 +13,9 @@ import CoinAddPage from "@views/CoinAddPage";
 import AccountBookContainer from "@pages/AccountBookContainer";
 import CarAddPage from "@views/CarAddPage";
 import StockAddPage from "./StockAddPage";
-import { useSelector } from "react-redux";
 import SearchIdPage from "./SearchIdPage";
 import SearchPwPage from "./SearchPwPage";
+import GuestPage from "./GuestPage";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
@@ -25,51 +26,51 @@ function RootPages() {
       {
         token !== "" ? (
           <Stack.Screen
-            name="홈"
+            name="Home"
             component={MainPage}
-            options={commonHeaderStyle}
+            options={{ ...commonHeaderStyle, title: "홈" }}
           /> // 메인 페이지
         ) : (
           <Stack.Screen
-            name="로그인"
+            name="Login"
             component={Login}
-            options={commonHeaderStyle}
+            options={{ ...commonHeaderStyle, title: "로그인" }}
           />
         ) //로그인 페이지
       }
 
       {/* 회원가입 페이지 */}
       <Stack.Screen
-        name="회원가입"
+        name="Signin"
         component={Signin}
-        options={commonHeaderStyle}
+        options={{ ...commonHeaderStyle, title: "회원가입" }}
       />
 
       {/* 아이디 찾기 페이지 */}
       <Stack.Screen
-        name="아이디 찾기"
+        name="SearchId"
         component={SearchIdPage}
-        options={commonHeaderStyle}
+        options={{ ...commonHeaderStyle, title: "아이디 찾기" }}
       />
 
       {/* 비밀번호 찾기 페이지 */}
       <Stack.Screen
-        name="비밀번호 찾기"
+        name="SearchPassword"
         component={SearchPwPage}
-        options={commonHeaderStyle}
+        options={{ ...commonHeaderStyle, title: "비밀번호 찾기" }}
       />
 
       {/* 비밀번호 찾기 페이지 */}
       <Stack.Screen
-        name="비회원 시세조회"
-        component={SearchPwPage}
-        options={commonHeaderStyle}
+        name="Guest"
+        component={GuestPage}
+        options={{ ...commonHeaderStyle, title: "비회원 시세조회" }}
       />
 
       <Stack.Screen
         name="AccountBook"
         component={AccountBookContainer}
-        options={commonHeaderStyle}
+        options={{ ...commonHeaderStyle, title: "가계부" }}
       />
       {/* 로그인 페이지
               <Stack.Screen

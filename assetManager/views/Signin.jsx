@@ -1,6 +1,6 @@
 import { Button, Center } from "native-base";
-import React, { useState } from "react";
-import { View, StyleSheet, ScrollView, Alert } from "react-native";
+import React from "react";
+import { View, ScrollView, Alert } from "react-native";
 import UserId from "../pages/loginContainer/UserId";
 import UserPassword from "../pages/loginContainer/UserPassword";
 import UserName from "../pages/loginContainer/UserName";
@@ -11,8 +11,10 @@ import Address from "../pages/loginContainer/Address";
 import { useSelector } from "react-redux";
 import { apiPath } from "../services";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 function Signin(props) {
+  const navigation = useNavigation();
   const {
     userId,
     userPw,
@@ -114,6 +116,7 @@ function Signin(props) {
       .then((res) => {
         console.log(res);
         Alert.alert(res.data);
+        navigation.navigate("Login");
       })
       .catch((err) => {
         console.log(err, "//");
