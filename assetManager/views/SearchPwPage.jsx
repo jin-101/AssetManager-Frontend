@@ -1,16 +1,79 @@
 import React, { useState } from "react";
-import { View, Button, Divider, Stack, Text, ScrollView } from "native-base";
+import { View, Button, Divider, ScrollView, Text } from "native-base";
 import UserId from "../pages/loginContainer/UserId";
 import SecurityNumber from "../pages/loginContainer/SecurityNumber";
-import InputTextComponent from "../components/InputTextComponent";
+// import InputTextComponent from "../components/InputTextComponent";
+import { apiPath } from "../services";
+import { inputFormCheckFunction } from "../utils";
+import axios from "axios";
+import UserPassword from "../pages/loginContainer/UserPassword";
 
 function SearchPwPage(props) {
-  const data = ["aaa", "bbb", "ccc"];
   const [inputId, SetInputId] = useState("");
   const [inputSsn, SetInputSsn] = useState({
     securityNoFirst: "",
     securityNoSecond: "",
   });
+
+  const [searchPw, setSearchPw] = useState("");
+  const [inputPw, SetInputPw] = useState({
+    userPw: "",
+    userPwCheck: "",
+  });
+  // const [newPw, setNewPw] = useState("");
+  // const [newPwCheck, setNewPwCheck] = useState("");
+
+  const searchClick = () => {
+    if (inputFormCheckFunction("userId", inputId)) return;
+    const { securityNoFirst, securityNoSecond } = inputSsn;
+    if (
+      inputFormCheckFunction(
+        "securityNumber",
+        securityNoFirst,
+        securityNoSecond
+      )
+    )
+      return;
+
+    axios({
+      headers: { "Content-Type": `application/json` },
+      url: `${apiPath}/user/findUserPw`,
+      method: "POST",
+      data: JSON.stringify({
+        userId: inputId,
+        ssn: `${securityNoFirst}-${securityNoSecond}`,
+      }),
+    })
+      .then((res) => {
+        console.log(res.data);
+        setSearchPw(res.data);
+      })
+      .catch((err) => {
+        console.log(err, "//");
+      });
+  };
+
+  const register = () => {
+    const { userPw, userPwCheck } = inputPw;
+    if (inputFormCheckFunction("userPw", userPw, userPwCheck)) return;
+    console.log("통과");
+    // axios({
+    //   headers: { "Content-Type": `application/json` },
+    //   url: `${apiPath}/user/findUserPw`,
+    //   method: "POST",
+    //   data: JSON.stringify({
+    //     userId: inputId,
+    //     userPw: newPw,
+    //   }),
+    // })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //      navigation.navigate("Login");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err, "//");
+    //   });
+  };
 
   console.log(inputId, inputSsn);
   return (
@@ -25,56 +88,34 @@ function SearchPwPage(props) {
           />
           <SecurityNumber parentState={inputSsn} parentSetState={SetInputSsn} />
           <View w="100%" justifyContent="center" alignItems="center">
-            <Button w="80%">비밀번호 찾기</Button>
+            <Button w="80%" onPress={searchClick}>
+              비밀번호 찾기
+            </Button>
           </View>
         </View>
-        <>
-          <Divider />
-          <View alignItems="center">
-            <InputTextComponent
-              formControlStyle={{
-                w: "90%",
-                mt: "4",
-                mb: "2",
-                bg: "pink.100",
-                alignItems: "center",
-              }}
-              textLabel={{ frontText: "기존 비밀번호" }}
-              textInputPropsForFront={{ width: "40%", textAlign: "center" }}
-              textInputProps={{ editable: false, width: "60%" }}
-              value={"aaaaa"}
-            />
-            <InputTextComponent
-              formControlStyle={{
-                w: "90%",
-                mt: "2",
-                mb: "2",
-                bg: "pink.100",
-                alignItems: "center",
-              }}
-              textLabel={{ frontText: "새 비밀번호" }}
-              textInputPropsForFront={{ width: "40%", textAlign: "center" }}
-              textInputProps={{ editable: false, width: "60%" }}
-              value={"aaaaa"}
-            />
-            <InputTextComponent
-              formControlStyle={{
-                w: "90%",
-                mt: "2",
-                mb: "4",
-                bg: "pink.100",
-                alignItems: "center",
-              }}
-              textLabel={{ frontText: "새 비밀번호확인" }}
-              textInputPropsForFront={{ width: "40%", textAlign: "center" }}
-              textInputProps={{ editable: false, width: "60%" }}
-              value={"aaaaa"}
-            />
-          </View>
-          <View w="100%" justifyContent="center" alignItems="center">
-            <Button w="70%">등록</Button>
-          </View>
-        </>
+        {searchPw.length > 0 && (
+          <>
+            <Divider />
+            <View alignItems="center" w="100%">
+              <Text w="90%" mt="4" mb="8" fontSize={15}>
+                {searchPw}
+              </Text>
+              <View w="90%">
+                <UserPassword
+                  parentState={inputPw}
+                  parentSetState={SetInputPw}
+                  title="새 비밀번호"
+                  title2="새 비밀번호 확인"
+                />
+              </View>
+            </View>
+            <View w="100%" justifyContent="center" alignItems="center">
+              <Button w="70%" onPress={register}>
+                등록
+              </Button>
+            </View>
+          </>
+        )}
       </View>
     </ScrollView>
   );

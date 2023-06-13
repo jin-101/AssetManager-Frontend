@@ -8,14 +8,16 @@ import SecurityNumber from "../pages/loginContainer/SecurityNumber";
 import PhoneNumber from "../pages/loginContainer/PhoneNumber";
 import Email from "../pages/loginContainer/Email";
 import Address from "../pages/loginContainer/Address";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { apiPath } from "../services";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { inputFormCheckFunction } from "../utils";
+import { signinInitialize } from "../action/signin";
 
 function Signin(props) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const {
     userId,
     userPw,
@@ -72,28 +74,13 @@ function Signin(props) {
     })
       .then((res) => {
         console.log(res);
+        dispatch(signinInitialize());
         Alert.alert(res.data);
         navigation.navigate("Login");
       })
       .catch((err) => {
         console.log(err, "//");
       });
-
-    console.log("모두 통과 등록~~~", {
-      userId,
-      userPw,
-      userPwCheck,
-      userName,
-      securityNoFirst,
-      securityNoSecond,
-      phoneNoFirst,
-      phoneNoSecond,
-      phoneNoThird,
-      email,
-      zonePost,
-      addressFirst,
-      addressSecond,
-    });
   };
   return (
     <View>
