@@ -17,6 +17,7 @@ function StockAddPage() {
   const { token } = useSelector((state) => state.login);
   const dispatch = useDispatch();
 
+
   const onRest = () => dispatch(stockInputReset());
 
   const onSubmit = () => {
@@ -30,7 +31,7 @@ function StockAddPage() {
       shares: buyQuantity,
     };
 
-    /*
+
         axios.post('http://192.168.0.81:8888/app/stock/stockAssetInput',null,{params:stockInputDTO})
         .then(function (response) {
           setReesponseMessage(response.data);
@@ -38,8 +39,10 @@ function StockAddPage() {
         .catch(function (error) {
           console.log(error);
         });
-        */
+
+
   };
+
 
   return (
     <ScrollView bg="primary.100">
