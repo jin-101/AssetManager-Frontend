@@ -5,13 +5,19 @@ import { signinStates } from "../../action/signin";
 import { useDispatch, useSelector } from "react-redux";
 
 function UserName({
+  parentState = undefined,
+  parentSetState = undefined,
   title = "이름",
   HelperText = "사용자의 이름 입력해주세요.",
 }) {
   const { userName } = useSelector((state) => state.signin);
   const dispatch = useDispatch();
   const onchange = (text) => {
-    dispatch(signinStates("userName", text));
+    if (parentSetState) {
+      parentSetState(text);
+    } else {
+      dispatch(signinStates("userName", text));
+    }
   };
 
   return (
@@ -27,7 +33,7 @@ function UserName({
           {title}
         </Text>
         <Input
-          value={userName}
+          value={parentState || userName}
           onChangeText={onchange}
           bg="white"
           size="xl"

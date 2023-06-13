@@ -15,11 +15,21 @@ import { apiPath } from "../../services";
 import { Alert } from "react-native";
 import axios from "axios";
 
-function UserId() {
+function UserId({
+  parentState = undefined,
+  parentSetState = undefined,
+  isCheckBtn = true,
+  title = "계정",
+  HelperText = "사용할 아이디를 입력해주세요.",
+}) {
   const dispatch = useDispatch();
   const [localUserId, setLocalUserId] = useState("");
   const onchange = (text) => {
-    setLocalUserId(text);
+    if (parentSetState) {
+      parentSetState(text);
+    } else {
+      setLocalUserId(text);
+    }
   };
 
   const onPress = () => {
@@ -58,19 +68,19 @@ function UserId() {
     >
       <FormControl w="90%">
         <Text fontSize="lg" fontWeight="bold" mb={1}>
-          {"계정"}
+          {title}
         </Text>
         <HStack>
           <Input
-            value={localUserId}
+            value={parentState || localUserId}
             onChangeText={onchange}
             bg="white"
             size="xl"
             w={{
-              base: "75%",
+              base: isCheckBtn ? "75%" : "100%",
             }}
             mr={{
-              base: "1%",
+              base: isCheckBtn ? "1%" : "0",
             }}
             InputLeftElement={
               <Icon
@@ -82,14 +92,14 @@ function UserId() {
             }
             placeholder="Id"
           />
-          <Button onPress={onPress} h="50" w="25%">
-            {"중복체크"}
-          </Button>
+          {isCheckBtn && (
+            <Button onPress={onPress} h="50" w="25%">
+              {"중복체크"}
+            </Button>
+          )}
         </HStack>
         {/* 부연설명 text */}
-        <FormControl.HelperText>
-          {"사용할 아이디를 입력해주세요."}
-        </FormControl.HelperText>
+        <FormControl.HelperText>{HelperText}</FormControl.HelperText>
       </FormControl>
     </Stack>
   );
