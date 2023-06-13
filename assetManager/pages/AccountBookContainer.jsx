@@ -2,106 +2,27 @@ import axios from "axios";
 import ModalSelector from "react-native-modal-selector";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState, useEffect } from "react";
-import { Feather } from "@expo/vector-icons";
-import { Pressable, HStack, Center, Icon } from "native-base";
 
-import {
-  Text,
-  FlatList,
-  View,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-  ScrollView,
-} from "react-native";
+import { Text, View, TouchableOpacity, Modal, ScrollView } from "react-native";
 import { apiPath } from "../services";
-import { isAndroid } from "../utils";
-const styles = StyleSheet.create({
-  categorytouchable: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  margin: {
-    marginLeft: 150,
-  },
-  smallgray: {
-    fontSize: 13,
-    color: "gray",
-  },
-  leftSpace: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 10,
-  },
-  row: {
-    flexDirection: "row",
-    marginBottom: 10,
-  },
-  modalBg: {
-    position: "absolute",
-    top: 0,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "gray",
-    opacity: 0.5,
-  },
-  modalContaniner: {
-    position: "absolute",
-    top: 0,
-    width: "100%",
-    height: "100%",
-    flex: 1,
-    justifyContent: "flex-end",
-  },
-  modalTitle: {
-    height: 60,
-    backgroundColor: "white",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    justifyContent: "space-around",
-    alignItems: "center",
-    borderBottomWidth: 0.5,
-    borderColor: "lightgray",
-  },
-  modalTitleText: {
-    fontSize: 20,
-    fontWeight: 700,
-  },
-  modalContent: {
-    backgroundColor: "white",
-  },
-  modalFooter: {
-    height: isAndroid ? 0 : 20,
-    backgroundColor: "white",
-  },
-});
+import AccountBookList from "../components/AccountBookList";
+import { Button } from "native-base";
+
 function AccountBookContainer() {
   // const [service, setService] = React.useState("");
 
   const today = new Date();
   const year = today.getFullYear(); // 연도
   const month = today.getMonth() + 1; // 월 (0부터 시작하므로 1을 더함)
-  const day = today.getDate(); // 일
 
   const [currentYear, setCurrentYear] = useState(year);
   const [currentMonth, setCurrentMonth] = useState(month);
   const [selectedYear, setSelectedYear] = useState(year);
   const [selectedMonth, setSelectedMonth] = useState(month);
   const [data, setData] = useState([]);
-  const [categoryData, setCategoryData] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
-  const [Category, setCategory] = useState("카테고리 입력");
-  const [selectedCategory, setSelectedCategory] = useState("");
-
-  const [show, setShow] = useState(false);
-  const modalShow = (e) => {
-    setShow((prev) => !prev);
-    //console.log(data2);
-  };
 
   useEffect(() => {
     axios({
@@ -120,17 +41,21 @@ function AccountBookContainer() {
       .catch((error) => {});
   }, [currentYear, currentMonth]);
 
-  useEffect(() => {
+  const ListSave = () => {
+    //console.log("컨테이너에서///////" + JSON.stringify(itemList));
     axios({
-      method: "post",
-      url: apiPath + "/rest/webboard/categorylist.do",
+      url: apiPath + "/rest/webboard/listsave.do",
+      method: "put",
+      data: itemList,
+      //headers: { "Content-Type": `application/json` },
     })
       .then((response) => {
-        //console.log(response.data);
-        setCategoryData(response.data);
+        console.log("카테고리, 메모 저장 axios 성공");
       })
-      .catch((error) => {});
-  }, []);
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const handleMinusMonth = () => {
     if (currentMonth === 1) {
@@ -170,73 +95,12 @@ function AccountBookContainer() {
     setShowModal(false);
   };
 
-  const InputCategory = (category) => {
-    modalShow();
-    setCategory(category);
-  };
+  useEffect(() => {
+    setItemList(data);
+  }, [data]);
 
   const [itemList, setItemList] = useState(data);
-  console.log("아이템 리스트!!!" + itemList);
-
-  const List = ({ item, setItemList, itemList }) => {
-    return (
-      <ScrollView>
-        <View>
-          <View>
-            <Text style={{ marginTop: 30 }}>{item.exchangeDate}</Text>
-            <View
-              style={{
-                backgroundColor: "gray",
-                height: 1,
-                marginTop: 10,
-                width: 350,
-              }}
-            />
-          </View>
-
-          <View style={{ flexDirection: "row", marginTop: 15 }}>
-            <Text>{item.content}</Text>
-            <View style={{ flex: 1, alignItems: "flex-end" }}>
-              {item.withdraw > 0 ? (
-                <Text>- {item.withdraw.toLocaleString()}원</Text>
-              ) : (
-                <Text>{item.deposit.toLocaleString()}원</Text>
-              )}
-            </View>
-          </View>
-
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.smallgray}>{item.bank}</Text>
-            <Text style={styles.smallgray}>
-              {" "}
-              | {item.exchangeTime.slice(0, -3)}
-            </Text>
-            <View style={{ flex: 1, alignItems: "flex-end" }}>
-              <Text style={styles.smallgray}>
-                {item.balance.toLocaleString()}원
-              </Text>
-            </View>
-          </View>
-
-          <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity
-              onPress={() => {
-                //console.log({ index });
-                setShow((prev) => !prev);
-              }}
-            >
-              <Text style={{ color: "gray" }}>{Category}</Text>
-              {/* <Text>{index}</Text> */}
-            </TouchableOpacity>
-            <View style={{ flex: 1, alignItems: "flex-end" }}>
-              <TextInput placeholder="메모 입력" />
-            </View>
-          </View>
-        </View>
-      </ScrollView>
-    );
-  };
-
+  //console.log({ data });
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <View
@@ -389,97 +253,28 @@ function AccountBookContainer() {
                 style={{ marginTop: 9, marginLeft: 10, fontSize: 13 }}
               ></Ionicons>
             </TouchableOpacity>
+
+            <View style={{ flex: 1, alignItems: "flex-end", marginRight: 25 }}>
+              <Button onPress={ListSave}>{"저장"}</Button>
+            </View>
           </View>
         </View>
       </View>
 
       {/* 카드내역 스크롤 뷰 자리 */}
-      {itemList.map((item, index) => {
-        return (
-          <List item={item} itemList={itemList} setItemList={setItemList} />
-        );
-        <button
-          onClick={() => {
-            console.log(itemList);
-          }}
-        >
-          확인
-        </button>;
-      })}
-
-      {/* 카테고리 모달 2 (진형거) */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={show}
-        onRequestClose={modalShow}
-      >
-        <View style={styles.modalBg}></View>
-        <View style={styles.modalContaniner}>
-          <HStack style={styles.modalTitle}>
-            <Text style={styles.modalTitleText}>{"카테고리"}</Text>
-            <Pressable cursor="pointer" onPress={modalShow}>
-              <Center>
-                <Icon
-                  as={
-                    <Feather
-                      name="x"
-                      size={25}
-                      color="black"
-                      style={{ fontWeight: 700 }}
-                    />
-                  }
-                />
-              </Center>
-            </Pressable>
-          </HStack>
-          <View style={styles.modalContent}>
-            <FlatList
-              Style
-              columnWrapperStyle={{
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              data={categoryData}
-              numColumns={4}
-              renderItem={({ item, index }) => {
-                return (
-                  <View
-                    style={{
-                      borderRadius: 10,
-                      padding: 5,
-                      borderWidth: 1,
-                      borderColor: "gray",
-                      margin: 10,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      width: "20%",
-                    }}
-                    onTouchEnd={() => InputCategory(item.category)}
-                  >
-                    <View
-                      style={{
-                        alignItems: "center",
-                      }}
-                    >
-                      {/* <Image
-                          source={require("../assets/rockcrab.png")}
-                          style={{ width: 45, height: 45 }}
-                        /> */}
-                      {/* const aa = [{  name:"gift" size:45, color:"black"},{},{}]  ---->   {...aa[index]} */}
-                      <Feather name="gift" size={45} color="black" />
-                      <Text>{item.category}</Text>
-                    </View>
-                  </View>
-                );
-              }}
-              keyExtractor={(item, index) => index.toString()}
-            ></FlatList>
-          </View>
-          <View style={styles.modalFooter}></View>
-        </View>
-      </Modal>
-      {/* 카테고리 모달 2 (진형거) */}
+      <ScrollView>
+        {itemList.map((item, index) => {
+          return (
+            <AccountBookList
+              key={item.detailCode}
+              item={item}
+              itemList={itemList}
+              setItemList={setItemList}
+              index={index + 1}
+            />
+          );
+        })}
+      </ScrollView>
     </View>
   );
 }
