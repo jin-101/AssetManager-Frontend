@@ -1,7 +1,13 @@
 import React, { useCallback } from "react";
 import { HStack, Text, FormControl } from "native-base";
 import { TextInput, Alert } from "react-native";
-import { inputTagCommonStyle, keyBoardType } from "../utils";
+import {
+  alertText,
+  inputPriceFormat,
+  inputTagCommonStyle,
+  keyBoardType,
+  req,
+} from "../utils";
 import { useDispatch } from "react-redux";
 import { formControlLableBasicStyle } from "../styles";
 
@@ -9,6 +15,7 @@ function InputTextComponent({
   name = "",
   id = "0",
   value = "",
+  priceFormat = false,
   placeholder = "",
   dispatchF = undefined,
   parentSetState = undefined,
@@ -23,8 +30,8 @@ function InputTextComponent({
   labelStyle = {}, // native-base에 formControl.label _text 속성 모두 입력가능
   textLabel = {}, // frontText, endText, frontTextSize, endTextSize
   inputStyle = {}, // style 속성 입력가능
-  alertTitle = "주의",
-  alertContent = "올바른 값을 입력해주세요.",
+  alertTitle = alertText.basic.title,
+  alertContent = alertText.basic.content,
 }) {
   console.log("InputTextComponent >>>");
   const dispatch = useDispatch();
@@ -34,8 +41,11 @@ function InputTextComponent({
 
   const onChangeText = useCallback((text) => {
     if (inputType === "number") {
-      const format = /^[1-9]/;
-      if (text.length > 0 && !format.test(text)) {
+      const format = req.num;
+      if (
+        (text.length > 0 && !format.test(text[text.length - 1])) ||
+        (text.length === 1 && text === "0")
+      ) {
         Alert.alert(alertTitle, alertContent);
         return;
       }
@@ -49,7 +59,6 @@ function InputTextComponent({
     }
     if (parentSetState) parentSetState(text, id, name);
     if (dispatchF) dispatch(dispatchF(text, id, name));
-    
   }, []);
 
   return (
@@ -85,7 +94,7 @@ function InputTextComponent({
           }}
           placeholder={placeholder}
           placeholderTextColor="lightgray"
-          value={value}
+          value={priceFormat ? inputPriceFormat(value) : value}
           onChangeText={onChangeText}
           {...textInputProps}
         />

@@ -1,9 +1,10 @@
 import { FormControl, HStack, Icon, Pressable, Stack, Text } from "native-base";
 import React, { useState } from "react";
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet, Alert } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { signinStates } from "../../action/signin";
+import { alertText, req } from "../../utils";
 
 const custom = StyleSheet.create({
   inputStyle: {
@@ -26,6 +27,11 @@ function SecurityNumber() {
   const [securityNoSecondShow, setSecurityNoSecondShow] = useState(false);
 
   const setterFunction = (key, text) => {
+    const format = req.num;
+    if (text.length > 0 && !format.test(text[text.length - 1])) {
+      Alert.alert(alertText.basic.title, alertText.basic.content);
+      return;
+    }
     dispatch(signinStates(key, text));
   };
   return (

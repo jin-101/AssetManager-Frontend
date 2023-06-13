@@ -4,7 +4,10 @@ import { Feather } from "@expo/vector-icons";
 import { signinStates } from "../../action/signin";
 import { useDispatch, useSelector } from "react-redux";
 
-function UserName() {
+function UserName({
+  title = "이름",
+  HelperText = "사용자의 이름 입력해주세요.",
+}) {
   const { userName } = useSelector((state) => state.signin);
   const dispatch = useDispatch();
   const onchange = (text) => {
@@ -21,7 +24,7 @@ function UserName() {
     >
       <FormControl w="90%">
         <Text fontSize="lg" fontWeight="bold" mb={1}>
-          {"이름"}
+          {title}
         </Text>
         <Input
           value={userName}
@@ -43,9 +46,7 @@ function UserName() {
           placeholder="Name"
         />
         {/* 부연설명 text */}
-        <FormControl.HelperText>
-          {"사용자의 이름 입력해주세요."}
-        </FormControl.HelperText>
+        <FormControl.HelperText>{HelperText}</FormControl.HelperText>
       </FormControl>
     </Stack>
   );

@@ -13,16 +13,14 @@ export const loginLayoutStyle = {
   container: {
     flex: 1,
   },
-  header: {
-    height: 50,
-  },
   content: {
+    height: "80%",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
   footer: {
-    height: 50,
+    height: "10%",
     backgroundColor: "#4f69c6",
     justifyContent: "center",
   },

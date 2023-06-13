@@ -5,10 +5,11 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { pageUpdate } from "../action";
 import { useNavigation } from "@react-navigation/native";
+import { isAndroid } from "../utils";
 
 const styles = StyleSheet.create({
   footer: {
-    height: 80,
+    height: isAndroid ? "10%" : "15%",
   },
   footerText: {
     fontSize: 15,
@@ -34,6 +35,7 @@ function Footerbar() {
         bg="indigo.600"
         h="100%"
         alignItems="center"
+        justifyContent="center"
         safeAreaBottom
         shadow={6}
       >

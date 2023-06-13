@@ -49,6 +49,7 @@ function SelectComponent({
   const selector = () => {
     return (
       <Select
+        readOnly={true}
         selectedValue={value}
         onValueChange={onChange}
         placeholder="선택해주세요."
