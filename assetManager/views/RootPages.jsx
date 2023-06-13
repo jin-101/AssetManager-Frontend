@@ -12,6 +12,8 @@ import CoinAddPage from "@views/CoinAddPage";
 import AccountBookContainer from "@pages/AccountBookContainer";
 import CarAddPage from "@views/CarAddPage";
 import { useSelector } from "react-redux";
+import SearchIdPage from "./SearchIdPage";
+import SearchPwPage from "./SearchPwPage";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
@@ -39,6 +41,20 @@ function RootPages() {
       <Stack.Screen
         name="회원가입"
         component={Signin}
+        options={commonHeaderStyle}
+      />
+
+      {/* 아이디 찾기 페이지 */}
+      <Stack.Screen
+        name="아이디 찾기"
+        component={SearchIdPage}
+        options={commonHeaderStyle}
+      />
+
+      {/* 비밀번호 찾기 페이지 */}
+      <Stack.Screen
+        name="비밀번호 찾기"
+        component={SearchPwPage}
         options={commonHeaderStyle}
       />
 
