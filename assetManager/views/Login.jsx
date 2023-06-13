@@ -82,7 +82,7 @@ function Login() {
       <View style={style.header}></View>
       <View style={style.content}>
         <Box w="100%">
-          <Box space={4} mb="10" mt="5" alignItems="center">
+          <Box space={4} mb="10" alignItems="center">
             <Text fontSize={40}>Welcome</Text>
           </Box>
           <Box
