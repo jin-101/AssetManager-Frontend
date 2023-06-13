@@ -47,7 +47,7 @@ function Address() {
               }}
               value={zonePost}
               editable={false}
-              placeholder="post"
+              placeholder="Zip code"
               placeholderTextColor="lightgray"
             />
             <Icon
