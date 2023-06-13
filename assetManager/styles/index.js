@@ -1,5 +1,14 @@
 import { StyleSheet } from "react-native";
 
+export const modalBg = {
+  position: "absolute",
+  top: 0,
+  width: "100%",
+  height: "100%",
+  backgroundColor: "gray",
+  opacity: 0.5,
+};
+
 export const loginLayoutStyle = {
   container: {
     flex: 1,
