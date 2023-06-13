@@ -22,6 +22,7 @@ import InputTextComponent from "../components/InputTextComponent";
 import { makeDateString } from "../utils";
 import { setRef } from "@mui/material";
 import { useSelector } from "react-redux";
+import Loading from "../components/Loading";
 //import { AptSidoSelect, AptGuSelect } from "../components/AptSidoSelect";
 
 function AptAddPage(props) {
@@ -37,6 +38,9 @@ function AptAddPage(props) {
     setMaturityDate(0);
   };
 
+  // 0. 로딩 페이지를 이용하기 위한 useState
+  const [isLoading, setIsLoading] = useState(false);
+
   // 1. 시/도 선택시 => 구를 얻는
   // Picker 컴포넌트를 선택했을 때 Axios 요청을 실행
   const [sido, setSido] = useState("");
@@ -45,6 +49,7 @@ function AptAddPage(props) {
   const handlePickerChange = (sido) => {
     console.log("내가 선택한 시/도 Picker 컴포넌트 : " + sido);
     setSido(sido);
+    setIsLoading(true);
 
     // Axios 요청 실행 (if문 : 시/도 선택 클릭시엔 axios 실행 안하게끔)
     if (sido !== "") {
@@ -56,10 +61,12 @@ function AptAddPage(props) {
           const responseData = response.data;
           const guMap = new Map(Object.entries(responseData));
           setGuMap(guMap);
+          setIsLoading(false);
         })
         .catch((error) => {
           // 에러 처리
           console.error(error);
+          setIsLoading(false);
         });
     }
   };
@@ -71,6 +78,7 @@ function AptAddPage(props) {
   const handlePickerChange2 = (gu) => {
     console.log("내가 선택한 구 Picker 컴포넌트 : " + gu);
     setGu(gu);
+    setIsLoading(true);
 
     // Axios 요청 실행 (if문 : 시/도 선택 클릭시엔 axios 실행 안하게끔)
     if (gu !== "") {
@@ -82,10 +90,12 @@ function AptAddPage(props) {
           const responseData = response.data;
           const dongMap = new Map(Object.entries(responseData));
           setDongMap(dongMap);
+          setIsLoading(false);
         })
         .catch((error) => {
           // 에러 처리
           console.error(error);
+          setIsLoading(false);
         });
     }
   };
@@ -103,6 +113,7 @@ function AptAddPage(props) {
     console.log(sido);
     console.log(gu);
     setDong(dong);
+    setIsLoading(true);
 
     // Axios 요청 실행 (if문 : 시/도 선택 클릭시엔 axios 실행 안하게끔)
     if (dong !== "") {
@@ -115,10 +126,12 @@ function AptAddPage(props) {
           const responseData = response.data;
           const aptMap = new Map(Object.entries(responseData));
           setAptMap(aptMap);
+          setIsLoading(false);
         })
         .catch((error) => {
           // 에러 처리
           console.error(error);
+          setIsLoading(false);
         });
     }
   };
@@ -226,7 +239,7 @@ function AptAddPage(props) {
     resetAll();
   };
 
-  //
+  if (isLoading) return <Loading />;
   return (
     <ScrollView bg="red.100">
       <VStack mt="10" mb="10" alignItems="center">
