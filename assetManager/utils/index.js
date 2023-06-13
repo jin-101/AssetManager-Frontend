@@ -1,5 +1,19 @@
 //초기 설정 값 및 util성 변수 및 함수
 
+// 금액 처리 세자리 마다(,)
+export const inputPriceFormat = (str) => {
+  const comma = (str) => {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+  };
+  const uncomma = (str) => {
+    str = String(str);
+    return str.replace(/[^\d]+/g, "");
+  };
+  return comma(uncomma(str));
+};
+
+//키보드 타입
 export const keyBoardType = (type) => {
   let keyboard;
   switch (type) {
