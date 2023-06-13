@@ -1,7 +1,13 @@
 import React, { useCallback } from "react";
 import { HStack, Text, FormControl } from "native-base";
 import { TextInput, Alert } from "react-native";
-import { inputPriceFormat, inputTagCommonStyle, keyBoardType } from "../utils";
+import {
+  alertText,
+  inputPriceFormat,
+  inputTagCommonStyle,
+  keyBoardType,
+  req,
+} from "../utils";
 import { useDispatch } from "react-redux";
 import { formControlLableBasicStyle } from "../styles";
 
@@ -24,8 +30,8 @@ function InputTextComponent({
   labelStyle = {}, // native-base에 formControl.label _text 속성 모두 입력가능
   textLabel = {}, // frontText, endText, frontTextSize, endTextSize
   inputStyle = {}, // style 속성 입력가능
-  alertTitle = "주의",
-  alertContent = "올바른 값을 입력해주세요.",
+  alertTitle = alertText.basic.title,
+  alertContent = alertText.basic.content,
 }) {
   console.log("InputTextComponent >>>");
   const dispatch = useDispatch();
@@ -35,7 +41,7 @@ function InputTextComponent({
 
   const onChangeText = useCallback((text) => {
     if (inputType === "number") {
-      const format = /^[0-9]/;
+      const format = req.num;
       if (
         (text.length > 0 && !format.test(text[text.length - 1])) ||
         (text.length === 1 && text === "0")
