@@ -113,7 +113,7 @@ function Signin(props) {
     })
       .then((res) => {
         console.log(res);
-        Alert.alert(res.data);
+        Alert.alert("", res.data);
       })
       .catch((err) => {
         console.log(err, "//");
