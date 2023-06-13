@@ -24,6 +24,7 @@ function InputTextComponent({
   inputType = "text",
   formControlProps = {},
   formControlLabelProps = {},
+  textInputPropsForFront = {},
   textInputProps = {},
   formHelperTextProps = {},
   formControlStyle = {}, //native-base에 formControl 속성 모두 입력가능
@@ -73,10 +74,13 @@ function InputTextComponent({
         {title}
       </Text>
 
-      <HStack alignItems="center">
+      <HStack alignItems="center" w="100%">
         {/* input 앞에 텍스트 삽입 */}
         {textLabel?.frontText && (
-          <Text fontSize={textLabel?.frontTextSize || "lg"}>
+          <Text
+            fontSize={textLabel?.frontTextSize || "lg"}
+            {...textInputPropsForFront}
+          >
             {textLabel?.frontText}
           </Text>
         )}
