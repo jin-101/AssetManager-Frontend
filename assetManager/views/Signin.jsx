@@ -67,6 +67,7 @@ function Signin(props) {
       const dateRegex = /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])$/;
       if (!dateRegex.test(securityNoFirst)) {
         Alert.alert("", "주민등록번호의 생년월일이 올바르지 않습니다.");
+        return;
       }
     }
 

@@ -24,16 +24,18 @@ function UserId() {
 
   const onPress = () => {
     //axios 다녀와서 dispatch하기
+    if (localUserId === "") {
+      Alert.alert("", "아이디를 입력해주세요");
+      return;
+    }
     axios({
-      headers: { "Content-Type": `application/json` },
-      url: `${apiPath}/user/checkDuplicatedId`,
+      url: `${apiPath}/user/checkDuplicatedId/${localUserId}`,
       method: "GET",
-      data: JSON.stringify({ userId: localUserId }),
     })
       .then((res) => {
         console.log(res);
         Alert.alert(res.data);
-        if (res.data === "사용가능한 ID입니다.")
+        if (res.data === "사용가능한 ID입니다")
           dispatch(signinStates("userId", localUserId));
         else {
           onchange("");
