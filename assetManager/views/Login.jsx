@@ -58,6 +58,16 @@ function Login() {
     dispatch(signinInitialize());
     navigation.navigate("회원가입");
   };
+
+  //아이디 찾기 버튼
+  const searchId = () => {
+    navigation.navigate("아이디 찾기");
+  };
+
+  //비밀번호 찾기 버튼
+  const searchPw = () => {
+    navigation.navigate("비밀번호 찾기");
+  };
   return (
     <View style={style.container}>
       <View style={style.header}></View>
@@ -141,11 +151,11 @@ function Login() {
                 </Button>
               </Stack>
               <HStack>
-                <Button mt="3" size="md" variant="ghost">
+                <Button mt="3" size="md" variant="ghost" onPress={searchId}>
                   아이디 찾기
                 </Button>
                 <Text mt="5">{"/"}</Text>
-                <Button mt="3" size="md" variant="ghost">
+                <Button mt="3" size="md" variant="ghost" onPress={searchPw}>
                   비밀번호 찾기
                 </Button>
               </HStack>
