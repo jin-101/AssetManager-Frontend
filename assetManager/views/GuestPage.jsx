@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Loading from "../components/Loading";
 
 function GuestPage(props) {
-  const [isLoading, useIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   console.log(isLoading);
   if (isLoading) return <Loading />;
   return (

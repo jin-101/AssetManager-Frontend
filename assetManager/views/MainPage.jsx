@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,9 +9,10 @@ import SearchContainer from "@pages/SearchContainer";
 import AssetContainer from "@pages/AssetContainer";
 import AccountBookContainer from "@pages/AccountBookContainer";
 import { Button } from "native-base";
-import { loginStateUpdate } from "../action";
+import { pageInitialize, loginStateUpdate } from "../action";
 import axios from "axios";
 import { apiPath } from "../services";
+import Loading from "../components/Loading";
 
 const styles = StyleSheet.create({
   container: {
@@ -29,8 +30,19 @@ function MainPage() {
   const { pageState } = useSelector((state) => state.footerNav);
   const { token } = useSelector((state) => state.login);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const logoutOnPress = () => {
-    console.log(token);
+    axios.interceptors.request.use(
+      function (config) {
+        setIsLoading(true);
+        return config;
+      },
+      function (error) {
+        // 요청 설정을 수정하는 중에 오류가 발생한 경우 실행됩니다.
+        return Promise.reject(error);
+      }
+    );
     axios({
       url: `${apiPath}/user/logout`,
       method: "POST",
@@ -42,9 +54,11 @@ function MainPage() {
         Alert.alert("", res.data);
         dispatch(loginStateUpdate(""));
         navigation.navigate("Login");
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   };
 
@@ -67,6 +81,10 @@ function MainPage() {
     });
   }, [navigation]);
 
+  useEffect(() => {
+    dispatch(pageInitialize());
+  }, []);
+
   const returnComponent = () => {
     switch (pageState) {
       case 0:
@@ -82,6 +100,7 @@ function MainPage() {
     }
   };
 
+  if (isLoading) return <Loading />;
   return (
     <View style={styles.container}>
       {returnComponent()}
