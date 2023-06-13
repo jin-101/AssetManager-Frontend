@@ -7,6 +7,7 @@ import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { stockInputUpdate, stockInputReset } from "../action";
 import axios from "axios";
+import { apiPath } from "../services";
 
 function StockAddPage() {
   const currentDate = makeDateString(new Date());
@@ -21,23 +22,29 @@ function StockAddPage() {
   const onRest = () => dispatch(stockInputReset());
 
   const onSubmit = () => {
-    Alert.alert("자산등록완료");
-    const buyDay = buyDate.replaceAll("-", "");
-    console.log(token);
+    const buyDay = buyDate;
     const stockInputDTO = {
+      userId:token,
       stockName,
       price: buyPrice,
       buyDay,
       shares: buyQuantity,
     };
 
-
-        axios.post('http://192.168.0.81:8888/app/stock/stockAssetInput',null,{params:stockInputDTO})
+        axios.post(`${apiPath}/stock/stockAssetInput`,null,{params:stockInputDTO})
         .then(function (response) {
-          setReesponseMessage(response.data);
+
+          if(response.data==='등록완료'){
+            Alert.alert("자산등록완료");
+            onRest();
+          } else {
+            Alert.alert("자산등록실패 다시 등록해주세요");
+          }
+
         })
         .catch(function (error) {
           console.log(error);
+          Alert.alert("서버에러 잠시만 기다려주세요0")
         });
 
 

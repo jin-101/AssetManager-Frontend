@@ -16,6 +16,7 @@ import StockAddPage from "./StockAddPage";
 import SearchIdPage from "./SearchIdPage";
 import SearchPwPage from "./SearchPwPage";
 import GuestPage from "./GuestPage";
+import CurrencyAddPage from "./CurrencyAddPage";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
@@ -102,7 +103,7 @@ function RootPages() {
       />
       <Stack.Screen
         name="AddExchange"
-        component={DepositAddPage}
+        component={CurrencyAddPage}
         options={{ ...commonHeaderStyle, title: "외환 추가" }}
       />
       <Stack.Screen
