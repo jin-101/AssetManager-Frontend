@@ -30,7 +30,6 @@ function StockAddPage(){
     const onSubmit = () => {
         Alert.alert("자산등록완료")
         const buyDay  = buyDate.replaceAll("-","");
-        
         console.log(token);
         const stockInputDTO = {stockName,price:buyPrice,buyDay,shares:buyQuantity};
 

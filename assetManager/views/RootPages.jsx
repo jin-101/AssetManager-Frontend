@@ -18,6 +18,8 @@ import SearchPwPage from "./SearchPwPage";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
+  const { token } = useSelector((state) => state.login);
+  console.log(token);
   return (
     <Stack.Navigator>
       {
