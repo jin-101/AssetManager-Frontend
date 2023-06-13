@@ -19,6 +19,8 @@ import {
 
 import { STOCK_UPDATE, STOCK_RESET } from "./stock";
 
+import { CURRENCY_UPDATE, CURRENCY_RESET } from "./currency";
+
 export {
   LOGIN_STATE_UPDATE,
   PAGE_INITIALIZE,
@@ -36,4 +38,6 @@ export {
   CAR_YEAR_UPDATE,
   STOCK_UPDATE,
   STOCK_RESET,
+  CURRENCY_UPDATE,
+  CURRENCY_RESET,
 };

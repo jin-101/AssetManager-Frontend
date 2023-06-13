@@ -1,0 +1,2 @@
+export const CURRENCY_UPDATE = "CURRENCY_UPDATE";
+export const CURRENCY_RESET = "CURRENCY_RESET";
