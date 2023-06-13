@@ -1,6 +1,15 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
-import { Box, Button, Icon, Input, Pressable, Stack, Text } from "native-base";
+import {
+  Box,
+  Button,
+  HStack,
+  Icon,
+  Input,
+  Pressable,
+  Stack,
+  Text,
+} from "native-base";
 import React, { useState } from "react";
 import { StyleSheet, View, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -131,13 +140,22 @@ function Login() {
                   로그인
                 </Button>
               </Stack>
-              <Box mt="2">
-                <Button size="lg" variant="ghost">
-                  비회원 시세조회
+              <HStack>
+                <Button mt="3" size="md" variant="ghost">
+                  아이디 찾기
                 </Button>
-              </Box>
+                <Text mt="5">{"/"}</Text>
+                <Button mt="3" size="md" variant="ghost">
+                  비밀번호 찾기
+                </Button>
+              </HStack>
             </Stack>
           </Box>
+        </Box>
+        <Box mt="2">
+          <Button size="lg" variant="ghost">
+            비회원 시세조회
+          </Button>
         </Box>
       </View>
       <View style={style.footer}>
