@@ -22,8 +22,8 @@ import { makeDateString } from "../utils";
 function CoinAddPage(props) {
   const [market, setMarket] = useState("");
   const [coinName, setCoinName] = useState("");
-  const [quantity, setQuantity] = useState(0); // input에서 0을 입력하면 String이더라고. 그래서 초기값도 그냥 "0"으로 줘버림
-  const [price, setPrice] = useState(0);
+  const [quantity, setQuantity] = useState(""); // input에서 0을 입력하면 String이더라고. 그래서 초기값도 그냥 "0"으로 줘버림
+  const [price, setPrice] = useState("");
   const [date, setDate] = useState(makeDateString(new Date()));
   const [formData, setFormData] = useState({});
   const { token } = useSelector((state) => state.login);
@@ -31,8 +31,8 @@ function CoinAddPage(props) {
     setSelectedValue(""); // 이게 있어야 초기화시 '거래소를 선택해주세요'가 뜸
     setMarket("");
     setCoinName("");
-    setQuantity(0);
-    setPrice(0);
+    setQuantity("");
+    setPrice("");
     setSearchKeyword(""); // 코인 검색란도 초기화되게끔 설정
   };
   const handleSubmit = () => {
@@ -52,7 +52,7 @@ function CoinAddPage(props) {
     } else if (coinName === "") {
       Alert.alert("Error", "코인 이름을 입력해주세요");
       return;
-    } else if (quantity === 0 || price === 0) {
+    } else if (quantity === "" || price === "") {
       // input에서 0을 입력하면 String이더라고. 그래서 초기값도 그냥 "0"으로 줘버림
       Alert.alert("Error", "수량과 가격을 입력해주세요");
       return;
@@ -63,7 +63,7 @@ function CoinAddPage(props) {
 
     // 입력값이 유효한 경우 처리 로직
     axios({
-      url: `${apiPath}/coin/add`,
+      url: `${apiPath}/coin/add/${token}`,
       method: "POST",
       headers: {
         "Content-Type": `application/json`,
@@ -89,8 +89,8 @@ function CoinAddPage(props) {
     // 입력값 초기화 (★ 한꺼번에 하는 방법은 없나??)
     // setMarket(""); // 여러번 입력하는 경우를 생각하면 얘는 굳이 초기화해줄 필요가 없네
     setCoinName("");
-    setQuantity(0);
-    setPrice(0);
+    setQuantity("");
+    setPrice("");
     setSearchKeyword(""); // 코인 검색란도 초기화되게끔 설정
     //setFormData({});
   };
@@ -181,8 +181,8 @@ function CoinAddPage(props) {
                 onValueChange={handleValueChange}
               >
                 <Select.Item label="거래소를 선택해주세요" value="" />
-                <Select.Item label="업비트" value="upbit" />
-                <Select.Item label="빗썸" value="bithumb" />
+                <Select.Item label="업비트" value="업비트" />
+                <Select.Item label="빗썸" value="빗썸" />
               </Select>
             </Box>
             <Box mb="5">
@@ -228,7 +228,7 @@ function CoinAddPage(props) {
               <Input
                 isRequired="true" // Required 이거 왜 안 먹히지??
                 keyboardType="numeric"
-                value={quantity}
+                value={String(quantity)}
                 onChangeText={(quantity) => setQuantity(quantity)}
               />
             </Box>
@@ -237,7 +237,7 @@ function CoinAddPage(props) {
               <Input
                 isRequired="true"
                 keyboardType="numeric"
-                value={price}
+                value={String(price)}
                 onChangeText={(price) => setPrice(inputPriceFormat(price))}
               />
             </Box>
