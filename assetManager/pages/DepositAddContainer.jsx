@@ -121,6 +121,7 @@ function DepositAddContainer({ item, isOnlyOne }) {
         <InputTextComponent
           name="price"
           inputType={"number"}
+          priceFormat={true}
           formControlProps={{ mb: "5" }}
           textLabel={{ endText: "원" }}
           inputStyle={{ width: "90%" }}
