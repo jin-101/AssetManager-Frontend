@@ -71,10 +71,10 @@ function DropdownModal({ content }) {
                         onTouchEnd={() => {
                           setDropdown(dropdownInit);
                           onClose();
-                          navigation.navigate(li); //page 이동 (App.js에서 mapping)
+                          navigation.navigate(li.key); //page 이동 (App.js에서 mapping)
                         }}
                       >
-                        <Actionsheet.Item key={j}>{li}</Actionsheet.Item>
+                        <Actionsheet.Item key={j}>{li.title}</Actionsheet.Item>
                       </Box>
                     ))}
                   </Box>
