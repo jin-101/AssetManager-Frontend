@@ -5,10 +5,9 @@ import PhoneNumber from "../pages/loginContainer/PhoneNumber";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { apiPath } from "../services";
+import { inputFormCheckFunction } from "../utils";
 
 function SearchIdPage(props) {
-  const data = ["aaa", "bbb", "ccc"];
-
   const { token } = useSelector((state) => state.login);
   const [inputName, SetInputName] = useState("");
   const [inputPhone, SetInputPhone] = useState({
@@ -19,7 +18,17 @@ function SearchIdPage(props) {
   const [searchIds, setSearchIds] = useState([]);
 
   const searchClick = () => {
+    if (inputFormCheckFunction("userName", inputName)) return;
     const { phoneNoFirst, phoneNoSecond, phoneNoThird } = inputPhone;
+    if (
+      inputFormCheckFunction(
+        "phoneNumber",
+        phoneNoFirst,
+        phoneNoSecond,
+        phoneNoThird
+      )
+    )
+      return;
     axios({
       headers: { "Content-Type": `application/json` },
       url: `${apiPath}/user/findUserId`,
@@ -39,7 +48,6 @@ function SearchIdPage(props) {
       });
   };
 
-  console.log(inputName, inputPhone);
   return (
     <ScrollView>
       <View justifyContent="center" alignItems="center" mt="5">
@@ -55,16 +63,18 @@ function SearchIdPage(props) {
             </Button>
           </View>
         </View>
-        <>
-          <Divider />
-          <Stack>
-            {searchIds.map((item, index) => (
-              <View w="90%" h="30" mt="10" mb="5" key={index}>
-                <Text key={index}>{item}</Text>
-              </View>
-            ))}
-          </Stack>
-        </>
+        {searchIds.length > 0 && (
+          <>
+            <Divider />
+            <Stack mt="4">
+              {searchIds.map((item, index) => (
+                <View w="90%" h="30" mt="4" mb="4" key={index}>
+                  <Text key={index}>{item}</Text>
+                </View>
+              ))}
+            </Stack>
+          </>
+        )}
       </View>
     </ScrollView>
   );
