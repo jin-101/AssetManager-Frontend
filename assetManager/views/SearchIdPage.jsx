@@ -1,7 +1,7 @@
 import { View, Button, Divider, Stack, Text, ScrollView } from "native-base";
 import React, { useState } from "react";
-import UserName from "../pages/loginContainer/UserName";
-import PhoneNumber from "../pages/loginContainer/PhoneNumber";
+import UserName from "@pages/userInfoContainer/UserName";
+import PhoneNumber from "@pages/userInfoContainer/PhoneNumber";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { apiPath } from "../services";

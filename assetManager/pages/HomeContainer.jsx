@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollView } from "react-native";
 import { Box, Center, HStack, Text, VStack } from "native-base";
-import DropdownModal from "../components/DropdownModal";
+import DropdownModal from "@components/DropdownModal";
 
 function HomeContainer() {
   return (

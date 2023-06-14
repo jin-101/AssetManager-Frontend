@@ -1,9 +1,8 @@
 //연습중..
 import { Box, Button, VStack } from "native-base";
 import React from "react";
-import { StyleSheet, Text } from "react-native";
-import { ScrollView } from "react-native";
-import SelectComponent from "../components/SelectComponent";
+import { StyleSheet, Text, ScrollView } from "react-native";
+import SelectComponent from "@components/SelectComponent";
 import { Picker } from "@react-native-picker/picker";
 
 function SearchContainer({}) {

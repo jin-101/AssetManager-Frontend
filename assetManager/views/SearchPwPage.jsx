@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { View, Button, Divider, ScrollView, Text } from "native-base";
-import UserId from "../pages/loginContainer/UserId";
-import SecurityNumber from "../pages/loginContainer/SecurityNumber";
-// import InputTextComponent from "../components/InputTextComponent";
+import UserId from "@pages/userInfoContainer/UserId";
+import SecurityNumber from "@pages/userInfoContainer/SecurityNumber";
+import UserPassword from "@pages/userInfoContainer/UserPassword";
 import { apiPath } from "../services";
 import { inputFormCheckFunction } from "../utils";
 import axios from "axios";
-import UserPassword from "../pages/loginContainer/UserPassword";
 
 function SearchPwPage(props) {
   const [inputId, SetInputId] = useState("");

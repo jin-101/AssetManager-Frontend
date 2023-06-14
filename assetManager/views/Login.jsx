@@ -19,7 +19,7 @@ import { apiPath } from "../services";
 import { loginStateUpdate } from "../action";
 import { loginLayoutStyle } from "../styles";
 import { signinInitialize } from "../action/signin";
-import Loading from "../components/Loading";
+import Loading from "@components/Loading";
 
 const style = StyleSheet.create(loginLayoutStyle);
 

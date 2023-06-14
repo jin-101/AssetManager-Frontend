@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 
 import { Text, View, TouchableOpacity, Modal, ScrollView } from "react-native";
 import { apiPath } from "../services";
-import AccountBookList from "../components/AccountBookList";
+import AccountBookList from "@components/AccountBookList";
 import { Button } from "native-base";
 import { StyleSheet } from "react-native";
 
