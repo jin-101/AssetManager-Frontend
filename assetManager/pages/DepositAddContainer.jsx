@@ -22,8 +22,8 @@ function DepositAddContainer({ item, isOnlyOne }) {
   }, []);
 
   return (
-    <VStack alignItems="center">
-      <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+    <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+      <Box w="100%">
         <HStack
           justifyContent="space-around"
           alignItems="center"
@@ -48,25 +48,15 @@ function DepositAddContainer({ item, isOnlyOne }) {
         </HStack>
         <InputRadioComponent
           name="depositType"
-          formControlProps={{ mb: "5", isDisabled: true }}
+          formControlProps={{ mb: "8", isDisabled: true }}
           formControlLabelProps={{
-            w: "40%",
-            _disabled: {
-              ...{
-                _text: {
-                  fontSize: "lg",
-                  color: "black",
-                  fontWeight: "bold",
-                },
-              },
-            },
+            text: "상품 선택",
           }}
-          title={"상품 선택"}
           radioButtonList={[
             {
               text: "예금",
               value: "deposit",
-              liStyle: { alignItems: "center", mr: "10" },
+              liStyle: { alignItems: "center", ml: "5", mr: "10" },
             },
             {
               text: "적금",
@@ -74,19 +64,20 @@ function DepositAddContainer({ item, isOnlyOne }) {
               liStyle: { alignItems: "center" },
             },
           ]}
+          formControlHelperProps={{ text: "상품을 선택하세요." }}
           id={item.index}
           value={item["depositType"]}
           dispatchF={depositUpdate}
         />
         <InputDateComponent
           name="startDate"
-          formControlStyle={{ mb: "5" }}
-          title={"가입일"}
-          helperText={"상품 가입일을 선택하세요."}
+          formControlProps={{ mb: "5" }}
+          formControlLabelProps={{ text: "가입일" }}
+          formControlHelperProps={{ text: "상품 가입일을 선택하세요." }}
+          textInputProps={{ color: startDate ? "black" : "gray" }}
           id={item.index}
           value={startDate || currentDate}
           dispatchF={depositUpdate}
-          inputStyle={{ color: startDate ? "black" : "lightgray" }}
           datePickerProps={{
             type: "YYYY-MM-DD",
             minDate: `${year - 5}-01-01`,
@@ -100,13 +91,12 @@ function DepositAddContainer({ item, isOnlyOne }) {
         />
         <InputDateComponent
           name="endDate"
-          formControlStyle={{ mb: "5" }}
-          title={"만기일"}
-          helperText={"상품 만기일을 입력하세요."}
+          formControlProps={{ mb: "5" }}
+          formControlLabelProps={{ text: "만기일" }}
+          formControlHelperProps={{ text: "상품 만기일을 입력하세요." }}
           id={item.index}
           value={endDate || currentDate}
           dispatchF={depositUpdate}
-          inputStyle={{ color: endDate ? "black" : "lightgray" }}
           datePickerProps={{
             type: "YYYY-MM-DD",
             minDate: `${year - 5}-01-01`,
@@ -123,10 +113,10 @@ function DepositAddContainer({ item, isOnlyOne }) {
           inputType={"number"}
           priceFormat={true}
           formControlProps={{ mb: "5" }}
-          textLabel={{ endText: "원" }}
-          inputStyle={{ width: "90%" }}
-          title={"금액"}
-          helperText={"예치금액 / 적립금액을 입력하세요."}
+          formControlLabelProps={{ text: "금액(원)" }}
+          formControlHelperProps={{
+            text: "예치금액 / 적립금액을 입력하세요.",
+          }}
           alertContent={"정확한 금액을 입력해주세요."}
           id={item.index}
           value={item["price"] || ""}
@@ -136,11 +126,14 @@ function DepositAddContainer({ item, isOnlyOne }) {
         <InputTextComponent
           name="rate"
           inputType={"double"}
-          formControlStyle={{ mb: "10" }}
-          textLabel={{ endText: "%" }}
-          inputStyle={{ width: "90%" }}
-          title={"금리"}
-          helperText={"상품가입 시 적용 금리(이자율)를 입력하세요."}
+          formControlProps={{ mb: "10" }}
+          formControlLabelProps={{ text: "금리(%)" }}
+          formControlHelperProps={{
+            text: "상품가입 시 적용 금리(이자율)를 입력하세요.",
+          }}
+          // inputStyle={{ width: "90%" }}
+          // title={"금리"}
+          // helperText={"상품가입 시 적용 금리(이자율)를 입력하세요."}
           alertContent={"금리를 올바르게 입력해주세요."}
           id={item.index}
           value={item["rate"] || ""}
@@ -148,7 +141,7 @@ function DepositAddContainer({ item, isOnlyOne }) {
           dispatchF={depositUpdate}
         />
       </Box>
-    </VStack>
+    </Box>
   );
 }
 

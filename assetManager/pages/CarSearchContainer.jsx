@@ -17,11 +17,17 @@ function CarSearchContainer({ register }) {
       <Stack>
         <InputTextComponent
           name="car"
-          formControlStyle={{ mb: "10" }}
+          formControlProps={{ mb: "10" }}
+          formControlLabelProps={{
+            text: "차량번호로 등록",
+            marginBottom: 30,
+            fontWeight: "bold",
+          }}
+          formControlHelperProps={{
+            text: "소유중인 차량 번호를 입력해주세요.",
+          }}
           textLabel={{ frontText: "차량번호" }}
-          inputStyle={{ marginTop: 15, width: "75%" }}
-          title={"차량번호로 등록"}
-          helperText={"소유중인 차량 번호를 입력해주세요."}
+          textInputStyle={{ width: "75%" }}
           value={carId}
           dispatchF={carIdUpdate}
         />

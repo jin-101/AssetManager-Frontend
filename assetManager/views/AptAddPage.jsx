@@ -358,7 +358,7 @@ function AptAddPage(props) {
             {/*  ★★★★★ 검색기능 시작 */}
             <Box>
               <InputTextComponent
-                title="아파트 이름 검색하기"
+                formControlLabelProps={{ text: "아파트 이름 검색하기" }}
                 value={searchKeyword}
                 parentSetState={handleSearch}
                 //onChangeText={handleSearch}
@@ -406,49 +406,43 @@ function AptAddPage(props) {
             {/* <Box mb="5"> */}
             {/* 일단 원으로 하고 나중에 상황봐서 억원, 천만원으로 바꾸자 */}
             <InputTextComponent
-              title="매입가격 (원)"
+              formControlLabelProps={{ text: "매입가격 (원)" }}
               inputType="number"
               priceFormat="true"
               value={String(purchasePrice)}
               parentSetState={setPurchasePrice}
+            ></InputTextComponent>
+            {/* </Box> */}
+
+            {/* <Box mb="5"> */}
+            <InputDateComponent
+              formControlLabelProps={{ text: "매입날짜" }}
+              dateTimePicker={{ display: "spinner" }}
+              value={purchaseDate}
+              parentSetState={setPurchaseDate}
+              // ★ 상태를 변경하려면 (1)value와 (2)parentSetState 2개 모두 필요
+              textInputStyle={{ color: "gray" }}
+              formControlProps={{ mb: "5" }}
+              helperText={"아파트 매입 날짜를 선택하세요."}
+              // 달력 모양 설정
+              datePickerProps={{
+                type: "YYYY-MM",
+                minDate: `1990-01`,
+                maxDate: `${year}-12`,
+                daySuffix: "일",
+                width: 300,
+                rowHeight: 60,
+                selectedBorderLineWidth: "2",
+                toolBarCancelStyle: { color: "black" },
+              }}
               // 스타일 적용
               labelStyle={{
                 fontSize: 15,
                 fontWeight: "normal",
                 color: "black",
               }}
-            ></InputTextComponent>
+            ></InputDateComponent>
             {/* </Box> */}
-
-            <Box mb="5">
-              <InputDateComponent
-                title="매입날짜"
-                dateTimePicker={{ display: "spinner" }}
-                value={purchaseDate}
-                parentSetState={setPurchaseDate}
-                // ★ 상태를 변경하려면 (1)value와 (2)parentSetState 2개 모두 필요
-                inputStyle={{ color: "gray" }}
-                formControlStyle={{ w: "100%", mb: "5" }}
-                helperText={"아파트 매입 날짜를 선택하세요."}
-                // 달력 모양 설정
-                datePickerProps={{
-                  type: "YYYY-MM",
-                  minDate: `1990-01`,
-                  maxDate: `${year}-12`,
-                  daySuffix: "일",
-                  width: 300,
-                  rowHeight: 60,
-                  selectedBorderLineWidth: "2",
-                  toolBarCancelStyle: { color: "black" },
-                }}
-                // 스타일 적용
-                labelStyle={{
-                  fontSize: 15,
-                  fontWeight: "normal",
-                  color: "black",
-                }}
-              ></InputDateComponent>
-            </Box>
 
             {/* 6. 대출 Show/Hide 코드 */}
             <Box mb="5">
@@ -472,45 +466,27 @@ function AptAddPage(props) {
                   {isVisible && (
                     <View style={styles.box}>
                       <InputTextComponent
-                        title="대출금액 (원)"
+                        formControlLabelProps={{ text: "대출금액 (원)" }}
                         inputType="number"
                         priceFormat="true" // 금액표시(,) true로 설정
-                        inputStyle={{ width: "100%" }}
+                        textInputStyle={{ width: "100%" }}
                         value={loanAmount}
                         parentSetState={setLoanAmount}
-                        // 스타일 적용
-                        labelStyle={{
-                          fontSize: 15,
-                          fontWeight: "normal",
-                          color: "black",
-                        }}
                       ></InputTextComponent>
                       <InputTextComponent
-                        title="대출금리 (%)"
+                        formControlLabelProps={{ text: "대출금리 (%)" }}
                         inputType="double"
-                        inputStyle={{ width: "100%" }}
+                        textInputStyle={{ width: "100%" }}
                         value={rate}
                         parentSetState={setRate}
-                        // 스타일 적용
-                        labelStyle={{
-                          fontSize: 15,
-                          fontWeight: "normal",
-                          color: "black",
-                        }}
                       ></InputTextComponent>
 
                       <InputTextComponent
-                        title="대출만기 (남은 기간)"
+                        formControlLabelProps={{ text: "대출만기 (남은 기간)" }}
                         placeholder="1년 ~ 50년"
                         inputType="number"
                         value={maturityDate}
                         parentSetState={setMaturityDate}
-                        // 스타일 적용
-                        labelStyle={{
-                          fontSize: 15,
-                          fontWeight: "normal",
-                          color: "black",
-                        }}
                       />
                     </View>
                   )}
