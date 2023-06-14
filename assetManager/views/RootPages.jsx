@@ -1,25 +1,28 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { commonHeaderStyle } from "../styles";
+import { commonHeaderStyle } from "@styles";
 import { useSelector } from "react-redux";
 
-import Login from "@views/Login";
-import Signin from "@views/Signin";
-import MainPage from "@views/MainPage";
-import DepositAddPage from "@views/DepositAddPage";
-import AptAddPage from "@views/AptAddPage";
-import CoinAddPage from "@views/CoinAddPage";
-import AccountBookContainer from "@pages/AccountBookContainer";
-import CarAddPage from "@views/CarAddPage";
-import StockAddPage from "./StockAddPage";
-import SearchIdPage from "./SearchIdPage";
-import SearchPwPage from "./SearchPwPage";
-import GuestPage from "./GuestPage";
-import CurrencyAddPage from "./CurrencyAddPage";
-import GoldAddPage from "./GoldAddPage";
-import AccountBookAnalysis from "../components/AccountBookAnalysis";
-import MokdonPlanner from "./MokdonPlanner";
+import {
+  Login,
+  Signin,
+  MainPage,
+  DepositAddPage,
+  AptAddPage,
+  CoinAddPage,
+  AccountBookContainer,
+  CarAddPage,
+  StockAddPage,
+  SearchIdPage,
+  SearchPwPage,
+  GuestPage,
+  CurrencyAddPage,
+  GoldAddPage,
+  AccountBookAnalysis,
+  MokdonPlanner,
+  UserInfoPage,
+} from "@views";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
@@ -64,11 +67,18 @@ function RootPages() {
         options={{ ...commonHeaderStyle, title: "비밀번호 찾기" }}
       />
 
-      {/* 비밀번호 찾기 페이지 */}
+      {/* 비회원 시세조회 페이지 */}
       <Stack.Screen
         name="Guest"
         component={GuestPage}
         options={{ ...commonHeaderStyle, title: "비회원 시세조회" }}
+      />
+
+      {/* 사용자 기본정보 변경 페이지 */}
+      <Stack.Screen
+        name="UserInfo"
+        component={UserInfoPage}
+        options={{ ...commonHeaderStyle, title: "기본정보 변경" }}
       />
 
       {/* 가계부 페이지 */}

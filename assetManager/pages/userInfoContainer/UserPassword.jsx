@@ -11,6 +11,8 @@ function UserPassword({
   HelperText = "사용할 비밀번호를 입력해주세요.",
   title2 = "비밀번호 확인",
   HelperText2 = "사용할 비밀번호를 입력해주세요.",
+  isReadOnly = false,
+  isReadOnly2 = false,
 }) {
   const dispatch = useDispatch();
   const { userPw, userPwCheck } =
@@ -77,6 +79,8 @@ function UserPassword({
               </Pressable>
             }
             placeholder="Password"
+            isReadOnly={isReadOnly}
+            color={isReadOnly ? "gray.400" : "black"}
           />
           {/* 부연설명 text */}
           <FormControl.HelperText>{HelperText}</FormControl.HelperText>
@@ -128,6 +132,8 @@ function UserPassword({
               </Pressable>
             }
             placeholder="Password"
+            isReadOnly={isReadOnly2}
+            color={isReadOnly2 ? "gray.400" : "black"}
           />
           {/* 부연설명 text */}
           <FormControl.HelperText>{HelperText2}</FormControl.HelperText>
