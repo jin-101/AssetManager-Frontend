@@ -57,7 +57,13 @@ function MokdonPlanner(props) {
       method: "GET",
       data: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
-    });
+    })
+      .then((res) => {
+        console.log("계산한 결과 : " + res.data);
+      })
+      .catch((err) => {
+        console.log("계산에러 : " + err);
+      });
   };
 
   return (
