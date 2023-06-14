@@ -19,6 +19,7 @@ import GuestPage from "./GuestPage";
 import CurrencyAddPage from "./CurrencyAddPage";
 import GoldAddPage from "./GoldAddPage";
 import AccountBookAnalysis from "../components/AccountBookAnalysis";
+import MokdonPlanner from "./MokdonPlanner";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
@@ -119,6 +120,12 @@ function RootPages() {
         name="AddCoin"
         component={CoinAddPage}
         options={{ ...commonHeaderStyle, title: "코인 추가" }}
+      />
+      {/*  */}
+      <Stack.Screen
+        name="mokdonPlanner"
+        component={MokdonPlanner}
+        options={{ ...commonHeaderStyle, title: "목돈 마련 플래너" }}
       />
     </Stack.Navigator>
   );
