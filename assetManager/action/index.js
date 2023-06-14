@@ -21,6 +21,8 @@ import { stockInputUpdate, stockInputReset } from "./stock";
 
 import { currencyInputUpdate, currencyRest } from "./currency";
 
+import {goldInputUpdate,goldInputReset} from "./gold"
+
 export {
   loginStateUpdate,
   pageInitialize,
@@ -40,4 +42,6 @@ export {
   stockInputReset,
   currencyInputUpdate,
   currencyRest,
+  goldInputReset,
+  goldInputUpdate
 };
