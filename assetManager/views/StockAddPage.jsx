@@ -52,9 +52,9 @@ function StockAddPage() {
 
 
   return (
-    <ScrollView bg="primary.100">
+    <ScrollView bg="light.50">
       <VStack mt="10" mb="10" alignItems="center">
-        <Box bg="light.50" p="5" w="90%">
+        <Box bg="primary.100" p="5" w="90%">
           <FormControl>
             <InputTextComponent
               name="stockName"

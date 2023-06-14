@@ -21,6 +21,8 @@ import { STOCK_UPDATE, STOCK_RESET } from "./stock";
 
 import { CURRENCY_UPDATE, CURRENCY_RESET } from "./currency";
 
+import {GOLD_UPDATE,GOLD_RESET} from './gold'
+
 export {
   LOGIN_STATE_UPDATE,
   PAGE_INITIALIZE,
@@ -40,4 +42,7 @@ export {
   STOCK_RESET,
   CURRENCY_UPDATE,
   CURRENCY_RESET,
+  GOLD_UPDATE,
+  GOLD_RESET
+  
 };
