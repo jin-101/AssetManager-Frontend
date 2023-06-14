@@ -109,11 +109,35 @@ function Footerbar() {
         </Pressable>
         <Pressable
           cursor="pointer"
-          opacity={pageState === 3 ? 1 : 0.5}
+          opacity={pageState === 3 ? 1 : 0.6}
           py="2"
           flex={1}
           onPress={() => {
             footNaviAction(3);
+            navigation.setOptions({ title: "통계" });
+          }}
+        >
+          <Center>
+            <Icon
+              mb="1"
+              as={
+                <MaterialCommunityIcons
+                  name={pageState === 3 ? "wallet" : "wallet-outline"}
+                />
+              }
+              color="white"
+              size="lg"
+            />
+            <Text style={styles.footerText}>통계</Text>
+          </Center>
+        </Pressable>
+        <Pressable
+          cursor="pointer"
+          opacity={pageState === 4 ? 1 : 0.5}
+          py="2"
+          flex={1}
+          onPress={() => {
+            footNaviAction(4);
             navigation.setOptions({ title: "가계부" });
           }}
         >
@@ -123,7 +147,7 @@ function Footerbar() {
               as={
                 <MaterialCommunityIcons
                   name={
-                    pageState === 3 ? "book-account" : "book-account-outline"
+                    pageState === 4 ? "book-account" : "book-account-outline"
                   }
                 />
               }
