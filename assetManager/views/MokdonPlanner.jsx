@@ -40,22 +40,23 @@ function MokdonPlanner(props) {
 
   // 계산하기 버튼 눌렀을 때
   const calculateBtn = () => {
-    const data = {
+    let mokdonDto = {
       targetAmount: targetAmount,
       targetPeriod: targetPeriod,
       type: type,
       bank: bank,
     };
-    console.log(data);
-
     if (targetAmount === "" || targetPeriod === "") {
       Alert.alert("", "목표금액과 목표기간 모두 입력해주세요");
       return;
     }
+
+    console.log(mokdonDto);
+
     axios({
       url: `${apiPath}/mokdon/calculate`,
-      method: "GET",
-      data: JSON.stringify(data),
+      method: "POST",
+      data: JSON.stringify(mokdonDto),
       headers: { "Content-Type": "application/json" },
     })
       .then((res) => {
@@ -71,30 +72,24 @@ function MokdonPlanner(props) {
       <VStack mt="10" mb="10" alignItems="center">
         <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mb="5">
           <InputTextComponent
-            title="목표금액"
+            title="목표금액 (만원)"
             inputType="number"
             value={targetAmount}
             parentSetState={setTargetAmount}
-            textLabel={{
-              endText: "만원",
-            }}
-            inputStyle={{ width: "85%" }}
+            //inputStyle={{ width: "85%" }}
             helperText={"모으고 싶은 목표금액을 입력해주세요"}
             formControlProps={{ mb: "5" }}
             priceFormat={true}
           ></InputTextComponent>
           <InputTextComponent
-            title="목표기간"
+            title="목표기간 (개월)"
             formControlLabelProps={{
               text: "ㅁㄴㅇㄹ",
             }}
             inputType="number"
             value={targetPeriod}
             parentSetState={setTargetPeriod}
-            textLabel={{
-              endText: "년",
-            }}
-            inputStyle={{ width: "85%" }}
+            //inputStyle={{ width: "85%" }}
             helperText={"목돈을 모을 기간을 입력해주세요"}
             formControlProps={{ mb: "5" }}
           ></InputTextComponent>
