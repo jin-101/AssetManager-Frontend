@@ -17,6 +17,7 @@ import SearchIdPage from "./SearchIdPage";
 import SearchPwPage from "./SearchPwPage";
 import GuestPage from "./GuestPage";
 import CurrencyAddPage from "./CurrencyAddPage";
+import GoldAddPage from "./GoldAddPage";
 import AccountBookAnalysis from "../components/AccountBookAnalysis";
 
 function RootPages() {
@@ -101,7 +102,7 @@ function RootPages() {
       />
       <Stack.Screen
         name="AddGold"
-        component={DepositAddPage}
+        component={GoldAddPage}
         options={{ ...commonHeaderStyle, title: "금 추가" }}
       />
       <Stack.Screen

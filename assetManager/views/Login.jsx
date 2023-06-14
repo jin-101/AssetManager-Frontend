@@ -9,6 +9,7 @@ import {
   Pressable,
   Stack,
   Text,
+  useToast,
 } from "native-base";
 import React, { useState } from "react";
 import { StyleSheet, View, Alert } from "react-native";
@@ -24,6 +25,7 @@ import Loading from "@components/Loading";
 const style = StyleSheet.create(loginLayoutStyle);
 
 function Login() {
+  const toast = useToast(); // ★ 로그인 성공시 화면 아래에 'OO님 반갑습니다' 를 띄우기 위한 Toast
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
@@ -59,7 +61,15 @@ function Login() {
           dispatch(loginStateUpdate(loginData.userId));
         }
         setIsLoading(false);
-        Alert.alert("", res.data);
+        // ★ 로그인 성공시 toast
+        toast.show({
+          placement: "top",
+          mt: 100, // 이걸로 뜨는 위치 설정
+          description: userId + "님 반갑습니다",
+        });
+
+        //Alert.alert("", res.data);
+
         // token 사용 시 코드
         // if (res.data.length > 50) {
         //   const token = res.data;
