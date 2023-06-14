@@ -9,6 +9,7 @@ import car from "./car";
 import stock from "./stock"
 import signin from "./signin"
 import currecny from "./currecny"
+import gold from "./gold";
 const rootReducer = combineReducers({
   // 리듀서들을 입력한다.
   login,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   car,
   stock,
   signin,
-  currecny
+  currecny,
+  gold
 });
 
 export default rootReducer;
