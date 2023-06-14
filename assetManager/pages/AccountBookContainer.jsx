@@ -3,11 +3,17 @@ import ModalSelector from "react-native-modal-selector";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState, useEffect } from "react";
 
-import { Text, View, TouchableOpacity, Modal, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Modal,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 import { apiPath } from "../services";
 import AccountBookList from "@components/AccountBookList";
 import { Button } from "native-base";
-import { StyleSheet } from "react-native";
 
 function AccountBookContainer() {
   const styles = StyleSheet.create({
