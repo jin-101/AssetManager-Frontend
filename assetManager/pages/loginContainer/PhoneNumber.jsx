@@ -18,10 +18,14 @@ const custom = StyleSheet.create({
   },
 });
 
-function PhoneNumber() {
-  const { phoneNoFirst, phoneNoSecond, phoneNoThird } = useSelector(
-    (state) => state.signin
-  );
+function PhoneNumber({
+  parentState = undefined,
+  parentSetState = undefined,
+  title = "전화번호",
+  HelperText = "사용자의 전화번호를 입력해주세요.",
+}) {
+  const { phoneNoFirst, phoneNoSecond, phoneNoThird } =
+    parentState || useSelector((state) => state.signin);
   const dispatch = useDispatch();
   const setterFunction = (key, text) => {
     const format = req.num;
@@ -29,7 +33,14 @@ function PhoneNumber() {
       Alert.alert(alertText.basic.title, alertText.basic.content);
       return;
     }
-    dispatch(signinStates(key, text));
+    if (parentSetState) {
+      parentSetState({
+        ...parentState,
+        [key]: text,
+      });
+    } else {
+      dispatch(signinStates(key, text));
+    }
   };
 
   return (
@@ -42,7 +53,7 @@ function PhoneNumber() {
     >
       <FormControl w="90%">
         <Text fontSize="lg" fontWeight="bold" mb={1}>
-          {"전화번호"}
+          {title}
         </Text>
         <HStack alignItems="center">
           <View style={{ width: "30%" }}>
@@ -87,9 +98,7 @@ function PhoneNumber() {
           />
         </HStack>
         {/* 부연설명 text */}
-        <FormControl.HelperText>
-          {"사용자의 전화번호를 입력해주세요."}
-        </FormControl.HelperText>
+        <FormControl.HelperText>{HelperText}</FormControl.HelperText>
       </FormControl>
     </Stack>
   );

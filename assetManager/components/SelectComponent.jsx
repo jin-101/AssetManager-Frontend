@@ -53,6 +53,7 @@ function SelectComponent({
         selectedValue={value}
         onValueChange={onChange}
         placeholder="선택해주세요."
+        backgroundColor="white"
         {...selectProps}
       >
         {selectItem.map((el, index) => (

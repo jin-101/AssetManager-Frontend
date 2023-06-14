@@ -18,6 +18,7 @@ import { TextInput, FlatList, Alert, TouchableOpacity } from "react-native"; // 
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";
 import { makeDateString } from "../utils";
+import InputTextComponent from "../components/InputTextComponent";
 
 function CoinAddPage(props) {
   const [market, setMarket] = useState("");
@@ -157,7 +158,7 @@ function CoinAddPage(props) {
   // ★★★★★ 검색 기능을 위한 코드 끝
 
   return (
-    <ScrollView bg="red.100">
+    <ScrollView>
       <VStack mt="10" mb="10" alignItems="center">
         <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mb="5">
           <FormControl>
@@ -224,22 +225,26 @@ function CoinAddPage(props) {
               />
             </Box>
             <Box mb="5">
-              <FormControl.Label>매수 수량</FormControl.Label>
-              <Input
-                isRequired="true" // Required 이거 왜 안 먹히지??
-                keyboardType="numeric"
-                value={String(quantity)}
-                onChangeText={(quantity) => setQuantity(quantity)}
-              />
+              {/* <FormControl.Label>매수 수량</FormControl.Label> */}
+              <InputTextComponent
+                title="매수 수량"
+                inputType="number"
+                value={quantity}
+                parentSetState={setQuantity}
+                //value={String(quantity)}
+                //onChangeText={(quantity) => setQuantity(quantity)}
+              ></InputTextComponent>
             </Box>
             <Box mb="5">
-              <FormControl.Label>매수 가격 (원)</FormControl.Label>
-              <Input
-                isRequired="true"
-                keyboardType="numeric"
-                value={String(price)}
-                onChangeText={(price) => setPrice(inputPriceFormat(price))}
-              />
+              {/* <FormControl.Label>매수 가격 (원)</FormControl.Label> */}
+              <InputTextComponent
+                title="매수 가격 (원)"
+                inputType="double"
+                value={price}
+                parentSetState={setPrice}
+                //value={String(price)}
+                //onChangeText={(price) => setPrice(inputPriceFormat(price))}
+              ></InputTextComponent>
             </Box>
 
             {/* SendAndResetButton 컴포넌트로 대체하고 싶은 부분 */}

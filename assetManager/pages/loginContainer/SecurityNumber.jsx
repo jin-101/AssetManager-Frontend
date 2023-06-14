@@ -18,10 +18,14 @@ const custom = StyleSheet.create({
   },
 });
 
-function SecurityNumber() {
-  const { securityNoFirst, securityNoSecond } = useSelector(
-    (state) => state.signin
-  );
+function SecurityNumber({
+  parentState = undefined,
+  parentSetState = undefined,
+  title = "주민등록번호",
+  HelperText = "사용자의 주민등록번호를 입력해주세요.",
+}) {
+  const { securityNoFirst, securityNoSecond } =
+    parentState || useSelector((state) => state.signin);
   const dispatch = useDispatch();
 
   const [securityNoSecondShow, setSecurityNoSecondShow] = useState(false);
@@ -32,7 +36,14 @@ function SecurityNumber() {
       Alert.alert(alertText.basic.title, alertText.basic.content);
       return;
     }
-    dispatch(signinStates(key, text));
+    if (parentSetState) {
+      parentSetState({
+        ...parentState,
+        [key]: text,
+      });
+    } else {
+      dispatch(signinStates(key, text));
+    }
   };
   return (
     <Stack
@@ -44,7 +55,7 @@ function SecurityNumber() {
     >
       <FormControl w="90%">
         <Text fontSize="lg" fontWeight="bold" mb={1}>
-          {"주민등록번호"}
+          {title}
         </Text>
         <HStack alignItems="center">
           <View style={{ width: "45%" }}>
@@ -101,9 +112,7 @@ function SecurityNumber() {
           </View>
         </HStack>
         {/* 부연설명 text */}
-        <FormControl.HelperText>
-          {"사용자의 주민등록번호를 입력해주세요."}
-        </FormControl.HelperText>
+        <FormControl.HelperText>{HelperText}</FormControl.HelperText>
       </FormControl>
     </Stack>
   );

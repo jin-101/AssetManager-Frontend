@@ -8,13 +8,16 @@ import SecurityNumber from "../pages/loginContainer/SecurityNumber";
 import PhoneNumber from "../pages/loginContainer/PhoneNumber";
 import Email from "../pages/loginContainer/Email";
 import Address from "../pages/loginContainer/Address";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { apiPath } from "../services";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import { inputFormCheckFunction } from "../utils";
+import { signinInitialize } from "../action/signin";
 
 function Signin(props) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const {
     userId,
     userPw,
@@ -32,72 +35,28 @@ function Signin(props) {
   } = useSelector((state) => state.signin);
 
   const register = () => {
-    if (userId === "") {
-      Alert.alert("", "아이디를 입력하세요.");
+    if (inputFormCheckFunction("userId", userId)) return;
+    if (inputFormCheckFunction("userPw", userPw, userPwCheck)) return;
+    if (inputFormCheckFunction("userName", userName)) return;
+    if (
+      inputFormCheckFunction(
+        "securityNumber",
+        securityNoFirst,
+        securityNoSecond
+      )
+    )
       return;
-    }
-
-    if (userPw === "") {
-      Alert.alert("", "비밀번호를 입력하세요.");
+    if (
+      inputFormCheckFunction(
+        "phoneNumber",
+        phoneNoFirst,
+        phoneNoSecond,
+        phoneNoThird
+      )
+    )
       return;
-    }
-
-    if (userName === "") {
-      Alert.alert("", "이름을 입력하세요.");
-      return;
-    }
-
-    if (userPwCheck === "") {
-      Alert.alert("", "비밀번호 확인을 입력하세요.");
-      return;
-    } else if (userPw !== userPwCheck) {
-      Alert.alert("", "입력한 비밀번호가 같지 않습니다.");
-      return;
-    }
-
-    if (securityNoFirst === "" || securityNoSecond === "") {
-      Alert.alert("", "주민등록번호를 입력하세요.");
-      return;
-    } else if (
-      Number(securityNoSecond[0]) > 4 ||
-      securityNoFirst.length !== 6 ||
-      securityNoSecond.length !== 7
-    ) {
-      Alert.alert("", "주민등록번호를 형식이 잘못되었습니다.");
-      return;
-    } else {
-      const dateRegex = /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])$/;
-      if (!dateRegex.test(securityNoFirst)) {
-        Alert.alert("", "주민등록번호의 생년월일이 올바르지 않습니다.");
-        return;
-      }
-    }
-
-    if (phoneNoFirst === "" || phoneNoSecond === "" || phoneNoThird === "") {
-      Alert.alert("", "전화번호를 입력하세요.");
-      return;
-    } else {
-      if (phoneNoSecond.length < 4 || phoneNoThird.length < 4) {
-        Alert.alert("", "전화번호의 형식이 잘못되었습니다.");
-        return;
-      }
-    }
-
-    if (email === "") {
-      Alert.alert("", "이메일을 입력하세요.");
-      return;
-    } else {
-      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-      if (!emailRegex.test(email)) {
-        Alert.alert("", "이메일을 형식이 잘못되었습니다.");
-        return;
-      }
-    }
-
-    if (zonePost === "") {
-      Alert.alert("", "주소를 입력하세요.");
-      return;
-    }
+    if (inputFormCheckFunction("email", email)) return;
+    if (inputFormCheckFunction("zonePost", zonePost)) return;
 
     axios({
       headers: { "Content-Type": `application/json` },
@@ -115,28 +74,13 @@ function Signin(props) {
     })
       .then((res) => {
         console.log(res);
+        dispatch(signinInitialize());
         Alert.alert(res.data);
         navigation.navigate("Login");
       })
       .catch((err) => {
         console.log(err, "//");
       });
-
-    console.log("모두 통과 등록~~~", {
-      userId,
-      userPw,
-      userPwCheck,
-      userName,
-      securityNoFirst,
-      securityNoSecond,
-      phoneNoFirst,
-      phoneNoSecond,
-      phoneNoThird,
-      email,
-      zonePost,
-      addressFirst,
-      addressSecond,
-    });
   };
   return (
     <View>

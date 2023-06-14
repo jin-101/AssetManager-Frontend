@@ -1,10 +1,12 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+
+const { width, height } = Dimensions.get("window");
 
 export const modalBg = {
   position: "absolute",
+  width: width,
+  height: height,
   top: 0,
-  width: "100%",
-  height: "100%",
   backgroundColor: "gray",
   opacity: 0.5,
 };

@@ -6,14 +6,8 @@ function Loading(props) {
   return (
     <View>
       <Box style={{ ...modalBg, opacity: 0.2 }}></Box>
-      <HStack
-        w="100%"
-        h="100%"
-        space={2}
-        alignItems="center"
-        justifyContent="center"
-        bg="red"
-      >
+      <Box style={{ ...modalBg, opacity: 0 }}></Box>
+      <HStack w="100%" h="100%" alignItems="center" justifyContent="center">
         <Spinner accessibilityLabel="Loading posts" />
         <Heading color="primary.500" fontSize="md">
           Loading

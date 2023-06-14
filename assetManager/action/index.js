@@ -1,5 +1,5 @@
 import { loginStateUpdate } from "./login";
-import { pageUpdate } from "./nav";
+import { pageInitialize, pageUpdate } from "./nav";
 import {
   depositInitialize,
   depositAdd,
@@ -17,13 +17,13 @@ import {
 } from "./car";
 // Redeux를 사용할 떄, action 함수
 
-import {
-  stockInputUpdate,
-  stockInputReset
-} from './stock'
+import { stockInputUpdate, stockInputReset } from "./stock";
+
+import { currencyInputUpdate, currencyRest } from "./currency";
 
 export {
   loginStateUpdate,
+  pageInitialize,
   pageUpdate,
   depositInitialize,
   depositAdd,
@@ -37,5 +37,7 @@ export {
   carModelUpdate,
   carYearUpdate,
   stockInputUpdate,
-  stockInputReset
+  stockInputReset,
+  currencyInputUpdate,
+  currencyRest,
 };

@@ -19,6 +19,7 @@ import { apiPath } from "../services";
 import { loginStateUpdate } from "../action";
 import { loginLayoutStyle } from "../styles";
 import { signinInitialize } from "../action/signin";
+import Loading from "../components/Loading";
 
 const style = StyleSheet.create(loginLayoutStyle);
 
@@ -28,11 +29,24 @@ function Login() {
   const [show, setShow] = useState(false);
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   // 로그인
   const loginBtn = () => {
     const loginData = { userId: userId, userPw: userPw };
     console.log(loginData);
+
+    axios.interceptors.request.use(
+      function (config) {
+        setIsLoading(true);
+        return config;
+      },
+      function (error) {
+        // 요청 설정을 수정하는 중에 오류가 발생한 경우 실행됩니다.
+        return Promise.reject(error);
+      }
+    );
+
     axios({
       url: `${apiPath}/user/login`,
       method: "POST",
@@ -43,8 +57,9 @@ function Login() {
         console.log(res.data);
         if (res.data === "로그인성공") {
           dispatch(loginStateUpdate(loginData.userId));
-        } else Alert.alert("", res.data);
-
+        }
+        setIsLoading(false);
+        Alert.alert("", res.data);
         // token 사용 시 코드
         // if (res.data.length > 50) {
         //   const token = res.data;
@@ -52,6 +67,7 @@ function Login() {
         // } else Alert.alert("", res.data);
       })
       .catch((err) => {
+        setIsLoading(false);
         console.log(err);
       });
   };
@@ -77,6 +93,8 @@ function Login() {
   const guestBtn = () => {
     navigation.navigate("Guest");
   };
+
+  if (isLoading) return <Loading />;
   return (
     <View style={style.container}>
       <View style={style.header}></View>
