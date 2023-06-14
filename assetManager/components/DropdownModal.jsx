@@ -3,6 +3,7 @@ import {
   Actionsheet,
   Box,
   Button,
+  Divider,
   HStack,
   Text,
   View,
@@ -34,8 +35,16 @@ function DropdownModal({ content }) {
       >
         <Actionsheet.Content>
           {content?.map((el, i) => (
-            <View w="100%" key={el.index}>
+            <View
+              w="100%"
+              key={el.index}
+              alignItems="center"
+              // backgroundColor="amber.100"
+            >
+              {/* <Divider /> */}
               <Actionsheet.Item
+                w="90%"
+                // backgroundColor="red.100"
                 onTouchEnd={() => {
                   setDropdown({
                     ...dropdownInit,
@@ -44,39 +53,53 @@ function DropdownModal({ content }) {
                 }}
               >
                 <HStack alignItems="center">
-                  <Text
-                    mr="2"
-                    fontSize="2xl"
-                    color={dropdown["item" + i] ? "green.700" : "black"}
-                  >
-                    {el.title}
-                  </Text>
-                  {dropdown["item" + i] ? (
-                    <Entypo name="triangle-up" size={20} color="green" />
-                  ) : (
-                    <Entypo name="triangle-down" size={20} />
-                  )}
+                  <View w="95%">
+                    <Text
+                      mr="2"
+                      fontSize="2xl"
+                      // fontWeight="bold"
+                      color={dropdown["item" + i] ? "green.700" : "black"}
+                    >
+                      {el.title}
+                    </Text>
+                  </View>
+                  <View>
+                    {dropdown["item" + i] ? (
+                      <Entypo name="triangle-up" size={20} color="green" />
+                    ) : (
+                      <Entypo name="triangle-down" size={20} />
+                    )}
+                  </View>
                 </HStack>
               </Actionsheet.Item>
               <>
+                <Divider w="90%" />
                 {dropdown["item" + i] ? (
-                  <Box w="100%" key={i}>
+                  <Box w="90%" key={i}>
                     {el?.list?.map((li, j) => (
                       <Box
                         key={j}
                         w="100%"
                         h={60}
-                        px={4}
+                        px={2}
                         justifyContent="center"
+                        // backgroundColor="yellow.100"
                         onTouchEnd={() => {
                           setDropdown(dropdownInit);
                           onClose();
                           navigation.navigate(li.key); //page 이동 (App.js에서 mapping)
                         }}
                       >
-                        <Actionsheet.Item key={j}>{li.title}</Actionsheet.Item>
+                        <Actionsheet.Item
+                          key={j}
+                          // backgroundColor="blue.100"
+                          alignItems="center"
+                        >
+                          <Text fontSize="xl">{li.title}</Text>
+                        </Actionsheet.Item>
                       </Box>
                     ))}
+                    <Divider w="100%" />
                   </Box>
                 ) : undefined}
               </>
