@@ -8,9 +8,10 @@ import { useDispatch } from "react-redux";
 const SearchAddress = ({
   btnStyle,
   dispatchF,
+  parentSetState,
   post,
   address1,
-  parentState,
+  isDisabled = false,
 }) => {
   const dispatch = useDispatch();
   const [isModal, setModal] = useState(false);
@@ -52,15 +53,22 @@ const SearchAddress = ({
             onSelected={(data) => {
               const { address, zonecode } = data;
               console.log(data);
-              dispatch(dispatchF(post, zonecode));
-              dispatch(dispatchF(address1, address));
-              // if (parentState) parentState(address);
+              if (parentSetState)
+                parentSetState({
+                  zonePost: zonecode,
+                  addressFirst: address,
+                  addressSecond: "",
+                });
+              else {
+                dispatch(dispatchF(post, zonecode));
+                dispatch(dispatchF(address1, address));
+              }
               onPress();
             }}
           />
         </Modal>
       )}
-      <Button {...btnStyle} onPress={onPress}>
+      <Button {...btnStyle} onPress={onPress} disabled={isDisabled}>
         {"주소검색"}
       </Button>
     </>

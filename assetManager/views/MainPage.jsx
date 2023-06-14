@@ -10,8 +10,8 @@ import HomeContainer from "@pages/HomeContainer";
 import SearchContainer from "@pages/SearchContainer";
 import AssetContainer from "@pages/AssetContainer";
 import AccountBookContainer from "@pages/AccountBookContainer";
+import MainPageModalContent from "@pages/MainPageModalContent";
 import { pageInitialize } from "../action";
-import MainPageModalContent from "../pages/MainPageModalContent";
 import { useToast } from "native-base";
 
 const styles = StyleSheet.create({
@@ -93,7 +93,12 @@ function MainPage() {
         animationIn="slideInRight"
         animationOut="slideOutRight"
       >
-        <MainPageModalContent onPress={modalSlideFunction} toast={toast} />
+        <MainPageModalContent
+          userName="000"
+          userlastInTime="00/00/00"
+          onPress={modalSlideFunction}
+          toast={toast}
+        />
       </Modal>
     </>
   );

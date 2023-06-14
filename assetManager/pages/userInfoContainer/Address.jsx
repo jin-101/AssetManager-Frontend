@@ -18,10 +18,15 @@ const custom = StyleSheet.create({
   },
 });
 
-function Address() {
-  const { zonePost, addressFirst, addressSecond } = useSelector(
-    (state) => state.signin
-  );
+function Address({
+  parentState = undefined,
+  parentSetState = undefined,
+  title = "주소",
+  HelperText = "사용자의 주소를 검색해주세요.",
+  isDisabled = false,
+}) {
+  const { zonePost, addressFirst, addressSecond } =
+    parentState || useSelector((state) => state.signin);
   const dispatch = useDispatch();
 
   console.log(zonePost, addressFirst);
@@ -35,7 +40,7 @@ function Address() {
     >
       <FormControl w="90%">
         <Text fontSize="lg" fontWeight="bold" mb={1}>
-          {"주소"}
+          {title}
         </Text>
         <HStack mb="1">
           <View style={{ width: "74%", marginRight: 4 }}>
@@ -43,7 +48,11 @@ function Address() {
               style={{
                 ...custom.inputStyle,
                 width: "100%",
-                color: addressFirst.length > 0 ? "black" : "gray",
+                color: isDisabled
+                  ? "lightgray"
+                  : addressFirst.length > 0
+                  ? "black"
+                  : "gray",
               }}
               value={zonePost}
               editable={false}
@@ -60,9 +69,11 @@ function Address() {
           </View>
           <SearchAddress
             dispatchF={signinStates}
+            parentSetState={parentSetState}
             post="zonePost"
             address1="addressFirst"
             btnStyle={{ width: "25%" }}
+            isDisabled={isDisabled}
           />
         </HStack>
         <TextInput
@@ -70,7 +81,11 @@ function Address() {
             ...custom.inputStyle,
             width: "100%",
             marginBottom: 3,
-            color: addressFirst.length > 0 ? "black" : "gray",
+            color: isDisabled
+              ? "lightgray"
+              : addressFirst.length > 0
+              ? "black"
+              : "gray",
           }}
           value={addressFirst}
           editable={false}
@@ -81,19 +96,20 @@ function Address() {
           style={{
             ...custom.inputStyle,
             width: "100%",
+            color: isDisabled ? "lightgray" : "black",
           }}
           value={addressSecond}
-          editable={addressFirst.length > 0}
+          editable={isDisabled ? false : addressFirst.length > 0}
           placeholder="address2"
           placeholderTextColor={addressFirst.length > 0 ? "gray" : "lightgray"}
           onChangeText={(text) => {
-            dispatch(signinStates("addressSecond", text));
+            if (parentSetState)
+              parentSetState({ ...parentState, addressSecond: text });
+            else dispatch(signinStates("addressSecond", text));
           }}
         />
         {/* 부연설명 text */}
-        <FormControl.HelperText>
-          {"사용자의 주소를 검색해주세요."}
-        </FormControl.HelperText>
+        <FormControl.HelperText>{HelperText}</FormControl.HelperText>
       </FormControl>
     </Stack>
   );

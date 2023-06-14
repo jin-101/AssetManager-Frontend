@@ -4,11 +4,18 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { signinStates } from "../../action/signin";
 import { useDispatch, useSelector } from "react-redux";
 
-function Email() {
-  const { email } = useSelector((state) => state.signin);
+function Email({
+  parentState = undefined,
+  parentSetState = undefined,
+  title = "이메일",
+  HelperText = "사용자의 이메일을 입력해주세요.",
+  isReadOnly = false,
+}) {
+  const { email } = parentState || useSelector((state) => state.signin);
   const dispatch = useDispatch();
   const onchange = (text) => {
-    dispatch(signinStates("email", text));
+    if (parentSetState) parentSetState({ email: text });
+    else dispatch(signinStates("email", text));
   };
   return (
     <Stack
@@ -20,7 +27,7 @@ function Email() {
     >
       <FormControl w="90%">
         <Text fontSize="lg" fontWeight="bold" mb={1}>
-          {"이메일"}
+          {title}
         </Text>
         <Input
           value={email}
@@ -40,11 +47,11 @@ function Email() {
             />
           }
           placeholder="email"
+          isReadOnly={isReadOnly}
+          color={isReadOnly ? "gray.400" : "black"}
         />
         {/* 부연설명 text */}
-        <FormControl.HelperText>
-          {"사용자의 이메일을 입력해주세요."}
-        </FormControl.HelperText>
+        <FormControl.HelperText>{HelperText}</FormControl.HelperText>
       </FormControl>
     </Stack>
   );
