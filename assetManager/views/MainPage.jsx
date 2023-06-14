@@ -64,12 +64,7 @@ function MainPage() {
 
   const logoutBtn = () => {
     return (
-      <Button
-        bg="red.500"
-        color="white"
-        borderRadius="lg"
-        onPress={logoutOnPress}
-      >
+      <Button bg="blue.500" borderRadius="lg" onPress={logoutOnPress}>
         {"로그아웃"}
       </Button>
     );
