@@ -81,9 +81,6 @@ function CarAddContainer({ register }) {
           formControlProps={{ marginBottom: 10 }}
           formControlLabelProps={{
             text: "제조사 조회",
-            fontSize: 15,
-            fontWeight: "normal",
-            color: "black",
           }}
           formControlHelperProps={{ text: "소유차량의 제조사를 선택하세요." }}
           // selectProps={{}}

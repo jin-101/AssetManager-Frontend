@@ -60,8 +60,7 @@ function InputDateComponent({
             style={{
               ...inputTagCommonStyle,
               color: "gray",
-              width: "68%",
-              marginLeft: "10%",
+              width: "58%",
               ...textInputStyle,
             }}
             value={value}

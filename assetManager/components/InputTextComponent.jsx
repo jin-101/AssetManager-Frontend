@@ -78,7 +78,6 @@ function InputTextComponent({
         }}
         {...formControlLabelProps}
       >
-        {/* {title} */}
         {formControlLabelText}
       </Text>
 

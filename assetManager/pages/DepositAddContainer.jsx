@@ -22,8 +22,8 @@ function DepositAddContainer({ item, isOnlyOne }) {
   }, []);
 
   return (
-    <VStack alignItems="center">
-      <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+    <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+      <Box w="100%">
         <HStack
           justifyContent="space-around"
           alignItems="center"
@@ -50,24 +50,13 @@ function DepositAddContainer({ item, isOnlyOne }) {
           name="depositType"
           formControlProps={{ mb: "8", isDisabled: true }}
           formControlLabelProps={{
-            w: "40%",
-            _disabled: {
-              ...{
-                _text: {
-                  fontSize: "lg",
-                  color: "black",
-                  fontWeight: "bold",
-                },
-              },
-            },
             text: "상품 선택",
           }}
-          // title={"상품 선택"}
           radioButtonList={[
             {
               text: "예금",
               value: "deposit",
-              liStyle: { alignItems: "center", ml: "3", mr: "10" },
+              liStyle: { alignItems: "center", ml: "5", mr: "10" },
             },
             {
               text: "적금",
@@ -124,10 +113,10 @@ function DepositAddContainer({ item, isOnlyOne }) {
           inputType={"number"}
           priceFormat={true}
           formControlProps={{ mb: "5" }}
-          formControlLabelProps={{ text: "금액" }}
-          formControlHelperProps={{ text: "예치금액 / 적립금액을 입력하세요." }}
-          textLabel={{ endText: "원" }}
-          // textInputStyle={{ width: "90%" }}
+          formControlLabelProps={{ text: "금액(원)" }}
+          formControlHelperProps={{
+            text: "예치금액 / 적립금액을 입력하세요.",
+          }}
           alertContent={"정확한 금액을 입력해주세요."}
           id={item.index}
           value={item["price"] || ""}
@@ -138,11 +127,10 @@ function DepositAddContainer({ item, isOnlyOne }) {
           name="rate"
           inputType={"double"}
           formControlProps={{ mb: "10" }}
-          formControlLabelProps={{ text: "금리" }}
+          formControlLabelProps={{ text: "금리(%)" }}
           formControlHelperProps={{
             text: "상품가입 시 적용 금리(이자율)를 입력하세요.",
           }}
-          textLabel={{ endText: "%" }}
           // inputStyle={{ width: "90%" }}
           // title={"금리"}
           // helperText={"상품가입 시 적용 금리(이자율)를 입력하세요."}
@@ -153,7 +141,7 @@ function DepositAddContainer({ item, isOnlyOne }) {
           dispatchF={depositUpdate}
         />
       </Box>
-    </VStack>
+    </Box>
   );
 }
 
