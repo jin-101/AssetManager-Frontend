@@ -18,6 +18,7 @@ import SearchPwPage from "./SearchPwPage";
 import GuestPage from "./GuestPage";
 import CurrencyAddPage from "./CurrencyAddPage";
 import GoldAddPage from "./GoldAddPage";
+import AccountBookAnalysis from "../components/AccountBookAnalysis";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
@@ -69,10 +70,18 @@ function RootPages() {
         options={{ ...commonHeaderStyle, title: "비회원 시세조회" }}
       />
 
+      {/* 가계부 페이지 */}
       <Stack.Screen
         name="AccountBook"
         component={AccountBookContainer}
         options={{ ...commonHeaderStyle, title: "가계부" }}
+      />
+
+      {/* 가계부 분석 페이지 */}
+      <Stack.Screen
+        name="AccountBookAnalysis"
+        component={AccountBookAnalysis}
+        options={{ ...commonHeaderStyle, title: "가계부 분석" }}
       />
 
       {/* 모달 이동 페이지 - 자산 */}

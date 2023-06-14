@@ -2,6 +2,8 @@ import axios from "axios";
 import ModalSelector from "react-native-modal-selector";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+// import Loading from "@components/Loading";
 
 import {
   Text,
@@ -14,6 +16,7 @@ import {
 import { apiPath } from "../services";
 import AccountBookList from "@components/AccountBookList";
 import { Button } from "native-base";
+import AccountBookAnalysis from "../components/AccountBookAnalysis";
 
 function AccountBookContainer() {
   const styles = StyleSheet.create({
@@ -36,9 +39,11 @@ function AccountBookContainer() {
   const [data, setData] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
-  const [showModal2, setShowModal2] = useState(false);
+
+  // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    // console.log("여기들어왔다");
     axios({
       method: "post",
       url: apiPath + "/rest/webboard/list.do",
@@ -51,9 +56,11 @@ function AccountBookContainer() {
       .then((response) => {
         //console.log(response.data);
         setData(response.data);
+        // if (response.data.length > 0) console.log(response.data, "///");
+        // setIsLoading(true);
       })
       .catch((error) => {});
-  }, [currentYear, currentMonth]);
+  }, [currentMonth]);
 
   const ListSave = () => {
     //console.log("컨테이너에서///////" + JSON.stringify(itemList));
@@ -93,10 +100,6 @@ function AccountBookContainer() {
     setShowModal((prevState) => !prevState);
     setSelectedYear(currentYear);
     setSelectedMonth(currentMonth);
-  };
-
-  const openCategoryModal = () => {
-    setShowModal2((prevState) => !prevState);
   };
 
   const handleSelectMonth = () => {
@@ -142,189 +145,204 @@ function AccountBookContainer() {
     return comma(uncomma(str));
   };
 
+  const navigation = useNavigation();
+
+  const moveToAnalysis = () => {
+    navigation.navigate("AccountBookAnalysis", { itemList, currentMonth });
+  };
+
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 20,
-        }}
-      >
-        <View style={{ flex: 1, marginLeft: 15, marginBottom: 10 }}>
-          <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity onPress={handleMinusMonth}>
-              <Ionicons
-                name="caret-back-outline"
-                style={{ marginTop: 9, marginRight: 10, fontSize: 13 }}
-              ></Ionicons>
-            </TouchableOpacity>
+    <>
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            marginTop: 20,
+          }}
+        >
+          <View style={{ flex: 1, marginLeft: 15, marginBottom: 10 }}>
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity onPress={handleMinusMonth}>
+                <Ionicons
+                  name="caret-back-outline"
+                  style={{ marginTop: 9, marginRight: 10, fontSize: 13 }}
+                ></Ionicons>
+              </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleToggleModal}>
-              <Text style={{ fontSize: 18, fontWeight: "bold", marginTop: 3 }}>
-                {currentYear}년 {currentMonth}월
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={handleToggleModal}>
+                <Text
+                  style={{ fontSize: 18, fontWeight: "bold", marginTop: 3 }}
+                >
+                  {currentYear}년 {currentMonth}월
+                </Text>
+              </TouchableOpacity>
 
-            {/* 월별 선택 모달 */}
-            <Modal
-              visible={showModal}
-              animationType="slide"
-              transparent={true}
-              onRequestClose={handleToggleModal}
-              presentationStyle="overFullScreen"
-            >
-              <TouchableOpacity
-                style={{ flex: 1 }}
-                activeOpacity={1}
-                onPress={handleBackdropPress}
+              {/* 월별 선택 모달 */}
+              <Modal
+                visible={showModal}
+                animationType="slide"
+                transparent={true}
+                onRequestClose={handleToggleModal}
+                presentationStyle="overFullScreen"
               >
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
-                    zIndex: 1,
-                  }}
+                <TouchableOpacity
+                  style={{ flex: 1 }}
+                  activeOpacity={1}
+                  onPress={handleBackdropPress}
                 >
                   <View
                     style={{
-                      backgroundColor: "white",
-                      padding: 20,
-                      borderRadius: 10,
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor: "rgba(0, 0, 0, 0.5)",
+                      zIndex: 1,
                     }}
                   >
                     <View
                       style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        width: 200,
-                        height: 40,
+                        backgroundColor: "white",
+                        padding: 20,
+                        borderRadius: 10,
                       }}
                     >
-                      <ModalSelector
-                        data={[
-                          { key: 2020, label: "2020년" },
-                          { key: 2021, label: "2021년" },
-                          { key: 2022, label: "2022년" },
-                          { key: 2023, label: "2023년" },
-                        ]}
-                        initValue={selectedYear.toString() + "년"}
-                        onChange={(option) => setSelectedYear(option.key)}
-                        style={{
-                          flex: 1,
-                        }}
-                        initValueTextStyle={{ color: "black" }}
-                        selectStyle={{ borderWidth: 0 }}
-                        optionContainerStyle={{ borderRadius: 5 }}
-                        optionTextStyle={{ fontSize: 16 }}
-                        cancelText="취소"
-                        backdropPressToClose={true}
-                      />
-
-                      <ModalSelector
-                        data={[
-                          { key: 1, label: "1월" },
-                          { key: 2, label: "2월" },
-                          { key: 3, label: "3월" },
-                          { key: 4, label: "4월" },
-                          { key: 5, label: "5월" },
-                          { key: 6, label: "6월" },
-                          { key: 7, label: "7월" },
-                          { key: 8, label: "8월" },
-                          { key: 9, label: "9월" },
-                          { key: 10, label: "10월" },
-                          { key: 11, label: "11월" },
-                          { key: 12, label: "12월" },
-                        ]}
-                        initValue={selectedMonth.toString() + "월"}
-                        onChange={(option) => setSelectedMonth(option.key)}
-                        style={{ flex: 1 }}
-                        selectStyle={{ borderWidth: 0 }}
-                        optionContainerStyle={{ borderRadius: 5 }}
-                        optionTextStyle={{ fontSize: 16 }}
-                        cancelText="취소"
-                        backdropPressToClose={true}
-                        initValueTextStyle={{ color: "black" }}
-                      />
-                    </View>
-
-                    <View style={{ flexDirection: "row" }}>
                       <View
                         style={{
-                          flex: 1,
-                          marginLeft: 35,
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          width: 200,
+                          height: 40,
                         }}
                       >
-                        <TouchableOpacity
-                          onPress={handleSelectMonth}
-                          style={{ marginTop: 20 }}
-                        >
-                          <Text style={{ fontSize: 16, color: "blue" }}>
-                            적용
-                          </Text>
-                        </TouchableOpacity>
+                        <ModalSelector
+                          data={[
+                            { key: 2020, label: "2020년" },
+                            { key: 2021, label: "2021년" },
+                            { key: 2022, label: "2022년" },
+                            { key: 2023, label: "2023년" },
+                          ]}
+                          initValue={selectedYear.toString() + "년"}
+                          onChange={(option) => setSelectedYear(option.key)}
+                          style={{
+                            flex: 1,
+                          }}
+                          initValueTextStyle={{ color: "black" }}
+                          selectStyle={{ borderWidth: 0 }}
+                          optionContainerStyle={{ borderRadius: 5 }}
+                          optionTextStyle={{ fontSize: 16 }}
+                          cancelText="취소"
+                          backdropPressToClose={true}
+                        />
+
+                        <ModalSelector
+                          data={[
+                            { key: 1, label: "1월" },
+                            { key: 2, label: "2월" },
+                            { key: 3, label: "3월" },
+                            { key: 4, label: "4월" },
+                            { key: 5, label: "5월" },
+                            { key: 6, label: "6월" },
+                            { key: 7, label: "7월" },
+                            { key: 8, label: "8월" },
+                            { key: 9, label: "9월" },
+                            { key: 10, label: "10월" },
+                            { key: 11, label: "11월" },
+                            { key: 12, label: "12월" },
+                          ]}
+                          initValue={selectedMonth.toString() + "월"}
+                          onChange={(option) => setSelectedMonth(option.key)}
+                          style={{ flex: 1 }}
+                          selectStyle={{ borderWidth: 0 }}
+                          optionContainerStyle={{ borderRadius: 5 }}
+                          optionTextStyle={{ fontSize: 16 }}
+                          cancelText="취소"
+                          backdropPressToClose={true}
+                          initValueTextStyle={{ color: "black" }}
+                        />
                       </View>
 
-                      <View
-                        style={{
-                          flex: 1,
-                          alignItems: "flex-end",
-                          marginRight: 35,
-                        }}
-                      >
-                        <TouchableOpacity
-                          onPress={handleToggleModal}
-                          style={{ marginTop: 20 }}
+                      <View style={{ flexDirection: "row" }}>
+                        <View
+                          style={{
+                            flex: 1,
+                            marginLeft: 35,
+                          }}
                         >
-                          <Text style={{ fontSize: 16, color: "blue" }}>
-                            닫기
-                          </Text>
-                        </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={handleSelectMonth}
+                            style={{ marginTop: 20 }}
+                          >
+                            <Text style={{ fontSize: 16, color: "blue" }}>
+                              적용
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+
+                        <View
+                          style={{
+                            flex: 1,
+                            alignItems: "flex-end",
+                            marginRight: 35,
+                          }}
+                        >
+                          <TouchableOpacity
+                            onPress={handleToggleModal}
+                            style={{ marginTop: 20 }}
+                          >
+                            <Text style={{ fontSize: 16, color: "blue" }}>
+                              닫기
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
                       </View>
                     </View>
                   </View>
-                </View>
+                </TouchableOpacity>
+              </Modal>
+              {/* 월별 선택 모달 */}
+              <TouchableOpacity onPress={handlePlusMonth}>
+                <Ionicons
+                  name="caret-forward-outline"
+                  style={{ marginTop: 9, marginLeft: 10, fontSize: 13 }}
+                ></Ionicons>
               </TouchableOpacity>
-            </Modal>
-            {/* 월별 선택 모달 */}
-            <TouchableOpacity onPress={handlePlusMonth}>
-              <Ionicons
-                name="caret-forward-outline"
-                style={{ marginTop: 9, marginLeft: 10, fontSize: 13 }}
-              ></Ionicons>
-            </TouchableOpacity>
 
-            <View style={{ flex: 1, alignItems: "flex-end", marginRight: 25 }}>
-              <Button onPress={ListSave}>{"저장"}</Button>
+              <View
+                style={{ flex: 1, alignItems: "flex-end", marginRight: 25 }}
+              >
+                <Button onPress={ListSave}>{"저장"}</Button>
+              </View>
+              <View style={{ marginRight: 25 }}>
+                <Button onPress={moveToAnalysis}>분석</Button>
+              </View>
+            </View>
+            <View>
+              <Text style={styles.depositandwithdraw}>
+                지출 : {inputPriceFormat(calculateWithdrawTotal())}원
+              </Text>
+              <Text style={styles.depositandwithdraw}>
+                수입 : {inputPriceFormat(calculateDepositTotal())}원
+              </Text>
             </View>
           </View>
-          <View>
-            <Text style={styles.depositandwithdraw}>
-              지출 : {inputPriceFormat(calculateWithdrawTotal())}원
-            </Text>
-            <Text style={styles.depositandwithdraw}>
-              수입 : {inputPriceFormat(calculateDepositTotal())}원
-            </Text>
-          </View>
         </View>
+        {/* 카드내역 스크롤 뷰 자리 */}
+        <ScrollView>
+          {itemList.map((item, index) => {
+            return (
+              <AccountBookList
+                key={item.detailCode}
+                item={item}
+                itemList={itemList}
+                setItemList={setItemList}
+                index={index}
+              />
+            );
+          })}
+        </ScrollView>
       </View>
-
-      {/* 카드내역 스크롤 뷰 자리 */}
-      <ScrollView>
-        {itemList.map((item, index) => {
-          return (
-            <AccountBookList
-              key={item.detailCode}
-              item={item}
-              itemList={itemList}
-              setItemList={setItemList}
-              index={index}
-            />
-          );
-        })}
-      </ScrollView>
-    </View>
+      {/* {isLoading && <Loading />} */}
+    </>
   );
 }
 
