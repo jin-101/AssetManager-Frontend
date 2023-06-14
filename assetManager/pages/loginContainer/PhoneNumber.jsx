@@ -1,9 +1,10 @@
 import { FormControl, HStack, Icon, Stack, Text } from "native-base";
 import React from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput, Alert } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { signinStates } from "../../action/signin";
 import { useDispatch, useSelector } from "react-redux";
+import { alertText, req } from "../../utils";
 
 const custom = StyleSheet.create({
   inputStyle: {
@@ -23,6 +24,11 @@ function PhoneNumber() {
   );
   const dispatch = useDispatch();
   const setterFunction = (key, text) => {
+    const format = req.num;
+    if (text.length > 0 && !format.test(text[text.length - 1])) {
+      Alert.alert(alertText.basic.title, alertText.basic.content);
+      return;
+    }
     dispatch(signinStates(key, text));
   };
 
