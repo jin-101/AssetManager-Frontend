@@ -67,7 +67,13 @@ function CarAddContainer({ register }) {
   return (
     <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
       <Box w="100%">
-        <Text style={{ ...formControlLableBasicStyle.label, marginBottom: 30 }}>
+        <Text
+          style={{
+            ...formControlLableBasicStyle.label,
+            marginBottom: 30,
+            fontWeight: "bold",
+          }}
+        >
           {"직접 등록"}
         </Text>
         <SelectComponent
