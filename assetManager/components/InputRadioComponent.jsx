@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { FormControl, HStack, Text } from "native-base";
 import { RadioButton } from "react-native-paper";
 import { useDispatch } from "react-redux";
@@ -13,12 +13,17 @@ function InputRadioComponent({
   radioButtonList = [], // 구조 -> [{text : "", value:"", liStyle:{ HStack 속성적용 }, RadioButtonLabelProps:{ Text 속성적용 }, RadioButtonItemProps:{ RadioButton 속성적용}}]
   formControlProps = {}, // FormControl 속성적용
   formControlLabelProps = {}, //FormControl.Label 속성적용
-  labelStyle = {}, // style 속성적용
+  formControlHelperProps = {},
+  // labelStyle = {}, // style 속성적용
   radioButtonGroupProps = {}, //RadioButton.Group 속성적용
   inputStyle = {}, //HStack 속성적용
 }) {
   console.log("InputRadioComponent >>>");
   const dispatch = useDispatch();
+  const { text: formControlLabelText = "", ...formControlLabelStyleProps } =
+    useMemo(() => formControlLabelProps);
+  const { text: formControlHelperText = "", ...formControlHelperStyleProps } =
+    useMemo(() => formControlHelperProps);
 
   const onChange = useCallback((newValue) => {
     if (parentSetState) parentSetState(newValue, id, name);
@@ -26,15 +31,14 @@ function InputRadioComponent({
   }, []);
 
   return (
-    <FormControl isDisabled {...formControlProps}>
+    <FormControl style={{ width: "100%" }} isDisabled {...formControlProps}>
       <Text
         style={{
           ...formControlLableBasicStyle.label,
-          ...labelStyle,
+          ...formControlLabelStyleProps,
         }}
-        {...formControlLabelProps}
       >
-        {title}
+        {formControlLabelText}
       </Text>
       <RadioButton.Group
         onValueChange={onChange}
@@ -50,6 +54,9 @@ function InputRadioComponent({
           ))}
         </HStack>
       </RadioButton.Group>
+      <FormControl.HelperText {...formControlHelperStyleProps}>
+        {formControlHelperText}
+      </FormControl.HelperText>
     </FormControl>
   );
 }
