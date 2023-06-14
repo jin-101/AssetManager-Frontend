@@ -128,12 +128,12 @@ function AccountBookList({ item, setItemList, itemList, index }) {
     setItemList(itemList);
   };
 
-  console.log("/////", index);
-
   const previousItem = index > 0 ? itemList[index - 1] : null;
   const showDate =
     !previousItem || previousItem.exchangeDate !== item.exchangeDate; //!null은 true
 
+  // console.log("왜 두번찍혀", index);
+  console.log(categoryData.length);
   return (
     <>
       <View>
