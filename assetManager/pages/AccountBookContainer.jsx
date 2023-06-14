@@ -12,7 +12,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { apiPath } from "../services";
-import AccountBookList from "../components/AccountBookList";
+import AccountBookList from "@components/AccountBookList";
 import { Button } from "native-base";
 
 function AccountBookContainer() {

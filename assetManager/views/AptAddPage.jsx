@@ -13,16 +13,16 @@ import {
 } from "native-base";
 import { Alert, StyleSheet, View, TouchableOpacity } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
 import { Picker } from "@react-native-picker/picker";
-import ShowHideBox from "../components/ShowHideBox";
+import ShowHideBox from "@components/ShowHideBox";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { apiPath } from "../services";
-import InputDateComponent from "../components/InputDateComponent";
-import InputTextComponent from "../components/InputTextComponent";
+import InputDateComponent from "@components/InputDateComponent";
+import InputTextComponent from "@components/InputTextComponent";
 import { makeDateString } from "../utils";
 import { setRef } from "@mui/material";
 import { useSelector } from "react-redux";
-import Loading from "../components/Loading";
+import Loading from "@components/Loading";
 //import { AptSidoSelect, AptGuSelect } from "../components/AptSidoSelect";
 
 function AptAddPage(props) {

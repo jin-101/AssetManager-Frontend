@@ -18,7 +18,7 @@ import { TextInput, FlatList, Alert, TouchableOpacity } from "react-native"; // 
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";
 import { makeDateString } from "../utils";
-import InputTextComponent from "../components/InputTextComponent";
+import InputTextComponent from "@components/InputTextComponent";
 
 function CoinAddPage(props) {
   const [market, setMarket] = useState("");

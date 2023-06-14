@@ -73,12 +73,6 @@ function RootPages() {
         component={AccountBookContainer}
         options={{ ...commonHeaderStyle, title: "가계부" }}
       />
-      {/* 로그인 페이지
-              <Stack.Screen
-                name="Login"
-                component={Login}
-                options={commonHeaderStyle}
-              /> */}
 
       {/* 모달 이동 페이지 - 자산 */}
       <Stack.Screen
