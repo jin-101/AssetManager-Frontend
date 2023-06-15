@@ -3,6 +3,7 @@ import ModalSelector from "react-native-modal-selector";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 // import Loading from "@components/Loading";
 
 import {
@@ -38,7 +39,7 @@ function AccountBookContainer() {
   const [data, setData] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
-
+  const { token } = useSelector((state) => state.login); //아이디 가져오는 법
   // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ function AccountBookContainer() {
       data: JSON.stringify({
         year: currentYear,
         month: currentMonth,
+        memberId: token,
       }),
       headers: { "Content-Type": `application/json` },
     })
@@ -334,6 +336,13 @@ function AccountBookContainer() {
         </View>
         {/* 카드내역 스크롤 뷰 자리 */}
         <ScrollView>
+          <View style={{ flexDirection: "row", backgroundColor: "gray" }}>
+            <Text>전체 내역</Text>
+
+            <View style={{ flex: 1, alignItems: "flex-end" }}>
+              <Text>추가</Text>
+            </View>
+          </View>
           {itemList.map((item, index) => {
             return (
               <AccountBookList
