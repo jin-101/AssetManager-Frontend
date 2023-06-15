@@ -9,9 +9,9 @@ import { Text } from "react-native";
 import { formControlLableBasicStyle } from "../styles";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  carCompanyList,
+  carCompanyListSearch,
   carCompanyUpdate,
-  carModelList,
+  carModelListSearch,
   carModelUpdate,
   carYearUpdate,
 } from "../action";
@@ -38,7 +38,7 @@ function CarAddContainer({ register }) {
         method: "GET",
       })
         .then((res) => {
-          dispatch(carCompanyList(res.data));
+          dispatch(carCompanyListSearch(res.data));
         })
         .catch((err) => {
           console.log(err);
@@ -54,7 +54,7 @@ function CarAddContainer({ register }) {
             method: "GET",
           })
             .then((res) => {
-              dispatch(carModelList(carCompany, [...new Set(res.data)]));
+              dispatch(carModelListSearch(carCompany, [...new Set(res.data)]));
             })
             .catch((err) => {
               console.log(err);

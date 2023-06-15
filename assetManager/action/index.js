@@ -7,8 +7,8 @@ import {
   depositUpdate,
 } from "./deposit";
 import {
-  carCompanyList,
-  carModelList,
+  carCompanyListSearch,
+  carModelListSearch,
   carInitialize,
   carIdUpdate,
   carCompanyUpdate,
@@ -32,8 +32,8 @@ export {
   depositAdd,
   depositDelete,
   depositUpdate,
-  carCompanyList,
-  carModelList,
+  carCompanyListSearch,
+  carModelListSearch,
   carInitialize,
   carIdUpdate,
   carCompanyUpdate,
