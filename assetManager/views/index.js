@@ -15,6 +15,8 @@ import GoldAddPage from "@views/GoldAddPage";
 import AccountBookAnalysis from "@components/AccountBookAnalysis";
 import MokdonPlanner from "@views/MokdonPlanner";
 import UserInfoPage from "@views/UserInfoPage";
+import StockCRUDpage from "@views/StockCRUDpage";
+
 
 export {
   Login,
@@ -34,4 +36,5 @@ export {
   AccountBookAnalysis,
   MokdonPlanner,
   UserInfoPage,
+  StockCRUDpage
 };
