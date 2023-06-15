@@ -151,6 +151,10 @@ function AccountBookContainer() {
     navigation.navigate("AccountBookAnalysis", { itemList, currentMonth });
   };
 
+  const moveToUpload = () => {
+    navigation.navigate("AccountBookUpload");
+  };
+
   return (
     <>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -314,6 +318,9 @@ function AccountBookContainer() {
               </View>
               <View style={{ marginRight: 25 }}>
                 <Button onPress={moveToAnalysis}>분석</Button>
+              </View>
+              <View style={{ marginRight: 25 }}>
+                <Button onPress={moveToUpload}>업로드</Button>
               </View>
             </View>
             <View>
