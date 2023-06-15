@@ -3,6 +3,7 @@ import { StyleSheet, Dimensions } from "react-native";
 const { width, height } = Dimensions.get("window");
 
 export const modalBg = {
+  ...StyleSheet.absoluteFillObject,
   position: "absolute",
   width: width,
   height: height,

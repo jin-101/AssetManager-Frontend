@@ -14,7 +14,7 @@ import { Box, Button, Divider, HStack } from "native-base";
 import { loginInitialize } from "../action";
 import axios from "axios";
 import { apiPath } from "../services";
-import Loading from "../components/Loading";
+import { delay } from "../utils";
 
 // 데이터 받아올 형식,,, 추후 삭제
 const tempData = [
@@ -119,17 +119,15 @@ const tempData = [
   },
 ];
 
-function MainPageModalContent({ onPress = () => {}, toast = "" }) {
+function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const { token, userName, lastAccessDate } = useSelector(
     (state) => state.login
   );
 
-  const [isLoading, setIsLoading] = useState(false);
   const [firstCategory, setFirstCategory] = useState(0);
   const [dropdownState, setDropdownState] = useState(999);
-
   // 리스트(콘텐츠) 길이 구한 변수
   const modalContentHeight =
     Dimensions.get("window").height -
@@ -138,16 +136,6 @@ function MainPageModalContent({ onPress = () => {}, toast = "" }) {
 
   // 로그아웃 버튼 클릭시 호출 함수
   const logoutOnPress = () => {
-    axios.interceptors.request.use(
-      function (config) {
-        setIsLoading(true);
-        return config;
-      },
-      function (error) {
-        // 요청 설정을 수정하는 중에 오류가 발생한 경우 실행됩니다.
-        return Promise.reject(error);
-      }
-    );
     axios({
       url: `${apiPath}/user/logout`,
       method: "POST",
@@ -163,22 +151,21 @@ function MainPageModalContent({ onPress = () => {}, toast = "" }) {
             mt: 100, // 이걸로 뜨는 위치 설정
             description: token + "님 로그아웃 되었습니다.",
           });
-        dispatch(loginInitialize());
         navigation.navigate("Login");
-        setIsLoading(false);
+        dispatch(loginInitialize());
       })
       .catch((err) => {
         console.log(err);
-        setIsLoading(false);
       });
   };
 
   //기본 정보 변경
-  const basicInfoChangeBtn = () => {
+  async function basicInfoChangeBtn() {
     console.log("기본정보 변경 페이지로 이동", navigation.navigate);
+    await onPress(); // 받은 모달변경함수 실행(모달 종료)
+    await delay(300);
     navigation.navigate("UserInfo");
-    onPress(); // 받은 모달변경함수 실행(모달 종료)
-  };
+  }
 
   //회원 탈퇴
   const userDeleteBtn = () => {
@@ -198,7 +185,6 @@ function MainPageModalContent({ onPress = () => {}, toast = "" }) {
     console.log(firstCategory, dropdownState, index, naviText);
   };
 
-  if (isLoading) return <Loading />;
   return (
     <>
       {/* 상단 바 */}

@@ -31,9 +31,9 @@ function MainPage() {
   const toast = useToast();
 
   //모달슬라이드 상태관리 함수
-  const modalSlideFunction = () => {
+  async function modalSlideFunction() {
     setSlideModalOpen(!slideModalOpen);
-  };
+  }
 
   const headerMenuBtn = () => {
     return (
