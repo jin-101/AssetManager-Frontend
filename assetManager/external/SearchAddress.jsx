@@ -54,11 +54,12 @@ const SearchAddress = ({
               const { address, zonecode } = data;
               console.log(data);
               if (parentSetState)
-                parentSetState({
+                parentSetState((prev) => ({
+                  ...prev,
                   zonePost: zonecode,
                   addressFirst: address,
                   addressSecond: "",
-                });
+                }));
               else {
                 dispatch(dispatchF(post, zonecode));
                 dispatch(dispatchF(address1, address));

@@ -69,7 +69,9 @@ function Signin(props) {
         ssn: `${securityNoFirst}-${securityNoSecond}`,
         userEmail: email,
         phoneNumber: `${phoneNoFirst}-${phoneNoSecond}-${phoneNoThird}`,
-        userAddress: `${addressFirst} ${addressSecond}`,
+        zipCode: zonePost,
+        userAddress: addressFirst,
+        userDetailAddress: addressSecond,
       }),
     })
       .then((res) => {
