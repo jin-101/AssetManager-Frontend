@@ -183,6 +183,13 @@ function MainPageModalContent({
     onPress(); // 받은 모달변경함수 실행(모달 종료)
   };
 
+  //회원 탈퇴
+  const userDeleteBtn = () => {
+    //회원 탈퇴 터치 시 기능 구현 필요
+    //axios로 리덕스 스토어 에서 꺼낸 id 값을 스프링부트로 보낸다
+    console.log("회원탈퇴 버튼을 터치");
+  };
+
   const firstCategoryChoice = (index) => {
     setFirstCategory(index);
     setDropdownState(999);
@@ -207,7 +214,13 @@ function MainPageModalContent({
             style={native.titleLeftWelcome}
           >{`${userName}님 반갑습니다.`}</Text>
           <HStack {...base.titleLeftLogoutBox}>
-            <Button {...base.titleLeftLogoutBtn} onPress={logoutOnPress}>
+            <Button
+              {...base.titleLeftLogoutBtn}
+              _pressed={{
+                bg: "gray.100",
+              }}
+              onPress={logoutOnPress}
+            >
               <Text style={{ color: "gray" }}>로그아웃</Text>
             </Button>
             <Text style={{ marginLeft: 10, fontSize: 15 }}>
@@ -232,24 +245,50 @@ function MainPageModalContent({
         style={{ marginTop: native.titleLayout.height, height: "100%" }}
       >
         {/* 기본정보변경 */}
-        <View
-          style={{
-            height: native.userInfoLayout.height,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Button
-            bg="yellow.300"
-            width={200}
-            height={50}
-            variant="subtle"
-            borderRadius="lg"
-            onPress={basicInfoChangeBtn}
+        <HStack justifyContent={"center"}>
+          <View
+            style={{
+              height: native.userInfoLayout.height,
+              justifyContent: "center",
+            }}
           >
-            <Text style={{ color: "black", fontSize: 20 }}>기본정보변경</Text>
-          </Button>
-        </View>
+            <Button
+              bg="yellow.500"
+              width={150}
+              height={50}
+              marginRight={5}
+              variant="subtle"
+              borderRadius="lg"
+              onPress={basicInfoChangeBtn}
+              _pressed={{
+                bg: "yellow.400",
+              }}
+            >
+              <Text style={{ color: "white", fontSize: 20 }}>기본정보변경</Text>
+            </Button>
+          </View>
+          <View
+            style={{
+              height: native.userInfoLayout.height,
+              justifyContent: "center",
+            }}
+          >
+            <Button
+              bg="danger.700"
+              width={150}
+              height={50}
+              marginRight={5}
+              variant="subtle"
+              borderRadius="lg"
+              onPress={userDeleteBtn}
+              _pressed={{
+                bg: "danger.600",
+              }}
+            >
+              <Text style={{ color: "white", fontSize: 20 }}>회원탈퇴</Text>
+            </Button>
+          </View>
+        </HStack>
         <Divider bg={"black"} />
 
         {/* 카테고리 리스트(콘텐츠) */}
