@@ -1,6 +1,7 @@
 //상수와 관련된 파일
 import { LOGIN_INITIALIZE, LOGIN_STATE_UPDATE } from "./login";
 import { PAGE_INITIALIZE, PAGE_UPDATE } from "./nav";
+import { GET_AVGRATE, RESET_AVGRATE } from "./avgRate";
 import {
   DEPOSIT_INITIALIZE,
   DEPOSIT_ADD,
@@ -45,4 +46,6 @@ export {
   CURRENCY_RESET,
   GOLD_UPDATE,
   GOLD_RESET,
+  GET_AVGRATE,
+  RESET_AVGRATE,
 };
