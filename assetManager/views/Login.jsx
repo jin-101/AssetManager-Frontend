@@ -12,7 +12,7 @@ import {
   useToast,
 } from "native-base";
 import React, { useState } from "react";
-import { StyleSheet, View, Alert } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 
@@ -36,17 +36,7 @@ function Login() {
   // 로그인
   const loginBtn = () => {
     const loginData = { userId: userId, userPw: userPw };
-
-    axios.interceptors.request.use(
-      function (config) {
-        setIsLoading(true);
-        return config;
-      },
-      function (error) {
-        // 요청 설정을 수정하는 중에 오류가 발생한 경우 실행됩니다.
-        return Promise.reject(error);
-      }
-    );
+    setIsLoading(true);
 
     axios({
       url: `${apiPath}/user/login`,
@@ -56,8 +46,9 @@ function Login() {
     })
       .then((res) => {
         console.log(res.data);
-        if (res.data === "로그인성공") {
-          dispatch(loginStateUpdate(loginData.userId));
+        const { result, userName } = res.data;
+        if (result === "로그인성공") {
+          dispatch(loginStateUpdate(loginData.userId, userName));
         }
         setIsLoading(false);
         // ★ 로그인 성공시 toast
@@ -66,9 +57,6 @@ function Login() {
           mt: 100, // 이걸로 뜨는 위치 설정
           description: userId + "님 반갑습니다",
         });
-
-        //Alert.alert("", res.data);
-
         // token 사용 시 코드
         // if (res.data.length > 50) {
         //   const token = res.data;

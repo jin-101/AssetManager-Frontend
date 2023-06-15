@@ -1,5 +1,5 @@
 //상수와 관련된 파일
-import { LOGIN_STATE_UPDATE } from "./login";
+import { LOGIN_INITIALIZE, LOGIN_STATE_UPDATE } from "./login";
 import { PAGE_INITIALIZE, PAGE_UPDATE } from "./nav";
 import {
   DEPOSIT_INITIALIZE,
@@ -21,9 +21,10 @@ import { STOCK_UPDATE, STOCK_RESET } from "./stock";
 
 import { CURRENCY_UPDATE, CURRENCY_RESET } from "./currency";
 
-import {GOLD_UPDATE,GOLD_RESET} from './gold'
+import { GOLD_UPDATE, GOLD_RESET } from "./gold";
 
 export {
+  LOGIN_INITIALIZE,
   LOGIN_STATE_UPDATE,
   PAGE_INITIALIZE,
   PAGE_UPDATE,
@@ -43,6 +44,5 @@ export {
   CURRENCY_UPDATE,
   CURRENCY_RESET,
   GOLD_UPDATE,
-  GOLD_RESET
-  
+  GOLD_RESET,
 };

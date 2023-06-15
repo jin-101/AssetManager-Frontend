@@ -9,12 +9,10 @@ import { inputFormCheckFunction } from "../utils";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { apiPath } from "../services";
-import Loading from "../components/Loading";
 
 function UserInfoPage(props) {
   const { token } = useSelector((state) => state.login);
   const [userUpdate, setUserUpdate] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   const [userSearchState, setUserSearchState] = useState({
     userPw: "",
@@ -61,7 +59,6 @@ function UserInfoPage(props) {
           addressFirst: userAddress || "",
           addressSecond: userDetailAddress || "",
         });
-        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err, "//");
@@ -118,7 +115,6 @@ function UserInfoPage(props) {
       });
   };
 
-  if (isLoading) return <Loading />;
   return (
     <View style={{ marginTop: 30 }}>
       <ScrollView>
