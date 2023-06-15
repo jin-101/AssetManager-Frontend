@@ -83,6 +83,9 @@ function UserInfoPage(props) {
           <Button
             onPress={userUpdate ? register : update}
             colorScheme={userUpdate ? "success" : "warning"}
+            _pressed={{
+              bg: userUpdate ? "success" : "warning",
+            }}
             w="90%"
             mt="5"
             mb="10"
