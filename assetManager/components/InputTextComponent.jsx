@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { HStack, Text, FormControl } from "native-base";
 import { TextInput, Alert } from "react-native";
 import {
@@ -19,23 +19,29 @@ function InputTextComponent({
   placeholder = "",
   dispatchF = undefined,
   parentSetState = undefined,
-  title = "",
-  helperText = "",
+  // title = "",
+  // helperText = "",
   inputType = "text",
   formControlProps = {},
   formControlLabelProps = {},
+  formControlHelperProps = {},
   textInputPropsForFront = {},
+  textInputStyle = {},
   textInputProps = {},
-  formHelperTextProps = {},
-  formControlStyle = {}, //native-base에 formControl 속성 모두 입력가능
-  labelStyle = {}, // native-base에 formControl.label _text 속성 모두 입력가능
+  // formHelperTextProps = {},
+  // formControlStyle = {}, //native-base에 formControl 속성 모두 입력가능
+  // labelStyle = {}, // native-base에 formControl.label _text 속성 모두 입력가능
   textLabel = {}, // frontText, endText, frontTextSize, endTextSize
-  inputStyle = {}, // style 속성 입력가능
+  // inputStyle = {}, // style 속성 입력가능
   alertTitle = alertText.basic.title,
   alertContent = alertText.basic.content,
 }) {
   console.log("InputTextComponent >>>");
   const dispatch = useDispatch();
+  const { text: formControlLabelText = "", ...formControlLabelStyleProps } =
+    useMemo(() => formControlLabelProps);
+  const { text: formControlHelperText = "", ...formControlHelperStyleProps } =
+    useMemo(() => formControlHelperProps);
 
   const isNumType = inputType === "number" || inputType === "double" || false;
   const keyboardType = keyBoardType(inputType);
@@ -63,22 +69,23 @@ function InputTextComponent({
   }, []);
 
   return (
-    <FormControl {...formControlStyle} {...formControlProps}>
+    <FormControl style={{ width: "100%" }} {...formControlProps}>
       <Text
         style={{
           ...formControlLableBasicStyle.label,
-          ...labelStyle,
+          // ...labelStyle,
+          ...formControlLabelStyleProps,
         }}
         {...formControlLabelProps}
       >
-        {title}
+        {formControlLabelText}
       </Text>
 
       <HStack alignItems="center" w="100%">
         {/* input 앞에 텍스트 삽입 */}
         {textLabel?.frontText && (
           <Text
-            fontSize={textLabel?.frontTextSize || "lg"}
+            fontSize={textLabel?.frontTextSize || "md"}
             {...textInputPropsForFront}
           >
             {textLabel?.frontText}
@@ -94,7 +101,7 @@ function InputTextComponent({
             textAlign: isNumType ? "right" : "left",
             paddingLeft: isNumType ? 0 : 10,
             paddingRight: isNumType ? 10 : 0,
-            ...inputStyle,
+            ...textInputStyle,
           }}
           placeholder={placeholder}
           placeholderTextColor="lightgray"
@@ -105,15 +112,15 @@ function InputTextComponent({
 
         {/* input 뒤에 텍스트 삽입 */}
         {textLabel?.endText && (
-          <Text fontSize={textLabel?.endTextSize || "lg"}>
+          <Text fontSize={textLabel?.endTextSize || "md"}>
             {textLabel?.endText}
           </Text>
         )}
       </HStack>
 
       {/* 부연설명 text */}
-      <FormControl.HelperText {...formHelperTextProps}>
-        {helperText}
+      <FormControl.HelperText {...formControlHelperStyleProps}>
+        {formControlHelperText}
       </FormControl.HelperText>
     </FormControl>
   );

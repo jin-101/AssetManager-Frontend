@@ -227,7 +227,7 @@ function CoinAddPage(props) {
             <Box mb="5">
               {/* <FormControl.Label>매수 수량</FormControl.Label> */}
               <InputTextComponent
-                title="매수 수량"
+                formControlLabelProps={{ text: "매수 수량" }}
                 inputType="number"
                 value={quantity}
                 parentSetState={setQuantity}
@@ -238,7 +238,7 @@ function CoinAddPage(props) {
             <Box mb="5">
               {/* <FormControl.Label>매수 가격 (원)</FormControl.Label> */}
               <InputTextComponent
-                title="매수 가격 (원)"
+                formControlLabelProps={{ text: "매수 가격 (원)" }}
                 inputType="double"
                 value={price}
                 parentSetState={setPrice}

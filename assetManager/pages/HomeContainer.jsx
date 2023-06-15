@@ -1,13 +1,49 @@
 import React from "react";
 import { ScrollView } from "react-native";
-import { Box, Center, HStack, Text, VStack } from "native-base";
+import { Box, Button, Center, HStack, Text, VStack } from "native-base";
 import DropdownModal from "@components/DropdownModal";
+import { useNavigation } from "@react-navigation/native";
 
 function HomeContainer() {
+  const navigation = useNavigation();
+  const mokdonPlanner = () => {
+    navigation.navigate("mokdonPlanner");
+  };
   return (
     <>
       <ScrollView>
         <VStack space={10} alignItems="center" mt="10" mb="10">
+          <Box width="50%">
+            <DropdownModal
+              content={[
+                {
+                  index: 0,
+                  title: "자산",
+                  list: [
+                    { title: "예적금", key: "AddDeposit" },
+                    { title: "부동산", key: "AddApt" },
+                    { title: "자동차", key: "AddCar" },
+                    { title: "금", key: "AddGold" },
+                    { title: "외환", key: "AddExchange" },
+                    { title: "주식", key: "AddStock" },
+                    { title: "코인", key: "AddCoin" },
+                  ],
+                },
+                {
+                  index: 1,
+                  title: "부채",
+                  list: [
+                    { title: "부채항목1", key: "Addtest1" },
+                    { title: "부채항목2", key: "Addtest2" },
+                    { title: "부채항목3", key: "Addtest3" },
+                  ],
+                },
+              ]}
+            />
+          </Box>
+          <Button width="50%" onPress={mokdonPlanner}>
+            목돈 마련 플래너
+          </Button>
           <HStack w="80%" h="300">
             <Box
               rounded="md"
@@ -36,32 +72,6 @@ function HomeContainer() {
           <Center w="80%" h="300" bg="coolGray.100" rounded="md" shadow={3}>
             <Text fontSize="2xl">소비탭</Text>
           </Center>
-          <DropdownModal
-            content={[
-              {
-                index: 0,
-                title: "자산",
-                list: [
-                  { title: "예적금", key: "AddDeposit" },
-                  { title: "부동산", key: "AddApt" },
-                  { title: "자동차", key: "AddCar" },
-                  { title: "금", key: "AddGold" },
-                  { title: "외환", key: "AddExchange" },
-                  { title: "주식", key: "AddStock" },
-                  { title: "코인", key: "AddCoin" },
-                ],
-              },
-              {
-                index: 1,
-                title: "부채",
-                list: [
-                  { title: "부채항목1", key: "Addtest1" },
-                  { title: "부채항목2", key: "Addtest2" },
-                  { title: "부채항목3", key: "Addtest3" },
-                ],
-              },
-            ]}
-          />
         </VStack>
       </ScrollView>
     </>

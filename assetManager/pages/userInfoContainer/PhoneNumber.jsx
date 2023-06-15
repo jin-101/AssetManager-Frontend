@@ -23,6 +23,8 @@ function PhoneNumber({
   parentSetState = undefined,
   title = "전화번호",
   HelperText = "사용자의 전화번호를 입력해주세요.",
+  editable2 = true,
+  editable3 = true,
 }) {
   const { phoneNoFirst, phoneNoSecond, phoneNoThird } =
     parentState || useSelector((state) => state.signin);
@@ -82,6 +84,7 @@ function PhoneNumber({
             onChangeText={(text) => {
               setterFunction("phoneNoSecond", text);
             }}
+            editable={editable2}
             maxLength={4}
           />
           <Text w="5%" textAlign="center" fontSize="lg">
@@ -94,6 +97,7 @@ function PhoneNumber({
             onChangeText={(text) => {
               setterFunction("phoneNoThird", text);
             }}
+            editable={editable3}
             maxLength={4}
           />
         </HStack>

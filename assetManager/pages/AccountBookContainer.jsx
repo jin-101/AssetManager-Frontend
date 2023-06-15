@@ -16,7 +16,6 @@ import {
 import { apiPath } from "../services";
 import AccountBookList from "@components/AccountBookList";
 import { Button } from "native-base";
-import AccountBookAnalysis from "../components/AccountBookAnalysis";
 
 function AccountBookContainer() {
   const styles = StyleSheet.create({

@@ -44,6 +44,6 @@ export const formControlLableBasicStyle = StyleSheet.create({
     marginBottom: 5,
     color: "black",
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "normal",
   },
 });

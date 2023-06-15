@@ -36,7 +36,6 @@ function Login() {
   // 로그인
   const loginBtn = () => {
     const loginData = { userId: userId, userPw: userPw };
-    console.log(loginData);
 
     axios.interceptors.request.use(
       function (config) {

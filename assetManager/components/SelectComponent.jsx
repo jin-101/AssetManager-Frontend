@@ -24,7 +24,7 @@ function SelectComponent({
   const dispatch = useDispatch();
   const { text: formControlLabelText = "", ...formControlLabelStyleProps } =
     useMemo(() => formControlLabelProps);
-  const { text: FormControlHelperText = "", ...FormControlHelperStyleProps } =
+  const { text: formControlHelperText = "", ...formControlHelperStyleProps } =
     useMemo(() => formControlHelperProps);
 
   const onChange = (text) => {
@@ -69,7 +69,7 @@ function SelectComponent({
   };
 
   return (
-    <FormControl maxW="100%" {...formControlProps} style={{ width: "100%" }}>
+    <FormControl maxW="100%" style={{ width: "100%" }} {...formControlProps}>
       {isVertical ? (
         <VStack
           style={{
@@ -110,8 +110,8 @@ function SelectComponent({
           </HStack>
         </View>
       )}
-      <FormControl.HelperText {...FormControlHelperStyleProps}>
-        {FormControlHelperText}
+      <FormControl.HelperText {...formControlHelperStyleProps}>
+        {formControlHelperText}
       </FormControl.HelperText>
     </FormControl>
   );

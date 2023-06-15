@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Button, FormControl, HStack, Text } from "native-base";
 import { inputTagCommonStyle } from "../utils";
 import { TextInput } from "react-native";
@@ -12,22 +12,30 @@ function InputDateComponent({
   parentSetState = undefined,
 
   value = "",
-  title = "",
-  helperText = "",
+  // title = "",
+  // helperText = "",
   formControlProps = {},
   formControlLabelProps = {},
+  formControlHelperProps = {},
+  textInputStyle = {},
   textInputProps = {},
   buttonProps = {},
-  FormControlHelperTextProps = {},
-  formControlStyle = {}, //기존 제작 파라매타
-  labelStyle = {}, //기존 제작 파라매타
-  inputStyle = {}, //기존 제작 파라매타
+  // formControlHelperTextProps = {},
+  // formControlStyle = {}, //기존 제작 파라매타
+  // labelStyle = {}, //기존 제작 파라매타
+  //  //기존 제작 파라매타
 
   modalProps = {},
   layoutIsScroll = true,
   datePickerProps = {},
 }) {
   console.log("InputDateComponent >>>");
+
+  const { text: formControlLabelText = "", ...formControlLabelStyleProps } =
+    useMemo(() => formControlLabelProps);
+  const { text: formControlHelperText = "", ...formControlHelperStyleProps } =
+    useMemo(() => formControlHelperProps);
+
   const [show, setShow] = useState(false);
   const modalShow = () => {
     setShow((prev) => !prev);
@@ -35,33 +43,36 @@ function InputDateComponent({
 
   return (
     <>
-      <FormControl isDisabled {...formControlStyle} {...formControlProps}>
+      <FormControl isDisabled {...formControlProps}>
         <Text
           style={{
             ...formControlLableBasicStyle.label,
-            ...labelStyle,
+            // ...labelStyle,
+            ...formControlLabelStyleProps,
           }}
-          {...formControlLabelProps}
+          // {...formControlLabelProps}
         >
-          {title}
+          {/* {title} */}
+          {formControlLabelText}
         </Text>
-        <HStack alignItems="center" justifyContent="center" h="50" mb="1">
+        <HStack alignItems="center" justifyContent="center" w="100%" h="50">
           <TextInput
             style={{
               ...inputTagCommonStyle,
-              width: "50%",
-              ...inputStyle,
+              color: "gray",
+              width: "58%",
+              ...textInputStyle,
             }}
             value={value}
             readOnly={true}
             {...textInputProps}
           />
           <Button h="45" ml="2" onTouchEnd={modalShow} {...buttonProps}>
-            날짜를 선택하세요.
+            날짜를 선택하세요
           </Button>
         </HStack>
-        <FormControl.HelperText {...FormControlHelperTextProps}>
-          {helperText}
+        <FormControl.HelperText {...formControlHelperStyleProps}>
+          {formControlHelperText}
         </FormControl.HelperText>
       </FormControl>
       <DatePickerModal

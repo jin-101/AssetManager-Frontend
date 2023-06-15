@@ -67,7 +67,13 @@ function CarAddContainer({ register }) {
   return (
     <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
       <Box w="100%">
-        <Text style={{ ...formControlLableBasicStyle.label, marginBottom: 30 }}>
+        <Text
+          style={{
+            ...formControlLableBasicStyle.label,
+            marginBottom: 30,
+            fontWeight: "bold",
+          }}
+        >
           {"직접 등록"}
         </Text>
         <SelectComponent
@@ -75,9 +81,6 @@ function CarAddContainer({ register }) {
           formControlProps={{ marginBottom: 10 }}
           formControlLabelProps={{
             text: "제조사 조회",
-            fontSize: 15,
-            fontWeight: "normal",
-            color: "black",
           }}
           formControlHelperProps={{ text: "소유차량의 제조사를 선택하세요." }}
           // selectProps={{}}

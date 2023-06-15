@@ -18,58 +18,53 @@ function StockAddPage() {
   const { token } = useSelector((state) => state.login);
   const dispatch = useDispatch();
 
-
   const onRest = () => dispatch(stockInputReset());
 
   const onSubmit = () => {
     const buyDay = buyDate;
     const stockInputDTO = {
-      userId:token,
+      userId: token,
       stockName,
       price: buyPrice,
       buyDay,
       shares: buyQuantity,
     };
 
-        axios.post(`${apiPath}/stock/stockAssetInput`,null,{params:stockInputDTO})
-        .then(function (response) {
-
-          if(response.data==='등록완료'){
-            Alert.alert("자산등록완료");
-            onRest();
-          } else {
-            Alert.alert("자산등록실패 다시 등록해주세요");
-          }
-
-        })
-        .catch(function (error) {
-          console.log(error);
-          Alert.alert("서버에러 잠시만 기다려주세요0")
-        });
-
-
+    axios
+      .post(`${apiPath}/stock/stockAssetInput`, null, { params: stockInputDTO })
+      .then(function (response) {
+        if (response.data === "등록완료") {
+          Alert.alert("자산등록완료");
+          onRest();
+        } else {
+          Alert.alert("자산등록실패 다시 등록해주세요");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+        Alert.alert("서버에러 잠시만 기다려주세요0");
+      });
   };
 
-
   return (
-    <ScrollView bg="light.50">
-      <VStack mt="10" mb="10" alignItems="center">
-        <Box bg="primary.100" p="5" w="90%">
-          <FormControl>
+    <ScrollView>
+      <VStack alignItems="center" mt="5" mb="5">
+        <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+          <Box w="100%">
             <InputTextComponent
               name="stockName"
               inputType={"text"}
               formControlProps={{ mb: "5" }}
-              inputStyle={{ width: "100%" }}
-              title={"매수종목"}
+              formControlLabelProps={{ text: "매수종목" }}
+              textInputStyle={{ width: "100%" }}
               placeholder="EX)삼성전자"
               value={stockName}
               dispatchF={stockInputUpdate}
             />
             <InputDateComponent
               name="buyDate"
-              formControlStyle={{ w: "100%", mt: "0" }}
-              title={"매수날짜"}
+              formControlProps={{ w: "100%", mt: "0" }}
+              formControlLabelProps={{ text: "매수날짜" }}
               value={buyDate}
               dispatchF={stockInputUpdate}
               datePickerProps={{
@@ -87,8 +82,8 @@ function StockAddPage() {
               name="buyPrice"
               inputType={"text"}
               formControlProps={{ mb: "5" }}
-              inputStyle={{ width: "100%" }}
-              title={"매수가격"}
+              formControlLabelProps={{ text: "매수가격" }}
+              textInputStyle={{ width: "100%" }}
               value={buyPrice}
               dispatchF={stockInputUpdate}
             />
@@ -96,8 +91,8 @@ function StockAddPage() {
               name="buyQuantity"
               inputType={"text"}
               formControlProps={{ mb: "5" }}
-              inputStyle={{ width: "100%" }}
-              title={"매수수량"}
+              formControlLabelProps={{ text: "매수수량" }}
+              textInputStyle={{ width: "100%" }}
               placeholder="EX)100주"
               value={buyQuantity}
               dispatchF={stockInputUpdate}
@@ -106,7 +101,7 @@ function StockAddPage() {
               자산등록
             </Button>
             <Button onPress={onRest}>초기화</Button>
-          </FormControl>
+          </Box>
         </Box>
       </VStack>
     </ScrollView>
