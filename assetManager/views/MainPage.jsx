@@ -31,10 +31,9 @@ function MainPage() {
   const toast = useToast();
 
   //모달슬라이드 상태관리 함수
-  const modalSlideFunction = () => {
-    console.log("/", slideModalOpen);
+  async function modalSlideFunction() {
     setSlideModalOpen(!slideModalOpen);
-  };
+  }
 
   const headerMenuBtn = () => {
     return (
@@ -93,12 +92,7 @@ function MainPage() {
         animationIn="slideInRight"
         animationOut="slideOutRight"
       >
-        <MainPageModalContent
-          userName="000"
-          userlastInTime="00/00/00"
-          onPress={modalSlideFunction}
-          toast={toast}
-        />
+        <MainPageModalContent onPress={modalSlideFunction} toast={toast} />
       </Modal>
     </>
   );

@@ -12,7 +12,8 @@ import SearchPwPage from "@views/SearchPwPage";
 import GuestPage from "@views/GuestPage";
 import CurrencyAddPage from "@views/CurrencyAddPage";
 import GoldAddPage from "@views/GoldAddPage";
-import AccountBookAnalysis from "@components/AccountBookAnalysis";
+import AccountBookAnalysis from "@views/AccountBookAnalysis";
+import AccountBookUpload from "@views/AccountBookUpload";
 import MokdonPlanner from "@views/MokdonPlanner";
 import UserInfoPage from "@views/UserInfoPage";
 
@@ -32,6 +33,7 @@ export {
   CurrencyAddPage,
   GoldAddPage,
   AccountBookAnalysis,
+  AccountBookUpload,
   MokdonPlanner,
   UserInfoPage,
 };

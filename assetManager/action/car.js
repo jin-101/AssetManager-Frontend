@@ -8,8 +8,11 @@ import {
   CAR_YEAR_UPDATE,
 } from "../constants";
 
-export const carCompanyList = (arr) => ({ type: CAR_COMPANYLIST_SEARCH, arr });
-export const carModelList = (key, arr) => ({
+export const carCompanyListSearch = (arr) => ({
+  type: CAR_COMPANYLIST_SEARCH,
+  arr,
+});
+export const carModelListSearch = (key, arr) => ({
   type: CAR_MODELLIST_SEARCH,
   key,
   arr,
