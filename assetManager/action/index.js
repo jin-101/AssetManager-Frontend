@@ -21,7 +21,9 @@ import { stockInputUpdate, stockInputReset } from "./stock";
 
 import { currencyInputUpdate, currencyRest } from "./currency";
 
-import {goldInputUpdate,goldInputReset} from "./gold"
+import { goldInputUpdate, goldInputReset } from "./gold";
+
+import { getAvgRate, resetAvgRate } from "./avgRate";
 
 export {
   loginStateUpdate,
@@ -43,5 +45,7 @@ export {
   currencyInputUpdate,
   currencyRest,
   goldInputReset,
-  goldInputUpdate
+  goldInputUpdate,
+  getAvgRate,
+  resetAvgRate,
 };
