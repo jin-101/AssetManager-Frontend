@@ -11,10 +11,10 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Box, Button, Divider, HStack } from "native-base";
-import { loginStateUpdate } from "../action";
+import { loginInitialize } from "../action";
 import axios from "axios";
 import { apiPath } from "../services";
-import Loading from "../components/Loading";
+import { delay } from "../utils";
 
 // 데이터 받아올 형식,,, 추후 삭제
 const tempData = [
@@ -119,20 +119,15 @@ const tempData = [
   },
 ];
 
-function MainPageModalContent({
-  userName = "게스트",
-  userlastInTime = "-",
-  onPress = () => {},
-  toast = "",
-}) {
+function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.login);
+  const { token, userName, lastAccessDate } = useSelector(
+    (state) => state.login
+  );
 
-  const [isLoading, setIsLoading] = useState(false);
   const [firstCategory, setFirstCategory] = useState(0);
   const [dropdownState, setDropdownState] = useState(999);
-
   // 리스트(콘텐츠) 길이 구한 변수
   const modalContentHeight =
     Dimensions.get("window").height -
@@ -141,16 +136,6 @@ function MainPageModalContent({
 
   // 로그아웃 버튼 클릭시 호출 함수
   const logoutOnPress = () => {
-    axios.interceptors.request.use(
-      function (config) {
-        setIsLoading(true);
-        return config;
-      },
-      function (error) {
-        // 요청 설정을 수정하는 중에 오류가 발생한 경우 실행됩니다.
-        return Promise.reject(error);
-      }
-    );
     axios({
       url: `${apiPath}/user/logout`,
       method: "POST",
@@ -166,21 +151,27 @@ function MainPageModalContent({
             mt: 100, // 이걸로 뜨는 위치 설정
             description: token + "님 로그아웃 되었습니다.",
           });
-        dispatch(loginStateUpdate(""));
         navigation.navigate("Login");
-        setIsLoading(false);
+        dispatch(loginInitialize());
       })
       .catch((err) => {
         console.log(err);
-        setIsLoading(false);
       });
   };
 
   //기본 정보 변경
-  const basicInfoChangeBtn = () => {
+  async function basicInfoChangeBtn() {
     console.log("기본정보 변경 페이지로 이동", navigation.navigate);
+    await onPress(); // 받은 모달변경함수 실행(모달 종료)
+    await delay(300);
     navigation.navigate("UserInfo");
-    onPress(); // 받은 모달변경함수 실행(모달 종료)
+  }
+
+  //회원 탈퇴
+  const userDeleteBtn = () => {
+    //회원 탈퇴 터치 시 기능 구현 필요
+    //axios로 리덕스 스토어 에서 꺼낸 id 값을 스프링부트로 보낸다
+    console.log("회원탈퇴 버튼을 터치");
   };
 
   const firstCategoryChoice = (index) => {
@@ -194,7 +185,6 @@ function MainPageModalContent({
     console.log(firstCategory, dropdownState, index, naviText);
   };
 
-  if (isLoading) return <Loading />;
   return (
     <>
       {/* 상단 바 */}
@@ -207,11 +197,17 @@ function MainPageModalContent({
             style={native.titleLeftWelcome}
           >{`${userName}님 반갑습니다.`}</Text>
           <HStack {...base.titleLeftLogoutBox}>
-            <Button {...base.titleLeftLogoutBtn} onPress={logoutOnPress}>
+            <Button
+              {...base.titleLeftLogoutBtn}
+              _pressed={{
+                bg: "gray.100",
+              }}
+              onPress={logoutOnPress}
+            >
               <Text style={{ color: "gray" }}>로그아웃</Text>
             </Button>
             <Text style={{ marginLeft: 10, fontSize: 15 }}>
-              {`최근 접속 : ${userlastInTime}`}
+              {`최근 접속 : ${lastAccessDate}`}
             </Text>
           </HStack>
         </View>
@@ -232,24 +228,50 @@ function MainPageModalContent({
         style={{ marginTop: native.titleLayout.height, height: "100%" }}
       >
         {/* 기본정보변경 */}
-        <View
-          style={{
-            height: native.userInfoLayout.height,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Button
-            bg="yellow.300"
-            width={200}
-            height={50}
-            variant="subtle"
-            borderRadius="lg"
-            onPress={basicInfoChangeBtn}
+        <HStack justifyContent={"center"}>
+          <View
+            style={{
+              height: native.userInfoLayout.height,
+              justifyContent: "center",
+            }}
           >
-            <Text style={{ color: "black", fontSize: 20 }}>기본정보변경</Text>
-          </Button>
-        </View>
+            <Button
+              bg="yellow.500"
+              width={150}
+              height={50}
+              marginRight={5}
+              variant="subtle"
+              borderRadius="lg"
+              onPress={basicInfoChangeBtn}
+              _pressed={{
+                bg: "yellow.400",
+              }}
+            >
+              <Text style={{ color: "white", fontSize: 20 }}>기본정보변경</Text>
+            </Button>
+          </View>
+          <View
+            style={{
+              height: native.userInfoLayout.height,
+              justifyContent: "center",
+            }}
+          >
+            <Button
+              bg="danger.700"
+              width={150}
+              height={50}
+              marginRight={5}
+              variant="subtle"
+              borderRadius="lg"
+              onPress={userDeleteBtn}
+              _pressed={{
+                bg: "danger.600",
+              }}
+            >
+              <Text style={{ color: "white", fontSize: 20 }}>회원탈퇴</Text>
+            </Button>
+          </View>
+        </HStack>
         <Divider bg={"black"} />
 
         {/* 카테고리 리스트(콘텐츠) */}
@@ -289,7 +311,7 @@ function MainPageModalContent({
                   {dropdownState === j &&
                     secondItem.list.map((thirdItem, k) => (
                       <Box
-                        key={thirdItem.key}
+                        key={thirdItem.key + k}
                         backgroundColor={"yellow.200"}
                         height={50}
                         borderWidth={1}

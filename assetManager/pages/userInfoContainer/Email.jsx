@@ -14,7 +14,7 @@ function Email({
   const { email } = parentState || useSelector((state) => state.signin);
   const dispatch = useDispatch();
   const onchange = (text) => {
-    if (parentSetState) parentSetState({ email: text });
+    if (parentSetState) parentSetState({ ...parentState, email: text });
     else dispatch(signinStates("email", text));
   };
   return (
