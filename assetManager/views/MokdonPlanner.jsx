@@ -34,7 +34,26 @@ function MokdonPlanner(props) {
   const [targetAmount, setTargetAmount] = useState("");
   const [targetPeriod, setTargetPeriod] = useState("");
   const saveType = ["자유롭게", "예금", "적금"];
-  const bankType = ["신한은행", "국민은행"]; // ★ 여기 뱅크타입을 이제 Back에서 데이터 받아서 사용해야 함
+  // ★ 여기 뱅크타입을 이제 Back에서 데이터 받아서 사용?
+  const bankType = [
+    "신한은행",
+    "국민은행",
+    "하나은행",
+    "우리은행",
+    "농협은행",
+    "IBK은행",
+    "수협은행",
+    "부산은행",
+    "광주은행",
+    "제주은행",
+    "전북은행",
+    "경남은행",
+    "한국스탠다드차타드은행",
+    "카카오뱅크",
+    "토스뱅크",
+    "케이뱅크",
+    "한국산업은행",
+  ];
   const [type, setType] = useState("");
   const [bank, setBank] = useState("");
   const [result, setResult] = useState({});
@@ -45,7 +64,7 @@ function MokdonPlanner(props) {
   // 은행-평균금리 정보 받아오기
   useEffect(() => {
     // 데이터 로딩 작업 수행
-    console.log("예금" + deposit);
+    console.log("예금 " + deposit); // redux에 의해 다시 페이지 들가도 남아있음 (로그아웃하면 초기화시키게끔 형이 설정할 듯?)
     console.log("적금 " + savings);
 
     if (deposit.length === 0) {
