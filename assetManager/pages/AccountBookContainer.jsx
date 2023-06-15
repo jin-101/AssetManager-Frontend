@@ -16,7 +16,6 @@ import {
 import { apiPath } from "../services";
 import AccountBookList from "@components/AccountBookList";
 import { Button } from "native-base";
-import AccountBookAnalysis from "../components/AccountBookAnalysis";
 
 function AccountBookContainer() {
   const styles = StyleSheet.create({
@@ -149,6 +148,10 @@ function AccountBookContainer() {
 
   const moveToAnalysis = () => {
     navigation.navigate("AccountBookAnalysis", { itemList, currentMonth });
+  };
+
+  const moveToUpload = () => {
+    navigation.navigate("AccountBookUpload");
   };
 
   return (
@@ -314,6 +317,9 @@ function AccountBookContainer() {
               </View>
               <View style={{ marginRight: 25 }}>
                 <Button onPress={moveToAnalysis}>분석</Button>
+              </View>
+              <View style={{ marginRight: 25 }}>
+                <Button onPress={moveToUpload}>업로드</Button>
               </View>
             </View>
             <View>
