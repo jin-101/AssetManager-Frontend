@@ -11,7 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Box, Button, Divider, HStack } from "native-base";
-import { loginInitialize } from "../action";
+import { loginInitialize, resetAvgRate } from "../action";
 import axios from "axios";
 import { apiPath } from "../services";
 import { delay } from "../utils";
@@ -151,8 +151,8 @@ function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
             mt: 100, // 이걸로 뜨는 위치 설정
             description: token + "님 로그아웃 되었습니다.",
           });
+        dispatchInitializeFunction();
         navigation.navigate("Login");
-        dispatch(loginInitialize());
       })
       .catch((err) => {
         console.log(err);
@@ -174,13 +174,24 @@ function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
     console.log("회원탈퇴 버튼을 터치");
   };
 
+  // 로그아웃 시 초기화 함수
+  const dispatchInitializeFunction = () => {
+    dispatch(resetAvgRate());
+    dispatch(loginInitialize());
+  };
+
+  // 전체보기 왼쪽 선택지
   const firstCategoryChoice = (index) => {
     setFirstCategory(index);
     setDropdownState(999);
   };
+
+  // 전체보기 오른쪽 선택지
   const dropdwonChoice = (index) => {
     setDropdownState(index);
   };
+
+  // 전체보기 최종 선택 시 콜백함수
   const navigatorChoice = (index, naviText) => {
     console.log(firstCategory, dropdownState, index, naviText);
   };
