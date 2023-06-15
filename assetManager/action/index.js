@@ -1,4 +1,4 @@
-import { loginStateUpdate } from "./login";
+import { loginInitialize, loginStateUpdate } from "./login";
 import { pageInitialize, pageUpdate } from "./nav";
 import {
   depositInitialize,
@@ -21,10 +21,11 @@ import { stockInputUpdate, stockInputReset } from "./stock";
 
 import { currencyInputUpdate, currencyRest } from "./currency";
 
-import {goldInputUpdate,goldInputReset} from "./gold"
+import { goldInputUpdate, goldInputReset } from "./gold";
 
 export {
   loginStateUpdate,
+  loginInitialize,
   pageInitialize,
   pageUpdate,
   depositInitialize,
@@ -43,5 +44,5 @@ export {
   currencyInputUpdate,
   currencyRest,
   goldInputReset,
-  goldInputUpdate
+  goldInputUpdate,
 };

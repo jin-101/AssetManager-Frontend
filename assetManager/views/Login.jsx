@@ -12,7 +12,7 @@ import {
   useToast,
 } from "native-base";
 import React, { useState } from "react";
-import { StyleSheet, View, Alert } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 
@@ -56,8 +56,9 @@ function Login() {
     })
       .then((res) => {
         console.log(res.data);
-        if (res.data === "로그인성공") {
-          dispatch(loginStateUpdate(loginData.userId));
+        const { result, userName } = res.data;
+        if (result === "로그인성공") {
+          dispatch(loginStateUpdate(loginData.userId, userName));
         }
         setIsLoading(false);
         // ★ 로그인 성공시 toast

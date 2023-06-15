@@ -11,7 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Box, Button, Divider, HStack } from "native-base";
-import { loginStateUpdate } from "../action";
+import { loginInitialize } from "../action";
 import axios from "axios";
 import { apiPath } from "../services";
 import Loading from "../components/Loading";
@@ -119,15 +119,12 @@ const tempData = [
   },
 ];
 
-function MainPageModalContent({
-  userName = "게스트",
-  userlastInTime = "-",
-  onPress = () => {},
-  toast = "",
-}) {
+function MainPageModalContent({ onPress = () => {}, toast = "" }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.login);
+  const { token, userName, lastAccessDate } = useSelector(
+    (state) => state.login
+  );
 
   const [isLoading, setIsLoading] = useState(false);
   const [firstCategory, setFirstCategory] = useState(0);
@@ -166,7 +163,7 @@ function MainPageModalContent({
             mt: 100, // 이걸로 뜨는 위치 설정
             description: token + "님 로그아웃 되었습니다.",
           });
-        dispatch(loginStateUpdate(""));
+        dispatch(loginInitialize());
         navigation.navigate("Login");
         setIsLoading(false);
       })
@@ -224,7 +221,7 @@ function MainPageModalContent({
               <Text style={{ color: "gray" }}>로그아웃</Text>
             </Button>
             <Text style={{ marginLeft: 10, fontSize: 15 }}>
-              {`최근 접속 : ${userlastInTime}`}
+              {`최근 접속 : ${lastAccessDate}`}
             </Text>
           </HStack>
         </View>
@@ -328,7 +325,7 @@ function MainPageModalContent({
                   {dropdownState === j &&
                     secondItem.list.map((thirdItem, k) => (
                       <Box
-                        key={thirdItem.key}
+                        key={thirdItem.key + k}
                         backgroundColor={"yellow.200"}
                         height={50}
                         borderWidth={1}
