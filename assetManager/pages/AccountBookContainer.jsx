@@ -3,6 +3,7 @@ import ModalSelector from "react-native-modal-selector";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 // import Loading from "@components/Loading";
 
 import {
@@ -16,7 +17,6 @@ import {
 import { apiPath } from "../services";
 import AccountBookList from "@components/AccountBookList";
 import { Button } from "native-base";
-import AccountBookAnalysis from "../components/AccountBookAnalysis";
 
 function AccountBookContainer() {
   const styles = StyleSheet.create({
@@ -39,7 +39,7 @@ function AccountBookContainer() {
   const [data, setData] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
-
+  const { token } = useSelector((state) => state.login); //아이디 가져오는 법
   // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -50,6 +50,7 @@ function AccountBookContainer() {
       data: JSON.stringify({
         year: currentYear,
         month: currentMonth,
+        memberId: token,
       }),
       headers: { "Content-Type": `application/json` },
     })
@@ -149,6 +150,10 @@ function AccountBookContainer() {
 
   const moveToAnalysis = () => {
     navigation.navigate("AccountBookAnalysis", { itemList, currentMonth });
+  };
+
+  const moveToUpload = () => {
+    navigation.navigate("AccountBookUpload");
   };
 
   return (
@@ -315,6 +320,9 @@ function AccountBookContainer() {
               <View style={{ marginRight: 25 }}>
                 <Button onPress={moveToAnalysis}>분석</Button>
               </View>
+              <View style={{ marginRight: 25 }}>
+                <Button onPress={moveToUpload}>업로드</Button>
+              </View>
             </View>
             <View>
               <Text style={styles.depositandwithdraw}>
@@ -328,6 +336,13 @@ function AccountBookContainer() {
         </View>
         {/* 카드내역 스크롤 뷰 자리 */}
         <ScrollView>
+          <View style={{ flexDirection: "row", backgroundColor: "gray" }}>
+            <Text>전체 내역</Text>
+
+            <View style={{ flex: 1, alignItems: "flex-end" }}>
+              <Text>추가</Text>
+            </View>
+          </View>
           {itemList.map((item, index) => {
             return (
               <AccountBookList

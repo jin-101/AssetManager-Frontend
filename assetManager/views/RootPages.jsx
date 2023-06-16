@@ -22,6 +22,7 @@ import {
   AccountBookAnalysis,
   MokdonPlanner,
   UserInfoPage,
+  AccountBookUpload,
   StockCRUDpage
 } from "@views";
 
@@ -94,6 +95,13 @@ function RootPages() {
         name="AccountBookAnalysis"
         component={AccountBookAnalysis}
         options={{ ...commonHeaderStyle, title: "가계부 분석" }}
+      />
+
+      {/* 가계부 업로드 페이지 */}
+      <Stack.Screen
+        name="AccountBookUpload"
+        component={AccountBookUpload}
+        options={{ ...commonHeaderStyle, title: "가계부 업로드" }}
       />
 
       {/* 모달 이동 페이지 - 자산 */}

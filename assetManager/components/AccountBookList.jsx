@@ -166,11 +166,12 @@ function AccountBookList({ item, setItemList, itemList, index }) {
         </View>
 
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.smallgray}>{item.bank}</Text>
+          <Text style={styles.smallgray}>{item.accountNumber}</Text>
           <Text style={styles.smallgray}>
             {" "}
             | {item.exchangeTime.slice(0, -3)}
           </Text>
+
           <View style={{ flex: 1, alignItems: "flex-end" }}>
             <Text style={styles.smallgray}>
               {item.balance.toLocaleString()}원
