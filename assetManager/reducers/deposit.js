@@ -7,6 +7,8 @@ import {
 
 const initialOneAdd = {
   depositType: "deposit",
+  bank: "",
+  productName: "",
   startDate: "",
   endDate: "",
   price: 0,
