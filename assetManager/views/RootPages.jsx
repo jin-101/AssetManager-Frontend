@@ -149,7 +149,7 @@ function RootPages() {
       <Stack.Screen
         name="stockCrud"
         component={StockCRUDpage}
-        options={{ ...commonHeaderStyle, title: "주식자산 수정" }}      
+        options={{ ...commonHeaderStyle, title: "주식잔고" }}      
       />
     </Stack.Navigator>
   );
