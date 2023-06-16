@@ -23,6 +23,7 @@ import {
   MokdonPlanner,
   UserInfoPage,
   AccountBookUpload,
+  StockCRUDpage
   AccountBookAddPage,
 } from "@views";
 
@@ -152,6 +153,11 @@ function RootPages() {
         name="mokdonPlanner"
         component={MokdonPlanner}
         options={{ ...commonHeaderStyle, title: "목돈 마련 플래너" }}
+      />
+      <Stack.Screen
+        name="stockCrud"
+        component={StockCRUDpage}
+        options={{ ...commonHeaderStyle, title: "주식잔고" }}
       />
     </Stack.Navigator>
   );

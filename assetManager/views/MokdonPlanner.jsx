@@ -35,6 +35,7 @@ function MokdonPlanner(props) {
   const [targetPeriod, setTargetPeriod] = useState("");
   const saveType = ["자유롭게", "예금", "적금"];
   // ★ 여기 뱅크타입을 이제 Back에서 데이터 받아서 사용?
+  // 총 17개 은행
   const bankType = [
     "신한은행",
     "국민은행",
@@ -57,6 +58,7 @@ function MokdonPlanner(props) {
   const [type, setType] = useState("");
   const [bank, setBank] = useState("");
   const [result, setResult] = useState({});
+  const [list, setList] = useState([]);
 
   console.log("내가 고른 저축 유형 : " + type);
   console.log("내가 고른 은행 종류 : " + bank);
@@ -69,7 +71,7 @@ function MokdonPlanner(props) {
 
     if (deposit.length === 0) {
       axios({
-        url: `${apiPath}/mokdon/getAvgRate`,
+        url: `${apiPath}/mokdon/getAvgRatePlz`,
         method: "GET",
       }).then((res) => {
         console.log("평균금리 몇임?? : " + res.data);
@@ -111,6 +113,20 @@ function MokdonPlanner(props) {
       });
   };
 
+  // 은행-평균금리 정보 받아오기
+  useEffect(() => {
+    // 데이터 로딩 작업 수행
+    axios({
+      url: `${apiPath}/mokdon/getAvgRate`,
+      method: "GET",
+    }).then((res) => {
+      const aa = res.data;
+      console.log("Map 데이터가 옴 " + aa);
+      console.log(aa["광주은행"]); // key: 각 은행 이름
+      console.log(aa["신한은행"]);
+    });
+  }, []); // [] : 렌더링 될때 처음 1번만 실행한다는 뜻.
+
   // ★ 진이형한테 질문 - 왜 여기선 setter로 변경된 값이 바로 반영되고
 
   return (
@@ -133,7 +149,7 @@ function MokdonPlanner(props) {
             }}
             formControlProps={{ marginBottom: 5 }}
           ></SelectComponent>
-          {type.length <= 3 && (
+          {(type === "예금" || type === "적금") && (
             <SelectComponent
               selectItem={bankType}
               value={bank}
@@ -150,6 +166,7 @@ function MokdonPlanner(props) {
               }}
               formControlProps={{ marginBottom: 5 }}
             ></SelectComponent>
+            //<InputTextComponent></InputTextComponent> 진이형한테 질문
           )}
           <InputTextComponent
             title="목표금액 (만원)"
