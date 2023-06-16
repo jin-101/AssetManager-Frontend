@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, View, Text } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
-import * as FileSystem from "expo-file-system";
 import axios from "axios";
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";

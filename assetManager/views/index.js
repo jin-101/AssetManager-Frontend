@@ -14,8 +14,11 @@ import CurrencyAddPage from "@views/CurrencyAddPage";
 import GoldAddPage from "@views/GoldAddPage";
 import AccountBookAnalysis from "@views/AccountBookAnalysis";
 import AccountBookUpload from "@views/AccountBookUpload";
+import AccountBookAddPage from "@views/AccountBookAddPage";
 import MokdonPlanner from "@views/MokdonPlanner";
 import UserInfoPage from "@views/UserInfoPage";
+import StockCRUDpage from "@views/StockCRUDpage";
+
 
 export {
   Login,
@@ -34,6 +37,8 @@ export {
   GoldAddPage,
   AccountBookAnalysis,
   AccountBookUpload,
+  AccountBookAddPage,
   MokdonPlanner,
   UserInfoPage,
+  StockCRUDpage
 };
