@@ -1,8 +1,7 @@
 import { GET_AVGRATE, RESET_AVGRATE } from "../constants";
 
-export const getAvgRate = (deposit, savings) => ({
+export const getAvgRate = (bankAndAvgRate) => ({
   type: GET_AVGRATE,
-  deposit,
-  savings,
+  bankAndAvgRate,
 });
 export const resetAvgRate = () => ({ type: RESET_AVGRATE });

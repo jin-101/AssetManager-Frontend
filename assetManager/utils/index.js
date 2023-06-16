@@ -164,3 +164,23 @@ export const inputFormCheckFunction = (key, val1, val2, val3) => {
 export function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+export const bankType = [
+  "신한은행",
+  "국민은행",
+  "하나은행",
+  "우리은행",
+  "농협은행",
+  "중소기업은행",
+  "수협은행",
+  "부산은행",
+  "광주은행",
+  "제주은행",
+  "전북은행",
+  "경남은행",
+  "한국스탠다드차타드은행",
+  "카카오뱅크",
+  "토스뱅크",
+  "케이뱅크",
+  "한국산업은행",
+];
