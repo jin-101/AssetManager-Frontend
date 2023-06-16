@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 // import Loading from "@components/Loading";
-
+import { isAndroid } from "../utils";
 import {
   Text,
   View,
@@ -16,7 +16,19 @@ import {
 } from "react-native";
 import { apiPath } from "../services";
 import AccountBookList from "@components/AccountBookList";
-import { Button } from "native-base";
+import {
+  Button,
+  Pressable,
+  HStack,
+  Center,
+  Icon,
+  Box,
+  FormControl,
+  Select,
+} from "native-base";
+import { Feather } from "@expo/vector-icons";
+import InputTextComponent from "@components/InputTextComponent";
+import InputRadioComponent from "@components/InputRadioComponent";
 
 function AccountBookContainer() {
   const styles = StyleSheet.create({
@@ -25,6 +37,58 @@ function AccountBookContainer() {
       fontWeight: "bold",
       marginTop: 3,
       marginLeft: 10,
+    },
+    modalBg: {
+      position: "absolute",
+      top: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "gray",
+      opacity: 0.5,
+    },
+    modalContaniner: {
+      position: "absolute",
+      top: 0,
+      width: "100%",
+      height: "100%",
+      flex: 1,
+      justifyContent: "flex-end",
+    },
+    modalTitle: {
+      height: 60,
+      backgroundColor: "white",
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      justifyContent: "space-around",
+      alignItems: "center",
+      borderBottomWidth: 0.5,
+      borderColor: "lightgray",
+    },
+    modalTitleText: {
+      fontSize: 20,
+      fontWeight: 700,
+    },
+    modalContent: {
+      backgroundColor: "white",
+    },
+    modalFooter: {
+      height: isAndroid ? 0 : 20,
+      backgroundColor: "white",
+    },
+    container: {
+      flex: 1,
+      width: "100%",
+      // justifyContent: "center",
+      // alignItems: "center",
+    },
+    picker: {
+      // height: 50,
+      // width: 200,
+      fontSize: 15, // 글씨 크기 조정
+      backgroundColor: "white",
+    },
+    pickerItem: {
+      fontSize: 10, // 글씨 크기 조정
     },
   });
 
@@ -43,7 +107,6 @@ function AccountBookContainer() {
   // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // console.log("여기들어왔다");
     axios({
       method: "post",
       url: apiPath + "/rest/webboard/list.do",
@@ -55,21 +118,16 @@ function AccountBookContainer() {
       headers: { "Content-Type": `application/json` },
     })
       .then((response) => {
-        //console.log(response.data);
         setData(response.data);
-        // if (response.data.length > 0) console.log(response.data, "///");
-        // setIsLoading(true);
       })
       .catch((error) => {});
   }, [currentMonth]);
 
   const ListSave = () => {
-    //console.log("컨테이너에서///////" + JSON.stringify(itemList));
     axios({
       url: apiPath + "/rest/webboard/listsave.do",
       method: "put",
       data: itemList,
-      //headers: { "Content-Type": `application/json` },
     })
       .then((response) => {
         console.log("카테고리, 메모 저장 axios 성공");
@@ -154,6 +212,19 @@ function AccountBookContainer() {
 
   const moveToUpload = () => {
     navigation.navigate("AccountBookUpload");
+  };
+
+  const moveToAdd = () => {
+    navigation.navigate("AccountBookAddPage", {
+      itemList: {
+        accountNumber: `${itemList.accountNumber}`,
+      },
+    });
+  };
+
+  const [show, setShow] = useState(false);
+  const modalShow = (e) => {
+    setShow((prev) => !prev);
   };
 
   return (
@@ -336,13 +407,22 @@ function AccountBookContainer() {
         </View>
         {/* 카드내역 스크롤 뷰 자리 */}
         <ScrollView>
-          <View style={{ flexDirection: "row", backgroundColor: "gray" }}>
-            <Text>전체 내역</Text>
-
-            <View style={{ flex: 1, alignItems: "flex-end" }}>
-              <Text>추가</Text>
+          <View style={{ flexDirection: "row" }}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "flex-end",
+                //justifyContent: "center",
+              }}
+            >
+              <TouchableOpacity onPress={moveToAdd}>
+                <Text>
+                  <Feather name="plus" size={15} color="black" /> 추가
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
+
           {itemList.map((item, index) => {
             return (
               <AccountBookList

@@ -24,6 +24,7 @@ import {
   UserInfoPage,
   AccountBookUpload,
   StockCRUDpage
+  AccountBookAddPage,
 } from "@views";
 
 function RootPages() {
@@ -104,6 +105,13 @@ function RootPages() {
         options={{ ...commonHeaderStyle, title: "가계부 업로드" }}
       />
 
+      {/* 가계부 추가 페이지 */}
+      <Stack.Screen
+        name="AccountBookAddPage"
+        component={AccountBookAddPage}
+        options={{ ...commonHeaderStyle, title: "가계부 추가" }}
+      />
+
       {/* 모달 이동 페이지 - 자산 */}
       <Stack.Screen
         name="AddDeposit"
@@ -149,7 +157,7 @@ function RootPages() {
       <Stack.Screen
         name="stockCrud"
         component={StockCRUDpage}
-        options={{ ...commonHeaderStyle, title: "주식잔고" }}      
+        options={{ ...commonHeaderStyle, title: "주식잔고" }}
       />
     </Stack.Navigator>
   );
