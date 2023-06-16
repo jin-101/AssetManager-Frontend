@@ -1,7 +1,7 @@
 import React from "react";
 
 import { ScrollView, Pressable, Text } from "react-native";
-import { Box Button, Text } from "native-base";
+import { Box,Button} from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import {useNavigation} from "@react-navigation/native"
 
@@ -27,7 +27,9 @@ function AssetContainer() {
                 <Text style={{ color: "white" }}>예/적금</Text>
               </Pressable>
             </Box>
-            <Box bg={"amber.100"}></Box>
+            <Box bg={"amber.100"}>
+              <Button onPress={onPressStock}> 주식crud</Button>
+            </Box>
             <Box bg={"amber.100"}></Box>
           </ScrollView>
         </Box>
