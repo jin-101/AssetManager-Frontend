@@ -16,6 +16,8 @@ import AccountBookAnalysis from "@views/AccountBookAnalysis";
 import AccountBookUpload from "@views/AccountBookUpload";
 import MokdonPlanner from "@views/MokdonPlanner";
 import UserInfoPage from "@views/UserInfoPage";
+import StockCRUDpage from "@views/StockCRUDpage";
+
 
 export {
   Login,
@@ -36,4 +38,5 @@ export {
   AccountBookUpload,
   MokdonPlanner,
   UserInfoPage,
+  StockCRUDpage
 };

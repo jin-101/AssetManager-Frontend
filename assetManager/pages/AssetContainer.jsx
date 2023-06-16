@@ -1,15 +1,24 @@
 import React from "react";
+
 import { ScrollView, Pressable, Text } from "react-native";
-import { Box } from "native-base";
+import { Box Button, Text } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
+import {useNavigation} from "@react-navigation/native"
 
 function AssetContainer() {
+
+  const navigation = useNavigation();
+  const onPressStock = () => {
+    navigation.navigate("stockCrud")
+  };
+
   return (
     <>
       <ScrollView>
         <Box h={"250"} bg={"amber.100"}>
           <Text fontSize="4xl">자산 콘텐츠 화면 만들기</Text>
         </Box>
+
         <Box h={"150"} bg={"blue.300"}>
           <ScrollView horizontal>
             <Box bg={"amber.100"}>
