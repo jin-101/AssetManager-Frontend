@@ -1,8 +1,7 @@
 import { GET_AVGRATE, RESET_AVGRATE } from "../constants";
 
 const initialState = {
-  deposit: "",
-  savings: "",
+  bankAndAvgRate: {},
 };
 
 export default function avgRate(state = initialState, action) {
@@ -10,8 +9,7 @@ export default function avgRate(state = initialState, action) {
     case GET_AVGRATE:
       return {
         ...state,
-        deposit: action.deposit,
-        savings: action.savings,
+        bankAndAvgRate: action.bankAndAvgRate,
       };
     case RESET_AVGRATE:
       return { ...initialState };

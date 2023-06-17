@@ -45,9 +45,10 @@ function Login() {
       data: JSON.stringify(loginData),
     })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data, "///");
         const { result, userName } = res.data;
         if (result === "로그인성공") {
+          console.log(loginData.userId, userName);
           dispatch(loginStateUpdate(loginData.userId, userName));
         }
         setIsLoading(false);
