@@ -78,7 +78,7 @@ function CarAddContainer({ register }) {
         </Text>
         <SelectComponent
           isVertical={true}
-          formControlProps={{ marginBottom: 10 }}
+          formControlProps={{ marginBottom: 5 }}
           formControlLabelProps={{
             text: "제조사 조회",
           }}
@@ -93,7 +93,7 @@ function CarAddContainer({ register }) {
           <>
             {carCompany !== "기타" ? (
               <SelectComponent
-                formControlProps={{ marginBottom: 10 }}
+                formControlProps={{ marginBottom: 5 }}
                 formControlLabelProps={{
                   text: "모델 조회",
                   fontWeight: "normal",
@@ -111,19 +111,29 @@ function CarAddContainer({ register }) {
               />
             ) : (
               <InputTextComponent
-                formControlStyle={{ mb: "10" }}
-                formControlLabelProps={{ fontWeight: "normal", fontSize: 15 }}
-                title={"모델 입력"}
-                helperText={"소유차량의 모델을 입력하세요."}
+                formControlProps={{ mb: "5" }}
+                formControlLabelProps={{
+                  text: "모델 입력",
+                  fontWeight: "normal",
+                  fontSize: 15,
+                }}
+                formControlHelperProps={{
+                  text: "소유차량의 모델을 입력하세요.",
+                }}
                 value={carModel}
                 dispatchF={carModelUpdate}
               />
             )}
             <InputDateComponent
-              formControlLabelProps={{ fontWeight: "normal", fontSize: 15 }}
-              formControlStyle={{ mb: "5" }}
-              title={"자동차 연식"}
-              helperText={"소유차량의 연식을 선택하세요."}
+              formControlProps={{ mb: "5" }}
+              formControlLabelProps={{
+                text: "자동차 연식",
+                fontWeight: "normal",
+                fontSize: 15,
+              }}
+              formControlHelperProps={{
+                text: "소유차량의 연식을 선택하세요.",
+              }}
               value={carYear}
               dispatchF={carYearUpdate}
               inputStyle={{ color: carYear !== "" ? "black" : "lightgray" }}

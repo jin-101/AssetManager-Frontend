@@ -19,20 +19,15 @@ function CarAddPage(props) {
     dispatch(carInitialize());
   }, []); //처음에 초기화
 
-  const successFunction = () => {
-    Alert.alert("", "차량등록을 완료하였습니다.");
-    dispatch(carInitialize());
-  };
-  const warnFunction = (warn) => {
-    console.log("warn");
-    Alert.alert("", `${warn} \n\n정보를 직접 입력해주세요.`);
+  const responseFunction = (text) => {
+    Alert.alert("", text);
     dispatch(carInitialize());
   };
   const errorFunction = (err) => {
     console.log("err", err);
     Alert.alert(
-      "오류",
-      "올바른 형태의 차량번호가 아닙니다.\n\n정보를 직접 입력해주세요."
+      "",
+      "차량번호의 정보를 찾지 못했습니다. \n\n직접 입력해주세요."
     );
     dispatch(carInitialize());
   };
@@ -40,14 +35,12 @@ function CarAddPage(props) {
   const register = (type) => {
     if (type === "add1") {
       axios({
-        url: apiPath + `/car/mySearch.do/${carId}`,
+        url: apiPath + `/car/mySearch.do/${carId.replaceAll(" ", "")}`,
         method: "POST",
       }) //id 넘겨줘야됨
         .then((res) => {
-          const { price, year, className } = res.data;
-          console.log("고객정보", className, year, price);
-          if (!price || !year || !className) warnFunction(className);
-          else successFunction();
+          console.log(res.data);
+          responseFunction(res.data);
         })
         .catch((err) => {
           errorFunction(err);
@@ -60,7 +53,7 @@ function CarAddPage(props) {
       })
         .then((res) => {
           console.log(res.data);
-          successFunction();
+          responseFunction(res.data);
         })
         .catch((err) => {
           errorFunction(err);
