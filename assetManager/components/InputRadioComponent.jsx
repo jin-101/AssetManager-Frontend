@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
-import { FormControl, HStack, Text } from "native-base";
-import { RadioButton } from "react-native-paper";
+import { FormControl, HStack, Text, Radio } from "native-base";
+// import { RadioButton } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { formControlLableBasicStyle } from "../styles";
 function InputRadioComponent({
@@ -10,7 +10,7 @@ function InputRadioComponent({
   dispatchF = undefined,
   parentSetState = undefined,
   title = "",
-  radioButtonList = [], // 구조 -> [{text : "", value:"", liStyle:{ HStack 속성적용 }, RadioButtonLabelProps:{ Text 속성적용 }, RadioButtonItemProps:{ RadioButton 속성적용}}]
+  radioButtonList = [], // 구조 -> [{text : "", value:"", liStyle:{ HStack 속성적용 },  RadioButtonItemProps:{ Radio 속성적용}}]
   formControlProps = {}, // FormControl 속성적용
   formControlLabelProps = {}, //FormControl.Label 속성적용
   formControlHelperProps = {},
@@ -40,20 +40,22 @@ function InputRadioComponent({
       >
         {formControlLabelText}
       </Text>
-      <RadioButton.Group
-        onValueChange={onChange}
-        value={value}
-        {...radioButtonGroupProps}
-      >
+      <Radio.Group onChange={onChange} value={value} {...radioButtonGroupProps}>
         <HStack {...inputStyle}>
           {radioButtonList.map((el, index) => (
             <HStack key={index} {...el.liStyle}>
-              <Text {...el.RadioButtonLabelProps}>{el.text}</Text>
-              <RadioButton value={el.value} {...el.RadioButtonItemProps} />
+              <Radio
+                value={el.value}
+                my={1}
+                isDisabled={false}
+                {...el.RadioButtonItemProps}
+              >
+                {el.text}
+              </Radio>
             </HStack>
           ))}
         </HStack>
-      </RadioButton.Group>
+      </Radio.Group>
       <FormControl.HelperText {...formControlHelperStyleProps}>
         {formControlHelperText}
       </FormControl.HelperText>
