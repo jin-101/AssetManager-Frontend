@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ScrollView, VStack } from "native-base";
+import { VStack } from "native-base";
 import CarSearchContainer from "../pages/CarSearchContainer";
 import CarAddContainer from "../pages/CarAddContainer";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import { carInitialize } from "../action";
 import { Alert } from "react-native";
 import axios from "axios";
 import { apiPath } from "../services";
+import ContentScrollView from "@components/ContentScrollView";
 
 function CarAddPage(props) {
   const dispatch = useDispatch();
@@ -67,12 +68,12 @@ function CarAddPage(props) {
     }
   };
   return (
-    <ScrollView>
+    <ContentScrollView>
       <VStack alignItems="center" mt="5" mb="5">
         <CarSearchContainer register={register} />
         <CarAddContainer register={register} />
       </VStack>
-    </ScrollView>
+    </ContentScrollView>
   );
 }
 export default CarAddPage;

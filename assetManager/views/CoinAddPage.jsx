@@ -19,6 +19,7 @@ import { apiPath } from "../services";
 import { useSelector } from "react-redux";
 import { makeDateString } from "../utils";
 import InputTextComponent from "@components/InputTextComponent";
+import ContentScrollView from "@components/ContentScrollView";
 
 function CoinAddPage(props) {
   const [market, setMarket] = useState("");
@@ -158,7 +159,7 @@ function CoinAddPage(props) {
   // ★★★★★ 검색 기능을 위한 코드 끝
 
   return (
-    <ScrollView>
+    <ContentScrollView>
       <VStack mt="10" mb="10" alignItems="center">
         <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mb="5">
           <FormControl>
@@ -279,7 +280,7 @@ function CoinAddPage(props) {
           </FormControl>
         </Box>
       </VStack>
-    </ScrollView>
+    </ContentScrollView>
   );
 }
 
