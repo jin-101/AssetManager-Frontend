@@ -25,14 +25,15 @@ function MokdonPlanner(props) {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const { bankAndAvgRate } = useSelector((state) => state.avgRate);
-  // 목돈 계산기의 금액, 기간
+  // 목돈 계산기의 금액, 기간, 월 소득
   const [targetAmount, setTargetAmount] = useState("");
   const [targetPeriod, setTargetPeriod] = useState("");
+  const [income, setIncome] = useState("");
   // 이자 계산기의 금액, 기간
   const [amount, setAmount] = useState("");
   const [period, setPeriod] = useState("");
   const [avgRate, setAvgRate] = useState(""); // 직접입력한 금리
-  const saveType = ["예금", "적금", "My 소득(용돈)"];
+  const saveType = ["예금", "적금"]; //
   const asdf = {
     예금: "depositAvgRate",
     적금: "savingsAvgRate",
@@ -46,6 +47,7 @@ function MokdonPlanner(props) {
     setType("");
     setBank("");
     setAvgRate("");
+    setIncome("");
   };
 
   // 2-1. 목돈 계산하기 버튼 눌렀을 때
@@ -56,10 +58,14 @@ function MokdonPlanner(props) {
     } else if (type === "") {
       Alert.alert("", "저축 유형을 선택해주세요");
       return;
-    } else if (bank === "") {
+    } else if ((type === "예금" || type === "적금") && bank === "") {
       Alert.alert("", "은행을 선택해주세요");
       return;
-    } else if (bank === "직접입력" && avgRate === "") {
+    } else if (
+      (type === "예금" || type === "적금") &&
+      bank === "직접입력" &&
+      avgRate === ""
+    ) {
       Alert.alert("", "금리를 입력해주세요");
       return;
     }
@@ -70,6 +76,7 @@ function MokdonPlanner(props) {
       rateType: rateType, // 단리, 복리
       bank: bank,
       avgRate: bankAndAvgRate[bank][asdf[type]] || avgRate, // (1)은행 고를경우 왼쪽, (2)직접입력할 경우 오른쪽
+      income: income, // 사용자의 저축액
     };
     console.log("목돈계산기 버튼 누름 " + mokdonDto);
     //
@@ -191,7 +198,7 @@ function MokdonPlanner(props) {
 
       {/* (1) 목돈 마련 플래너 파트 */}
       {btnStatus ? (
-        <VStack mt="10" mb="10" alignItems="center">
+        <VStack mt="5" mb="10" alignItems="center">
           <Box
             bg="blue.100"
             w="90%"
@@ -239,7 +246,7 @@ function MokdonPlanner(props) {
               }}
               formControlProps={{ marginBottom: 5 }}
             ></SelectComponent>
-            {(type === "예금" || type === "적금") && (
+            {type !== "" && (
               <>
                 <SelectComponent
                   selectItem={bankType}
@@ -258,7 +265,7 @@ function MokdonPlanner(props) {
                 {bank !== "" && bank !== "직접입력" && (
                   <InputTextComponent
                     formControlLabelProps={{
-                      text: `평균 ${type}금리`,
+                      text: `평균 ${type}금리 (%)`,
                     }}
                     value={bankAndAvgRate[bank][asdf[type]]}
                     textInputProps={{ readOnly: true }}
@@ -274,6 +281,35 @@ function MokdonPlanner(props) {
                     inputType="double"
                   ></InputTextComponent>
                 )}
+
+                {type === "예금" && (
+                  <InputTextComponent
+                    value={income}
+                    parentSetState={setIncome}
+                    inputType="number"
+                    formControlLabelProps={{
+                      text: "총 예치금액 (만원)",
+                    }}
+                    formControlHelperProps={{
+                      text: "저축하는 돈이 따로 있는 경우에만 입력",
+                    }}
+                    formControlProps={{ marginBottom: 5 }}
+                  ></InputTextComponent>
+                )}
+                {type === "적금" && (
+                  <InputTextComponent
+                    value={income}
+                    parentSetState={setIncome}
+                    inputType="number"
+                    formControlLabelProps={{
+                      text: "매달 적금액 (만원)",
+                    }}
+                    formControlHelperProps={{
+                      text: "저축하는 돈이 따로 있는 경우에만 입력",
+                    }}
+                    formControlProps={{ marginBottom: 5 }}
+                  ></InputTextComponent>
+                )}
               </>
             )}
             <Button style={styles.calculateBtn} onPress={mokdoncalculatorBtn}>
@@ -282,39 +318,83 @@ function MokdonPlanner(props) {
           </Box>
 
           {btnStatus === true && result.type === "예금" && (
-            <Box bg="violet.100" w="90%" p="5" borderRadius="2xl" mb="5">
+            <Box bg="violet.100" w="90%" p="5" borderRadius="2xl">
               <InputTextComponent
-                value={"약 " + result.roundedPrincipal + " 만원"}
+                value={result.totalPai}
                 formControlLabelProps={{
-                  text: `${result.type} 가입 시 필요한 원금`,
+                  text: `내가 저축한 총 원리금`,
                 }}
                 // 부가 설정
                 priceFormat={true}
                 textInputProps={{ readOnly: true }}
                 textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 만원" }}
+                textLabel={{ endText: " 원" }}
+              ></InputTextComponent>
+              <InputTextComponent
+                value={result.lackingAmount}
+                formControlLabelProps={{
+                  text: `부족한 금액`,
+                }}
+                // 부가 설정
+                priceFormat={true}
+                textInputProps={{ readOnly: true }}
+                textInputStyle={{ width: "85%" }}
+                textLabel={{ endText: " 원" }}
+              ></InputTextComponent>
+              <InputTextComponent
+                value={result.requiredPrincipal}
+                formControlLabelProps={{
+                  text: `추가로 필요한 예치금 (${result.type} 가입 시)`,
+                }}
+                // 부가 설정
+                priceFormat={true}
+                textInputProps={{ readOnly: true }}
+                textInputStyle={{ width: "85%" }}
+                textLabel={{ endText: " 원" }}
               ></InputTextComponent>
             </Box>
           )}
           {btnStatus === true && result.type === "적금" && (
-            <Box bg="violet.100" w="90%" p="5" borderRadius="2xl" mb="5">
+            <Box bg="violet.100" w="90%" p="5" borderRadius="2xl">
               <InputTextComponent
-                value={"약 " + result.roundedPrincipal + " 만원"}
+                value={result.totalPai}
                 formControlLabelProps={{
-                  text: `${result.type} 가입 시 필요한 월납입액`,
+                  text: `내가 저축한 총 원리금`,
                 }}
                 // 부가 설정
                 priceFormat={true}
                 textInputProps={{ readOnly: true }}
                 textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 만원" }}
+                textLabel={{ endText: " 원" }}
+              ></InputTextComponent>
+              <InputTextComponent
+                value={result.lackingAmount}
+                formControlLabelProps={{
+                  text: `부족한 금액`,
+                }}
+                // 부가 설정
+                priceFormat={true}
+                textInputProps={{ readOnly: true }}
+                textInputStyle={{ width: "85%" }}
+                textLabel={{ endText: " 원" }}
+              ></InputTextComponent>
+              <InputTextComponent
+                value={result.requiredPrincipal}
+                formControlLabelProps={{
+                  text: `추가로 필요한 월납입액 (${result.type} 가입 시)`,
+                }}
+                // 부가 설정
+                priceFormat={true}
+                textInputProps={{ readOnly: true }}
+                textInputStyle={{ width: "85%" }}
+                textLabel={{ endText: " 원" }}
               ></InputTextComponent>
             </Box>
           )}
         </VStack>
       ) : (
         // (2) 이자 계산기 파트
-        <VStack mt="10" mb="10" alignItems="center">
+        <VStack mt="5" mb="10" alignItems="center">
           <Box
             bg="red.100"
             w="90%"
@@ -417,7 +497,7 @@ function MokdonPlanner(props) {
             )}
             <InputTextComponent
               formControlLabelProps={{
-                text: "목표기간 (개월)",
+                text: "저축기간 (개월)",
               }}
               inputType="number"
               value={period}
