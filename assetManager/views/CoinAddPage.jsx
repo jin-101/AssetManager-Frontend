@@ -19,6 +19,9 @@ import { apiPath } from "../services";
 import { useSelector } from "react-redux";
 import { makeDateString } from "../utils";
 import InputTextComponent from "@components/InputTextComponent";
+import SelectComponent from "../components/SelectComponent";
+import { View } from "react-native";
+import { Modal } from "react-native";
 
 function CoinAddPage(props) {
   const [market, setMarket] = useState("");
@@ -28,6 +31,8 @@ function CoinAddPage(props) {
   const [date, setDate] = useState(makeDateString(new Date()));
   const [formData, setFormData] = useState({});
   const { token } = useSelector((state) => state.login);
+  const marketList = ["업비트", "빗썸"];
+
   const handleReset = () => {
     setSelectedValue(""); // 이게 있어야 초기화시 '거래소를 선택해주세요'가 뜸
     setMarket("");
@@ -36,16 +41,8 @@ function CoinAddPage(props) {
     setPrice("");
     setSearchKeyword(""); // 코인 검색란도 초기화되게끔 설정
   };
-  const handleSubmit = () => {
-    let formData = {
-      market: market,
-      coinName: coinName,
-      quantity: quantity,
-      price: price,
-      date: date,
-    };
-    console.log(formData);
 
+  const handleSubmit = () => {
     // 입력값 유효한지 check
     if (market === "") {
       Alert.alert("Error", "거래소를 선택해주세요");
@@ -61,6 +58,14 @@ function CoinAddPage(props) {
       Alert.alert("Error", "0이 아닌 값을 입력해주세요");
       return;
     }
+    let formData = {
+      market: market,
+      coinName: coinName,
+      quantity: quantity,
+      price: price,
+      date: date,
+    };
+    console.log(formData);
 
     // 입력값이 유효한 경우 처리 로직
     axios({
@@ -157,6 +162,11 @@ function CoinAddPage(props) {
   };
   // ★★★★★ 검색 기능을 위한 코드 끝
 
+  const maxTextCount = 5; // 보여질 최대 텍스트 개수
+  const showMoreText = () => {
+    setTextData(textData.slice(0, maxTextCount));
+  };
+
   return (
     <ScrollView>
       <VStack mt="10" mb="10" alignItems="center">
@@ -168,30 +178,23 @@ function CoinAddPage(props) {
                   보유중인 코인을 추가하세요.
                 </FormControl.Label>
               </HStack>
-              <FormControl.Label w="100%">
-                컴포넌트들 위치 및 디자인은 나중에 합시다
-              </FormControl.Label>
-              {/* <FormControl.HelperText>
-                보유중인 코인을 추가하세요.
-              </FormControl.HelperText> */}
             </Box>
-            <Box mb="5">
-              <FormControl.Label>거래소</FormControl.Label>
-              <Select
-                selectedValue={selectedValue}
-                onValueChange={handleValueChange}
-              >
-                <Select.Item label="거래소를 선택해주세요" value="" />
-                <Select.Item label="업비트" value="업비트" />
-                <Select.Item label="빗썸" value="빗썸" />
-              </Select>
-            </Box>
+            <SelectComponent
+              selectItem={marketList}
+              value={selectedValue}
+              parentSetState={handleValueChange}
+              formControlLabelProps={{
+                text: "거래소",
+              }}
+            ></SelectComponent>
+
+            {/*  ★★★★★ 검색기능 시작 */}
             <Box mb="5">
               <FormControl.Label>코인 검색하기</FormControl.Label>
-              {/*  ★★★★★ 검색기능 시작 */}
               <Input
                 value={searchKeyword} // value는 내가 주고 싶은 거 줘도 되는 듯??
                 onChangeText={handleSearch}
+                bg={"white"}
               />
               {searchKeyword !== "" &&
                 Array.from(filteredData.keys()).map((key) => (
@@ -204,9 +207,6 @@ function CoinAddPage(props) {
                     {/* ★ 선택한 market의 코인만 Text화 */}
                     {key.includes(market) && (
                       <Text fontSize="xs" key={key}>
-                        {/* 뒤에 붙어있는 _upbit, _bithumb 등을 제거하기 위해
-                          {key.substring(0, key.indexOf("_", 0))}
-                          */}
                         {key}
                       </Text>
                     )}
@@ -216,36 +216,31 @@ function CoinAddPage(props) {
               {/*  ★★★★★ 검색기능 끝 */}
             </Box>
             <Box mb="5">
-              <FormControl.Label>코인 이름</FormControl.Label>
+              <FormControl.Label>선택한 코인</FormControl.Label>
               <Input
-                isRequired="true" // Required 이거 왜 안 먹히지??
-                placeholder="검색한 코인을 입력하세요"
+                placeholder="검색한 코인을 터치하세요"
                 value={coinName}
                 onChangeText={(coinName) => setCoinName(coinName)}
+                isReadOnly={true}
               />
             </Box>
-            <Box mb="5">
-              {/* <FormControl.Label>매수 수량</FormControl.Label> */}
-              <InputTextComponent
-                formControlLabelProps={{ text: "매수 수량" }}
-                inputType="number"
-                value={quantity}
-                parentSetState={setQuantity}
-                //value={String(quantity)}
-                //onChangeText={(quantity) => setQuantity(quantity)}
-              ></InputTextComponent>
-            </Box>
-            <Box mb="5">
-              {/* <FormControl.Label>매수 가격 (원)</FormControl.Label> */}
-              <InputTextComponent
-                formControlLabelProps={{ text: "매수 가격 (원)" }}
-                inputType="double"
-                value={price}
-                parentSetState={setPrice}
-                //value={String(price)}
-                //onChangeText={(price) => setPrice(inputPriceFormat(price))}
-              ></InputTextComponent>
-            </Box>
+            {/* <FormControl.Label>매수 수량</FormControl.Label> */}
+            <InputTextComponent
+              formControlLabelProps={{ text: "매수 수량" }}
+              inputType="double"
+              value={quantity}
+              parentSetState={setQuantity}
+              //value={String(quantity)}
+              //onChangeText={(quantity) => setQuantity(quantity)}
+            ></InputTextComponent>
+            {/* <FormControl.Label>매수 가격 (원)</FormControl.Label> */}
+            <InputTextComponent
+              formControlLabelProps={{ text: "매수 가격 (원)" }}
+              value={price}
+              parentSetState={setPrice}
+              inputType="double" // 소수까지 입력가능한 키타입 (made by 진이형)
+              //priceFormat={true} // 금액 표시 기능 (★ double과 prcieFormat 같이 쓰면 입력할 때 에러나네)
+            ></InputTextComponent>
 
             {/* SendAndResetButton 컴포넌트로 대체하고 싶은 부분 */}
             <Box mb="5">
