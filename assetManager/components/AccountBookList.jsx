@@ -10,9 +10,12 @@ import {
   TouchableOpacity,
   Modal,
   StyleSheet,
+  Alert,
+  Image,
 } from "react-native";
 import { isAndroid } from "../utils";
 import { apiPath } from "../services";
+import { lightBlue } from "@mui/material/colors";
 
 const styles = StyleSheet.create({
   categorytouchable: {
@@ -132,7 +135,68 @@ function AccountBookList({ item, setItemList, itemList, index }) {
   const showDate =
     !previousItem || previousItem.exchangeDate !== item.exchangeDate; //!null은 true
 
-  // console.log("왜 두번찍혀", index);
+  const handleDelete = () => {
+    Alert.alert("삭제 확인", "정말 삭제하시겠습니까?", [
+      { text: "예", onPress: () => handleConfirmDelete(item.detailCode) },
+      { text: "아니오", style: "cancel" },
+    ]);
+  };
+
+  const handleConfirmDelete = (detailCode) => {
+    axios({
+      url: apiPath + `/rest/webboard/deletelist.do/${detailCode}`,
+      method: "delete",
+    })
+      .then(() => {
+        setItemList((prevItemList) =>
+          prevItemList.filter((item) => item.detailCode !== detailCode)
+        );
+        //삭제한 detailCode의 아이템만 빼고 선택하여 아이템 리스트에 새로 넣어주는 것
+        //item.detailCode : 전체 아이템의 디테일 코드
+        //detailCode : 삭제한 디테일 코드
+        console.log("delete axios 성공");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const imageData = [
+    require("../assets/gift.png"),
+    require("../assets/pencil.png"),
+    require("../assets/bus.png"),
+    require("../assets/finance.png"),
+
+    require("../assets/culture.png"),
+    require("../assets/sendmoney.png"),
+    require("../assets/beauty.png"),
+    require("../assets/life.png"),
+
+    require("../assets/alchohol.png"),
+    require("../assets/travel.png"),
+    require("../assets/shopping.png"),
+    require("../assets/medical.png"),
+
+    require("../assets/eat.png"),
+    require("../assets/transport.png"),
+    require("../assets/house.png"),
+    require("../assets/coffee.png"),
+
+    require("../assets/insurance.png"),
+    require("../assets/donate.png"),
+    require("../assets/pay.png"),
+    require("../assets/money.png"),
+    // ...
+  ];
+
+  const iconData = [
+    { name: "gift", size: 25, color: "black" },
+    { name: "book-open", size: 25, color: "black" },
+    { name: "truck", size: 25, color: "black" },
+    { name: "trending-up", size: 25, color: "black" },
+    // ...
+  ];
+
+  console.log("왜 두번찍혀", index);
   console.log(categoryData.length);
   return (
     <>
@@ -154,7 +218,26 @@ function AccountBookList({ item, setItemList, itemList, index }) {
           </View>
         )}
 
-        <View style={{ flexDirection: "row", marginTop: 15 }}>
+        <View
+          style={{
+            flex: 1,
+            alignItems: "flex-end",
+            marginTop: 8,
+            //backgroundColor: "skyblue",
+          }}
+        >
+          <TouchableOpacity onPress={handleDelete}>
+            <Feather name="trash-2" size={14} color="gray" />
+          </TouchableOpacity>
+        </View>
+
+        <View
+          style={{
+            flexDirection: "row",
+            //marginTop: 15,
+            //backgroundColor: "red",
+          }}
+        >
           <Text>{item.content}</Text>
           <View style={{ flex: 1, alignItems: "flex-end" }}>
             {item.withdraw > 0 ? (
@@ -262,7 +345,17 @@ function AccountBookList({ item, setItemList, itemList, index }) {
                           style={{ width: 45, height: 45 }}
                         /> */}
                       {/* const aa = [{  name:"gift" size:45, color:"black"},{},{}]  ---->   {...aa[index]} */}
-                      <Feather name="gift" size={25} color="black" />
+                      {/* <Feather name="gift" size={25} color="black" /> */}
+                      {/* <Feather
+                        name={iconData[index].name}
+                        size={iconData[index].size}
+                        color={iconData[index].color}
+                      /> */}
+                      <Image
+                        source={imageData[index]}
+                        style={{ width: 45, height: 45 }}
+                      />
+
                       <Text>{item.category}</Text>
                     </View>
                   </View>

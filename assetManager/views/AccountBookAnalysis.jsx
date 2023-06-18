@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, Dimensions } from "react-native";
 import {
   LineChart,
   BarChart,
@@ -8,7 +8,6 @@ import {
   ContributionGraph,
   StackedBarChart,
 } from "react-native-chart-kit";
-import { Dimensions } from "react-native";
 const screenWidth = Dimensions.get("window").width;
 
 function AccountBookAnalysis({ route }) {
