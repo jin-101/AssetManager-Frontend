@@ -1,14 +1,15 @@
 import React, { useCallback } from "react";
-import { Box, HStack, VStack, Text } from "native-base";
+import { Box, HStack, Text } from "native-base";
 import InputRadioComponent from "@components/InputRadioComponent";
 import InputTextComponent from "@components/InputTextComponent";
 import InputDateComponent from "@components/InputDateComponent";
+import SelectComponent from "@components/SelectComponent";
 import { useDispatch } from "react-redux";
 import { depositDelete, depositUpdate } from "../action";
 import { IconButton } from "react-native-paper";
 import { makeDateString } from "../utils";
 
-function DepositAddContainer({ item, isOnlyOne }) {
+function DepositAddContainer({ item, isOnlyOne, bankList }) {
   console.log("DepoAddContainer >>", item);
 
   const dispatch = useDispatch();
@@ -67,6 +68,30 @@ function DepositAddContainer({ item, isOnlyOne }) {
           formControlHelperProps={{ text: "상품을 선택하세요." }}
           id={item.index}
           value={item["depositType"]}
+          dispatchF={depositUpdate}
+        />
+        <SelectComponent
+          name="bank"
+          isVertical={true}
+          formControlProps={{ marginBottom: 5 }}
+          formControlLabelProps={{
+            text: "은행명",
+          }}
+          formControlHelperProps={{ text: "은행을 선택하세요." }}
+          selectItem={bankList}
+          id={item.index}
+          value={item["bank"]}
+          dispatchF={depositUpdate}
+        />
+        <InputTextComponent
+          name="productName"
+          formControlProps={{ mb: "5" }}
+          formControlLabelProps={{ text: "상품명" }}
+          formControlHelperProps={{
+            text: "금융상품 이름을 입력하세요.",
+          }}
+          id={item.index}
+          value={item["productName"] || ""}
           dispatchF={depositUpdate}
         />
         <InputDateComponent

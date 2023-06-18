@@ -13,6 +13,7 @@ import AccountBookContainer from "@pages/AccountBookContainer";
 import MainPageModalContent from "@pages/MainPageModalContent";
 import { pageInitialize } from "../action";
 import { useToast } from "native-base";
+import StatisticsContainer from "@pages/StatisticsContainer";
 
 const styles = StyleSheet.create({
   container: {
@@ -64,8 +65,8 @@ function MainPage() {
         return <SearchContainer />;
       case 2:
         return <AssetContainer />;
-      // case 3:
-      //   return <HomeContainer />;
+      case 3:
+        return <StatisticsContainer />;
       case 4:
         return <AccountBookContainer />;
       default:

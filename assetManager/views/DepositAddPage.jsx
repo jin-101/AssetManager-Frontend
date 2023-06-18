@@ -8,12 +8,16 @@ import { IconButton } from "react-native-paper";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { apiPath } from "../services";
+import Loading from "@components/Loading";
 
 function DepositAddPage() {
   console.log("DepoAddPage >>>");
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [banklist, setBankList] = useState([]);
 
   useEffect(() => {
     dispatch(depositInitialize());
@@ -23,6 +27,20 @@ function DepositAddPage() {
   const len = depositStateList.length;
   const nextId = useRef(1);
   const [pass, setPass] = useState(false);
+
+  useEffect(() => {
+    axios({
+      url: `${apiPath}/deposit/bankList.do`,
+      method: "GET",
+    })
+      .then((res) => {
+        setBankList(res.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
     const bool = depositStateList.every(
@@ -68,40 +86,44 @@ function DepositAddPage() {
   }, []);
   console.log("통과여부", pass);
   return (
-    <ScrollView>
-      <VStack alignItems="center" mt="5" mb="5">
-        {depositStateList?.map((item, i) => (
-          <DepositAddContainer
-            key={item.index}
-            item={item}
-            nextId={len - 1 === i && nextId}
-            isOnlyOne={len === 1 || false}
-          />
-        ))}
+    <>
+      <ScrollView>
+        <VStack alignItems="center" mt="5" mb="5">
+          {depositStateList?.map((item, i) => (
+            <DepositAddContainer
+              key={item.index}
+              item={item}
+              nextId={len - 1 === i && nextId}
+              isOnlyOne={len === 1 || false}
+              bankList={banklist}
+            />
+          ))}
 
-        <IconButton
-          icon="plus-circle" //"note-plus"
-          iconColor={pass ? "green" : "gray"}
-          size={70}
+          <IconButton
+            icon="plus-circle" //"note-plus"
+            iconColor={pass ? "green" : "gray"}
+            size={70}
+            disabled={!pass}
+            onPress={addButton}
+            style={{
+              margin: -25,
+              padding: 0,
+              position: "absolute",
+              bottom: 0,
+            }}
+          />
+        </VStack>
+        <Button
+          colorScheme={pass ? "success" : "gray"}
           disabled={!pass}
-          onPress={addButton}
-          style={{
-            margin: -25,
-            padding: 0,
-            position: "absolute",
-            bottom: 0,
-          }}
-        />
-      </VStack>
-      <Button
-        colorScheme={pass ? "success" : "gray"}
-        disabled={!pass}
-        onPress={register}
-        m="3"
-      >
-        등록
-      </Button>
-    </ScrollView>
+          onPress={register}
+          m="3"
+        >
+          등록
+        </Button>
+      </ScrollView>
+      {isLoading && <Loading />}
+    </>
   );
 }
 export default DepositAddPage;
