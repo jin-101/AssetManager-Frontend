@@ -240,17 +240,12 @@ function AptAddPage(props) {
   return (
     <ContentScrollView>
       <VStack mt="5" mb="5" alignItems="center">
-        <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mb="5">
+        <Box bg="blue.100" w="90%" p="5" borderRadius="2xl">
           <FormControl>
-            <Box mb="10">
-              <HStack alignItems="center">
-                <FormControl.Label w="100%">
-                  보유중인 아파트를 검색 후 추가하세요.
-                </FormControl.Label>
-              </HStack>
-            </Box>
-
             <Box mb="5">
+              <Text mb={5} fontSize={25}>
+                지역 선택
+              </Text>
               <FormControl.Label>시/도</FormControl.Label>
               {/* AptSidoSelect 컴포넌트로 분리하고 싶은 부분 */}
               <View style={styles.container}>
@@ -361,7 +356,6 @@ function AptAddPage(props) {
                 formControlLabelProps={{ text: "아파트 이름 검색하기" }}
                 value={searchKeyword}
                 parentSetState={handleSearch}
-                //onChangeText={handleSearch}
                 // 스타일 적용
                 labelStyle={{
                   fontSize: 15,
@@ -388,7 +382,7 @@ function AptAddPage(props) {
                 <Input
                   label={aptName}
                   value={aptName}
-                  placeholder="(1)검색 통해서 입력, (2)직접입력 구현해야 할 듯"
+                  placeholder="아파트 이름 검색 후 터치해주세요"
                 />
               </Box>
 
@@ -397,7 +391,7 @@ function AptAddPage(props) {
                 <Input
                   value={netLeasableArea}
                   label={netLeasableArea}
-                  placeholder="전용면적"
+                  placeholder="아파트 이름 검색 후 터치해주세요"
                   isReadOnly={true}
                 ></Input>
               </Box>

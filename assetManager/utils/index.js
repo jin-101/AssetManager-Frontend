@@ -166,6 +166,7 @@ export function delay(ms) {
 }
 
 export const bankType = [
+  "직접입력",
   "신한은행",
   "국민은행",
   "하나은행",

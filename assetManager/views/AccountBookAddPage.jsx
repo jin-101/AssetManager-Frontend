@@ -14,10 +14,10 @@ function AccountBookAddPage({ route }) {
   const [radio, setRadio] = useState("withdraw");
   const [content, setContent] = useState("");
   const [memo, setMemo] = useState("");
-
   const { itemList } = route.params;
-
-  console.log(itemList);
+  const uniqueAccountNumbers = [
+    ...new Set(itemList.map((item) => item.accountNumber)),
+  ];
 
   return (
     <ScrollView>
@@ -31,7 +31,16 @@ function AccountBookAddPage({ route }) {
               mb="5"
               borderRadius="lg"
               backgroundColor="amber.100"
-            ></HStack>
+            >
+              <Text style={{ fontSize: 25, margin: 10 }}>가계부 추가</Text>
+            </HStack>
+            {/* {itemList.map((item, index) => {
+              return <Text key={index}>{item.accountNumber}</Text>;
+            })} */}
+            {uniqueAccountNumbers.map((accountNumber, index) => {
+              return <Text key={index}>{accountNumber}</Text>;
+            })}
+
             <InputTextComponent
               name="price"
               inputType={"number"}
@@ -49,7 +58,6 @@ function AccountBookAddPage({ route }) {
               value={price}
               parentSetState={setPrice}
             />
-
             <InputRadioComponent
               name="Type"
               formControlProps={{ mb: "8", isDisabled: true }}
@@ -75,7 +83,6 @@ function AccountBookAddPage({ route }) {
               value={radio}
               parentSetState={setRadio}
             />
-
             <InputTextComponent
               name="price"
               inputType={"text"}
@@ -106,7 +113,6 @@ function AccountBookAddPage({ route }) {
               parentSetState={setContent}
               //dispatchF={depositUpdate}
             />
-
             <SelectComponent
               isVertical={true}
               formControlProps={{ marginBottom: 10 }}
@@ -117,12 +123,12 @@ function AccountBookAddPage({ route }) {
               //   text: "소유차량의 제조사를 선택하세요.",
               // }}
               // selectProps={{}}
-              //selectItem={companyList}
+              selectItem={uniqueAccountNumbers}
               // selectItemStyle={{}}
-              //value={carCompany}
+              value={uniqueAccountNumbers}
+              parentSetState={setAccNum}
               //dispatchF={carCompanyUpdate}
             />
-
             <InputDateComponent
               name="startDate"
               formControlProps={{ mb: "5" }}
@@ -143,7 +149,6 @@ function AccountBookAddPage({ route }) {
                 toolBarCancelStyle: { color: "black" },
               }}
             />
-
             <InputTextComponent
               name="price"
               inputType={"text"}
