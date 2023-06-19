@@ -126,7 +126,7 @@ function AccountBookAddPage({ route }) {
               selectItem={uniqueAccountNumbers}
               // selectItemStyle={{}}
               value={uniqueAccountNumbers}
-              parentSetState={setAccNum}
+              //parentSetState={setAccNum}
               //dispatchF={carCompanyUpdate}
             />
             <InputDateComponent
