@@ -68,15 +68,37 @@ function StockCRUDpage() {
             </VStack>
             <Spacer />
 
-            <Text
-              fontSize="lg"
-              pr="5"
-              _dark={{ color: "warmGray.50" }}
-              color="coolGray.800"
-              alignSelf="center"
-            >
-              평균단가:{el.price}
-            </Text>
+
+            <VStack>
+              <Text
+                fontSize="xs"
+                pr="5"
+                _dark={{ color: "warmGray.50" }}
+                color="coolGray.800"
+                alignSelf="center"
+              >
+                현재가:{el.stockPrice}
+              </Text>
+              <Text
+                fontSize="xs"
+                pr="5"
+                _dark={{ color: "warmGray.50" }}
+                color="coolGray.800"
+                alignSelf="center"
+              >
+                평균단가:{el.price}
+              </Text>
+              <Text
+                fontSize="xs"
+                pr="5"
+                _dark={{ color: "warmGray.50" }}
+                color="coolGray.800"
+                alignSelf="center"
+              >
+                수익률:{el.gain}
+              </Text>
+            </VStack>
+
           </HStack>
         </Box>
       ))}
