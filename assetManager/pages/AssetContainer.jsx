@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import Carousel from "../external/Carousel";
 import ContentScrollView from "@components/ContentScrollView";
 import { StockCRUDpage } from "../views";
+import AptCrudPage from "../views/crudPage/AptCrudPage";
 
 const entries = [
   { key: "1", title: "예/적금", naviPath: "depositCrud" },
@@ -77,13 +78,7 @@ function AssetContainer() {
           </View>
         );
       case "2":
-        return (
-          <View>
-            <Box>
-              <Text>부동산 관련 surmary</Text>
-            </Box>
-          </View>
-        );
+        return <AptCrudPage></AptCrudPage>;
       case "3":
         return (
           <View>
