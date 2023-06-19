@@ -5,7 +5,7 @@ import { View, Text, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Carousel from "../external/Carousel";
 import ContentScrollView from "@components/ContentScrollView";
-import StockCRUDpage from "../views/StockCRUDpage";
+import { StockCRUDpage } from "../views";
 
 const entries = [
   { key: "1", title: "예/적금", naviPath: "depositCrud" },

@@ -19,7 +19,7 @@ import MokdonPlanner from "@views/MokdonPlanner";
 import UserInfoPage from "@views/UserInfoPage";
 import DepositCrudPage from "@views/crudPage/DepositCrudPage";
 import CarCrudPage from "@views/crudPage/CarCrudPage";
-import StockCRUDpage from "@views/StockCRUDpage";
+import StockCRUDpage from "@views/crudPage/StockCRUDpage";
 
 export {
   Login,
