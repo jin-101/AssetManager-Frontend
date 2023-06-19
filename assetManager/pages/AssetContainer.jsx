@@ -1,15 +1,15 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { Box, Button } from "native-base";
 import React from "react";
-import { View, Text, ScrollView, Dimensions } from "react-native";
+import { View, Text, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Carousel from "../external/Carousel";
 import ContentScrollView from "@components/ContentScrollView";
 
 const entries = [
-  { key: "1", title: "예/적금", naviPath: "" },
+  { key: "1", title: "예/적금", naviPath: "depositCrud" },
   { key: "2", title: "부동산", naviPath: "" },
-  { key: "3", title: "자동차", naviPath: "" },
+  { key: "3", title: "자동차", naviPath: "carCrud" },
   { key: "4", title: "금", naviPath: "" },
   { key: "5", title: "외환", naviPath: "" },
   { key: "6", title: "주식", naviPath: "stockCrud" },
