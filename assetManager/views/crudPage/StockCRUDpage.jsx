@@ -15,7 +15,7 @@ import {
 import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { apiPath } from "../services";
+import { apiPath } from "../../services";
 
 function StockCRUDpage() {
   const { token } = useSelector((state) => state.login);
@@ -37,7 +37,7 @@ function StockCRUDpage() {
 
   return (
     <Box mt="3">
-      {stocks.map((el, index) => (
+      {stocks?.map((el, index) => (
         <Box
           key={index}
           borderBottomWidth="1"
@@ -48,7 +48,7 @@ function StockCRUDpage() {
           py="2"
         >
           <HStack space={[2, 3]} justifyContent="space-between">
-            <Avatar size="50px" source={require("../assets/bear.jpg")} ml="1" />
+            <Avatar size="50px" source={require("@assets/bear.jpg")} ml="1" />
             <VStack>
               <Text
                 _dark={{ color: "warmGray.50" }}
