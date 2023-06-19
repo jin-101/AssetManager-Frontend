@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { VStack } from "native-base";
-import CarSearchContainer from "../pages/CarSearchContainer";
-import CarAddContainer from "../pages/CarAddContainer";
+import CarSearchContainer from "@pages/CarSearchContainer";
+import CarAddContainer from "@pages/CarAddContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { carInitialize } from "../action";
 import { Alert } from "react-native";

@@ -17,8 +17,9 @@ import AccountBookUpload from "@views/AccountBookUpload";
 import AccountBookAddPage from "@views/AccountBookAddPage";
 import MokdonPlanner from "@views/MokdonPlanner";
 import UserInfoPage from "@views/UserInfoPage";
+import DepositCrudPage from "@views/crudPage/DepositCrudPage";
+import CarCrudPage from "@views/crudPage/CarCrudPage";
 import StockCRUDpage from "@views/StockCRUDpage";
-
 
 export {
   Login,
@@ -40,5 +41,7 @@ export {
   AccountBookAddPage,
   MokdonPlanner,
   UserInfoPage,
-  StockCRUDpage
+  DepositCrudPage,
+  CarCrudPage,
+  StockCRUDpage,
 };

@@ -23,6 +23,8 @@ import {
   MokdonPlanner,
   UserInfoPage,
   AccountBookUpload,
+  DepositCrudPage,
+  CarCrudPage,
   StockCRUDpage,
   AccountBookAddPage,
 } from "@views";
@@ -108,11 +110,24 @@ function RootPages() {
             component={CoinAddPage}
             options={{ ...commonHeaderStyle, title: "코인 추가" }}
           />
-          {/*  */}
+
+          {/* 목돈마련플래너 */}
           <Stack.Screen
             name="mokdonPlanner"
             component={MokdonPlanner}
             options={{ ...commonHeaderStyle, title: "목돈 마련 플래너" }}
+          />
+
+          {/* 보유자산 상세내역 */}
+          <Stack.Screen
+            name="depositCrud"
+            component={DepositCrudPage}
+            options={{ ...commonHeaderStyle, title: "예적금 보유내역" }}
+          />
+          <Stack.Screen
+            name="carCrud"
+            component={CarCrudPage}
+            options={{ ...commonHeaderStyle, title: "자동차 보유내역" }}
           />
           <Stack.Screen
             name="stockCrud"
