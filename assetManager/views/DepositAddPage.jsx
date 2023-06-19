@@ -1,5 +1,5 @@
 import { Button, VStack } from "native-base";
-import { Alert, ScrollView } from "react-native";
+import { Alert } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import DepositAddContainer from "@pages/DepositAddContainer";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { apiPath } from "../services";
 import Loading from "@components/Loading";
+import ContentScrollView from "@components/ContentScrollView";
 
 function DepositAddPage() {
   console.log("DepoAddPage >>>");
@@ -87,7 +88,7 @@ function DepositAddPage() {
   console.log("통과여부", pass);
   return (
     <>
-      <ScrollView>
+      <ContentScrollView>
         <VStack alignItems="center" mt="5" mb="5">
           {depositStateList?.map((item, i) => (
             <DepositAddContainer
@@ -121,7 +122,7 @@ function DepositAddPage() {
         >
           등록
         </Button>
-      </ScrollView>
+      </ContentScrollView>
       {isLoading && <Loading />}
     </>
   );

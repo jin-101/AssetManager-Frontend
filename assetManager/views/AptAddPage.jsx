@@ -4,7 +4,6 @@ import {
   FormControl,
   HStack,
   Input,
-  ScrollView,
   Text,
   VStack,
   Select,
@@ -23,6 +22,7 @@ import { makeDateString } from "../utils";
 import { setRef } from "@mui/material";
 import { useSelector } from "react-redux";
 import Loading from "@components/Loading";
+import ContentScrollView from "@components/ContentScrollView";
 //import { AptSidoSelect, AptGuSelect } from "../components/AptSidoSelect";
 
 function AptAddPage(props) {
@@ -238,7 +238,7 @@ function AptAddPage(props) {
 
   if (isLoading) return <Loading />;
   return (
-    <ScrollView>
+    <ContentScrollView>
       <VStack mt="5" mb="5" alignItems="center">
         <Box bg="blue.100" w="90%" p="5" borderRadius="2xl">
           <FormControl>
@@ -521,7 +521,7 @@ function AptAddPage(props) {
           </FormControl>
         </Box>
       </VStack>
-    </ScrollView>
+    </ContentScrollView>
   );
 }
 

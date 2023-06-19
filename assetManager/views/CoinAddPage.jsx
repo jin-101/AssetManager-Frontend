@@ -19,6 +19,7 @@ import { apiPath } from "../services";
 import { useSelector } from "react-redux";
 import { makeDateString } from "../utils";
 import InputTextComponent from "@components/InputTextComponent";
+import ContentScrollView from "@components/ContentScrollView";
 import SelectComponent from "../components/SelectComponent";
 import { View } from "react-native";
 import { Modal } from "react-native";
@@ -168,7 +169,7 @@ function CoinAddPage(props) {
   };
 
   return (
-    <ScrollView>
+    <ContentScrollView>
       <VStack mt="10" mb="10" alignItems="center">
         <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mb="5">
           <FormControl>
@@ -274,7 +275,7 @@ function CoinAddPage(props) {
           </FormControl>
         </Box>
       </VStack>
-    </ScrollView>
+    </ContentScrollView>
   );
 }
 

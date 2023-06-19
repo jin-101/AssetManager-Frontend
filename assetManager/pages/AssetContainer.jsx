@@ -4,6 +4,7 @@ import React from "react";
 import { View, Text, ScrollView, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Carousel from "../external/Carousel";
+import ContentScrollView from "@components/ContentScrollView";
 
 const entries = [
   { key: "1", title: "예/적금", naviPath: "" },
@@ -189,7 +190,7 @@ function AssetContainer() {
   );
   return (
     <>
-      <ScrollView>
+      <ContentScrollView>
         <Box h={"250"} bg={"amber.100"}>
           <Text fontSize="4xl">총자산 보여주는 곳</Text>
         </Box>
@@ -199,7 +200,7 @@ function AssetContainer() {
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
         />
-      </ScrollView>
+      </ContentScrollView>
     </>
   );
 }
