@@ -1,9 +1,8 @@
 //연습중..
-import { Box, Button, VStack } from "native-base";
+import { Box } from "native-base";
 import React from "react";
-import { StyleSheet, Text, ScrollView } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import SelectComponent from "@components/SelectComponent";
-import { Picker } from "@react-native-picker/picker";
 
 function SearchContainer({}) {
   console.log("SeachContainer >>>");
@@ -25,20 +24,7 @@ function SearchContainer({}) {
   return (
     <ScrollView>
       <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
-        <Box w="100%" bg="amber.100">
-          <SelectComponent
-            formControlProps={{}}
-            formControlLabelProps={{
-              text: "제목",
-              fontWeight: 700,
-              color: "black",
-            }}
-            FormControlHelperProps={{}}
-            selectProps={{}}
-            selectItem={selectItem}
-            selectItemStyle={{}}
-          />
-        </Box>
+        <Box w="100%" bg="amber.100"></Box>
       </Box>
     </ScrollView>
   );

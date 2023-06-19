@@ -11,6 +11,7 @@ import {
 } from "native-base";
 import InputDateComponent from "@components/InputDateComponent";
 import InputTextComponent from "@components/InputTextComponent";
+import ContentScrollView from "@components/ContentScrollView";
 import { makeDateString } from "../utils";
 import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
@@ -60,7 +61,7 @@ function CurrencyAddPage() {
   const onReset = () => dispatch(currencyRest());
 
   return (
-    <ScrollView>
+    <ContentScrollView>
       <VStack alignItems="center" mt="5" mb="5">
         <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
           <Box w="100%">
@@ -131,7 +132,7 @@ function CurrencyAddPage() {
           </Box>
         </Box>
       </VStack>
-    </ScrollView>
+    </ContentScrollView>
   );
 }
 
