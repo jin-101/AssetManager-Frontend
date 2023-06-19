@@ -27,8 +27,6 @@ import {
   Select,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
-import InputTextComponent from "@components/InputTextComponent";
-import InputRadioComponent from "@components/InputRadioComponent";
 
 function AccountBookContainer() {
   const styles = StyleSheet.create({
@@ -215,11 +213,7 @@ function AccountBookContainer() {
   };
 
   const moveToAdd = () => {
-    navigation.navigate("AccountBookAddPage", {
-      itemList: {
-        accountNumber: `${itemList.accountNumber}`,
-      },
-    });
+    navigation.navigate("AccountBookAddPage", { itemList });
   };
 
   const [show, setShow] = useState(false);
