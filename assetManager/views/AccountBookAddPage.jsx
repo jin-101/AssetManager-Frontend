@@ -1,23 +1,116 @@
-import { HStack, VStack, Box, FormControl, Select, Button } from "native-base";
+import {
+  HStack,
+  VStack,
+  Box,
+  FormControl,
+  Button as NBButton,
+} from "native-base";
 import React, { useState } from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { Text, ScrollView, StyleSheet, Button } from "react-native";
 import InputRadioComponent from "@components/InputRadioComponent";
 import InputTextComponent from "@components/InputTextComponent";
 import InputDateComponent from "@components/InputDateComponent";
 import SelectComponent from "@components/SelectComponent";
-import { makeDateString } from "../utils";
+import { inputTagCommonStyle, makeDateString } from "../utils";
+import CategoryModal from "../components/CategoryModal";
+import { TouchableOpacity } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
+import { formControlLableBasicStyle } from "../styles";
+import { left } from "@popperjs/core";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import axios from "axios";
+import { apiPath } from "../services";
+import { useSelector } from "react-redux";
 
 function AccountBookAddPage({ route }) {
+  const { token } = useSelector((state) => state.login);
   const currentDate = makeDateString(new Date());
+  const [selectedDate, setSelectedDate] = useState(currentDate);
   const year = Number(currentDate.substring(0, 4));
-  const [price, setPrice] = useState("");
+  const [money, setMoney] = useState("");
   const [radio, setRadio] = useState("withdraw");
   const [content, setContent] = useState("");
   const [memo, setMemo] = useState("");
+  const [category, setCategory] = useState("");
+
   const { itemList } = route.params;
   const uniqueAccountNumbers = [
     ...new Set(itemList.map((item) => item.accountNumber)),
   ];
+  const [selectedAccountNumber, setSelectedAccountNumber] = useState("");
+
+  const [show, setShow] = useState(false);
+  const modalShow = (e) => {
+    console.log("///");
+    setShow((prev) => !prev);
+  };
+
+  const [showPicker, setShowPicker] = useState(false);
+
+  const handleOpenPicker = () => {
+    if (!showPicker) {
+      setShowPicker(true);
+    }
+  };
+  const handleClosePicker = () => {
+    if (showPicker) {
+      setShowPicker(false);
+    }
+  };
+  const handleTimeChange = (event, selectedTime) => {
+    if (selectedTime) {
+      setShowPicker(false);
+      setSelectedTime(selectedTime);
+      console.log(selectedTime);
+    } else {
+      setShowPicker(false);
+    }
+  };
+
+  const currentTimeData = new Date();
+  const [selectedTime, setSelectedTime] = useState(currentTimeData);
+
+  //시간만 스트링 형태로 출력 12:00:00 AM
+  const selectedTimeString = selectedTime.toLocaleTimeString();
+  console.log(selectedTimeString);
+
+  //12:00:00 AM의 길이
+  const TimeLength = selectedTimeString.length;
+
+  //DB 저장을 위해 12:00:00 형식으로 출력
+  const TimeForSaveData = selectedTimeString.substring(0, TimeLength - 3);
+  const TimeForSaveLength = TimeForSaveData.length;
+  const TimeForSave =
+    TimeForSaveLength == 7 ? "0" + TimeForSaveData : TimeForSaveData;
+
+  console.log("db저장용!!!" + TimeForSave);
+
+  //화면에 보여주기 위한 시간 12:00 형식
+  const TimeforValue = selectedTimeString.substring(0, TimeLength - 6);
+  console.log("화면출력용!" + TimeforValue);
+
+  const SaveOneAccount = () => {
+    axios({
+      url: apiPath + "/rest/webboard/saveoneaccount.do",
+      method: "post",
+      data: {
+        [radio]: money,
+        category: category,
+        content: content,
+        memo: memo,
+        accountNumber: selectedAccountNumber,
+        exchangeDate: selectedDate + "T" + TimeForSave,
+        memberId: token,
+      },
+      headers: { "Content-Type": `application/json` },
+    })
+      .then(() => {
+        console.log("axios 가계부 한건 추가 성공");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <ScrollView>
@@ -34,29 +127,16 @@ function AccountBookAddPage({ route }) {
             >
               <Text style={{ fontSize: 25, margin: 10 }}>가계부 추가</Text>
             </HStack>
-            {/* {itemList.map((item, index) => {
-              return <Text key={index}>{item.accountNumber}</Text>;
-            })} */}
-            {uniqueAccountNumbers.map((accountNumber, index) => {
-              return <Text key={index}>{accountNumber}</Text>;
-            })}
-
             <InputTextComponent
-              name="price"
+              name="money"
               inputType={"number"}
               priceFormat={true}
               formControlProps={{ mb: "5" }}
               formControlLabelProps={{ text: "금액(원)" }}
-              // formControlHelperProps={{
-              //   text: "예치금액 / 적립금액을 입력하세요.",
-              // }}
               alertContent={"정확한 금액을 입력해주세요."}
-              //id={item.index}
-              //value={item["price"] || ""}
               placeholder="0"
-              //dispatchF={depositUpdate}
-              value={price}
-              parentSetState={setPrice}
+              value={money}
+              parentSetState={setMoney}
             />
             <InputRadioComponent
               name="Type"
@@ -76,42 +156,37 @@ function AccountBookAddPage({ route }) {
                   liStyle: { alignItems: "center" },
                 },
               ]}
-              //formControlHelperProps={{ text: "상품을 선택하세요." }}
-              //id={item.index}
-              //value={item["depositType"]}
-              //dispatchF={depositUpdate}
               value={radio}
               parentSetState={setRadio}
             />
-            <InputTextComponent
-              name="price"
-              inputType={"text"}
-              priceFormat={true}
-              formControlProps={{ mb: "5" }}
-              formControlLabelProps={{ text: "카테고리" }}
-              // formControlHelperProps={{
-              //   text: "예치금액 / 적립금액을 입력하세요.",
-              // }}
-              alertContent={"정확한 금액을 입력해주세요."}
-              //id={item.index}
-              //value={item["price"] || ""}
-              placeholder="미분류"
-              //dispatchF={depositUpdate}
-            />
+            <FormControl>
+              <Text style={{ ...formControlLableBasicStyle.label }}>
+                카테고리
+              </Text>
+            </FormControl>
+            <TouchableOpacity onPress={modalShow}>
+              <TextInput
+                style={{
+                  ...inputTagCommonStyle,
+                  textAlign: left,
+                  paddingLeft: 10,
+                  marginBottom: 10,
+                }}
+                placeholder="미분류"
+                placeholderTextColor="lightgray"
+                editable={false}
+                value={category}
+              />
+            </TouchableOpacity>
             <InputTextComponent
               name="content"
               inputType={"text"} //Text가 디폴트임 (생략가능)
               formControlProps={{ mb: "5" }}
               formControlLabelProps={{ text: "거래처" }}
-              // formControlHelperProps={{
-              //   text: "예치금액 / 적립금액을 입력하세요.",
-              // }}
               alertContent={"정확한 금액을 입력해주세요."}
-              //id={item.index}
               placeholder="거래처를 입력하세요"
               value={content}
               parentSetState={setContent}
-              //dispatchF={depositUpdate}
             />
             <SelectComponent
               isVertical={true}
@@ -119,25 +194,15 @@ function AccountBookAddPage({ route }) {
               formControlLabelProps={{
                 text: "거래수단",
               }}
-              // formControlHelperProps={{
-              //   text: "소유차량의 제조사를 선택하세요.",
-              // }}
-              // selectProps={{}}
               selectItem={uniqueAccountNumbers}
-              // selectItemStyle={{}}
-              value={uniqueAccountNumbers}
-              //parentSetState={setAccNum}
-              //dispatchF={carCompanyUpdate}
+              value={selectedAccountNumber}
+              parentSetState={setSelectedAccountNumber}
             />
             <InputDateComponent
               name="startDate"
               formControlProps={{ mb: "5" }}
               formControlLabelProps={{ text: "날짜" }}
-              //formControlHelperProps={{ text: "상품 가입일을 선택하세요." }}
-              //textInputProps={{ color: startDate ? "black" : "gray" }}
-              //id={item.index}
-              value={currentDate}
-              //dispatchF={depositUpdate}
+              value={selectedDate}
               datePickerProps={{
                 type: "YYYY-MM-DD",
                 minDate: `${year - 5}-01-01`,
@@ -148,26 +213,52 @@ function AccountBookAddPage({ route }) {
                 selectedBorderLineWidth: "2",
                 toolBarCancelStyle: { color: "black" },
               }}
+              parentSetState={setSelectedDate}
             />
+            {/* 시간 부분 */}
+            <TextInput
+              style={{
+                ...inputTagCommonStyle,
+                // width: 190,
+                // height: 45,
+                // backgroundColor: "white",
+                textAlign: left,
+                paddingLeft: 10,
+                marginBottom: 10,
+              }}
+              //placeholder={substringTime} //스트링 값이 들어가야 함
+              placeholderTextColor="lightgray"
+              editable={false}
+              value={TimeforValue}
+            />
+            <NBButton onPress={handleOpenPicker}>시간을 입력하세요</NBButton>
+            {showPicker && (
+              <DateTimePicker
+                value={selectedTime}
+                mode="time"
+                onChange={handleTimeChange}
+              />
+            )}
             <InputTextComponent
               name="price"
               inputType={"text"}
               formControlProps={{ mb: "5" }}
               formControlLabelProps={{ text: "메모" }}
-              // formControlHelperProps={{
-              //   text: "예치금액 / 적립금액을 입력하세요.",
-              // }}
-              alertContent={"정확한 금액을 입력해주세요."}
-              //id={item.index}
-              //value={item["price"] || ""}
+              alertContent={""}
               placeholder="메모 입력"
-              //dispatchF={depositUpdate}
               value={memo}
               parentSetState={setMemo}
             />
-            <Button size="lg">저장하기</Button>
+            <NBButton size="lg" onPress={SaveOneAccount}>
+              저장하기
+            </NBButton>
           </Box>
         </Box>
+        <CategoryModal
+          showState={show}
+          showSetState={modalShow}
+          categorySetState={setCategory}
+        />
       </VStack>
     </ScrollView>
   );
@@ -177,8 +268,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    // justifyContent: "center",
-    // alignItems: "center",
   },
   picker: {
     // height: 50,
