@@ -8,6 +8,7 @@ import ContentScrollView from "@components/ContentScrollView";
 import CarCrudPage from "../views/crudPage/CarCrudPage";
 import DepositCrudPage from "../views/crudPage/DepositCrudPage";
 import StockCRUDpage from "../views/crudPage/StockCRUDpage";
+import AptCrudPage from "../views/crudPage/AptCrudPage";
 
 const entries = [
   { key: "1", title: "예/적금", naviPath: "depositCrud" },
@@ -65,13 +66,7 @@ function AssetContainer() {
       case "1":
         return <DepositCrudPage />;
       case "2":
-        return (
-          <View>
-            <Box>
-              <Text>부동산 관련 surmary</Text>
-            </Box>
-          </View>
-        );
+        return <AptCrudPage></AptCrudPage>;
       case "3":
         return <CarCrudPage />;
       case "4":

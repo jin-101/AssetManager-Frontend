@@ -325,10 +325,8 @@ function MokdonPlanner(props) {
                   text: `내가 저축한 총 원리금`,
                 }}
                 // 부가 설정
-                priceFormat={true}
                 textInputProps={{ readOnly: true }}
-                textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 원" }}
+                //textInputStyle={{ width: "85%" }}
               ></InputTextComponent>
               <InputTextComponent
                 value={result.lackingAmount}
@@ -336,10 +334,8 @@ function MokdonPlanner(props) {
                   text: `부족한 금액`,
                 }}
                 // 부가 설정
-                priceFormat={true}
                 textInputProps={{ readOnly: true }}
-                textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 원" }}
+                //textInputStyle={{ width: "85%" }}
               ></InputTextComponent>
               <InputTextComponent
                 value={result.requiredPrincipal}
@@ -347,10 +343,8 @@ function MokdonPlanner(props) {
                   text: `추가로 필요한 예치금 (${result.type} 가입 시)`,
                 }}
                 // 부가 설정
-                priceFormat={true}
                 textInputProps={{ readOnly: true }}
-                textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 원" }}
+                //textInputStyle={{ width: "85%" }}
               ></InputTextComponent>
             </Box>
           )}
@@ -362,10 +356,8 @@ function MokdonPlanner(props) {
                   text: `내가 저축한 총 원리금`,
                 }}
                 // 부가 설정
-                priceFormat={true}
                 textInputProps={{ readOnly: true }}
-                textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 원" }}
+                //textInputStyle={{ width: "85%" }}
               ></InputTextComponent>
               <InputTextComponent
                 value={result.lackingAmount}
@@ -373,10 +365,8 @@ function MokdonPlanner(props) {
                   text: `부족한 금액`,
                 }}
                 // 부가 설정
-                priceFormat={true}
                 textInputProps={{ readOnly: true }}
-                textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 원" }}
+                //textInputStyle={{ width: "85%" }}
               ></InputTextComponent>
               <InputTextComponent
                 value={result.requiredPrincipal}
@@ -384,10 +374,8 @@ function MokdonPlanner(props) {
                   text: `추가로 필요한 월납입액 (${result.type} 가입 시)`,
                 }}
                 // 부가 설정
-                priceFormat={true}
                 textInputProps={{ readOnly: true }}
-                textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 원" }}
+                //textInputStyle={{ width: "85%" }}
               ></InputTextComponent>
             </Box>
           )}
@@ -516,10 +504,8 @@ function MokdonPlanner(props) {
                   text: `${result.type} - 일반 (15.4%)`,
                 }}
                 // 부가 설정
-                priceFormat={true}
                 textInputProps={{ readOnly: true }}
-                textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 원" }}
+                //textInputStyle={{ width: "85%" }}
               ></InputTextComponent>
               <InputTextComponent
                 value={result.netIntr9_5}
@@ -527,10 +513,8 @@ function MokdonPlanner(props) {
                   text: `${result.type} - 세금우대 (9.5%)`,
                 }}
                 // 부가 설정
-                priceFormat={true}
                 textInputProps={{ readOnly: true }}
-                textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 원" }}
+                //textInputStyle={{ width: "85%" }}
               ></InputTextComponent>
               <InputTextComponent
                 value={result.netIntr1_4}
@@ -538,10 +522,8 @@ function MokdonPlanner(props) {
                   text: `${result.type} - 세금우대 (1.4%)`,
                 }}
                 // 부가 설정
-                priceFormat={true}
                 textInputProps={{ readOnly: true }}
-                textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 원" }}
+                //textInputStyle={{ width: "85%" }}
               ></InputTextComponent>
               <InputTextComponent
                 value={result.netIntr0_0}
@@ -549,10 +531,8 @@ function MokdonPlanner(props) {
                   text: `${result.type} - 비과세 (0.0%)`,
                 }}
                 // 부가 설정
-                priceFormat={true}
                 textInputProps={{ readOnly: true }}
-                textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 원" }}
+                //textInputStyle={{ width: "85%" }}
               ></InputTextComponent>
             </Box>
           )}
@@ -564,10 +544,8 @@ function MokdonPlanner(props) {
                   text: `${result.type} - 일반 (15.4%)`,
                 }}
                 // 부가 설정
-                priceFormat={true}
                 textInputProps={{ readOnly: true }}
-                textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 원" }}
+                //textInputStyle={{ width: "85%" }}
               ></InputTextComponent>
               <InputTextComponent
                 value={result.netIntr9_5}
@@ -575,10 +553,8 @@ function MokdonPlanner(props) {
                   text: `${result.type} - 세금우대 (9.5%)`,
                 }}
                 // 부가 설정
-                priceFormat={true}
                 textInputProps={{ readOnly: true }}
-                textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 원" }}
+                //textInputStyle={{ width: "85%" }}
               ></InputTextComponent>
               <InputTextComponent
                 value={result.netIntr1_4}
@@ -586,10 +562,8 @@ function MokdonPlanner(props) {
                   text: `${result.type} - 세금우대 (1.4%)`,
                 }}
                 // 부가 설정
-                priceFormat={true}
                 textInputProps={{ readOnly: true }}
-                textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 원" }}
+                //textInputStyle={{ width: "85%" }}
               ></InputTextComponent>
               <InputTextComponent
                 value={result.netIntr0_0}
@@ -597,10 +571,8 @@ function MokdonPlanner(props) {
                   text: `${result.type} - 비과세 (0.0%)`,
                 }}
                 // 부가 설정
-                priceFormat={true}
                 textInputProps={{ readOnly: true }}
-                textInputStyle={{ width: "85%" }}
-                textLabel={{ endText: " 원" }}
+                //textInputStyle={{ width: "85%" }}
               ></InputTextComponent>
             </Box>
           )}
