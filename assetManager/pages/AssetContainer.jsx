@@ -7,6 +7,7 @@ import Carousel from "../external/Carousel";
 import ContentScrollView from "@components/ContentScrollView";
 import { StockCRUDpage } from "../views";
 import AptCrudPage from "../views/crudPage/AptCrudPage";
+import GoldCrudPage from "../views/crudPage/GoldCrudPage";
 
 const entries = [
   { key: "1", title: "예/적금", naviPath: "depositCrud" },
@@ -88,13 +89,7 @@ function AssetContainer() {
           </View>
         );
       case "4":
-        return (
-          <View>
-            <Box>
-              <Text>금 관련 surmary</Text>
-            </Box>
-          </View>
-        );
+        return <GoldCrudPage/>
       case "5":
         return (
           <View>
