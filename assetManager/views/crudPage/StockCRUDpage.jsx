@@ -11,15 +11,18 @@ import {
   HStack,
   Avatar,
   Spacer,
+  Center
 } from "native-base";
 import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { apiPath } from "../../services";
+import { json } from "react-router-dom";
 
 function StockCRUDpage() {
   const { token } = useSelector((state) => state.login);
   const [stocks, setStocks] = useState(null);
+  const [avergeGain,setAvergeGain] = useState(0);
 
   useEffect(() => {
     const fetchStock = async () => {
@@ -28,6 +31,15 @@ function StockCRUDpage() {
           params: { id: token },
         });
         setStocks(response.data);
+        
+        let totalInvestedAmount = 0;
+        let gainMutipleByInvestedAmount = 0;
+        for(let i=0;i<response.data.length;i++){
+          totalInvestedAmount += response.data[i]["investedAmount"];
+          gainMutipleByInvestedAmount += (response.data[i]["investedAmount"] * response.data[i]["gain"]);
+        }
+        setAvergeGain(gainMutipleByInvestedAmount/totalInvestedAmount);
+
       } catch (e) {
         console.log(e);
       }
@@ -37,6 +49,9 @@ function StockCRUDpage() {
 
   return (
     <Box mt="3">
+        <Center _text={{fontSize:"lg",fontWeight:"bold"}}>
+          평균수익률:{avergeGain}
+        </Center>
       {stocks?.map((el, index) => (
         <Box
           key={index}
