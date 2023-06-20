@@ -21,8 +21,10 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import axios from "axios";
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 function AccountBookAddPage({ route }) {
+  const navigation = useNavigation();
   const { token } = useSelector((state) => state.login);
   const currentDate = makeDateString(new Date());
   const [selectedDate, setSelectedDate] = useState(currentDate);
@@ -94,6 +96,8 @@ function AccountBookAddPage({ route }) {
       url: apiPath + "/rest/webboard/saveoneaccount.do",
       method: "post",
       data: {
+        withdraw: 0,
+        deposit: 0,
         [radio]: money,
         category: category,
         content: content,
@@ -106,6 +110,7 @@ function AccountBookAddPage({ route }) {
     })
       .then(() => {
         console.log("axios 가계부 한건 추가 성공");
+        navigation.navigate("AccountBook");
       })
       .catch((err) => {
         console.log(err);
@@ -239,6 +244,31 @@ function AccountBookAddPage({ route }) {
                 onChange={handleTimeChange}
               />
             )}
+            {/* <InputDateComponent
+              name="startDate"
+              formControlProps={{ mb: "5" }}
+              formControlLabelProps={{ text: "날짜" }}
+              value={selectedDate}
+              datePickerProps={{
+                isCustom: true,
+                customData: [
+                  ["1", "2", "3", "4", "5", "6"],
+                  ["1", "2", "3", "4", "5", "6"],
+                  [],
+                ],
+                type: "YYYY-MM",
+                // minDate: `${year - 5}-01-01`,
+                // maxDate: `${year + 5}-12-31`,
+                yearSuffix: "시",
+                monthSuffix: "분",
+                width: 300,
+                rowHeight: 60,
+                selectedBorderLineWidth: "2",
+                toolBarCancelStyle: { color: "black" },
+              }}
+              parentSetState={setSelectedDate}
+            /> */}
+
             <InputTextComponent
               name="price"
               inputType={"text"}
