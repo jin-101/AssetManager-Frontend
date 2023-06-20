@@ -1,13 +1,10 @@
-import { Box, Text } from "native-base";
+import { Box, Text, View } from "native-base";
 import React from "react";
-import { View } from "react-native";
 
 function CarCrudPage(props) {
   return (
-    <View>
-      <Box>
-        <Text>자동차 관련 surmary</Text>
-      </Box>
+    <View bgColor={"white"} w={"90%"} borderRadius={20}>
+      <Box></Box>
     </View>
   );
 }

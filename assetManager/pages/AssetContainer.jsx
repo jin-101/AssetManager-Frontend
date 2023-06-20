@@ -66,7 +66,7 @@ function AssetContainer() {
       case "1":
         return <DepositCrudPage />;
       case "2":
-        return <AptCrudPage></AptCrudPage>;
+        return <AptCrudPage />;
       case "3":
         return <CarCrudPage />;
       case "4":
@@ -127,7 +127,14 @@ function AssetContainer() {
 
   const renderItem = ({ item }) => (
     <>
-      <View style={{ backgroundColor: "lightgray" }}>
+      <View
+        style={{
+          marginTop: 20,
+          marginBottom: 20,
+          backgroundColor: "lightgray",
+          borderRadius: 20,
+        }}
+      >
         <Box w={"100%"}>
           <View style={{ marginTop: 10, alignItems: "center" }}>
             <Box
@@ -146,8 +153,7 @@ function AssetContainer() {
             style={{
               marginTop: 10,
               marginBottom: 10,
-              height: "100%",
-              backgroundColor: "skyblue",
+              // height: "100%",
               alignItems: "center",
             }}
           >
