@@ -17,7 +17,6 @@ import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { apiPath } from "../../services";
-import { json } from "react-router-dom";
 
 function StockCRUDpage() {
   const { token } = useSelector((state) => state.login);
