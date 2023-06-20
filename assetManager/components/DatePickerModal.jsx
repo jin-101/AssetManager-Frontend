@@ -2,10 +2,11 @@ import React, { useCallback } from "react";
 import { Center, HStack, Icon, Pressable } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import { Modal, StyleSheet, View, Text } from "react-native";
-import { DatePicker, CalendarList } from "react-native-common-date-picker";
+// import { DatePicker, CalendarList } from "react-native-common-date-picker";
 import { useDispatch } from "react-redux";
 import { isAndroid } from "../utils";
 import { modalBg } from "../styles";
+import DatePicker from "../external/CustomDatePicker/DatePicker";
 
 const styles = StyleSheet.create({
   modalBg: modalBg,
@@ -46,6 +47,8 @@ function DatePickerModal({
   datePickerProps = {}, //(DatePicker 스타일)
   modalProps = {}, //titleProps(base HStack 스타일), titleText(String), contentProps(native View 스타일)
   customProps = {},
+  isCustom = false,
+  customData = undefined,
 }) {
   const {
     name = "",
@@ -92,6 +95,8 @@ function DatePickerModal({
         <View style={{ ...styles.modalContent, ...contentProps }}>
           {layoutIsScroll ? (
             <DatePicker
+              isCustom={isCustom}
+              customData={customData}
               type="YYYY-MM" // 스크롤 유형
               minDate="2000-01-01" //시작일
               maxDate="2099-12-31" //종료일
