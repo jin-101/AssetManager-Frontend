@@ -11,6 +11,7 @@ import ContentScrollView from "@components/ContentScrollView";
 
 function CarAddPage(props) {
   const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.login);
   const { carCompany, carModel, carYear, carId } = useSelector(
     (state) => state.car
   );
@@ -35,7 +36,7 @@ function CarAddPage(props) {
   const register = (type) => {
     if (type === "add1") {
       axios({
-        url: apiPath + `/car/mySearch.do/${carId.replaceAll(" ", "")}`,
+        url: apiPath + `/car/mySearch.do/${carId.replaceAll(" ", "")}/${token}`,
         method: "POST",
       }) //id 넘겨줘야됨
         .then((res) => {
@@ -48,7 +49,9 @@ function CarAddPage(props) {
     } else if (type === "add2") {
       console.log("고객정보", carCompany, carModel, carYear);
       axios({
-        url: apiPath + `/car/insert.do/${carCompany}/${carModel}/${carYear}`,
+        url:
+          apiPath +
+          `/car/insert.do/${carCompany}/${carModel}/${carYear}/${token}`,
         method: "POST",
       })
         .then((res) => {
