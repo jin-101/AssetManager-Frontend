@@ -11,15 +11,18 @@ import {
   HStack,
   Avatar,
   Spacer,
+  Center
 } from "native-base";
 import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { apiPath } from "../services";
+import { apiPath } from "../../services";
+import { json } from "react-router-dom";
 
 function StockCRUDpage() {
   const { token } = useSelector((state) => state.login);
   const [stocks, setStocks] = useState(null);
+  const [avergeGain,setAvergeGain] = useState(0);
 
   useEffect(() => {
     const fetchStock = async () => {
@@ -28,6 +31,15 @@ function StockCRUDpage() {
           params: { id: token },
         });
         setStocks(response.data);
+        
+        let totalInvestedAmount = 0;
+        let gainMutipleByInvestedAmount = 0;
+        for(let i=0;i<response.data.length;i++){
+          totalInvestedAmount += response.data[i]["investedAmount"];
+          gainMutipleByInvestedAmount += (response.data[i]["investedAmount"] * response.data[i]["gain"]);
+        }
+        setAvergeGain(gainMutipleByInvestedAmount/totalInvestedAmount);
+
       } catch (e) {
         console.log(e);
       }
@@ -37,7 +49,10 @@ function StockCRUDpage() {
 
   return (
     <Box mt="3">
-      {stocks.map((el, index) => (
+        <Center _text={{fontSize:"lg",fontWeight:"bold"}}>
+          평균수익률:{avergeGain}
+        </Center>
+      {stocks?.map((el, index) => (
         <Box
           key={index}
           borderBottomWidth="1"
@@ -48,7 +63,7 @@ function StockCRUDpage() {
           py="2"
         >
           <HStack space={[2, 3]} justifyContent="space-between">
-            <Avatar size="50px" source={require("../assets/bear.jpg")} ml="1" />
+            <Avatar size="50px" source={require("@assets/bear.jpg")} ml="1" />
             <VStack>
               <Text
                 _dark={{ color: "warmGray.50" }}
@@ -68,15 +83,37 @@ function StockCRUDpage() {
             </VStack>
             <Spacer />
 
-            <Text
-              fontSize="lg"
-              pr="5"
-              _dark={{ color: "warmGray.50" }}
-              color="coolGray.800"
-              alignSelf="center"
-            >
-              평균단가:{el.price}
-            </Text>
+
+            <VStack>
+              <Text
+                fontSize="xs"
+                pr="5"
+                _dark={{ color: "warmGray.50" }}
+                color="coolGray.800"
+                alignSelf="center"
+              >
+                현재가:{el.stockPrice}
+              </Text>
+              <Text
+                fontSize="xs"
+                pr="5"
+                _dark={{ color: "warmGray.50" }}
+                color="coolGray.800"
+                alignSelf="center"
+              >
+                평균단가:{el.price}
+              </Text>
+              <Text
+                fontSize="xs"
+                pr="5"
+                _dark={{ color: "warmGray.50" }}
+                color="coolGray.800"
+                alignSelf="center"
+              >
+                수익률:{el.gain}
+              </Text>
+            </VStack>
+
           </HStack>
         </Box>
       ))}

@@ -1,11 +1,14 @@
 import { FontAwesome } from "@expo/vector-icons";
-import { Box, Button } from "native-base";
+import { Box } from "native-base";
 import React from "react";
 import { View, Text, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Carousel from "../external/Carousel";
 import ContentScrollView from "@components/ContentScrollView";
-import StockCRUDpage from "../views/StockCRUDpage";
+import CarCrudPage from "../views/crudPage/CarCrudPage";
+import DepositCrudPage from "../views/crudPage/DepositCrudPage";
+import StockCRUDpage from "../views/crudPage/StockCRUDpage";
+import AptCrudPage from "../views/crudPage/AptCrudPage";
 
 const entries = [
   { key: "1", title: "예/적금", naviPath: "depositCrud" },
@@ -61,37 +64,11 @@ function AssetContainer() {
   const contentsFunction = (key) => {
     switch (key) {
       case "1":
-        return (
-          <View
-            style={{
-              width: "100%",
-              height: 350,
-              marginBottom: 10,
-              backgroundColor: "white",
-              borderWidth: 1,
-            }}
-          >
-            <Box>
-              <Text>예적금 관련 surmary</Text>
-            </Box>
-          </View>
-        );
+        return <DepositCrudPage />;
       case "2":
-        return (
-          <View>
-            <Box>
-              <Text>부동산 관련 surmary</Text>
-            </Box>
-          </View>
-        );
+        return <AptCrudPage></AptCrudPage>;
       case "3":
-        return (
-          <View>
-            <Box>
-              <Text>자동차 관련 surmary</Text>
-            </Box>
-          </View>
-        );
+        return <CarCrudPage />;
       case "4":
         return (
           <View>
