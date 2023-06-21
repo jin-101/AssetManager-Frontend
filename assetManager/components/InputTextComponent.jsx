@@ -69,7 +69,6 @@ function InputTextComponent({
         return;
       }
     }
-    text = text.replace(/[-.,\s]/g, "");
     if (parentSetState) parentSetState(text, id, name);
     if (dispatchF) dispatch(dispatchF(text, id, name));
   }, []);
