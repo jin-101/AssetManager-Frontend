@@ -20,6 +20,7 @@ import UserInfoPage from "@views/UserInfoPage";
 import DepositCrudPage from "@views/crudPage/DepositCrudPage";
 import CarCrudPage from "@views/crudPage/CarCrudPage";
 import StockCRUDpage from "@views/crudPage/StockCRUDpage";
+import CalculatePage from "@views/CalculatePage";
 
 export {
   Login,
@@ -44,4 +45,5 @@ export {
   DepositCrudPage,
   CarCrudPage,
   StockCRUDpage,
+  CalculatePage,
 };

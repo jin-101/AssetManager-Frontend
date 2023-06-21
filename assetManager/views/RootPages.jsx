@@ -28,11 +28,12 @@ import {
   StockCRUDpage,
   AccountBookAddPage,
 } from "@views";
+import CalculatePage from "./CalculatePage";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
   const { token } = useSelector((state) => state.login);
-  console.log(token);
+  // console.log(token);
   return (
     <Stack.Navigator>
       {token !== "" ? (
@@ -116,6 +117,12 @@ function RootPages() {
             name="mokdonPlanner"
             component={MokdonPlanner}
             options={{ ...commonHeaderStyle, title: "목돈 마련 플래너" }}
+          />
+          {/* 연말정산 예산 계산기 */}
+          <Stack.Screen
+            name="calculate"
+            component={CalculatePage}
+            options={{ ...commonHeaderStyle, title: "연말정산 예상 계산기" }}
           />
 
           {/* 보유자산 상세내역 */}
