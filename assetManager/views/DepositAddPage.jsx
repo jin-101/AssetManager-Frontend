@@ -25,6 +25,7 @@ function DepositAddPage() {
   }, []); //처음에 초기화
 
   const { depositStateList } = useSelector((state) => state.deposit);
+  const { token } = useSelector((state) => state.login);
   const len = depositStateList.length;
   const nextId = useRef(1);
   const [pass, setPass] = useState(false);
@@ -64,7 +65,7 @@ function DepositAddPage() {
       });
       console.log(newDeopsitStateList);
       axios({
-        url: apiPath + "/deposit/add.do",
+        url: `${apiPath}/deposit/add.do/${token}`,
         method: "POST",
         data: newDeopsitStateList, //id도 넘겨줘야됨
       })

@@ -12,7 +12,7 @@ import {
   useToast,
 } from "native-base";
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 
@@ -46,18 +46,24 @@ function Login() {
     })
       .then((res) => {
         console.log(res.data, "///");
-        const { result, userName } = res.data;
+        const { result, userName, totalAsset } = res.data;
         if (result === "로그인성공") {
           console.log(loginData.userId, userName);
           dispatch(loginStateUpdate(loginData.userId, userName));
+
+          //totalAsset 디스패치하기
+
+          toast.show({
+            placement: "top",
+            mt: 100, // 이걸로 뜨는 위치 설정
+            description: userId + "님 반갑습니다",
+          });
+        } else {
+          Alert.alert("", result);
         }
         setIsLoading(false);
         // ★ 로그인 성공시 toast
-        toast.show({
-          placement: "top",
-          mt: 100, // 이걸로 뜨는 위치 설정
-          description: userId + "님 반갑습니다",
-        });
+
         // token 사용 시 코드
         // if (res.data.length > 50) {
         //   const token = res.data;

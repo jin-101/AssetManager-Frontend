@@ -47,15 +47,20 @@ function InputTextComponent({
   const keyboardType = keyBoardType(inputType);
 
   const onChangeText = useCallback((text) => {
+    console.log(text, "///");
     if (inputType === "number") {
-      const format = req.num;
-      if (
-        (text.length > 0 && !format.test(text[text.length - 1])) ||
-        (text.length === 1 && text === "0")
-      ) {
-        Alert.alert(alertTitle, alertContent);
-        return;
-      }
+      //입력했다가 지울 때, 유효성검사에 걸리므로 코드 수정!
+      text = text.replace(/[-.,\s]/g, "");
+      if (text[0] === "0") text = text.substring(1, text.length);
+
+      // const format = req.num;
+      // if (
+      //   (text.length > 0 && !format.test(text[text.length - 1])) ||
+      //   (text.length === 1 && text === "0")
+      // ) {
+      //   Alert.alert(alertTitle, alertContent);
+      //   return;
+      // }
     } else if (inputType === "double") {
       const commaLen = text.replaceAll(/[0-9]/gi, "").length;
       const format = /^[.]{1}|^.*-.*|^.*,.*/;
@@ -107,6 +112,7 @@ function InputTextComponent({
           placeholderTextColor="lightgray"
           value={priceFormat ? inputPriceFormat(value) : value}
           onChangeText={onChangeText}
+          on
           {...textInputProps}
         />
 
