@@ -2,11 +2,11 @@ import React, { useCallback } from "react";
 import { Center, HStack, Icon, Pressable } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import { Modal, StyleSheet, View, Text } from "react-native";
-// import { DatePicker, CalendarList } from "react-native-common-date-picker";
+import { DatePicker, CalendarList } from "react-native-common-date-picker";
 import { useDispatch } from "react-redux";
 import { isAndroid } from "../utils";
 import { modalBg } from "../styles";
-import DatePicker from "../external/CustomDatePicker/DatePicker";
+// import DatePicker from "../external/CustomDatePicker/DatePicker";
 
 const styles = StyleSheet.create({
   modalBg: modalBg,
