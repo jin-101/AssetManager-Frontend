@@ -23,6 +23,7 @@ import { setRef } from "@mui/material";
 import { useSelector } from "react-redux";
 import Loading from "@components/Loading";
 import ContentScrollView from "@components/ContentScrollView";
+import LoanInput from "../components/LoanInput";
 //import { AptSidoSelect, AptGuSelect } from "../components/AptSidoSelect";
 
 function AptAddPage(props) {
@@ -171,16 +172,7 @@ function AptAddPage(props) {
   };
 
   // 6. 대출 Show/Hide 코드
-  const [isVisible, setIsVisible] = useState(false);
-  const showButtonClick = () => {
-    setIsVisible(true);
-  };
-  const hideButtonClick = () => {
-    setIsVisible(false);
-  };
-  const [loanAmount, setLoanAmount] = useState(""); // 대출금액
-  const [rate, setRate] = useState(""); // 대출금리
-  const [maturityDate, setMaturityDate] = useState(""); // 대출만기
+  const { loanAmount, rate, maturityDate } = useSelector((state) => state.loan);
 
   // 7. 추가 버튼
   const handleSubmit = () => {
@@ -342,16 +334,10 @@ function AptAddPage(props) {
                 ))}
               </Select>
             </Box>
-            {/*  */}
           </FormControl>
-        </Box>
-      </VStack>
-
-      <VStack alignItems="center">
-        <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mb="5">
           <FormControl>
             {/*  ★★★★★ 검색기능 시작 */}
-            <Box>
+            <Box mt={10}>
               <InputTextComponent
                 formControlLabelProps={{ text: "아파트 이름 검색하기" }}
                 value={searchKeyword}
@@ -437,70 +423,25 @@ function AptAddPage(props) {
               }}
             ></InputDateComponent>
             {/* </Box> */}
-
-            {/* 6. 대출 Show/Hide 코드 */}
-            <Box mb="5">
-              <HStack alignItems="center">
-                <FormControl.Label w="100%">
-                  대출이 있을 경우에만 입력해주세요.
-                </FormControl.Label>
-              </HStack>
-              <View style={styles.container}>
-                {isVisible ? (
-                  <Button size="lg" onPress={hideButtonClick}>
-                    숨기기
-                  </Button>
-                ) : (
-                  <Button size="lg" onPress={showButtonClick}>
-                    대출 정보 입력하기
-                  </Button>
-                )}
-
-                <Box mt="5">
-                  {isVisible && (
-                    <View style={styles.box}>
-                      <InputTextComponent
-                        formControlLabelProps={{ text: "대출금액 (원)" }}
-                        inputType="number"
-                        priceFormat="true" // 금액표시(,) true로 설정
-                        textInputStyle={{ width: "100%" }}
-                        value={loanAmount}
-                        parentSetState={setLoanAmount}
-                      ></InputTextComponent>
-                      <InputTextComponent
-                        formControlLabelProps={{ text: "대출금리 (%)" }}
-                        inputType="double"
-                        textInputStyle={{ width: "100%" }}
-                        value={rate}
-                        parentSetState={setRate}
-                      ></InputTextComponent>
-
-                      <InputTextComponent
-                        formControlLabelProps={{ text: "대출만기 (남은 기간)" }}
-                        placeholder="1년 ~ 50년"
-                        inputType="number"
-                        value={maturityDate}
-                        parentSetState={setMaturityDate}
-                      />
-                    </View>
-                  )}
-                </Box>
-              </View>
-            </Box>
-
-            {/* <ShowHideBox state={aaaa} setState={setAaaa}></ShowHideBox> */}
-            <Stack
-              mb="2.5"
-              mt="1.5"
-              direction="row" // direction="row" => "column"으로 바꾸면 수직으로 쌓이게 됨
-              space={2}
-              // mx 이거 적용하면 버튼 너비가 줄어듦.
-              mx={{
-                base: "auto",
-                md: "0",
-              }}
-            >
-              {/* 초기화 버튼 필요 없을 듯 
+          </FormControl>
+        </Box>
+        {/* 6. 대출 Show/Hide 코드 */}
+        <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+          <LoanInput />
+        </Box>
+        {/* <ShowHideBox state={aaaa} setState={setAaaa}></ShowHideBox> */}
+        <Stack
+          mb="10"
+          mt="1.5"
+          direction="row" // direction="row" => "column"으로 바꾸면 수직으로 쌓이게 됨
+          space={2}
+          // mx 이거 적용하면 버튼 너비가 줄어듦.
+          mx={{
+            base: "auto",
+            md: "0",
+          }}
+        >
+          {/* 초기화 버튼 필요 없을 듯 
               <Button
                 size="lg"
                 variant="subtle"
@@ -509,17 +450,15 @@ function AptAddPage(props) {
               >
                 초기화
               </Button> */}
-              <Button
-                width={"100%"} // 버튼 너비
-                size="lg"
-                variant="subtle"
-                onPress={handleSubmit}
-              >
-                추가
-              </Button>
-            </Stack>
-          </FormControl>
-        </Box>
+          <Button
+            width={"80%"} // 버튼 너비
+            size="lg"
+            variant="subtle"
+            onPress={handleSubmit}
+          >
+            추가
+          </Button>
+        </Stack>
       </VStack>
     </ContentScrollView>
   );

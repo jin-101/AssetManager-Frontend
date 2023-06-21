@@ -1,0 +1,2 @@
+export const LOAN_INITIALIZE = "LOAN_INITIALIZE";
+export const ADD_LOAN_VALUE = "ADD_LOAN_VALUE";
