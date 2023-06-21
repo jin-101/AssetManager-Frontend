@@ -25,6 +25,8 @@ import { goldInputUpdate, goldInputReset } from "./gold";
 
 import { getAvgRate, resetAvgRate } from "./avgRate";
 
+import { loanInitialize, addLoanValue } from "./loan";
+
 export {
   loginStateUpdate,
   loginInitialize,
@@ -49,4 +51,6 @@ export {
   goldInputUpdate,
   getAvgRate,
   resetAvgRate,
+  loanInitialize,
+  addLoanValue,
 };
