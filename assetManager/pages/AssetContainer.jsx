@@ -29,8 +29,8 @@ function AssetContainer() {
   const sliderWidth = Dimensions.get("window").width;
   const itemWidth = Dimensions.get("window").width - 100;
   const [loading, setLoading] = useState(true);
-  const itemLength = 7;
-  let loadingCount = 0;
+  const itemLength = 7; // item이 늘어나면 숫자 높여준다.
+  let loadingCount = 0; // 자식에 데이터가 들어왔는지 판단하기 위한 변수
 
   const parentLoading = () => {
     loadingCount++;
