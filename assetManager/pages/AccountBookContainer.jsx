@@ -103,6 +103,8 @@ function AccountBookContainer() {
   const [showModal, setShowModal] = useState(false);
   const { token } = useSelector((state) => state.login); //아이디 가져오는 법
   // const [isLoading, setIsLoading] = useState(false);
+  const [itemList, setItemList] = useState(data);
+  const [isDel, setIsDel] = useState(false); //삭제했을 때, 부모에서 삭제한 것을 알기 위해 보내는 의미 없는 상태값
 
   useEffect(() => {
     axios({
@@ -119,7 +121,7 @@ function AccountBookContainer() {
         setData(response.data);
       })
       .catch((error) => {});
-  }, [currentMonth]);
+  }, [currentMonth, isDel]);
 
   const ListSave = () => {
     axios({
@@ -173,8 +175,6 @@ function AccountBookContainer() {
     setItemList(data);
   }, [data]);
 
-  const [itemList, setItemList] = useState(data);
-
   const calculateWithdrawTotal = () => {
     return itemList.reduce(
       (total, currentItem) => total + currentItem.withdraw,
@@ -208,8 +208,12 @@ function AccountBookContainer() {
     navigation.navigate("AccountBookAnalysis", { itemList, currentMonth });
   };
 
-  const moveToUpload = () => {
+  const moveToAccountUpload = () => {
     navigation.navigate("AccountBookUpload");
+  };
+
+  const moveToCashReceiptUpload = () => {
+    navigation.navigate("CashReceiptUpload");
   };
 
   const moveToAdd = () => {
@@ -220,7 +224,7 @@ function AccountBookContainer() {
   const modalShow = (e) => {
     setShow((prev) => !prev);
   };
-
+  console.log("///");
   return (
     <>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -376,17 +380,18 @@ function AccountBookContainer() {
                   style={{ marginTop: 9, marginLeft: 10, fontSize: 13 }}
                 ></Ionicons>
               </TouchableOpacity>
-
-              <View
-                style={{ flex: 1, alignItems: "flex-end", marginRight: 25 }}
+              {/* <View
+                style={{ flex: 1, alignItems: "flex-end", marginRight: 10 }}
               >
-                <Button onPress={ListSave}>{"저장"}</Button>
-              </View>
-              <View style={{ marginRight: 25 }}>
                 <Button onPress={moveToAnalysis}>분석</Button>
+              </View> */}
+              <View
+                style={{ flex: 1, alignItems: "flex-end", marginRight: 10 }}
+              >
+                <Button onPress={moveToAccountUpload}>업로드</Button>
               </View>
-              <View style={{ marginRight: 25 }}>
-                <Button onPress={moveToUpload}>업로드</Button>
+              <View style={{ marginRight: 10 }}>
+                <Button onPress={moveToCashReceiptUpload}>연말정산</Button>
               </View>
             </View>
             <View>
@@ -397,26 +402,24 @@ function AccountBookContainer() {
                 수입 : {inputPriceFormat(calculateDepositTotal())}원
               </Text>
             </View>
-          </View>
-        </View>
-        {/* 카드내역 스크롤 뷰 자리 */}
-        <ScrollView>
-          <View style={{ flexDirection: "row" }}>
-            <View
-              style={{
-                flex: 1,
-                alignItems: "flex-end",
-                //justifyContent: "center",
-              }}
-            >
-              <TouchableOpacity onPress={moveToAdd}>
+            <View style={{ flexDirection: "row-reverse", marginBottom: 5 }}>
+              <TouchableOpacity onPress={moveToAdd} style={{ marginRight: 25 }}>
                 <Text>
                   <Feather name="plus" size={15} color="black" /> 추가
                 </Text>
               </TouchableOpacity>
+
+              <TouchableOpacity onPress={ListSave} style={{ marginRight: 10 }}>
+                <Text>
+                  <Feather name="save" size={15} color="black" /> 저장
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
+        </View>
 
+        {/* 카드내역 스크롤 뷰 자리 */}
+        <ScrollView>
           {itemList.map((item, index) => {
             return (
               <AccountBookList
@@ -425,6 +428,7 @@ function AccountBookContainer() {
                 itemList={itemList}
                 setItemList={setItemList}
                 index={index}
+                setDel={setIsDel}
               />
             );
           })}

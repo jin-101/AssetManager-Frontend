@@ -27,6 +27,7 @@ import {
   CarCrudPage,
   StockCRUDpage,
   AccountBookAddPage,
+  CashReceiptUpload,
 } from "@views";
 
 function RootPages() {
@@ -66,6 +67,12 @@ function RootPages() {
             name="AccountBookUpload"
             component={AccountBookUpload}
             options={{ ...commonHeaderStyle, title: "가계부 업로드" }}
+          />
+          {/* 현금영수증 업로드 페이지 */}
+          <Stack.Screen
+            name="CashReceiptUpload"
+            component={CashReceiptUpload}
+            options={{ ...commonHeaderStyle, title: "현금영수증 업로드" }}
           />
           {/* 가계부 추가 페이지 */}
           <Stack.Screen
