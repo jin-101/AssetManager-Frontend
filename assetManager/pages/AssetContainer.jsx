@@ -1,6 +1,6 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { Box } from "native-base";
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Carousel from "../external/Carousel";
@@ -20,15 +20,24 @@ const entries = [
   { key: "5", title: "외환", naviPath: "" },
   { key: "6", title: "주식", naviPath: "stockCrud" },
   { key: "7", title: "코인", naviPath: "" },
-  { key: "8", title: "부채1", naviPath: "" },
-  { key: "9", title: "부채2", naviPath: "" },
-  { key: "10", title: "부채3", naviPath: "" },
+  // { key: "8", title: "부채1", naviPath: "" },
+  // { key: "9", title: "부채2", naviPath: "" },
+  // { key: "10", title: "부채3", naviPath: "" },
 ];
 
 function AssetContainer() {
   const navigation = useNavigation();
   const sliderWidth = Dimensions.get("window").width;
   const itemWidth = Dimensions.get("window").width - 100;
+  // const [loading, isLoading] = useState({
+  //   deposit: false,
+  //   apt: false,
+  //   car: false,
+  //   currency: false,
+  //   gold: false,
+  //   stock: false,
+  //   coin: false,
+  // });
 
   //press navigation
   const detailOnPress = (naviPath) => {
@@ -51,12 +60,12 @@ function AssetContainer() {
         return <FontAwesome name="money" size={30} color="black" />;
       case "7":
         return <FontAwesome name="money" size={30} color="black" />;
-      case "8":
-        return <FontAwesome name="money" size={30} color="black" />;
-      case "9":
-        return <FontAwesome name="money" size={30} color="black" />;
-      case "10":
-        return <FontAwesome name="money" size={30} color="black" />;
+      // case "8":
+      //   return <FontAwesome name="money" size={30} color="black" />;
+      // case "9":
+      //   return <FontAwesome name="money" size={30} color="black" />;
+      // case "10":
+      //   return <FontAwesome name="money" size={30} color="black" />;
 
       default:
         break;
@@ -74,7 +83,7 @@ function AssetContainer() {
       case "4":
         return <GoldCrudPage />;
       case "5":
-        return <CurrencyCrudPage/>;
+        return <CurrencyCrudPage />;
       case "6":
         return <StockCRUDpage />;
       case "7":
@@ -85,30 +94,30 @@ function AssetContainer() {
             </Box>
           </View>
         );
-      case "8":
-        return (
-          <View>
-            <Box>
-              <Text>부채1 관련 surmary</Text>
-            </Box>
-          </View>
-        );
-      case "9":
-        return (
-          <View>
-            <Box>
-              <Text>부채2 관련 surmary</Text>
-            </Box>
-          </View>
-        );
-      case "10":
-        return (
-          <View>
-            <Box>
-              <Text>부채3 관련 surmary</Text>
-            </Box>
-          </View>
-        );
+      // case "8":
+      //   return (
+      //     <View>
+      //       <Box>
+      //         <Text>부채1 관련 surmary</Text>
+      //       </Box>
+      //     </View>
+      //   );
+      // case "9":
+      //   return (
+      //     <View>
+      //       <Box>
+      //         <Text>부채2 관련 surmary</Text>
+      //       </Box>
+      //     </View>
+      //   );
+      // case "10":
+      //   return (
+      //     <View>
+      //       <Box>
+      //         <Text>부채3 관련 surmary</Text>
+      //       </Box>
+      //     </View>
+      //   );
 
       default:
         break;
