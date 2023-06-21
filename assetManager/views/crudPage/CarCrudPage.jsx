@@ -1,9 +1,8 @@
-import { Center, View, Text, Box, HStack, Button } from "native-base";
+import { View } from "native-base";
 import { apiPath } from "../../services";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { inputPriceFormat } from "../../utils";
 import AssetSurmary from "../../components/AssetSurmary";
 
 function CarCrudPage(props) {
