@@ -71,7 +71,7 @@ function AssetContainer() {
       case "3":
         return <CarCrudPage />;
       case "4":
-        return <GoldCrudPage/>
+        return <GoldCrudPage />;
       case "5":
         return (
           <View>
@@ -161,9 +161,6 @@ function AssetContainer() {
   return (
     <>
       <ContentScrollView>
-        <Box h={"250"} bg={"amber.100"}>
-          <Text fontSize="4xl">총자산 보여주는 곳</Text>
-        </Box>
         <Carousel
           data={entries}
           renderItem={renderItem}
