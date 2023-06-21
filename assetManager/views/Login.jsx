@@ -46,13 +46,10 @@ function Login() {
     })
       .then((res) => {
         console.log(res.data, "///");
-        const { result, userName, totalAsset } = res.data;
+        const { result, userName } = res.data;
         if (result === "로그인성공") {
           console.log(loginData.userId, userName);
           dispatch(loginStateUpdate(loginData.userId, userName));
-
-          //totalAsset 디스패치하기
-
           toast.show({
             placement: "top",
             mt: 100, // 이걸로 뜨는 위치 설정
