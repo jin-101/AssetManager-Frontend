@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function AccountBookList({ item, setItemList, itemList, index }) {
+function AccountBookList({ item, setItemList, itemList, index, setDel }) {
   const [memo, setMemo] = useState(item.memo);
   const [category, setCategory] = useState(item.category);
   const [show, setShow] = useState(false);
@@ -75,9 +75,7 @@ function AccountBookList({ item, setItemList, itemList, index }) {
       method: "delete",
     })
       .then(() => {
-        setItemList((prevItemList) =>
-          prevItemList.filter((item) => item.detailCode !== detailCode)
-        );
+        setDel((prv) => !prv);
         //삭제한 detailCode의 아이템만 빼고 선택하여 아이템 리스트에 새로 넣어주는 것
         //item.detailCode : 전체 아이템의 디테일 코드
         //detailCode : 삭제한 디테일 코드
