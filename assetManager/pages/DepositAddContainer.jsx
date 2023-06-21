@@ -119,6 +119,7 @@ function DepositAddContainer({ item, isOnlyOne, bankList }) {
           formControlProps={{ mb: "5" }}
           formControlLabelProps={{ text: "만기일" }}
           formControlHelperProps={{ text: "상품 만기일을 입력하세요." }}
+          textInputProps={{ color: endDate ? "black" : "gray" }}
           id={item.index}
           value={endDate || currentDate}
           dispatchF={depositUpdate}
