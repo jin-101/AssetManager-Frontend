@@ -37,7 +37,6 @@ function GoldCrudPage(){
         };
 
         fetchGold();
-
     },[]);
 
 
@@ -49,7 +48,16 @@ function GoldCrudPage(){
                 <Text>미니골드 현재가:{gold["miniGold"]}</Text>
                 <Text>99K기준 수익률{gold["returnBygold99k"]}</Text>
                 <Text>미니골드기준 수익률{gold["returnByminiGold"]}</Text>
+                <Text>총보유 {gold["totalGram"]} gram</Text>
             </VStack>
+            <HStack alignSelf="center">
+                <Button mt="5" mx="1">
+                잔고수정
+                </Button>
+                <Button mt="5" mx="1">
+                금 서비스
+                </Button>
+            </HStack> 
         </Box>
     );
 }

@@ -44,6 +44,7 @@ function StockCRUDpage() {
       }
     };
     fetchStock();
+    console.log(stocks)
   }, []);
 
   return (
@@ -116,10 +117,15 @@ function StockCRUDpage() {
           </HStack>
         </Box>
       ))}
+      <HStack alignSelf="center">
+        <Button mt="5" mx="1">
+          잔고수정
+        </Button>
+        <Button mt="5" mx="1">
+          주식 서비스
+        </Button>
+      </HStack>
 
-      <Button mt="5" mx="1">
-        잔고수정
-      </Button>
     </Box>
   );
 }

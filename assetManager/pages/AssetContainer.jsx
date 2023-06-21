@@ -10,6 +10,7 @@ import DepositCrudPage from "../views/crudPage/DepositCrudPage";
 import StockCRUDpage from "../views/crudPage/StockCRUDpage";
 import AptCrudPage from "../views/crudPage/AptCrudPage";
 import GoldCrudPage from "../views/crudPage/GoldCrudPage";
+import CurrencyCrudPage from "../views/crudPage/CurrencyCrudPage";
 
 const entries = [
   { key: "1", title: "예/적금", naviPath: "depositCrud" },
@@ -73,13 +74,7 @@ function AssetContainer() {
       case "4":
         return <GoldCrudPage/>
       case "5":
-        return (
-          <View>
-            <Box>
-              <Text>외환 관련 surmary</Text>
-            </Box>
-          </View>
-        );
+        return <CurrencyCrudPage/>;
       case "6":
         return <StockCRUDpage />;
       case "7":
