@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import AssetSurmary from "../../components/AssetSurmary";
 
-function CarCrudPage(props) {
+function CarCrudPage({ parentLoading }) {
   const { token } = useSelector((state) => state.login);
   const [userCar, setUserCar] = useState([]);
   useEffect(() => {
@@ -18,7 +18,7 @@ function CarCrudPage(props) {
     }) //id 넘겨줘야됨
       .then((res) => {
         setUserCar(res.data);
-        console.log(res.data);
+        parentLoading();
       })
       .catch((err) => {});
   }, []);

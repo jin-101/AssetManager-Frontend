@@ -1,12 +1,11 @@
 import axios from "axios";
-import { Center, View, Text, Box, HStack, Button, Divider } from "native-base";
+import { View, Divider } from "native-base";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { apiPath } from "../../services";
-import { inputPriceFormat } from "../../utils";
 import AssetSurmary from "../../components/AssetSurmary";
 
-function DepositCrudPage(props) {
+function DepositCrudPage({ parentLoading }) {
   const { token } = useSelector((state) => state.login);
   const [userDeposit, setUserDeposit] = useState([]);
   const { deposit, savings } = userDeposit;
@@ -20,7 +19,7 @@ function DepositCrudPage(props) {
     }) //id 넘겨줘야됨
       .then((res) => {
         setUserDeposit(res.data);
-        // console.log(res.data);
+        parentLoading();
       })
       .catch((err) => {
         console.log(err);

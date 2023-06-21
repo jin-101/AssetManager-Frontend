@@ -31,7 +31,7 @@ const showCurrencyName = (currency) => {
   }
 };
 
-function CurrencyCrudPage() {
+function CurrencyCrudPage({ parentLoading }) {
   const { token } = useSelector((state) => state.login);
   const [currency, setCurrency] = useState(null);
   const [avergeGain, setAvergeGain] = useState(0);
@@ -44,7 +44,7 @@ function CurrencyCrudPage() {
         });
         if (response === null) throw Error("빈값이 들어왔음");
         setCurrency(response.data);
-
+        parentLoading();
         let totalInvestedAmount = 0;
         let gainMutipleByInvestedAmount = 0;
         for (let i = 0; i < response?.data.length; i++) {

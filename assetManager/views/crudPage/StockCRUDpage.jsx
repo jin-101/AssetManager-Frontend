@@ -11,17 +11,17 @@ import {
   HStack,
   Avatar,
   Spacer,
-  Center
+  Center,
 } from "native-base";
 import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { apiPath } from "../../services";
 
-function StockCRUDpage() {
+function StockCRUDpage({ parentLoading }) {
   const { token } = useSelector((state) => state.login);
   const [stocks, setStocks] = useState(null);
-  const [avergeGain,setAvergeGain] = useState(0);
+  const [avergeGain, setAvergeGain] = useState(0);
 
   useEffect(() => {
     const fetchStock = async () => {
@@ -30,28 +30,28 @@ function StockCRUDpage() {
           params: { id: token },
         });
         setStocks(response.data);
-        
+        parentLoading();
         let totalInvestedAmount = 0;
         let gainMutipleByInvestedAmount = 0;
-        for(let i=0;i<response.data.length;i++){
+        for (let i = 0; i < response.data.length; i++) {
           totalInvestedAmount += response.data[i]["investedAmount"];
-          gainMutipleByInvestedAmount += (response.data[i]["investedAmount"] * response.data[i]["gain"]);
+          gainMutipleByInvestedAmount +=
+            response.data[i]["investedAmount"] * response.data[i]["gain"];
         }
-        setAvergeGain(gainMutipleByInvestedAmount/totalInvestedAmount);
-
+        setAvergeGain(gainMutipleByInvestedAmount / totalInvestedAmount);
       } catch (e) {
         console.log(e);
       }
     };
     fetchStock();
-    console.log(stocks)
+    console.log(stocks);
   }, []);
 
   return (
     <Box mt="3">
-        <Center _text={{fontSize:"lg",fontWeight:"bold"}}>
-          평균수익률:{avergeGain}
-        </Center>
+      <Center _text={{ fontSize: "lg", fontWeight: "bold" }}>
+        평균수익률:{avergeGain}
+      </Center>
       {stocks?.map((el, index) => (
         <Box
           key={index}
@@ -83,7 +83,6 @@ function StockCRUDpage() {
             </VStack>
             <Spacer />
 
-
             <VStack>
               <Text
                 fontSize="xs"
@@ -113,7 +112,6 @@ function StockCRUDpage() {
                 수익률:{el.gain}
               </Text>
             </VStack>
-
           </HStack>
         </Box>
       ))}
@@ -125,7 +123,6 @@ function StockCRUDpage() {
           주식 서비스
         </Button>
       </HStack>
-
     </Box>
   );
 }

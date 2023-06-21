@@ -2,7 +2,6 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Box } from "native-base";
 import React, { useState } from "react";
 import { View, Text, Dimensions } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import Carousel from "../external/Carousel";
 import ContentScrollView from "@components/ContentScrollView";
 import CarCrudPage from "../views/crudPage/CarCrudPage";
@@ -11,6 +10,7 @@ import StockCRUDpage from "../views/crudPage/StockCRUDpage";
 import AptCrudPage from "../views/crudPage/AptCrudPage";
 import GoldCrudPage from "../views/crudPage/GoldCrudPage";
 import CurrencyCrudPage from "../views/crudPage/CurrencyCrudPage";
+import Loading from "@components/Loading";
 
 const entries = [
   { key: "1", title: "예/적금", naviPath: "depositCrud" },
@@ -26,22 +26,15 @@ const entries = [
 ];
 
 function AssetContainer() {
-  const navigation = useNavigation();
   const sliderWidth = Dimensions.get("window").width;
   const itemWidth = Dimensions.get("window").width - 100;
-  // const [loading, isLoading] = useState({
-  //   deposit: false,
-  //   apt: false,
-  //   car: false,
-  //   currency: false,
-  //   gold: false,
-  //   stock: false,
-  //   coin: false,
-  // });
+  const [loading, setLoading] = useState(true);
+  const itemLength = 7;
+  let loadingCount = 0;
 
-  //press navigation
-  const detailOnPress = (naviPath) => {
-    navigation.navigate(naviPath);
+  const parentLoading = () => {
+    loadingCount++;
+    if (loadingCount === itemLength) setLoading(false);
   };
 
   const iconSelectFuntion = (key) => {
@@ -75,18 +68,19 @@ function AssetContainer() {
   const contentsFunction = (key) => {
     switch (key) {
       case "1":
-        return <DepositCrudPage />;
+        return <DepositCrudPage parentLoading={parentLoading} />;
       case "2":
-        return <AptCrudPage />;
+        return <AptCrudPage parentLoading={parentLoading} />;
       case "3":
-        return <CarCrudPage />;
+        return <CarCrudPage parentLoading={parentLoading} />;
       case "4":
-        return <GoldCrudPage />;
+        return <GoldCrudPage parentLoading={parentLoading} />;
       case "5":
-        return <CurrencyCrudPage />;
+        return <CurrencyCrudPage parentLoading={parentLoading} />;
       case "6":
-        return <StockCRUDpage />;
+        return <StockCRUDpage parentLoading={parentLoading} />;
       case "7":
+        parentLoading();
         return (
           <View>
             <Box>
@@ -172,6 +166,7 @@ function AssetContainer() {
           itemWidth={itemWidth}
         />
       </ContentScrollView>
+      {loading && <Loading />}
     </>
   );
 }
