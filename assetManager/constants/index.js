@@ -24,6 +24,8 @@ import { CURRENCY_UPDATE, CURRENCY_RESET } from "./currency";
 
 import { GOLD_UPDATE, GOLD_RESET } from "./gold";
 
+import { LOAN_INITIALIZE, ADD_LOAN_VALUE } from "./loan";
+
 export {
   LOGIN_INITIALIZE,
   LOGIN_STATE_UPDATE,
@@ -48,4 +50,6 @@ export {
   GOLD_RESET,
   GET_AVGRATE,
   RESET_AVGRATE,
+  LOAN_INITIALIZE,
+  ADD_LOAN_VALUE,
 };
