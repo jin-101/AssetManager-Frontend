@@ -28,6 +28,7 @@ import {
   StockCRUDpage,
   AccountBookAddPage,
   CashReceiptUpload,
+  CurrencyGraphPage
 } from "@views";
 import CalculatePage from "./CalculatePage";
 
