@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
-  FormControl,
-  ScrollView,
   VStack,
   Button,
   Text,
-  Heading,
-  FlatList,
   HStack,
-  Avatar,
-  Spacer,
-  Center
+  View
 } from "native-base";
 import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
@@ -41,8 +35,9 @@ function GoldCrudPage(){
 
 
     return(
+    <View bgColor={"white"} w={"90%"} borderRadius={20}>
         <Box>
-            <VStack>
+            <VStack alignSelf="center">
                 <Text>그램당 매수가:{gold["buyPriceByGram"]}</Text>
                 <Text>99K 현재가:{gold["gold99k"]}</Text>
                 <Text>미니골드 현재가:{gold["miniGold"]}</Text>
@@ -50,7 +45,7 @@ function GoldCrudPage(){
                 <Text>미니골드기준 수익률{gold["returnByminiGold"]}</Text>
                 <Text>총보유 {gold["totalGram"]} gram</Text>
             </VStack>
-            <HStack alignSelf="center">
+            <HStack alignSelf="center" mb="5">
                 <Button mt="5" mx="1">
                 잔고수정
                 </Button>
@@ -59,6 +54,7 @@ function GoldCrudPage(){
                 </Button>
             </HStack> 
         </Box>
+    </View>
     );
 }
 

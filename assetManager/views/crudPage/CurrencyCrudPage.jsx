@@ -7,11 +7,13 @@ import {
   HStack,
   Avatar,
   Spacer,
-  Center
+  Center,
+  View
 } from "native-base";
 import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import {useNavigation} from "@react-navigation/native"
 import { apiPath } from "../../services";
 
 
@@ -34,10 +36,12 @@ const showCurrencyName = (currency)=>{
 
 function CurrencyCrudPage(){
 
-
+    const navigation = useNavigation();
     const {token} = useSelector((state)=>state.login);
     const[currency,setCurrency] = useState(null);
     const [avergeGain,setAvergeGain] = useState(0);
+
+    const goTOcurrencyService = () => (navigation.navigate("currencyGraph"));
     
     useEffect(()=>{
         const fetchCurrency = async () => {
@@ -65,6 +69,7 @@ function CurrencyCrudPage(){
 
 
     return (
+    <View bgColor={"white"} w={"90%"} borderRadius={20}>
         <Box mt="3">
             <Center _text={{fontSize:"lg",fontWeight:"bold"}}>
                 평균수익률:{avergeGain}
@@ -131,15 +136,16 @@ function CurrencyCrudPage(){
                     </HStack>
                 </Box>
             ))}
-        <HStack alignSelf="center">
+        <HStack alignSelf="center" mb="4">
             <Button mt="5" mx="1">
             잔고수정
             </Button>
-            <Button mt="5" mx="1">
+            <Button mt="5" mx="1" onPress={goTOcurrencyService}>
             외화 서비스
             </Button>
         </HStack>            
         </Box>
+    </View>
     );
 
 }
