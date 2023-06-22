@@ -6,9 +6,14 @@ function AssetSurmary({
   data,
   title,
   textListInfo,
-  onPressUpdate,
-  onPressAdditional,
+  updateBtn = { title: "", onPress: () => {} },
+  serviceBtn = { title: "", onPress: () => {} },
 }) {
+  const { title: updateBtnTitle = "", onPress: updateBtnOnPress = () => {} } =
+    updateBtn;
+  const { title: serviceBtnTitle = "", onPress: serviceBtnOnPress = () => {} } =
+    serviceBtn;
+
   return (
     <Center borderRadius={20} mt={10} mb={10}>
       <Box>
@@ -41,11 +46,11 @@ function AssetSurmary({
         ))}
       </Box>
       <HStack>
-        <Button mb="5" mx="1" onPress={onPressUpdate}>
-          내역수정
+        <Button mb="5" mx="1" onPress={updateBtnOnPress}>
+          {updateBtnTitle}
         </Button>
-        <Button mb="5" mx="1" onPress={onPressAdditional}>
-          부가기능
+        <Button mb="5" mx="1" onPress={serviceBtnOnPress}>
+          {serviceBtnTitle}
         </Button>
       </HStack>
     </Center>
