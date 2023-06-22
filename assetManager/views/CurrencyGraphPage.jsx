@@ -55,16 +55,16 @@ function CurrencyGraphPage(){
     },[]);
 
     const chartConfig = {
-        backgroundGradientFrom: "#48C9B0",
+        backgroundGradientFrom: "#F7F9F9",
         backgroundGradientFromOpacity: 0,
-        backgroundGradientTo: "#1ABC9C",
+        backgroundGradientTo: "#808B96",
         backgroundGradientToOpacity: 1,
-        color: (opacity = 100) => `rgba(4, 45, 252, ${opacity})`,
+        color: (opacity = 100) => `rgba(250, 21, 7, ${opacity})`,
         labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
         propsForDots: {
             r: "1",
             strokeWidth: "2",
-            stroke: "#055af9"
+            stroke:"#DC1306"
           },
         propsForLabels:{
             fontSize:"10"
