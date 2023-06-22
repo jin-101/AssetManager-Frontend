@@ -28,7 +28,8 @@ import {
   StockCRUDpage,
   AccountBookAddPage,
   CashReceiptUpload,
-  CurrencyGraphPage
+  CurrencyGraphPage,
+  GoldGraphPage
 } from "@views";
 import CalculatePage from "./CalculatePage";
 
@@ -153,6 +154,11 @@ function RootPages() {
             name="currencyGraphPage"
             component={CurrencyGraphPage}
             options={{ ...commonHeaderStyle, title: "외화서비스" }}
+          />
+          <Stack.Screen
+            name="GoldGraphPage"
+            component={GoldGraphPage}
+            options={{ ...commonHeaderStyle, title: "금서비스" }}
           />
         </>
       ) : (
