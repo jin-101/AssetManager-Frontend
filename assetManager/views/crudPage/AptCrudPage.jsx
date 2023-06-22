@@ -7,7 +7,7 @@ import { apiPath } from "../../services";
 import { inputPriceFormat } from "../../utils";
 import AssetSurmary from "../../components/AssetSurmary";
 
-function AptCrudPage(props) {
+function AptCrudPage({ parentLoading }) {
   const { token } = useSelector((state) => state.login);
   const [userApt, setUserApt] = useState([]);
   useEffect(() => {
@@ -20,6 +20,7 @@ function AptCrudPage(props) {
     }) //id 넘겨줘야됨
       .then((res) => {
         setUserApt(res.data);
+        parentLoading();
         console.log(res.data);
       })
       .catch((err) => {

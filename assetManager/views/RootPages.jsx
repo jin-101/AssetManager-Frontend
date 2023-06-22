@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { commonHeaderStyle } from "@styles";
@@ -29,14 +29,19 @@ import {
   AccountBookAddPage,
   CashReceiptUpload,
   CurrencyGraphPage,
-  GoldGraphPage
+  GoldGraphPage,
+  DepositUpdate,
+  SavingsUpdate,
+  CarUpdate,
+  CarService,
+  CurrencyGraphPage
 } from "@views";
 import CalculatePage from "./CalculatePage";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
   const { token } = useSelector((state) => state.login);
-  // console.log(token);
+
   return (
     <Stack.Navigator>
       {token !== "" ? (
@@ -140,10 +145,34 @@ function RootPages() {
             component={DepositCrudPage}
             options={{ ...commonHeaderStyle, title: "예적금 보유내역" }}
           />
+          {/* 예금내역 수정 */}
+          <Stack.Screen
+            name="depositUpdate"
+            component={DepositUpdate}
+            options={{ ...commonHeaderStyle, title: "예금내역 수정" }}
+          />
+          {/* 적금내역 수정 */}
+          <Stack.Screen
+            name="savingsUpdate"
+            component={SavingsUpdate}
+            options={{ ...commonHeaderStyle, title: "적금내역 수정" }}
+          />
           <Stack.Screen
             name="carCrud"
             component={CarCrudPage}
             options={{ ...commonHeaderStyle, title: "자동차 보유내역" }}
+          />
+          {/* 차내역 수정 */}
+          <Stack.Screen
+            name="carUpdate"
+            component={CarUpdate}
+            options={{ ...commonHeaderStyle, title: "차 내역 수정" }}
+          />
+          {/* 차 서비스 */}
+          <Stack.Screen
+            name="carService"
+            component={CarService}
+            options={{ ...commonHeaderStyle, title: "차 서비스" }}
           />
           <Stack.Screen
             name="stockCrud"

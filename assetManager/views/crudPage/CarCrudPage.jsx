@@ -4,10 +4,18 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import AssetSurmary from "../../components/AssetSurmary";
+import { useNavigation } from "@react-navigation/native";
 
-function CarCrudPage(props) {
+function CarCrudPage({ parentLoading }) {
   const { token } = useSelector((state) => state.login);
+  const navigation = useNavigation();
   const [userCar, setUserCar] = useState([]);
+  const updateOnPress = () => {
+    navigation.navigate("carUpdate");
+  };
+  const serviceOnPress = () => {
+    navigation.navigate("carService");
+  };
   useEffect(() => {
     axios({
       url: apiPath + `/car/carCrud`,
@@ -18,7 +26,7 @@ function CarCrudPage(props) {
     }) //id 넘겨줘야됨
       .then((res) => {
         setUserCar(res.data);
-        console.log(res.data);
+        parentLoading();
       })
       .catch((err) => {});
   }, []);
@@ -33,8 +41,8 @@ function CarCrudPage(props) {
           { title: "연식", key: "year", unit: "년식" },
           { title: "현재 예상가격", key: "price", unit: "원", isPrice: true },
         ]}
-        onPressUpdate={() => {}}
-        onPressAdditional={() => {}}
+        updateBtn={{ title: "내역수정", onPress: updateOnPress }}
+        serviceBtn={{ title: "차 서비스", onPress: serviceOnPress }}
       />
     </View>
   );

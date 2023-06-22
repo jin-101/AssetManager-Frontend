@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  VStack,
-  Button,
-  Text,
-  HStack,
-  View
-} from "native-base";
+import { Box, VStack, Button, Text, HStack, View } from "native-base";
 import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -58,8 +51,9 @@ function GoldCrudPage(){
                 </Button>
             </HStack> 
         </Box>
+
     </View>
-    );
+  );
 }
 
-export default GoldCrudPage
+export default GoldCrudPage;
