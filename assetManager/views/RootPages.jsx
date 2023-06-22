@@ -1,4 +1,4 @@
-import React from "react";
+import React  from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { commonHeaderStyle } from "@styles";
@@ -28,6 +28,7 @@ import {
   StockCRUDpage,
   AccountBookAddPage,
   CashReceiptUpload,
+  CurrencyGraphPage
 } from "@views";
 import CalculatePage from "./CalculatePage";
 
@@ -147,6 +148,11 @@ function RootPages() {
             name="stockCrud"
             component={StockCRUDpage}
             options={{ ...commonHeaderStyle, title: "주식잔고" }}
+          />
+          <Stack.Screen
+            name="currencyGraph"
+            component={CurrencyGraphPage}
+            options={{ ...commonHeaderStyle, title: "외화서비스" }}
           />
         </>
       ) : (

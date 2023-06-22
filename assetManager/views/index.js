@@ -22,6 +22,8 @@ import CarCrudPage from "@views/crudPage/CarCrudPage";
 import StockCRUDpage from "@views/crudPage/StockCRUDpage";
 import CalculatePage from "@views/CalculatePage";
 import CashReceiptUpload from "@views/CashReceiptUpload";
+import CurrencyGraphPage from "./CurrencyGraphPage";
+
 
 export {
   Login,
@@ -48,4 +50,5 @@ export {
   StockCRUDpage,
   CalculatePage,
   CashReceiptUpload,
+  CurrencyGraphPage
 };
