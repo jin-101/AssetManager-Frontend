@@ -12,6 +12,8 @@ function StatisticsContainer() {
   const [fiInd, setFiInd] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log(fiInd);
+
   useEffect(() => {
     setIsLoading(true);
     axios({
