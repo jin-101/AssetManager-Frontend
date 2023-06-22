@@ -150,7 +150,7 @@ function RootPages() {
             options={{ ...commonHeaderStyle, title: "주식잔고" }}
           />
           <Stack.Screen
-            name="currencyGraph"
+            name="currencyGraphPage"
             component={CurrencyGraphPage}
             options={{ ...commonHeaderStyle, title: "외화서비스" }}
           />

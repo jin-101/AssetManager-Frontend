@@ -43,7 +43,7 @@ function CurrencyCrudPage(){
     const[currency,setCurrency] = useState(null);
     const [avergeGain,setAvergeGain] = useState(0);
 
-    const goTOcurrencyService = () => (navigation.navigate("currencyGraph"));
+    const goTOcurrencyService = () => (navigation.navigate("currencyGraphPage"));
     
     useEffect(()=>{
         const fetchCurrency = async () => {
