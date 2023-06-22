@@ -23,6 +23,7 @@ import StockCRUDpage from "@views/crudPage/StockCRUDpage";
 import CalculatePage from "@views/CalculatePage";
 import CashReceiptUpload from "@views/CashReceiptUpload";
 
+
 export {
   Login,
   Signin,
@@ -48,4 +49,5 @@ export {
   StockCRUDpage,
   CalculatePage,
   CashReceiptUpload,
+
 };

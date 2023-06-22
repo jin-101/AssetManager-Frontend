@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
-  FormControl,
-  ScrollView,
   VStack,
   Button,
   Text,
-  Heading,
-  FlatList,
   HStack,
   Avatar,
   Spacer,
-  Center
+  Center,
+  View
 } from "native-base";
 import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
@@ -48,6 +45,7 @@ function StockCRUDpage() {
   }, []);
 
   return (
+  <View bgColor={"white"} w={"90%"} borderRadius={20}>
     <Box mt="3">
         <Center _text={{fontSize:"lg",fontWeight:"bold"}}>
           평균수익률:{avergeGain}
@@ -117,7 +115,7 @@ function StockCRUDpage() {
           </HStack>
         </Box>
       ))}
-      <HStack alignSelf="center">
+      <HStack alignSelf="center" mb="2">
         <Button mt="5" mx="1">
           잔고수정
         </Button>
@@ -127,6 +125,7 @@ function StockCRUDpage() {
       </HStack>
 
     </Box>
+  </View>
   );
 }
 
