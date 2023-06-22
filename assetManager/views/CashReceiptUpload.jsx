@@ -5,10 +5,9 @@ import axios from "axios";
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";
 
-function AccountBookUpload(props) {
+function CashReceiptUpload(props) {
   const { token } = useSelector((state) => state.login); //아이디 가져오는 법
   const [selectedFile, setSelectedFile] = useState(null);
-
   const handleFileSelect = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({});
@@ -30,7 +29,7 @@ function AccountBookUpload(props) {
 
       const fileExtension = selectedFile.split(".").pop(); // 파일 확장자 추출
       const timestamp = Date.now();
-      const fileName = `${token}_file_${timestamp}.${fileExtension}`; // 파일 이름 생성
+      const fileName = `${token}_CashReceiptFile_${timestamp}.${fileExtension}`; // 파일 이름 생성
 
       // 파일을 FormData 객체에 추가
       const formData = new FormData();
@@ -42,7 +41,7 @@ function AccountBookUpload(props) {
 
       // Axios를 사용하여 파일을 서버로 전송
       const response = await axios.post(
-        apiPath + "/rest/webboard/filesave.do",
+        apiPath + "/rest/webboard/cashreceiptfilesave.do",
         formData,
         {
           headers: {
@@ -59,9 +58,9 @@ function AccountBookUpload(props) {
       console.log("Error uploading file:", error);
     }
   };
-
   return (
     <View>
+      <Text>현금영수증 CSV 파일 업로드 페이지</Text>
       <Button title="파일 선택하기" onPress={handleFileSelect} />
       {selectedFile && (
         <View>
@@ -73,4 +72,4 @@ function AccountBookUpload(props) {
   );
 }
 
-export default AccountBookUpload;
+export default CashReceiptUpload;

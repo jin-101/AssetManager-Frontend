@@ -1,18 +1,40 @@
-import React from "react";
-import { ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Center, HStack, Text, VStack } from "native-base";
 import DropdownModal from "@components/DropdownModal";
 import { useNavigation } from "@react-navigation/native";
+import ContentScrollView from "@components/ContentScrollView";
+import axios from "axios";
+import { apiPath } from "../services";
+import { useSelector } from "react-redux";
 
 function HomeContainer() {
   const navigation = useNavigation();
+  const { token } = useSelector((state) => state.login);
+  const [totalAsset, setTotalAsset] = useState("0");
+
   const mokdonPlanner = () => {
     navigation.navigate("mokdonPlanner");
   };
+  const calculate = () => {
+    navigation.navigate("calculate");
+  };
+
+  useEffect(() => {
+    axios({
+      url: `${apiPath}/user/getTotalAsset`,
+      method: "GET",
+      params: {
+        userId: token,
+      },
+    }).then((res) => {
+      setTotalAsset(res.data);
+    });
+  }, []);
   return (
     <>
-      <ScrollView>
+      <ContentScrollView>
         <VStack space={10} alignItems="center" mt="10" mb="10">
+          <Text>{totalAsset}</Text>
           <Box width="50%">
             <DropdownModal
               content={[
@@ -72,8 +94,12 @@ function HomeContainer() {
           <Center w="80%" h="300" bg="coolGray.100" rounded="md" shadow={3}>
             <Text fontSize="2xl">소비탭</Text>
           </Center>
+
+          <Button width="50%" onPress={calculate}>
+            연말 정산 예상 계산기
+          </Button>
         </VStack>
-      </ScrollView>
+      </ContentScrollView>
     </>
   );
 }

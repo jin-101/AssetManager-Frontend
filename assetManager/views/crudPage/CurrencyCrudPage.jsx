@@ -8,7 +8,9 @@ import {
   Avatar,
   Spacer,
   Center,
+
   View
+
 } from "native-base";
 import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,23 +18,23 @@ import axios from "axios";
 import {useNavigation} from "@react-navigation/native"
 import { apiPath } from "../../services";
 
-
-const showCurrencyName = (currency)=>{
-    switch (currency) {
-        case "jpy":
-            return "엔화";
-        case "usd":
-            return "달러";
-        case "eur":
-            return "유로";
-        case "gbp":
-            return "파운드";
-        case "cnh":
-            return "위안";
-        default:
-            break;
-    }
+const showCurrencyName = (currency) => {
+  switch (currency) {
+    case "jpy":
+      return "엔화";
+    case "usd":
+      return "달러";
+    case "eur":
+      return "유로";
+    case "gbp":
+      return "파운드";
+    case "cnh":
+      return "위안";
+    default:
+      break;
+  }
 };
+
 
 function CurrencyCrudPage(){
 
@@ -66,6 +68,8 @@ function CurrencyCrudPage(){
         fetchCurrency();
         console.log(currency);
     },[]);
+
+
 
 
     return (
@@ -147,6 +151,7 @@ function CurrencyCrudPage(){
         </Box>
     </View>
     );
+
 
 }
 
