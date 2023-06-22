@@ -59,6 +59,7 @@ function CarAddPage(props) {
           responseFunction(res.data);
         })
         .catch((err) => {
+          console.log(err);
           errorFunction(err);
         });
     }
