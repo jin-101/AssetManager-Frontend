@@ -34,9 +34,8 @@ import {
   SavingsUpdate,
   CarUpdate,
   CarService,
-  CurrencyGraphPage
+  CalculatePage,
 } from "@views";
-import CalculatePage from "./CalculatePage";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
