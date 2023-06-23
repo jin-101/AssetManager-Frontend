@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { apiPath } from "../../services";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Center, HStack, Stack, Text } from "native-base";
 import axios from "axios";
 import { inputPriceFormat } from "../../utils";
 import ContentScrollView from "@components/ContentScrollView";
+import { userCarUpdate } from "../../action";
 
 const textListInfo = [
   { title: "제조사", key: "company" },
@@ -13,8 +14,9 @@ const textListInfo = [
   { title: "현재 예상가격", key: "price", unit: "원", isPrice: true },
 ];
 function CarUpdate(props) {
+  const dispatch = useDispatch();
   const { token } = useSelector((state) => state.login);
-  const [userCar, setUserCar] = useState([]);
+  const { userCar } = useSelector((state) => state.userCar);
 
   const onRemove = (index) => {
     //detail code 보내서 삭제
@@ -43,7 +45,7 @@ function CarUpdate(props) {
       },
     }) //id 넘겨줘야됨
       .then((res) => {
-        setUserCar(res.data);
+        dispatch(userCarUpdate(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -57,7 +59,7 @@ function CarUpdate(props) {
           {userCar?.map((el, index) => (
             <Stack key={index}>
               <Box
-                bgColor={"amber.50"}
+                bgColor={"white"}
                 mt={index === 0 ? 2.5 : 5}
                 mb={index === userCar?.length - 1 ? 5 : 2.5}
                 padding={5}
@@ -76,16 +78,17 @@ function CarUpdate(props) {
                     </Text>
                   </HStack>
                 ))}
+                <Center>
+                  <Button
+                    mt={5}
+                    w={"60%"}
+                    colorScheme={"danger"}
+                    onPress={onRemove(index)}
+                  >
+                    삭제
+                  </Button>
+                </Center>
               </Box>
-              <Center>
-                <Button
-                  w={"60%"}
-                  colorScheme={"danger"}
-                  onPress={onRemove(index)}
-                >
-                  삭제
-                </Button>
-              </Center>
             </Stack>
           ))}
         </Box>

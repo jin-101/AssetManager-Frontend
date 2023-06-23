@@ -1,15 +1,17 @@
 import { View } from "native-base";
 import { apiPath } from "../../services";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import AssetSurmary from "../../components/AssetSurmary";
 import { useNavigation } from "@react-navigation/native";
+import { userCarUpdate } from "../../action";
 
 function CarCrudPage({ parentLoading }) {
+  const dispatch = useDispatch();
   const { token } = useSelector((state) => state.login);
+  const { userCar } = useSelector((state) => state.userCar);
   const navigation = useNavigation();
-  const [userCar, setUserCar] = useState([]);
   const updateOnPress = () => {
     navigation.navigate("carUpdate");
   };
@@ -25,7 +27,7 @@ function CarCrudPage({ parentLoading }) {
       },
     }) //id 넘겨줘야됨
       .then((res) => {
-        setUserCar(res.data);
+        dispatch(userCarUpdate(res.data));
         parentLoading();
       })
       .catch((err) => {});
