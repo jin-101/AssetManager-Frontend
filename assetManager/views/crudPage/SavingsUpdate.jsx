@@ -57,7 +57,7 @@ function SavingsUpdate(props) {
           {userSavings?.map((el, index) => (
             <Stack key={index}>
               <Box
-                bgColor={"amber.50"}
+                bgColor={"white"}
                 mt={index === 0 ? 2.5 : 5}
                 mb={index === userSavings?.length - 1 ? 5 : 2.5}
                 padding={5}
@@ -76,16 +76,17 @@ function SavingsUpdate(props) {
                     </Text>
                   </HStack>
                 ))}
+                <Center>
+                  <Button
+                    w={"40%"}
+                    mt={5}
+                    colorScheme={"danger"}
+                    onPress={onRemove(index)}
+                  >
+                    삭제
+                  </Button>
+                </Center>
               </Box>
-              <Center>
-                <Button
-                  w={"60%"}
-                  colorScheme={"danger"}
-                  onPress={onRemove(index)}
-                >
-                  삭제
-                </Button>
-              </Center>
             </Stack>
           ))}
         </Box>
