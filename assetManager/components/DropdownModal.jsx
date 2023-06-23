@@ -8,6 +8,7 @@ import {
   Text,
   View,
   useDisclose,
+  PresenceTransition,
 } from "native-base";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -76,7 +77,48 @@ function DropdownModal({ content }) {
               </Actionsheet.Item>
               <>
                 <Divider w="90%" />
-                {dropdown["item" + i] ? (
+                {dropdown["item" + i] && (
+                  <PresenceTransition
+                    visible={dropdown["item" + i]}
+                    initial={{
+                      opacity: 0,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      transition: {
+                        duration: 250,
+                      },
+                    }}
+                    style={{ width: "100%", alignItems: "center" }}
+                  >
+                    <Box w="90%" key={i}>
+                      {el?.list?.map((li, j) => (
+                        <Box
+                          key={j}
+                          w="100%"
+                          h={60}
+                          px={2}
+                          justifyContent="center"
+                          onTouchEnd={() => {
+                            setDropdown(dropdownInit);
+                            onClose();
+                            navigation.navigate(li.key); //page 이동 (App.js에서 mapping)
+                          }}
+                        >
+                          <Actionsheet.Item
+                            key={j}
+                            // backgroundColor="blue.100"
+                            alignItems="center"
+                          >
+                            <Text fontSize="xl">{li.title}</Text>
+                          </Actionsheet.Item>
+                        </Box>
+                      ))}
+                      <Divider w="100%" />
+                    </Box>
+                  </PresenceTransition>
+                )}
+                {/* {dropdown["item" + i] ? (
                   <Box w="90%" key={i}>
                     {el?.list?.map((li, j) => (
                       <Box
@@ -103,7 +145,7 @@ function DropdownModal({ content }) {
                     ))}
                     <Divider w="100%" />
                   </Box>
-                ) : undefined}
+                ) : undefined} */}
               </>
             </View>
           ))}
