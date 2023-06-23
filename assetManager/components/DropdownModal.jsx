@@ -23,8 +23,10 @@ function DropdownModal({ content }) {
   const [dropdown, setDropdown] = useState(dropdownInit);
   return (
     <>
-      <Button size="md" colorScheme="primary" onPress={onOpen}>
-        자산 / 부채 추가하기
+      <Button borderRadius={10} width="40%" h={"50"} onPress={onOpen}>
+        <Text color={"white"} fontSize={16}>
+          자산 / 부채 추가하기
+        </Text>
       </Button>
       <Actionsheet
         isOpen={isOpen}
