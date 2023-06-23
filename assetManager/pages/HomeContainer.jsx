@@ -6,7 +6,6 @@ import ContentScrollView from "@components/ContentScrollView";
 import axios from "axios";
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";
-
 function HomeContainer() {
   const navigation = useNavigation();
   const { token } = useSelector((state) => state.login);
@@ -35,7 +34,7 @@ function HomeContainer() {
       <ContentScrollView>
         <VStack space={10} alignItems="center" mt="10" mb="10">
           <Text>{totalAsset}</Text>
-          <Box width="50%">
+          <HStack>
             <DropdownModal
               content={[
                 {
@@ -62,10 +61,18 @@ function HomeContainer() {
                 },
               ]}
             />
-          </Box>
-          <Button width="50%" onPress={mokdonPlanner}>
-            목돈 마련 플래너
-          </Button>
+            <Button
+              borderRadius={10}
+              width="40%"
+              h={"50"}
+              ml={2}
+              onPress={mokdonPlanner}
+            >
+              <Text color={"white"} fontSize={15}>
+                목돈 마련 플래너
+              </Text>
+            </Button>
+          </HStack>
           <HStack w="80%" h="300">
             <Box
               rounded="md"
@@ -95,8 +102,16 @@ function HomeContainer() {
             <Text fontSize="2xl">소비탭</Text>
           </Center>
 
-          <Button width="50%" onPress={calculate}>
-            연말 정산 예상 계산기
+          <Button
+            // bg={"white"}
+            borderRadius={10}
+            width="40%"
+            h={"50"}
+            onPress={calculate}
+          >
+            <Text color={"white"} fontSize={14}>
+              연말 정산 예상 계산기
+            </Text>
           </Button>
         </VStack>
       </ContentScrollView>
