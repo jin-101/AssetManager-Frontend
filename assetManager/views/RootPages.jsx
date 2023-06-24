@@ -33,8 +33,9 @@ import {
   SavingsUpdate,
   CarUpdate,
   CarService,
-  CurrencyGraphPage,
+  StockCRUDpageUpdate,
   CalculatePage,
+  CurrencyGraphPage,
 } from "@views";
 // import CustomHeader from "../components/CustomHeader";
 
@@ -180,7 +181,7 @@ function RootPages() {
           />
           <Stack.Screen
             name="stockCrud"
-            component={StockCRUDpage}
+            component={StockCRUDpageUpdate}
             options={{ ...commonHeaderStyle, title: "주식잔고" }}
           />
           <Stack.Screen

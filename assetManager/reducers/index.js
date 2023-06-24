@@ -12,7 +12,9 @@ import currecny from "./currecny";
 import gold from "./gold";
 import avgRate from "./avgRate";
 import loan from "./loan";
+import havingStockUpdate from "./havingStock";
 import userCar from "./userCar";
+
 const rootReducer = combineReducers({
   // 리듀서들을 입력한다.
   login,
@@ -26,7 +28,8 @@ const rootReducer = combineReducers({
   gold,
   avgRate,
   loan,
-  userCar,
+  havingStockUpdate,
+  userCar
 });
 
 export default rootReducer;
