@@ -1,5 +1,5 @@
 import { FontAwesome } from "@expo/vector-icons";
-import { Box } from "native-base";
+import { Box, HStack } from "native-base";
 import React, { useState } from "react";
 import { View, Text, Dimensions } from "react-native";
 import Carousel from "../external/Carousel";
@@ -12,6 +12,8 @@ import GoldCrudPage from "../views/crudPage/GoldCrudPage";
 import CurrencyCrudPage from "../views/crudPage/CurrencyCrudPage";
 import Loading from "@components/Loading";
 import StockCRUDpageUpdate from "../views/crudPage/StockCRUDpageUpdate";
+import CoinCrudPage from "../views/crudPage/CoinCrudPage";
+
 
 const entries = [
   { key: "1", title: "예/적금", naviPath: "depositCrud" },
@@ -26,6 +28,10 @@ const entries = [
   // { key: "10", title: "부채3", naviPath: "" },
 ];
 
+const iconStyle = {
+  size: 40,
+  color: "black",
+};
 function AssetContainer() {
   const sliderWidth = Dimensions.get("window").width;
   const itemWidth = Dimensions.get("window").width - 100;
@@ -35,31 +41,32 @@ function AssetContainer() {
 
   const parentLoading = () => {
     loadingCount++;
+    console.log(loadingCount);
     if (loadingCount === itemLength) setLoading(false);
   };
 
   const iconSelectFuntion = (key) => {
     switch (key) {
       case "1":
-        return <FontAwesome name="money" size={30} color="black" />;
+        return <FontAwesome name="money" {...iconStyle} />;
       case "2":
-        return <FontAwesome name="money" size={30} color="black" />;
+        return <FontAwesome name="money" {...iconStyle} />;
       case "3":
-        return <FontAwesome name="money" size={30} color="black" />;
+        return <FontAwesome name="money" {...iconStyle} />;
       case "4":
-        return <FontAwesome name="money" size={30} color="black" />;
+        return <FontAwesome name="money" {...iconStyle} />;
       case "5":
-        return <FontAwesome name="money" size={30} color="black" />;
+        return <FontAwesome name="money" {...iconStyle} />;
       case "6":
-        return <FontAwesome name="money" size={30} color="black" />;
+        return <FontAwesome name="money" {...iconStyle} />;
       case "7":
-        return <FontAwesome name="money" size={30} color="black" />;
+        return <FontAwesome name="money" {...iconStyle} />;
       // case "8":
-      //   return <FontAwesome name="money" size={30} color="black" />;
+      //   return <FontAwesome name="money" {...iconStyle} />;
       // case "9":
-      //   return <FontAwesome name="money" size={30} color="black" />;
+      //   return <FontAwesome name="money" {...iconStyle} />;
       // case "10":
-      //   return <FontAwesome name="money" size={30} color="black" />;
+      //   return <FontAwesome name="money" {...iconStyle} />;
 
       default:
         break;
@@ -81,14 +88,8 @@ function AssetContainer() {
       case "6":
         return <StockCRUDpageUpdate parentLoading={parentLoading} />;
       case "7":
-        parentLoading();
-        return (
-          <View>
-            <Box>
-              <Text>코인 관련 surmary</Text>
-            </Box>
-          </View>
-        );
+        return <CoinCrudPage parentLoading={parentLoading} />;
+
       // case "8":
       //   return (
       //     <View>
@@ -131,17 +132,19 @@ function AssetContainer() {
       >
         <Box w={"100%"}>
           <View style={{ marginTop: 10, alignItems: "center" }}>
-            <Box
-              w={70}
+            <HStack
+              w={"70%"}
               h={70}
               alignItems={"center"}
               justifyContent={"center"}
               borderRadius={35}
-              bg={"yellow.100"}
+              bg={"white"}
             >
               {iconSelectFuntion(item.key)}
-              <Text style={{ color: "black" }}>{item.title}</Text>
-            </Box>
+              <Text style={{ color: "black", marginLeft: 10, fontSize: 20 }}>
+                {item.title}
+              </Text>
+            </HStack>
           </View>
           <View
             style={{

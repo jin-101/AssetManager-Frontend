@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ContentScrollView from "@components/ContentScrollView";
 import InputTextComponent from "@components/InputTextComponent";
-import {
-  Box,
-  Button,
-  Center,
-  Divider,
-  HStack,
-  Stack,
-  Text,
-  VStack,
-} from "native-base";
+import { Box, Button, HStack, Text, VStack } from "native-base";
 import SelectComponent from "../../components/SelectComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { apiPath } from "../../services";
@@ -19,24 +10,17 @@ import axios from "axios";
 import { Alert } from "react-native";
 import { inputPriceFormat } from "../../utils";
 import Loading from "../../components/Loading";
+import CarRegister from "../../components/CarRegister";
 
-const textListInfo = [
-  { title: "제조사", key: "carModel.carCompany.companyName" },
-  { title: "모델명", key: "carModel.className" },
-  { title: "연식", key: "year", unit: "년식" },
-  { title: "현재 예상가격", key: "price", unit: "원", isPrice: true },
-];
-
-function CarService(props) {
+function CarService({}) {
   const dispatch = useDispatch();
   const { companyList } = useSelector((state) => state.carList);
   const [carType, setCarType] = useState([]);
   const [tab, setTab] = useState(0);
   const [isResultOpen, setIsResultOpen] = useState(false);
   const [searchList, setSearchList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const loadingFunc = () => setIsLoading(!isLoading);
+  const { userCar } = useSelector((state) => state.userCar);
 
   const [carRecomand, setCarRecomand] = useState({
     carCompany: "",
@@ -50,31 +34,29 @@ function CarService(props) {
 
   const changeTab = (index) => setTab(index);
 
-  const onChangeCarRecomand = (value, id, name) => {
-    const companyPick = name === "carCompany";
-    setCarRecomand((prev) => ({
-      ...prev,
-      type: companyPick ? "" : prev.type,
-      [name]: value,
-    }));
-    if (companyPick) {
-      loadingFunc();
+  const onChangeCarRecomand = async (value, id, name) => {
+    if (name === "carCompany") {
       setCarType([]);
-      axios({
-        url: `${apiPath}/car/typeList`,
-        method: "GET",
-        params: {
-          carCompany: carRecomand.carCompany,
-        },
-      })
-        .then((res) => {
-          console.log(JSON.stringify(res.data), "JSON");
-          setCarType(res.data);
-          loadingFunc();
-        })
-        .catch((err) => {
-          console.log(err);
+      try {
+        const response = await axios.get(`${apiPath}/car/typeList`, {
+          params: {
+            carCompany: value,
+          },
         });
+        setCarRecomand((prev) => ({
+          ...prev,
+          type: "",
+          [name]: value,
+        }));
+        setCarType(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      setCarRecomand((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
     }
   };
 
@@ -88,7 +70,6 @@ function CarService(props) {
     } else if (maxPrice < minPrice) {
       Alert.alert("", "최저금액이 최고금액보다 크게 입력되었습니다.");
     } else {
-      loadingFunc();
       axios({
         url: `${apiPath}/car/recomand`,
         method: "GET",
@@ -97,11 +78,9 @@ function CarService(props) {
         },
       })
         .then((res) => {
-          console.log(JSON.stringify(res.data));
-          console.log(res.data.length);
+          console.log(JSON.stringify(res.data), res.data.length);
           changeResultOpen();
           setSearchList(res.data);
-          loadingFunc();
         })
         .catch((err) => {
           console.log(err);
@@ -111,106 +90,50 @@ function CarService(props) {
 
   useEffect(() => {
     if (isFirst) {
-      loadingFunc();
       axios({
         url: `${apiPath}/car/companyList.do`,
         method: "GET",
       })
         .then((res) => {
           dispatch(carCompanyListSearch(res.data));
-          loadingFunc();
         })
         .catch((err) => {
           console.log(err);
         });
     }
   }, []);
-  console.log({ carRecomand });
+  console.log({ userCar });
   return (
-    <ContentScrollView>
-      {/* 상단 버튼 */}
-      <HStack mt={"5"} space={5} justifyContent="center">
-        <Button
-          width={"40%"}
-          size="lg"
-          variant="outline"
-          onPress={() => changeTab(0)}
-        >
-          차 추천
-        </Button>
-        <Button
-          width={"40%"}
-          size="lg"
-          variant="outline"
-          colorScheme="secondary"
-          onPress={() => changeTab(1)}
-        >
-          차 취득세 계산기
-        </Button>
-      </HStack>
-      {/* 차 추천 */}
-      {tab === 0 && (
-        <VStack mt="5" alignItems="center">
-          <Box
-            bg="blue.100"
-            w="90%"
-            p="5"
-            borderRadius="2xl"
-            mb="5"
-            alignItems={"center"}
+    <>
+      <ContentScrollView>
+        {/* 상단 버튼 */}
+        <HStack mt={"5"} space={5} justifyContent="center">
+          <Button
+            width={"40%"}
+            bg={"white"}
+            borderRadius={15}
+            onPress={() => changeTab(0)}
+            _pressed={{ bg: "light.50" }}
           >
-            <Text mb={2.5} fontSize={25} fontWeight={"bold"}>
-              차 추천
+            <Text color={"blue.400"} fontSize={18} fontWeight={"semibold"}>
+              자동차 추천
             </Text>
-            <Divider></Divider>
-            <SelectComponent
-              name="carCompany"
-              isVertical={true}
-              formControlProps={{ marginTop: 5 }}
-              formControlLabelProps={{
-                text: "제조사 조회",
-              }}
-              formControlHelperProps={{ h: 0 }}
-              selectItem={companyList}
-              value={carRecomand?.carCompany}
-              parentSetState={onChangeCarRecomand}
-            />
-            <SelectComponent
-              name="type"
-              isVertical={true}
-              formControlProps={{ marginTop: 5 }}
-              formControlLabelProps={{
-                text: "유형 조회",
-              }}
-              formControlHelperProps={{ h: 0 }}
-              selectItem={carType}
-              value={carRecomand?.type}
-              parentSetState={onChangeCarRecomand}
-            />
-            <InputTextComponent
-              name="minPrice"
-              inputType="number"
-              value={carRecomand?.minPrice}
-              parentSetState={onChangeCarRecomand}
-              formControlLabelProps={{ text: "최저금액(원)" }}
-              priceFormat={true}
-              formControlProps={{ marginTop: 5 }}
-              formControlHelperProps={{ h: 0 }}
-            />
-            <InputTextComponent
-              name="maxPrice"
-              inputType="number"
-              value={carRecomand?.maxPrice}
-              parentSetState={onChangeCarRecomand}
-              formControlLabelProps={{ text: "최고금액(원)" }}
-              priceFormat={true}
-              formControlProps={{ marginTop: 5 }}
-              // formControlHelperProps={{ h: 0 }}
-            />
-            <Button onPress={carRecomandOnPress}>검색하기</Button>
-          </Box>
-          {/* 검색결과 리스트 */}
-          {isResultOpen && (
+          </Button>
+          <Button
+            width={"40%"}
+            bg={"white"}
+            borderRadius={15}
+            onPress={() => changeTab(1)}
+            _pressed={{ bg: "light.50" }}
+          >
+            <Text color={"pink.400"} fontSize={18} fontWeight={"semibold"}>
+              차 취득세 계산기
+            </Text>
+          </Button>
+        </HStack>
+        {/* 차 추천 */}
+        {tab === 0 && (
+          <VStack mt="5" alignItems="center">
             <Box
               bg="blue.100"
               w="90%"
@@ -219,57 +142,152 @@ function CarService(props) {
               mb="5"
               alignItems={"center"}
             >
-              {searchList?.map((el, index) => (
-                <Box
-                  w={"95%"}
-                  bgColor={"amber.50"}
+              <Text mb={2.5} fontSize={25} fontWeight={"bold"}>
+                중고 자동차 추천
+              </Text>
+              <SelectComponent
+                name="carCompany"
+                isVertical={true}
+                formControlProps={{ marginTop: 5 }}
+                formControlLabelProps={{
+                  text: "제조사 조회",
+                }}
+                formControlHelperProps={{ h: 0 }}
+                selectItem={companyList}
+                value={carRecomand?.carCompany}
+                parentSetState={onChangeCarRecomand}
+              />
+              <SelectComponent
+                name="type"
+                isVertical={true}
+                formControlProps={{ marginTop: 5 }}
+                formControlLabelProps={{
+                  text: "유형 조회",
+                }}
+                formControlHelperProps={{ h: 0 }}
+                selectItem={carType}
+                value={carRecomand?.type}
+                parentSetState={onChangeCarRecomand}
+              />
+              <InputTextComponent
+                name="minPrice"
+                inputType="number"
+                value={carRecomand?.minPrice}
+                parentSetState={onChangeCarRecomand}
+                formControlLabelProps={{ text: "최저금액(원)" }}
+                priceFormat={true}
+                formControlProps={{ marginTop: 5 }}
+                formControlHelperProps={{ h: 0 }}
+              />
+              <InputTextComponent
+                name="maxPrice"
+                inputType="number"
+                value={carRecomand?.maxPrice}
+                parentSetState={onChangeCarRecomand}
+                formControlLabelProps={{ text: "최고금액(원)" }}
+                priceFormat={true}
+                formControlProps={{ marginTop: 5 }}
+                // formControlHelperProps={{ h: 0 }}
+              />
+              <Button w={"40%"} onPress={carRecomandOnPress}>
+                검색하기
+              </Button>
+            </Box>
+            {/* 검색결과 리스트 */}
+            {isResultOpen && (
+              <Box
+                bg="blue.100"
+                w="90%"
+                p="5"
+                borderRadius="2xl"
+                mb="5"
+                alignItems={"center"}
+              >
+                {
+                  <Text fontSize={15} fontWeight={"semibold"} mb={2}>
+                    {searchList.length === 0
+                      ? "조건에 맞는 결과가 없습니다. "
+                      : "검색 결과입니다."}
+                  </Text>
+                }
+                {searchList?.map((el, index) => (
+                  <Box
+                    w={"95%"}
+                    bgColor={"white"}
+                    key={index}
+                    mt={index === 0 ? 2.5 : 5}
+                    mb={index === searchList?.length - 1 ? 5 : 2.5}
+                    padding={5}
+                    borderRadius={20}
+                  >
+                    <HStack>
+                      <Text fontSize={15} fontWeight={"semibold"}>
+                        {"제조사 : "}
+                      </Text>
+                      <Text fontSize={15}>
+                        {el.carModel.carCompany.companyName}
+                      </Text>
+                    </HStack>
+                    <HStack>
+                      <Text fontSize={15} fontWeight={"semibold"}>
+                        {"모델명 : "}
+                      </Text>
+                      <Text fontSize={15}>{el.carModel.className}</Text>
+                    </HStack>
+                    <HStack>
+                      <Text fontSize={15} fontWeight={"semibold"}>
+                        {"연식 : "}
+                      </Text>
+                      <Text fontSize={15}>
+                        {el.year}
+                        {"년식"}
+                      </Text>
+                    </HStack>
+                    <HStack>
+                      <Text fontSize={15} fontWeight={"semibold"}>
+                        {"예상가격 : "}
+                      </Text>
+                      <Text fontSize={15}>
+                        {inputPriceFormat(el.price)}
+                        {"원"}
+                      </Text>
+                    </HStack>
+                  </Box>
+                ))}
+                <Text fontSize={12} color={"gray.400"} mb={2}>
+                  {searchList.length !== 0 &&
+                    "주의 - 견적은 일부 정확하지 않을 수 있습니다."}
+                </Text>
+              </Box>
+            )}
+          </VStack>
+        )}
+        {tab === 1 && (
+          <VStack mt="5" mb="5" alignItems="center">
+            <Box
+              bg="red.100"
+              w="90%"
+              p="5"
+              borderRadius="2xl"
+              mb="5"
+              alignItems={"center"}
+            >
+              <Text mb={2.5} fontSize={25} fontWeight={"bold"}>
+                자동차 취등록세 계산
+              </Text>
+              {userCar?.map((el, index) => (
+                <CarRegister
                   key={index}
-                  mt={index === 0 ? 2.5 : 5}
-                  mb={index === searchList?.length - 1 ? 5 : 2.5}
-                  padding={5}
-                  borderRadius={20}
-                >
-                  <HStack>
-                    <Text fontSize={15} fontWeight={"semibold"}>
-                      {"제조사 : "}
-                    </Text>
-                    <Text fontSize={15}>
-                      {el.carModel.carCompany.companyName}
-                    </Text>
-                  </HStack>
-                  <HStack>
-                    <Text fontSize={15} fontWeight={"semibold"}>
-                      {"모델명 : "}
-                    </Text>
-                    <Text fontSize={15}>{el.carModel.className}</Text>
-                  </HStack>
-                  <HStack>
-                    <Text fontSize={15} fontWeight={"semibold"}>
-                      {"연식 : "}
-                    </Text>
-                    <Text fontSize={15}>
-                      {el.year}
-                      {"년식"}
-                    </Text>
-                  </HStack>
-                  <HStack>
-                    <Text fontSize={15} fontWeight={"semibold"}>
-                      {"예상가격 : "}
-                    </Text>
-                    <Text fontSize={15}>
-                      {inputPriceFormat(el.price)}
-                      {"원"}
-                    </Text>
-                  </HStack>
-                </Box>
+                  element={el}
+                  index={index}
+                  totalLen={userCar?.length}
+                />
               ))}
             </Box>
-          )}
-        </VStack>
-      )}
-      {tab === 1 && <VStack mt="5" mb="5" alignItems="center"></VStack>}
-      {isLoading && <Loading />}
-    </ContentScrollView>
+          </VStack>
+        )}
+      </ContentScrollView>
+    </>
   );
 }
 

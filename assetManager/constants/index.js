@@ -25,6 +25,11 @@ import { CURRENCY_UPDATE, CURRENCY_RESET } from "./currency";
 import { GOLD_UPDATE, GOLD_RESET } from "./gold";
 
 import { LOAN_INITIALIZE, ADD_LOAN_VALUE } from "./loan";
+import {
+  USER_CAR_INITIALIZE,
+  USER_CAR_UPDATE,
+  USER_CAR_REMOVE,
+} from "./userCar";
 
 export {
   LOGIN_INITIALIZE,
@@ -53,4 +58,8 @@ export {
   LOAN_INITIALIZE,
   ADD_LOAN_VALUE,
   HAVINGSTOCK_UPDATE
+  USER_CAR_INITIALIZE,
+  USER_CAR_UPDATE,
+  USER_CAR_REMOVE,
+
 };

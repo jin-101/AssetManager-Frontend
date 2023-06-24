@@ -6,7 +6,7 @@ import ContentScrollView from "@components/ContentScrollView";
 import axios from "axios";
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";
-
+import { btnStyle, btnTextStyle } from "../styles";
 function HomeContainer() {
   const navigation = useNavigation();
   const { token } = useSelector((state) => state.login);
@@ -35,7 +35,7 @@ function HomeContainer() {
       <ContentScrollView>
         <VStack space={10} alignItems="center" mt="10" mb="10">
           <Text>{totalAsset}</Text>
-          <Box width="50%">
+          <HStack>
             <DropdownModal
               content={[
                 {
@@ -62,10 +62,19 @@ function HomeContainer() {
                 },
               ]}
             />
-          </Box>
-          <Button width="50%" onPress={mokdonPlanner}>
-            목돈 마련 플래너
-          </Button>
+            <Button
+              {...btnStyle}
+              ml={2}
+              onPress={mokdonPlanner}
+              _text={{ ...btnTextStyle }}
+              _pressed={{
+                bg: "gray.200",
+                borderColor: "white",
+              }}
+            >
+              목돈 마련 플래너
+            </Button>
+          </HStack>
           <HStack w="80%" h="300">
             <Box
               rounded="md"
@@ -91,11 +100,19 @@ function HomeContainer() {
             <Text fontSize="2xl">통계일부</Text>
           </Center>
 
-          <Center w="80%" h="300" bg="coolGray.100" rounded="md" shadow={3}>
+          {/* <Center w="80%" h="300" bg="coolGray.100" rounded="md" shadow={3}>
             <Text fontSize="2xl">소비탭</Text>
-          </Center>
+          </Center> */}
 
-          <Button width="50%" onPress={calculate}>
+          <Button
+            {...btnStyle}
+            onPress={calculate}
+            _text={{ ...btnTextStyle }}
+            _pressed={{
+              bg: "gray.200",
+              borderColor: "white",
+            }}
+          >
             연말 정산 예상 계산기
           </Button>
         </VStack>

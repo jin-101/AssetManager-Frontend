@@ -5,17 +5,9 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { pageUpdate } from "../action";
 import { useNavigation } from "@react-navigation/native";
-import { isAndroid } from "../utils";
+import { loginLayoutStyle } from "../styles";
 
-const styles = StyleSheet.create({
-  footer: {
-    height: isAndroid ? "10%" : "15%",
-  },
-  footerText: {
-    fontSize: 15,
-    color: "white",
-  },
-});
+const styles = StyleSheet.create(loginLayoutStyle);
 
 function Footerbar() {
   const { pageState } = useSelector((state) => state.footerNav);
@@ -31,14 +23,7 @@ function Footerbar() {
 
   return (
     <View style={styles.footer}>
-      <HStack
-        bg="indigo.600"
-        h="100%"
-        alignItems="center"
-        justifyContent="center"
-        safeAreaBottom
-        shadow={6}
-      >
+      <HStack h="100%" w={"100%"} alignItems="center" justifyContent="center">
         <Pressable
           cursor="pointer"
           opacity={pageState === 0 ? 1 : 0.5}
