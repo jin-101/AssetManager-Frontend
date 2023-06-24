@@ -1,4 +1,4 @@
-import { Button, VStack } from "native-base";
+import { Button, Center, VStack } from "native-base";
 import { Alert } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import DepositAddContainer from "@pages/DepositAddContainer";
@@ -115,14 +115,17 @@ function DepositAddPage() {
             }}
           />
         </VStack>
-        <Button
-          colorScheme={pass ? "success" : "gray"}
-          disabled={!pass}
-          onPress={register}
-          m="3"
-        >
-          등록
-        </Button>
+        <Center>
+          <Button
+            w={"40%"}
+            colorScheme={pass ? "success" : "gray"}
+            disabled={!pass}
+            onPress={register}
+            m="3"
+          >
+            등록
+          </Button>
+        </Center>
       </ContentScrollView>
       {isLoading && <Loading />}
     </>

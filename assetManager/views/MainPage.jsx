@@ -12,7 +12,7 @@ import AssetContainer from "@pages/AssetContainer";
 import AccountBookContainer from "@pages/AccountBookContainer";
 import MainPageModalContent from "@pages/MainPageModalContent";
 import { pageInitialize } from "../action";
-import { useToast } from "native-base";
+import { HStack, useToast } from "native-base";
 import StatisticsContainer from "@pages/StatisticsContainer";
 
 const styles = StyleSheet.create({
@@ -40,8 +40,10 @@ function MainPage() {
     return (
       <>
         <Pressable onPress={modalSlideFunction}>
-          <AntDesign name="bars" size={24} color="white" />
-          <Text style={{ color: "white" }}>메뉴</Text>
+          {/* <HStack justifyContent={"center"} alignItems={"center"}> */}
+          {/* <Text style={{ color: "white" }}>메뉴</Text> */}
+          <AntDesign name="bars" size={30} color="white" />
+          {/* </HStack> */}
         </Pressable>
       </>
     );

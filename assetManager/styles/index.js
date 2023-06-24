@@ -1,4 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { isAndroid } from "../utils";
+import { Text } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
@@ -17,15 +19,22 @@ export const loginLayoutStyle = {
     flex: 1,
   },
   content: {
-    height: "80%",
+    marginTop: 100,
+    height: "100%",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
   footer: {
-    height: "10%",
+    height: isAndroid ? "10%" : "15%",
     backgroundColor: "#4f69c6",
     justifyContent: "center",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+  },
+  footerText: {
+    fontSize: 15,
+    color: "white",
   },
 };
 
@@ -38,7 +47,28 @@ export const commonHeaderStyle = {
   headerTitleStyle: {
     fontWeight: "bold",
   },
+  // headerLeft: () => (
+  //   <Text style={{ marginLeft: 10 }}>{"    "}</Text> // 여백 추가
+  // ),
 };
+
+export const btnStyle = StyleSheet.create({
+  variant: "outline",
+  colorScheme: "gray",
+  borderColor: "gray.400",
+  borderRadius: 5,
+  width: "40%",
+  height: "50",
+});
+export const btnTextStyle = StyleSheet.create({
+  color: "gray.900",
+  fontWeight: "semibold",
+  fontSize: 16,
+});
+export const btnPressStyle = StyleSheet.create({
+  bg: "gray.200",
+  borderColor: "white",
+});
 
 export const formControlLableBasicStyle = StyleSheet.create({
   label: {

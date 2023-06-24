@@ -6,6 +6,7 @@ import ContentScrollView from "@components/ContentScrollView";
 import axios from "axios";
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";
+import { btnStyle, btnTextStyle } from "../styles";
 function HomeContainer() {
   const navigation = useNavigation();
   const { token } = useSelector((state) => state.login);
@@ -62,15 +63,16 @@ function HomeContainer() {
               ]}
             />
             <Button
-              borderRadius={10}
-              width="40%"
-              h={"50"}
+              {...btnStyle}
               ml={2}
               onPress={mokdonPlanner}
+              _text={{ ...btnTextStyle }}
+              _pressed={{
+                bg: "gray.200",
+                borderColor: "white",
+              }}
             >
-              <Text color={"white"} fontSize={15}>
-                목돈 마련 플래너
-              </Text>
+              목돈 마련 플래너
             </Button>
           </HStack>
           <HStack w="80%" h="300">
@@ -98,20 +100,20 @@ function HomeContainer() {
             <Text fontSize="2xl">통계일부</Text>
           </Center>
 
-          <Center w="80%" h="300" bg="coolGray.100" rounded="md" shadow={3}>
+          {/* <Center w="80%" h="300" bg="coolGray.100" rounded="md" shadow={3}>
             <Text fontSize="2xl">소비탭</Text>
-          </Center>
+          </Center> */}
 
           <Button
-            // bg={"white"}
-            borderRadius={10}
-            width="40%"
-            h={"50"}
+            {...btnStyle}
             onPress={calculate}
+            _text={{ ...btnTextStyle }}
+            _pressed={{
+              bg: "gray.200",
+              borderColor: "white",
+            }}
           >
-            <Text color={"white"} fontSize={14}>
-              연말 정산 예상 계산기
-            </Text>
+            연말 정산 예상 계산기
           </Button>
         </VStack>
       </ContentScrollView>

@@ -23,23 +23,23 @@ function DepositAddContainer({ item, isOnlyOne, bankList }) {
   }, []);
 
   return (
-    <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+    <Box bg="blue.50" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
       <Box w="100%">
         <HStack
-          justifyContent="space-around"
+          justifyContent="space-between"
           alignItems="center"
           mb="5"
           borderRadius="lg"
-          backgroundColor="amber.100"
+          bg={"amber.50"}
         >
-          <Text fontSize="25" color="black">
+          <Text pl="4" fontSize="20" color="black">
             상품 정보 추가
           </Text>
           <IconButton
             icon="delete"
             disabled={isOnlyOne}
             iconColor={"red"}
-            size={40}
+            size={35}
             style={{
               margin: 0,
               padding: 0,
@@ -49,7 +49,7 @@ function DepositAddContainer({ item, isOnlyOne, bankList }) {
         </HStack>
         <InputRadioComponent
           name="depositType"
-          formControlProps={{ mb: "8", isDisabled: true }}
+          formControlProps={{ mt: "3", mb: "5", isDisabled: true }}
           formControlLabelProps={{
             text: "상품 선택",
           }}
