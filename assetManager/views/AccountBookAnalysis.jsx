@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Dimensions } from "react-native";
+import { View, Text, Dimensions, ScrollView } from "react-native";
 import {
   LineChart,
   BarChart,
@@ -25,60 +25,69 @@ function AccountBookAnalysis({ route }) {
     useShadowColorFromDataset: false, // optional
   };
 
+  // console.log("아이템 리스트 : " + JSON.stringify(itemList));
+
+  // withdraw 속성의 총합 계산
+  const totalWithdraw = itemList.reduce(
+    (total, item) => total + item.withdraw,
+    0
+  );
+
+  // 카테고리별 지출 계산
+  const categoryExpenses = {};
+  itemList.map((item) => {
+    if (categoryExpenses[item.category]) {
+      categoryExpenses[item.category] += item.withdraw;
+    } else {
+      categoryExpenses[item.category] = item.withdraw;
+    }
+  });
+
+  // 카테고리별 비율 계산
+  const categoryExpensesPercentage = {};
+  Object.keys(categoryExpenses).map((category) => {
+    categoryExpensesPercentage[category] =
+      (categoryExpenses[category] / totalWithdraw) * 100;
+  });
+
+  const data = Object.keys(categoryExpensesPercentage)
+    .filter((category) => categoryExpensesPercentage[category] !== 0) // 비율이 0인 항목 필터링
+    .map((category) => {
+      return {
+        name: category,
+        population: categoryExpensesPercentage[category],
+        color: getRandomColor(),
+        legendFontColor: "#7F7F7F",
+        legendFontSize: 15,
+      };
+    });
+
+  function getRandomColor() {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
   return (
-    <View>
+    <ScrollView>
       <Text>분석 페이지!</Text>
       <Text>{currentMonth}월</Text>
-      {itemList.map((item, index) => {
-        return <Text key={index}>{item.category}</Text>;
-      })}
-      <View>
-        <Text>Bezier Line Chart</Text>
-        <LineChart
-          data={{
-            labels: ["January", "February", "March", "April", "May", "June"],
-            datasets: [
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                ],
-              },
-            ],
-          }}
-          width={Dimensions.get("window").width} // from react-native
-          height={220}
-          yAxisLabel="$"
-          yAxisSuffix="k"
-          yAxisInterval={1} // optional, defaults to 1
-          chartConfig={{
-            backgroundColor: "#e26a00",
-            backgroundGradientFrom: "#fb8c00",
-            backgroundGradientTo: "#ffa726",
-            decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-            propsForDots: {
-              r: "6",
-              strokeWidth: "2",
-              stroke: "#ffa726",
-            },
-          }}
-          bezier
-          style={{
-            marginVertical: 8,
-            borderRadius: 16,
-          }}
-        />
-      </View>
-    </View>
+
+      <PieChart
+        data={data}
+        width={screenWidth}
+        height={275}
+        chartConfig={chartConfig}
+        accessor={"population"}
+        backgroundColor={"transparent"}
+        paddingLeft={"15"}
+        center={[10, 10]}
+        legendPosition={"bottom"}
+      />
+    </ScrollView>
   );
 }
 

@@ -38,7 +38,6 @@ function CategoryModal({
     }
   };
   const imageData = [
-    require("../assets/gift.png"),
     require("../assets/pencil.png"),
     require("../assets/bus.png"),
     require("../assets/finance.png"),
@@ -62,6 +61,7 @@ function CategoryModal({
     require("../assets/donate.png"),
     require("../assets/pay.png"),
     require("../assets/money.png"),
+    require("../assets/etc.png"),
     // ...
   ];
 
