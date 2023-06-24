@@ -45,10 +45,10 @@ function HomeContainer() {
                     { title: "예적금", key: "AddDeposit" },
                     { title: "부동산", key: "AddApt" },
                     { title: "자동차", key: "AddCar" },
-                    { title: "금", key: "AddGold" },
-                    { title: "외환", key: "AddExchange" },
                     { title: "주식", key: "AddStock" },
                     { title: "코인", key: "AddCoin" },
+                    { title: "금", key: "AddGold" },
+                    { title: "외환", key: "AddExchange" },
                   ],
                 },
                 {
