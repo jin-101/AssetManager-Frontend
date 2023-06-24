@@ -28,13 +28,20 @@ import {
   StockCRUDpage,
   AccountBookAddPage,
   CashReceiptUpload,
+  CurrencyGraphPage,
+  GoldGraphPage,
+  DepositUpdate,
+  SavingsUpdate,
+  CarUpdate,
+  CarService,
+  CurrencyGraphPage
 } from "@views";
 import CalculatePage from "./CalculatePage";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
   const { token } = useSelector((state) => state.login);
-  // console.log(token);
+
   return (
     <Stack.Navigator>
       {token !== "" ? (
@@ -138,15 +145,49 @@ function RootPages() {
             component={DepositCrudPage}
             options={{ ...commonHeaderStyle, title: "예적금 보유내역" }}
           />
+          {/* 예금내역 수정 */}
+          <Stack.Screen
+            name="depositUpdate"
+            component={DepositUpdate}
+            options={{ ...commonHeaderStyle, title: "예금내역 수정" }}
+          />
+          {/* 적금내역 수정 */}
+          <Stack.Screen
+            name="savingsUpdate"
+            component={SavingsUpdate}
+            options={{ ...commonHeaderStyle, title: "적금내역 수정" }}
+          />
           <Stack.Screen
             name="carCrud"
             component={CarCrudPage}
             options={{ ...commonHeaderStyle, title: "자동차 보유내역" }}
           />
+          {/* 차내역 수정 */}
+          <Stack.Screen
+            name="carUpdate"
+            component={CarUpdate}
+            options={{ ...commonHeaderStyle, title: "차 내역 수정" }}
+          />
+          {/* 차 서비스 */}
+          <Stack.Screen
+            name="carService"
+            component={CarService}
+            options={{ ...commonHeaderStyle, title: "차 서비스" }}
+          />
           <Stack.Screen
             name="stockCrud"
             component={StockCRUDpage}
             options={{ ...commonHeaderStyle, title: "주식잔고" }}
+          />
+          <Stack.Screen
+            name="currencyGraphPage"
+            component={CurrencyGraphPage}
+            options={{ ...commonHeaderStyle, title: "외화서비스" }}
+          />
+          <Stack.Screen
+            name="GoldGraphPage"
+            component={GoldGraphPage}
+            options={{ ...commonHeaderStyle, title: "금서비스" }}
           />
         </>
       ) : (

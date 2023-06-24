@@ -28,15 +28,16 @@ import LoanInput from "../components/LoanInput";
 
 function AptAddPage(props) {
   const { token } = useSelector((state) => state.login);
+
   // 0. 입력값 초기화 함수
   const resetAll = () => {
     setAptName("");
     setNetLeasableArea("");
     setPurchasePrice("");
     //setPurchaseDate("");
-    setLoanAmount("");
-    setRate("");
-    setMaturityDate("");
+    // setLoanAmount("");
+    // setRate("");
+    // setMaturityDate("");
   };
 
   // 0. 로딩 페이지를 이용하기 위한 useState
@@ -177,6 +178,9 @@ function AptAddPage(props) {
   // 7. 추가 버튼
   const handleSubmit = () => {
     let data = {
+      sido: sido,
+      gu: gu,
+      dong: dong,
       aptName: aptName,
       netLeasableArea: netLeasableArea,
       purchasePrice: purchasePrice,
@@ -225,7 +229,7 @@ function AptAddPage(props) {
         console.log(`Error Msg : ${err}`);
       });
     // 입력값 초기화
-    resetAll();
+    //resetAll();
   };
 
   if (isLoading) return <Loading />;
@@ -241,27 +245,9 @@ function AptAddPage(props) {
               <FormControl.Label>시/도</FormControl.Label>
               {/* AptSidoSelect 컴포넌트로 분리하고 싶은 부분 */}
               <View style={styles.container}>
-                {/* <SelectComponent
-                  isVertical={true}
-                  formControlProps={{ marginBottom: 10 }}
-                  formControlLabelProps={{
-                    text: "제조사 조회",
-                    fontSize: 15,
-                    fontWeight: "normal",
-                    color: "black",
-                  }}
-                  formControlHelperProps={{
-                    text: "소유차량의 제조사를 선택하세요.",
-                  }}
-                  selectItem={companyList}
-                  value={carCompany}
-                  dispatchF={carCompanyUpdate}
-                /> */}
                 <Select
                   selectedValue={sido}
                   onValueChange={handlePickerChange}
-                  // selectedValue={sido}
-                  // onValueChange={handleSido}
                   style={styles.picker}
                   itemStyle={styles.pickerItem}
                 >
@@ -441,15 +427,6 @@ function AptAddPage(props) {
             md: "0",
           }}
         >
-          {/* 초기화 버튼 필요 없을 듯 
-              <Button
-                size="lg"
-                variant="subtle"
-                colorScheme="secondary"
-                onPress={handleReset}
-              >
-                초기화
-              </Button> */}
           <Button
             width={"80%"} // 버튼 너비
             size="lg"
@@ -498,19 +475,5 @@ const styles = StyleSheet.create({
     color: "black",
   },
 });
-
-// 가격표시 코드 (3자리마다 콤마 넣기) => onChangeText={(price) => setPrice(inputPriceFormat(price))}
-const inputPriceFormat = (str) => {
-  //console.log("s", str);
-  const comma = (str) => {
-    str = String(str);
-    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
-  };
-  const uncomma = (str) => {
-    str = String(str);
-    return str.replace(/[^\d]+/g, "");
-  };
-  return comma(uncomma(str));
-};
 
 export default AptAddPage;

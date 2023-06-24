@@ -18,10 +18,17 @@ import AccountBookAddPage from "@views/AccountBookAddPage";
 import MokdonPlanner from "@views/MokdonPlanner";
 import UserInfoPage from "@views/UserInfoPage";
 import DepositCrudPage from "@views/crudPage/DepositCrudPage";
+import DepositUpdate from "@views/crudPage/DepositUpdate";
+import SavingsUpdate from "@views/crudPage/SavingsUpdate";
+import CarUpdate from "@views/crudPage/CarUpdate";
+import CarService from "@views/crudPage/CarService";
 import CarCrudPage from "@views/crudPage/CarCrudPage";
 import StockCRUDpage from "@views/crudPage/StockCRUDpage";
 import CalculatePage from "@views/CalculatePage";
 import CashReceiptUpload from "@views/CashReceiptUpload";
+import CurrencyGraphPage from "@views/CurrencyGraphPage";
+import GoldGraphPage from "@views/GoldGraphPage";
+
 
 export {
   Login,
@@ -44,8 +51,14 @@ export {
   MokdonPlanner,
   UserInfoPage,
   DepositCrudPage,
+  DepositUpdate,
+  SavingsUpdate,
+  CarUpdate,
+  CarService,
   CarCrudPage,
   StockCRUDpage,
   CalculatePage,
   CashReceiptUpload,
+  CurrencyGraphPage,
+  GoldGraphPage
 };
