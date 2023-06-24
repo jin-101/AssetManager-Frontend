@@ -36,13 +36,18 @@ import {
   CarService,
   CalculatePage,
 } from "@views";
+// import CustomHeader from "../components/CustomHeader";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
   const { token } = useSelector((state) => state.login);
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    // screenOptions={{
+    //   header: () => <CustomHeader />,
+    // }}
+    >
       {token !== "" ? (
         <>
           {/*  메인 페이지 */}
