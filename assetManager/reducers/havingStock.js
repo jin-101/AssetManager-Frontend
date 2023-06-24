@@ -1,6 +1,6 @@
 import {HAVINGSTOCK_UPDATE} from "../constants"
 
-const havingStocks =[2,5];
+const havingStocks =[];
 
 export default function havingStockUpdate(state=havingStocks,action) {
     switch (action.type) {
