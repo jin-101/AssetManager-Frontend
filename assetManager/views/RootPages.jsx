@@ -28,14 +28,14 @@ import {
   StockCRUDpage,
   AccountBookAddPage,
   CashReceiptUpload,
-  CurrencyGraphPage,
   GoldGraphPage,
   DepositUpdate,
   SavingsUpdate,
   CarUpdate,
   CarService,
   StockCRUDpageUpdate,
-  CalculatePage
+  CalculatePage,
+  CurrencyGraphPage,
 } from "@views";
 // import CustomHeader from "../components/CustomHeader";
 

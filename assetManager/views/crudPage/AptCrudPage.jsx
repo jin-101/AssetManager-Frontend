@@ -27,6 +27,12 @@ function AptCrudPage({ parentLoading }) {
         console.log(err);
       });
   }, []);
+
+  const updateOnPress = () => {
+    //navigation.navigate("depositUpdate");
+  };
+  const serviceOnPress = () => {};
+
   return (
     <View bgColor={"white"} w={"90%"} borderRadius={20}>
       <AssetSurmary
@@ -37,8 +43,8 @@ function AptCrudPage({ parentLoading }) {
           { title: "매입가", key: "purchasePrice", unit: "원", isPrice: true },
           { title: "수익률", key: "rateOfReturn" },
         ]}
-        onPressUpdate={() => {}}
-        onPressAdditional={() => {}}
+        updateBtn={{ title: "내역수정", onPress: updateOnPress }}
+        serviceBtn={{ title: "서비스??", onPress: serviceOnPress }}
       />
     </View>
   );
