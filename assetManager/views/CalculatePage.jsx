@@ -9,11 +9,8 @@ import {
   Stack,
   Text,
   PresenceTransition,
-  Icon,
-  ArrowBackIcon,
-  Image,
 } from "native-base";
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import React, { useState, useEffect } from "react";
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";
@@ -21,6 +18,7 @@ import ContentScrollView from "@components/ContentScrollView";
 import Counter from "../components/Counter";
 import InputTextComponent from "../components/InputTextComponent";
 import InputRadioComponent from "../components/InputRadioComponent";
+import { btnStyle, btnTextStyle } from "../styles";
 
 function CalculatePage(props) {
   const { token } = useSelector((state) => state.login);
@@ -54,10 +52,12 @@ function CalculatePage(props) {
   const update = () => {
     setCalculateUpdate(!calculateUpdate);
   };
+  // 등록시 axios로 데이터 보내기
   const register = () => {
     console.log(data);
   };
 
+  // 각각의 상태값 변경
   const onChangeValue = (value, id, name) => {
     setData((prev) => ({
       ...prev,
@@ -65,6 +65,7 @@ function CalculatePage(props) {
     }));
   };
 
+  //count관련 상태값 변경을 위한 매개함수
   const countOnChange = (sign, name) => {
     let newCount;
     if (sign === "plus") {
@@ -75,6 +76,7 @@ function CalculatePage(props) {
     onChangeValue(newCount, "", name);
   };
 
+  //수정-등록 버튼
   const updateOrSubmitButton = () => {
     return (
       <Center>
@@ -94,6 +96,7 @@ function CalculatePage(props) {
     );
   };
 
+  //처음 시작시 데이터 받아오기
   useEffect(() => {
     //    axios({
     //      url: `${apiPath}/`,
@@ -104,6 +107,8 @@ function CalculatePage(props) {
     //    }).then((res) => {
     //      setData(res.data);
     //    });
+
+    //모의 데이터
     setData({
       salary: 36000000,
       nonTaxIncome: 1200000,
@@ -119,6 +124,7 @@ function CalculatePage(props) {
       oneParent: 1,
     });
   }, []);
+
   console.log(data);
 
   return (
@@ -133,8 +139,14 @@ function CalculatePage(props) {
         )}
         <Box mt={5} mb={5} w={"90%"}>
           <Box alignItems={"center"}>
-            <Button w={"60%"} size="lg" onPress={accountBookNavi} mb={2.5}>
-              가계부로 이동
+            <Button
+              {...btnStyle}
+              w={"60%"}
+              size="lg"
+              onPress={accountBookNavi}
+              mb={2.5}
+            >
+              <Text {...btnTextStyle}>가계부로 이동</Text>
             </Button>
             <Text>가계부 입력시 더 정확하게 계산할 수 있습니다.</Text>
           </Box>
@@ -143,12 +155,12 @@ function CalculatePage(props) {
         <Box mt={5} mb={5} w={"90%"}>
           <Box alignItems={"center"}>
             {btnIsVisible ? (
-              <Button w={"60%"} size="lg" onPress={buttonControl}>
-                숨기기
+              <Button {...btnStyle} w={"60%"} size="lg" onPress={buttonControl}>
+                <Text {...btnTextStyle}>숨기기</Text>
               </Button>
             ) : (
-              <Button w={"60%"} size="lg" onPress={buttonControl}>
-                세부 정보 입력하기
+              <Button {...btnStyle} w={"60%"} size="lg" onPress={buttonControl}>
+                <Text {...btnTextStyle}>세부 정보 입력하기</Text>
               </Button>
             )}
           </Box>
