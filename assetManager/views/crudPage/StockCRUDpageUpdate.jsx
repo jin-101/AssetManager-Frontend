@@ -10,16 +10,19 @@ import {
   Center,
   View,
 } from "native-base";
-import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { apiPath } from "../../services";
+import {havingStockUpdate} from "../../action"
 
 function StockCRUDpageUpdate({ parentLoading }) {
   const { token } = useSelector((state) => state.login);
   const havingStock =useSelector((state)=>state.havingStockUpdate);
+  const dispatch = useDispatch();
   const [stocks, setStocks] = useState(null);
   const [avergeGain, setAvergeGain] = useState(0);
+
+  const onPress = ()=> (console.log(havingStock));
 
   useEffect(() => {
     const fetchStock = async () => {
@@ -29,6 +32,13 @@ function StockCRUDpageUpdate({ parentLoading }) {
         });
         setStocks(response.data);
         parentLoading();
+
+        for(let i=0;i<stocks.length;i++){
+          dispatch(havingStockUpdate(stocks[i]));
+        }
+      
+
+        //평균수익률 로직
         let totalInvestedAmount = 0;
         let gainMutipleByInvestedAmount = 0;
         for (let i = 0; i < response.data.length; i++) {
@@ -37,6 +47,8 @@ function StockCRUDpageUpdate({ parentLoading }) {
             response.data[i]["investedAmount"] * response.data[i]["gain"];
         }
         setAvergeGain(gainMutipleByInvestedAmount / totalInvestedAmount);
+
+
       } catch (e) {
         console.log(e);
       }
@@ -47,9 +59,6 @@ function StockCRUDpageUpdate({ parentLoading }) {
   return (
     <View bgColor={"white"} w={"90%"} borderRadius={20}>
       <Box mt="3">
-        <Center _text={{ fontSize: "lg", fontWeight: "bold" }}>
-          {havingStock}
-        </Center>
         <Center _text={{ fontSize: "lg", fontWeight: "bold" }}>
           평균수익률Update:{avergeGain}
         </Center>
@@ -117,7 +126,7 @@ function StockCRUDpageUpdate({ parentLoading }) {
           </Box>
         ))}
         <HStack alignSelf="center" mb="2">
-          <Button mt="5" mx="1">
+          <Button mt="5" mx="1" onPress={onPress}>
             잔고수정
           </Button>
           <Button mt="5" mx="1">

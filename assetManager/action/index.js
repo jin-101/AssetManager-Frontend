@@ -55,7 +55,7 @@ export {
   resetAvgRate,
   loanInitialize,
   addLoanValue,
-  havingStockUpdate
+  havingStockUpdate,
   userCarInitialize,
   userCarUpdate,
   userCarRemove,
