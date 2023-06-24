@@ -20,6 +20,7 @@ import { getAvgRate } from "../action/avgRate";
 import Loading from "../components/Loading";
 import { bankType } from "../utils";
 import { MaterialIcons } from "@expo/vector-icons";
+import { btnStyle, btnTextStyle } from "../styles";
 
 function MokdonPlanner(props) {
   const [isLoading, setIsLoading] = useState(false);
@@ -182,14 +183,26 @@ function MokdonPlanner(props) {
   return (
     <ScrollView mt="10" mb="10">
       <HStack space={5} justifyContent="center">
-        <Button width={"40%"} size="lg" variant="outline" onPress={mokdonBtn}>
+        <Button
+          {...btnStyle}
+          borderColor="info.400"
+          _text={{ ...btnTextStyle, color: "info.400" }}
+          _pressed={{
+            bg: "info.200",
+            borderColor: "white",
+          }}
+          onPress={mokdonBtn}
+        >
           목돈 마련 플래너
         </Button>
         <Button
-          width={"40%"}
-          size="lg"
-          variant="outline"
-          colorScheme="secondary"
+          {...btnStyle}
+          borderColor="secondary.400"
+          _text={{ ...btnTextStyle, color: "secondary.400" }}
+          _pressed={{
+            bg: "secondary.200",
+            borderColor: "white",
+          }}
           onPress={calculatorBtn}
         >
           예적금 이자 계산기

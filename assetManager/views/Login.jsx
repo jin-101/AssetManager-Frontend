@@ -21,6 +21,7 @@ import { loginStateUpdate } from "../action";
 import { loginLayoutStyle } from "../styles";
 import { signinInitialize } from "../action/signin";
 import Loading from "@components/Loading";
+import ContentScrollView from "@components/ContentScrollView";
 
 const style = StyleSheet.create(loginLayoutStyle);
 
@@ -97,111 +98,133 @@ function Login() {
 
   if (isLoading) return <Loading />;
   return (
-    <View style={style.container}>
-      <View style={style.header}></View>
-      <View style={style.content}>
-        <Box w="100%">
-          <Box space={4} mb="10" alignItems="center">
-            <Text fontSize={40}>Welcome</Text>
-          </Box>
-          <Box
-            borderWidth="1"
-            borderColor="coolGray.300"
-            bg="coolGray.100"
-            borderRadius="30"
-            height={400}
-            w="90%"
-            justifyContent="center"
-            maxW="400px"
-            mx="auto"
-            mb="10"
-          >
-            <Stack alignItems="center" space={4}>
-              <Input
-                value={userId}
-                onChangeText={(userId) => setUserId(userId)}
-                bg="white"
-                size="xl"
-                mt="5"
-                w={{
-                  base: "90%",
-                  md: "25%",
-                }}
-                InputLeftElement={
-                  <Icon
-                    as={<MaterialIcons name="person" />}
-                    size={5}
-                    ml="2"
-                    color="muted.400"
-                  />
-                }
-                placeholder="Id"
-              />
-              <Input
-                value={userPw}
-                onChangeText={(userPw) => setUserPw(userPw)}
-                bg="white"
-                w={{
-                  base: "90%",
-                  md: "25%",
-                }}
-                type={show ? "text" : "password"}
-                InputRightElement={
-                  <Pressable onPress={() => setShow(!show)}>
+    <>
+      <View style={style.container}>
+        <ContentScrollView>
+          <Box w="100%" mt={20}>
+            <Box space={4} mb="10" alignItems="center">
+              <Text fontSize={40}>Welcome</Text>
+            </Box>
+            <Box
+              bg="blue.100"
+              borderRadius="30"
+              height={400}
+              w="90%"
+              justifyContent="center"
+              maxW="400px"
+              mx="auto"
+              mb="10"
+            >
+              <Stack alignItems="center" space={4}>
+                <Input
+                  value={userId}
+                  onChangeText={(userId) => setUserId(userId)}
+                  bg="white"
+                  size="xl"
+                  mt="5"
+                  w={{
+                    base: "90%",
+                    md: "25%",
+                  }}
+                  h={{
+                    base: 16,
+                  }}
+                  InputLeftElement={
                     <Icon
-                      as={
-                        <MaterialIcons
-                          name={show ? "visibility" : "visibility-off"}
-                        />
-                      }
+                      as={<MaterialIcons name="person" />}
                       size={5}
-                      mr="2"
+                      ml="2"
                       color="muted.400"
                     />
-                  </Pressable>
-                }
-                placeholder="Password"
-              />
-              <Stack
-                mb="2.5"
-                mt="5"
-                direction={{
-                  base: "row",
-                  md: "row",
-                }}
-                space={5}
-              >
-                <Button size="md" colorScheme="primary" onPress={signUpBtn}>
-                  회원가입
-                </Button>
-                <Button size="md" colorScheme="primary" onPress={loginBtn}>
-                  로그인
-                </Button>
+                  }
+                  placeholder="Id"
+                />
+                <Input
+                  value={userPw}
+                  onChangeText={(userPw) => setUserPw(userPw)}
+                  bg="white"
+                  size="xl"
+                  w={{
+                    base: "90%",
+                    md: "25%",
+                  }}
+                  h={{
+                    base: 16,
+                  }}
+                  type={show ? "text" : "password"}
+                  InputRightElement={
+                    <Pressable onPress={() => setShow(!show)}>
+                      <Icon
+                        as={
+                          <MaterialIcons
+                            name={show ? "visibility" : "visibility-off"}
+                          />
+                        }
+                        size={5}
+                        mr="2"
+                        color="muted.400"
+                      />
+                    </Pressable>
+                  }
+                  placeholder="Password"
+                />
+                <Stack
+                  mb="2.5"
+                  mt="5"
+                  direction={{
+                    base: "row",
+                    md: "row",
+                  }}
+                  space={5}
+                >
+                  <Button
+                    style={{ width: "30%" }}
+                    colorScheme="primary"
+                    onPress={signUpBtn}
+                  >
+                    회원가입
+                  </Button>
+                  <Button
+                    style={{ width: "30%" }}
+                    colorScheme="primary"
+                    onPress={loginBtn}
+                  >
+                    로그인
+                  </Button>
+                </Stack>
+                <HStack mt="3" alignItems="center">
+                  <Button size="md" variant="ghost" onPress={searchId}>
+                    <Text color={"black"} fontSize={15}>
+                      아이디 찾기
+                    </Text>
+                  </Button>
+                  <Text color={"black"} fontSize={15}>
+                    {"/"}
+                  </Text>
+                  <Button size="md" variant="ghost" onPress={searchPw}>
+                    <Text color={"black"} fontSize={15}>
+                      비밀번호 찾기
+                    </Text>
+                  </Button>
+                </HStack>
               </Stack>
-              <HStack mt="3" alignItems="center">
-                <Button size="md" variant="ghost" onPress={searchId}>
-                  아이디 찾기
-                </Button>
-                <Text>{"/"}</Text>
-                <Button size="md" variant="ghost" onPress={searchPw}>
-                  비밀번호 찾기
-                </Button>
-              </HStack>
-            </Stack>
+            </Box>
           </Box>
-        </Box>
-        <Box mt="2">
-          <Button size="lg" variant="ghost" onPress={guestBtn}>
-            비회원 시세조회
-          </Button>
-        </Box>
+          <Box mt="2">
+            {/* <Button size="lg" variant="ghost" onPress={guestBtn}>
+              <Text color={"black"} fontSize={15}>
+                비회원 시세조회
+              </Text>
+            </Button> */}
+          </Box>
+        </ContentScrollView>
+        <View style={style.footer}>
+          <Stack alignItems="center">
+            <Text style={style.footerText}>Asset Manager</Text>
+          </Stack>
+        </View>
       </View>
-      <View style={style.footer}>
-        <Stack alignItems="center">
-          <Text color="white">Asset Manager</Text>
-        </Stack>
-      </View>
-    </View>
+    </>
   );
 }
 

@@ -15,6 +15,7 @@ import { loginInitialize, resetAvgRate } from "../action";
 import axios from "axios";
 import { apiPath } from "../services";
 import { delay } from "../utils";
+import { btnStyle, btnTextStyle } from "../styles";
 
 // 데이터 받아올 형식,,, 추후 삭제
 const tempData = [
@@ -247,18 +248,22 @@ function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
             }}
           >
             <Button
-              bg="yellow.500"
+              {...btnStyle}
+              borderColor="warning.400"
               width={150}
               height={50}
               marginRight={5}
-              variant="subtle"
-              borderRadius="lg"
               onPress={basicInfoChangeBtn}
+              _text={{
+                ...btnTextStyle,
+                color: "warning.400",
+              }}
               _pressed={{
-                bg: "yellow.400",
+                bg: "warning.100",
+                borderColor: "white",
               }}
             >
-              <Text style={{ color: "white", fontSize: 20 }}>기본정보변경</Text>
+              기본정보변경
             </Button>
           </View>
           <View
@@ -268,18 +273,22 @@ function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
             }}
           >
             <Button
-              bg="danger.700"
+              {...btnStyle}
+              borderColor="danger.400"
               width={150}
               height={50}
               marginRight={5}
-              variant="subtle"
-              borderRadius="lg"
               onPress={userDeleteBtn}
+              _text={{
+                ...btnTextStyle,
+                color: "danger.400",
+              }}
               _pressed={{
-                bg: "danger.600",
+                bg: "danger.100",
+                borderColor: "white",
               }}
             >
-              <Text style={{ color: "white", fontSize: 20 }}>회원탈퇴</Text>
+              회원탈퇴
             </Button>
           </View>
         </HStack>

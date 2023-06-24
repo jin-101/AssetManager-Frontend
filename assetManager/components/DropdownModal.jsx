@@ -8,22 +8,31 @@ import {
   Text,
   View,
   useDisclose,
+  PresenceTransition,
 } from "native-base";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { btnPressStyle, btnStyle, btnTextStyle } from "../styles";
 
 function DropdownModal({ content }) {
   const navigation = useNavigation();
   const { isOpen, onOpen, onClose } = useDisclose();
   const dropdownInit = {};
-  console.log(content);
   content.map((el, i) => {
     dropdownInit["item" + i] = false;
   });
   const [dropdown, setDropdown] = useState(dropdownInit);
   return (
     <>
-      <Button size="md" colorScheme="primary" onPress={onOpen}>
+      <Button
+        {...btnStyle}
+        onPress={onOpen}
+        _text={{ ...btnTextStyle }}
+        _pressed={{
+          bg: "gray.200",
+          borderColor: "white",
+        }}
+      >
         자산 / 부채 추가하기
       </Button>
       <Actionsheet
@@ -45,6 +54,7 @@ function DropdownModal({ content }) {
               <Actionsheet.Item
                 w="90%"
                 // backgroundColor="red.100"
+                _pressed={{ ...btnPressStyle }}
                 onTouchEnd={() => {
                   setDropdown({
                     ...dropdownInit,
@@ -74,34 +84,44 @@ function DropdownModal({ content }) {
               </Actionsheet.Item>
               <>
                 <Divider w="90%" />
-                {dropdown["item" + i] ? (
-                  <Box w="90%" key={i}>
-                    {el?.list?.map((li, j) => (
-                      <Box
-                        key={j}
-                        w="100%"
-                        h={60}
-                        px={2}
-                        justifyContent="center"
-                        // backgroundColor="yellow.100"
-                        onTouchEnd={() => {
-                          setDropdown(dropdownInit);
-                          onClose();
-                          navigation.navigate(li.key); //page 이동 (App.js에서 mapping)
-                        }}
-                      >
-                        <Actionsheet.Item
+                {dropdown["item" + i] && (
+                  <PresenceTransition
+                    visible={dropdown["item" + i]}
+                    initial={{
+                      opacity: 0,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      transition: {
+                        duration: 250,
+                      },
+                    }}
+                    style={{ width: "100%", alignItems: "center" }}
+                  >
+                    <Box w="90%" key={i}>
+                      {el?.list?.map((li, j) => (
+                        <Box
                           key={j}
-                          // backgroundColor="blue.100"
-                          alignItems="center"
+                          w="100%"
+                          h={60}
+                          px={2}
+                          justifyContent="center"
+                          _pressed={{ ...btnPressStyle }}
+                          onTouchEnd={() => {
+                            setDropdown(dropdownInit);
+                            onClose();
+                            navigation.navigate(li.key); //page 이동 (App.js에서 mapping)
+                          }}
                         >
-                          <Text fontSize="xl">{li.title}</Text>
-                        </Actionsheet.Item>
-                      </Box>
-                    ))}
-                    <Divider w="100%" />
-                  </Box>
-                ) : undefined}
+                          <Actionsheet.Item key={j} alignItems="center">
+                            <Text fontSize="xl">{li.title}</Text>
+                          </Actionsheet.Item>
+                        </Box>
+                      ))}
+                      <Divider w="100%" />
+                    </Box>
+                  </PresenceTransition>
+                )}
               </>
             </View>
           ))}

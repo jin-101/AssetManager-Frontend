@@ -27,6 +27,8 @@ import { getAvgRate, resetAvgRate } from "./avgRate";
 
 import { loanInitialize, addLoanValue } from "./loan";
 
+import { userCarInitialize, userCarUpdate, userCarRemove } from "./userCar";
+
 export {
   loginStateUpdate,
   loginInitialize,
@@ -53,4 +55,7 @@ export {
   resetAvgRate,
   loanInitialize,
   addLoanValue,
+  userCarInitialize,
+  userCarUpdate,
+  userCarRemove,
 };
