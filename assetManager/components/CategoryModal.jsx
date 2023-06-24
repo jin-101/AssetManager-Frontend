@@ -54,7 +54,7 @@ function CategoryModal({
     require("../assets/medical.png"),
 
     require("../assets/eat.png"),
-    require("../assets/transport.png"),
+    require("../assets/phone.png"),
     require("../assets/house.png"),
     require("../assets/coffee.png"),
 
