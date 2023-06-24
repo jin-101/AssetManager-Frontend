@@ -41,12 +41,25 @@ function AptCrudPage({ parentLoading }) {
         textListInfo={[
           { title: "아파트명", key: "aptName" },
           { title: "매입시기", key: "purchaseDate" },
-          { title: "현재가", key: "currentPrice", unit: "원", isPrice: true },
-          { title: "매입가", key: "purchasePrice", unit: "원", isPrice: true },
+          {
+            title: "매입가격",
+            key: "purchasePrice",
+            unit: "원",
+            isPrice: true,
+          },
+          {
+            title: "최근 거래가격",
+            key: "currentPrice",
+            unit: "원",
+            isPrice: true,
+          },
           { title: "수익률", key: "rateOfReturn" },
         ]}
         updateBtn={{ title: "내역수정", onPress: updateOnPress }}
-        serviceBtn={{ title: "서비스??", onPress: serviceOnPress }}
+        serviceBtn={{
+          title: "우리동네 평당가 순위(DTI, DSR 계산??)",
+          onPress: serviceOnPress,
+        }}
       />
     </View>
   );
