@@ -34,7 +34,7 @@ import {
   SavingsUpdate,
   CarUpdate,
   CarService,
-  CurrencyGraphPage
+  StockCRUDpageUpdate
 } from "@views";
 import CalculatePage from "./CalculatePage";
 
@@ -176,7 +176,7 @@ function RootPages() {
           />
           <Stack.Screen
             name="stockCrud"
-            component={StockCRUDpage}
+            component={StockCRUDpageUpdate}
             options={{ ...commonHeaderStyle, title: "주식잔고" }}
           />
           <Stack.Screen

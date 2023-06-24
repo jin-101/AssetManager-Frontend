@@ -11,6 +11,7 @@ import AptCrudPage from "../views/crudPage/AptCrudPage";
 import GoldCrudPage from "../views/crudPage/GoldCrudPage";
 import CurrencyCrudPage from "../views/crudPage/CurrencyCrudPage";
 import Loading from "@components/Loading";
+import StockCRUDpageUpdate from "../views/crudPage/StockCRUDpageUpdate";
 
 const entries = [
   { key: "1", title: "예/적금", naviPath: "depositCrud" },
@@ -78,7 +79,7 @@ function AssetContainer() {
       case "5":
         return <CurrencyCrudPage parentLoading={parentLoading} />;
       case "6":
-        return <StockCRUDpage parentLoading={parentLoading} />;
+        return <StockCRUDpageUpdate parentLoading={parentLoading} />;
       case "7":
         parentLoading();
         return (

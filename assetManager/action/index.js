@@ -17,7 +17,7 @@ import {
 } from "./car";
 // Redeux를 사용할 떄, action 함수
 
-import { stockInputUpdate, stockInputReset } from "./stock";
+import { stockInputUpdate, stockInputReset, havingStockUpdate } from "./stock";
 
 import { currencyInputUpdate, currencyRest } from "./currency";
 
@@ -53,4 +53,5 @@ export {
   resetAvgRate,
   loanInitialize,
   addLoanValue,
+  havingStockUpdate
 };
