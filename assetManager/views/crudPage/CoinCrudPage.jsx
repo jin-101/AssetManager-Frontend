@@ -33,8 +33,10 @@ function CoinCrudPage({ parentLoading }) {
         data={userCoin}
         title={`소유중인 코인 종류 : ${userCoin.length}개`}
         textListInfo={[
+          { title: "코인명", key: "coinName" },
           { title: "현재가", key: "currentPrice", unit: "원", isPrice: true },
-          { title: "매입가", key: "purchasePrice", unit: "원", isPrice: true },
+          { title: "평단가", key: "avgPrice", unit: "원", isPrice: true },
+          { title: "수량", key: "quantity", unit: "개" },
           { title: "수익률", key: "rateOfReturn", unit: "%" },
         ]}
         onPressUpdate={() => {}}
