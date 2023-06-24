@@ -28,13 +28,12 @@ import {
   StockCRUDpage,
   AccountBookAddPage,
   CashReceiptUpload,
-  CurrencyGraphPage,
   GoldGraphPage,
   DepositUpdate,
   SavingsUpdate,
   CarUpdate,
   CarService,
-  CurrencyGraphPage
+  CurrencyGraphPage,
 } from "@views";
 import CalculatePage from "./CalculatePage";
 

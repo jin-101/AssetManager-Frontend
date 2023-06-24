@@ -182,6 +182,8 @@ function AccountBookContainer() {
     );
   };
 
+  const [withdrawTotal, setWithdrawTotal] = useState(calculateWithdrawTotal());
+
   const calculateDepositTotal = () => {
     return itemList.reduce(
       (total, currentItem) => total + currentItem.deposit,
@@ -205,7 +207,11 @@ function AccountBookContainer() {
   const navigation = useNavigation();
 
   const moveToAnalysis = () => {
-    navigation.navigate("AccountBookAnalysis", { itemList, currentMonth });
+    navigation.navigate("AccountBookAnalysis", {
+      itemList,
+      currentMonth,
+      withdrawTotal,
+    });
   };
 
   const moveToAccountUpload = () => {
@@ -392,6 +398,10 @@ function AccountBookContainer() {
               </View>
               <View style={{ marginRight: 10 }}>
                 <Button onPress={moveToCashReceiptUpload}>연말정산</Button>
+              </View>
+              {/* 일단 시험용으로 여기에 작성 나중에 옮겨야 함 */}
+              <View style={{ marginRight: 10 }}>
+                <Button onPress={moveToAnalysis}>분석</Button>
               </View>
             </View>
             <View>
