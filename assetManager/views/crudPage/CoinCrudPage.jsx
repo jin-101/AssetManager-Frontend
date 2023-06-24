@@ -35,7 +35,7 @@ function CoinCrudPage({ parentLoading }) {
         textListInfo={[
           { title: "현재가", key: "currentPrice", unit: "원", isPrice: true },
           { title: "매입가", key: "purchasePrice", unit: "원", isPrice: true },
-          { title: "수익률", key: "rateOfReturn" },
+          { title: "수익률", key: "rateOfReturn", unit: "%" },
         ]}
         onPressUpdate={() => {}}
         onPressAdditional={() => {}}
