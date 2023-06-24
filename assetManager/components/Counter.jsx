@@ -25,13 +25,13 @@ function Counter({
       </Text>
       <HStack alignItems={"center"} justifyContent={"flex-end"}>
         <Pressable ml={5} mr={5} onPress={isDisabled ? () => {} : decrease}>
-          <AntDesign name="minussquareo" size={counterSize} color={color} />
+          <AntDesign name="minuscircleo" size={counterSize} color={color} />
         </Pressable>
         <Text fontSize={counterSize - 4} color={color}>
           {state}
         </Text>
         <Pressable ml={5} mr={5} onPress={isDisabled ? () => {} : increase}>
-          <AntDesign name="plussquareo" size={counterSize} color={color} />
+          <AntDesign name="pluscircleo" size={counterSize} color={color} />
         </Pressable>
       </HStack>
     </HStack>
