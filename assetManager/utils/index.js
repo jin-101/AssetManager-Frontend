@@ -2,6 +2,66 @@
 
 import { Alert } from "react-native";
 
+export const carTaxCalculate = (model, useType, price) => {
+  const tax = {
+    register: price * 0.05,
+    get: price * 0.02,
+  };
+  if (useType === "nonCom") {
+    tax.register = price * 0.02;
+    tax.get = price * 0.02;
+  } else if (useType === "com") {
+    if (carType.T1.includes(model)) {
+      tax.register = 0;
+      tax.get = 0;
+    } else if (carType.T2.includes(model)) {
+      tax.register = price * 0.03;
+      tax.get = price * 0.02;
+    }
+  }
+  return tax;
+};
+export const carType = {
+  T1: [
+    "레이",
+    "모닝",
+    "비스토",
+    "마티즈",
+    "쉐보레 스파크",
+    "티코",
+    "블루온",
+    "아토스",
+    "캐스퍼",
+    "트위지",
+    "알토라팡",
+    "허슬러",
+    "미라",
+    "미라지노",
+    "미라코코아",
+    "코펜",
+    "탄토",
+    "야리스(비츠)",
+    "파쏘",
+    "모코",
+    "N-One",
+  ],
+  T2: [
+    "스타렉스",
+    "스타리아",
+    "쏠라티",
+    "마스터",
+    "이스타나",
+    "프레지오",
+    "서버밴",
+    "아스트로밴",
+    "익스프레스밴",
+    "익스플로러밴",
+    "스프린터",
+    "사바나",
+    "밴",
+  ],
+};
+
 // 금액 처리 세자리 마다(,)
 export const inputPriceFormat = (str) => {
   const comma = (str) => {

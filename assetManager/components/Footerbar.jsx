@@ -34,10 +34,13 @@ function Footerbar() {
       <HStack
         bg="indigo.600"
         h="100%"
+        w={"100%"}
         alignItems="center"
         justifyContent="center"
         safeAreaBottom
         shadow={6}
+        borderTopLeftRadius={30}
+        borderTopRightRadius={30}
       >
         <Pressable
           cursor="pointer"
