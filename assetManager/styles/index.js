@@ -54,6 +54,7 @@ export const commonHeaderStyle = {
 
 export const btnStyle = StyleSheet.create({
   variant: "outline",
+  backgroundColor: "white",
   colorScheme: "gray",
   borderColor: "gray.400",
   borderRadius: 5,

@@ -26,6 +26,7 @@ function DropdownModal({ content }) {
     <>
       <Button
         {...btnStyle}
+        w={"70%"}
         onPress={onOpen}
         _text={{ ...btnTextStyle }}
         _pressed={{
@@ -44,16 +45,9 @@ function DropdownModal({ content }) {
       >
         <Actionsheet.Content>
           {content?.map((el, i) => (
-            <View
-              w="100%"
-              key={el.index}
-              alignItems="center"
-              // backgroundColor="amber.100"
-            >
-              {/* <Divider /> */}
+            <View w="100%" key={el.index} alignItems="center">
               <Actionsheet.Item
                 w="90%"
-                // backgroundColor="red.100"
                 _pressed={{ ...btnPressStyle }}
                 onTouchEnd={() => {
                   setDropdown({
