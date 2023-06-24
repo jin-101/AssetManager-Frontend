@@ -111,15 +111,15 @@ function CalculatePage(props) {
 
   //처음 시작시 데이터 받아오기
   useEffect(() => {
-    //    axios({
-    //      url: `${apiPath}/`,
-    //      method: "GET",
-    //      params: {
-    //        userId: token,
-    //      },
-    //    }).then((res) => {
-    //      setData(res.data);
-    //    });
+    // axios({
+    //   url: `${apiPath}/rest/yearEndTax/saveTaxInformation.do`,
+    //   method: "GET",
+    //   params: {
+    //     userId: token,
+    //   },
+    // }).then((res) => {
+    //   setData(res.data);
+    // });
     //모의 데이터
     // setData({
     //   ...data,
