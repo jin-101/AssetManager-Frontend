@@ -39,6 +39,7 @@ function AssetContainer() {
 
   const parentLoading = () => {
     loadingCount++;
+    console.log(loadingCount);
     if (loadingCount === itemLength) setLoading(false);
   };
 
