@@ -11,6 +11,7 @@ import AptCrudPage from "../views/crudPage/AptCrudPage";
 import GoldCrudPage from "../views/crudPage/GoldCrudPage";
 import CurrencyCrudPage from "../views/crudPage/CurrencyCrudPage";
 import Loading from "@components/Loading";
+import CoinCrudPage from "../views/crudPage/CoinCrudPage";
 
 const entries = [
   { key: "1", title: "예/적금", naviPath: "depositCrud" },
@@ -84,14 +85,8 @@ function AssetContainer() {
       case "6":
         return <StockCRUDpage parentLoading={parentLoading} />;
       case "7":
-        parentLoading();
-        return (
-          <View>
-            <Box>
-              <Text>코인 관련 surmary</Text>
-            </Box>
-          </View>
-        );
+        return <CoinCrudPage parentLoading={parentLoading} />;
+
       // case "8":
       //   return (
       //     <View>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, View, Text } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import axios from "axios";
@@ -58,9 +58,34 @@ function CashReceiptUpload(props) {
       console.log("Error uploading file:", error);
     }
   };
+
+  const [napbuhwangeupseaek, setNapbuhwangeupseaek] = useState(0);
+
+  //콘솔 찍기위해 시험용으로 작성한 엑시오스
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: apiPath + "/rest/yearEndTax/calculateTax.do",
+      data: JSON.stringify({
+        memberId: token,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        setNapbuhwangeupseaek(response.data);
+        console.log("시험용 엑시오스 성공");
+      })
+      .catch((error) => {
+        console.log("시험용 엑시으스 실패 : " + error);
+      });
+  }, []);
+
   return (
     <View>
       <Text>현금영수증 CSV 파일 업로드 페이지</Text>
+      <Text>{napbuhwangeupseaek}</Text>
       <Button title="파일 선택하기" onPress={handleFileSelect} />
       {selectedFile && (
         <View>
