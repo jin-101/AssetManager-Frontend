@@ -30,13 +30,6 @@ function StockCRUDpageUpdate({ parentLoading }) {
         const response = await axios.get(`${apiPath}/stock/stockCrud`, {
           params: { id: token },
         });
-        setStocks(response.data);
-        parentLoading();
-
-        for(let i=0;i<stocks.length;i++){
-          dispatch(havingStockUpdate(stocks[i]));
-        }
-      
 
         //평균수익률 로직
         let totalInvestedAmount = 0;
@@ -46,9 +39,10 @@ function StockCRUDpageUpdate({ parentLoading }) {
           gainMutipleByInvestedAmount +=
             response.data[i]["investedAmount"] * response.data[i]["gain"];
         }
-        setAvergeGain(gainMutipleByInvestedAmount / totalInvestedAmount);
-
-
+        setAvergeGain(gainMutipleByInvestedAmount / totalInvestedAmount);                
+        dispatch(havingStockUpdate(response.data));
+        parentLoading();
+        
       } catch (e) {
         console.log(e);
       }
@@ -62,7 +56,7 @@ function StockCRUDpageUpdate({ parentLoading }) {
         <Center _text={{ fontSize: "lg", fontWeight: "bold" }}>
           평균수익률Update:{avergeGain}
         </Center>
-        {stocks?.map((el, index) => (
+        {havingStock?.map((el, index) => (
           <Box
             key={index}
             borderBottomWidth="1"

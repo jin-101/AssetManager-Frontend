@@ -5,7 +5,7 @@ const havingStocks =[];
 export default function havingStockUpdate(state=havingStocks,action) {
     switch (action.type) {
         case HAVINGSTOCK_UPDATE:
-           return [...state,action.oneStock];
+           return action.stocks;
         default:
            return havingStocks;
     }
