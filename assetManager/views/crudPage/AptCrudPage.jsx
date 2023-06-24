@@ -39,6 +39,8 @@ function AptCrudPage({ parentLoading }) {
         data={userApt}
         title={`소유중인 아파트 : ${userApt.length}채`}
         textListInfo={[
+          { title: "아파트명", key: "aptName" },
+          { title: "매입시기", key: "purchaseDate" },
           { title: "현재가", key: "currentPrice", unit: "원", isPrice: true },
           { title: "매입가", key: "purchasePrice", unit: "원", isPrice: true },
           { title: "수익률", key: "rateOfReturn" },
