@@ -22,7 +22,20 @@ import { btnStyle, btnTextStyle } from "../styles";
 
 function CalculatePage(props) {
   const { token } = useSelector((state) => state.login);
-  const [data, setData] = useState({}); //연말정산 관련 받아온 데이터가 있을 때 담기
+  const [data, setData] = useState({
+    salary: 0,
+    nonTaxIncome: 0,
+    spouse: 0,
+    parents: 0,
+    children: 0,
+    sibling: 0,
+    fosterChildren: 0,
+    lowIncomePeople: 0,
+    oldPeople: 0,
+    disabledPerson: 0,
+    woman: 0,
+    oneParent: 0,
+  }); //연말정산 관련 받아온 데이터가 있을 때 담기
   const [paging, setPaging] = useState(0);
   const maxPage = 2;
   const [btnIsVisible, setBtnIsVisible] = useState(false);
@@ -107,22 +120,22 @@ function CalculatePage(props) {
     //    }).then((res) => {
     //      setData(res.data);
     //    });
-
     //모의 데이터
-    setData({
-      salary: 36000000,
-      nonTaxIncome: 1200000,
-      spouse: 1,
-      parents: 2,
-      children: 1,
-      sibling: 1,
-      fosterChildren: 1,
-      lowIncomePeople: 1,
-      oldPeople: 1,
-      disabledPerson: 1,
-      woman: 1,
-      oneParent: 1,
-    });
+    // setData({
+    //   ...data,
+    //   salary: 36000000,
+    //   nonTaxIncome: 1200000,
+    //   spouse: 1,
+    //   parents: 2,
+    //   children: 1,
+    //   sibling: 1,
+    //   fosterChildren: 1,
+    //   lowIncomePeople: 1,
+    //   oldPeople: 1,
+    //   disabledPerson: 1,
+    //   woman: 1,
+    //   oneParent: 1,
+    // });
   }, []);
 
   console.log(data);
