@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Center, HStack, Stack, Text, VStack } from "native-base";
+import { Box, Button, Stack, Text, VStack } from "native-base";
 import DropdownModal from "@components/DropdownModal";
 import { useNavigation } from "@react-navigation/native";
 import ContentScrollView from "@components/ContentScrollView";
@@ -8,6 +8,7 @@ import { apiPath } from "../services";
 import { useSelector } from "react-redux";
 import { btnStyle, btnTextStyle } from "../styles";
 import { StyleSheet } from "react-native";
+import CustomPieChart from "../components/CustomPieChart";
 
 const totalStyle = StyleSheet.create({
   outBox: {
@@ -30,6 +31,17 @@ const totalStyle = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+//데이터 받아온 것 가정
+const assetData = {
+  totalDepositAndSavings: 42200000,
+  totalApt: 1610000000,
+  totalCar: 310862153,
+  totalGoldAndExchange: 167929312,
+  totalStock: 265469710,
+  totalCoin: 4416844461,
+  totalAccountBalance: 200207,
+};
 
 function HomeContainer() {
   const navigation = useNavigation();
@@ -65,7 +77,7 @@ function HomeContainer() {
             </Text>
           </Box>
         ) : (
-          <Box>
+          <Box w="60%">
             <Text fontSize="xl" fontWeight={"bold"}>
               {title}
             </Text>
@@ -75,10 +87,27 @@ function HomeContainer() {
       </Box>
     );
   };
+  console.log(Number(totalAsset.replaceAll(",", "")));
   return (
     <>
       <ContentScrollView>
         <VStack space={10} alignItems="center" mt="10" mb="10">
+          <Stack {...totalStyle.outBox}>
+            {totalBox({
+              boxStyle: { ...totalStyle.inBox, bg: "amber.100", mb: 2.5 },
+              title: "총 자산",
+              value: totalAsset,
+            })}
+            {totalBox({
+              boxStyle: { ...totalStyle.inBox, bg: "darkBlue.100", mt: 2.5 },
+              title: "총 부채",
+              value: "123,456",
+            })}
+          </Stack>
+          <CustomPieChart
+            totalValue={Number(totalAsset.replaceAll(",", ""))}
+            assetData={assetData}
+          />
           <DropdownModal
             content={[
               {
@@ -129,22 +158,6 @@ function HomeContainer() {
           >
             연말정산 예상 계산기
           </Button>
-          <Stack {...totalStyle.outBox}>
-            {totalBox({
-              boxStyle: { ...totalStyle.inBox, bg: "amber.100", mb: 2.5 },
-              title: "총 자산",
-              value: totalAsset,
-            })}
-            {totalBox({
-              boxStyle: { ...totalStyle.inBox, bg: "darkBlue.100", mt: 2.5 },
-              title: "총 부채",
-              value: totalAsset,
-            })}
-          </Stack>
-
-          <Center w="80%" h="300" bg="white" rounded="md" shadow={3}>
-            <Text fontSize="2xl">통계일부</Text>
-          </Center>
         </VStack>
       </ContentScrollView>
     </>
