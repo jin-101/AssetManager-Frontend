@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import {
     Box,
     VStack,
@@ -22,6 +22,9 @@ function StockService(){
     const {token} = useSelector((state)=>state.login);
     const havingStock = useSelector((state)=>state.havingStockUpdate);
     const [gains,setGains] = useState([]);
+
+    
+
     const fecthReturn = async (stockCode,stockMarket) => {
         try {
             const response = await axios.get(`${apiPath}/stock/compareReturn`,{
