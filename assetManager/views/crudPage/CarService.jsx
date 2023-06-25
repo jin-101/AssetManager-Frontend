@@ -11,6 +11,7 @@ import { Alert } from "react-native";
 import { inputPriceFormat } from "../../utils";
 import Loading from "../../components/Loading";
 import CarRegister from "../../components/CarRegister";
+import { btnStyle, btnTextStyle } from "../../styles";
 
 function CarService({}) {
   const dispatch = useDispatch();
@@ -109,26 +110,28 @@ function CarService({}) {
         {/* 상단 버튼 */}
         <HStack mt={"5"} space={5} justifyContent="center">
           <Button
-            width={"40%"}
-            bg={"white"}
-            borderRadius={15}
+            {...btnStyle}
+            borderColor="blue.400"
+            _text={{ ...btnTextStyle, color: "blue.400" }}
+            _pressed={{
+              bg: "blue.200",
+              borderColor: "white",
+            }}
             onPress={() => changeTab(0)}
-            _pressed={{ bg: "light.50" }}
           >
-            <Text color={"blue.400"} fontSize={18} fontWeight={"semibold"}>
-              자동차 추천
-            </Text>
+            자동차 추천
           </Button>
           <Button
-            width={"40%"}
-            bg={"white"}
-            borderRadius={15}
+            {...btnStyle}
+            borderColor="pink.400"
+            _text={{ ...btnTextStyle, color: "pink.400" }}
+            _pressed={{
+              bg: "pink.200",
+              borderColor: "white",
+            }}
             onPress={() => changeTab(1)}
-            _pressed={{ bg: "light.50" }}
           >
-            <Text color={"pink.400"} fontSize={18} fontWeight={"semibold"}>
-              차 취득세 계산기
-            </Text>
+            차 취득세 계산기
           </Button>
         </HStack>
         {/* 차 추천 */}
