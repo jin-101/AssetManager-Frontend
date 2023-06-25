@@ -29,6 +29,7 @@ import CashReceiptUpload from "@views/CashReceiptUpload";
 import CurrencyGraphPage from "@views/CurrencyGraphPage";
 import GoldGraphPage from "@views/GoldGraphPage";
 import StockCRUDpageUpdate from "@views/crudPage/StockCRUDpageUpdate"
+import StockService from "@views/StockService"
 
 
 export {
@@ -62,5 +63,6 @@ export {
   CashReceiptUpload,
   CurrencyGraphPage,
   GoldGraphPage,
-  StockCRUDpageUpdate
+  StockCRUDpageUpdate,
+  StockService
 };
