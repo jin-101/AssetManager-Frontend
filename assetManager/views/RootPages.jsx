@@ -36,6 +36,7 @@ import {
   StockCRUDpageUpdate,
   CalculatePage,
   CurrencyGraphPage,
+  StockService
 } from "@views";
 // import CustomHeader from "../components/CustomHeader";
 
@@ -193,6 +194,11 @@ function RootPages() {
             name="GoldGraphPage"
             component={GoldGraphPage}
             options={{ ...commonHeaderStyle, title: "금서비스" }}
+          />
+          <Stack.Screen
+            name="StockService"
+            component={StockService}
+            options={{ ...commonHeaderStyle, title: "주식서비스" }}
           />
         </>
       ) : (
