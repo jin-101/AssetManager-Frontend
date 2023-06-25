@@ -45,32 +45,47 @@ function CustomPieChart({ totalValue = 1, assetData = {} }) {
         bg={"white"}
         shadow={3}
       >
-        <Box w={"100%"} alignItems={"center"} justifyContent={"center"}>
-          <PieChart
-            data={chartData}
-            width={pieGraphSize}
-            height={pieGraphSize}
-            chartConfig={{
-              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            }}
-            accessor="assetRatio"
-            hasLegend={false}
-            center={[pieGraphSize * pieGraphPositionFixValue, 0]}
-          />
+        {totalValue === 1 ? (
           <Box
-            position={"absolute"}
-            w={pieGraphCenterCircleSize}
-            h={pieGraphCenterCircleSize}
-            borderRadius={pieGraphCenterCircleSize * 0.5}
-            bg={"white"}
+            width={"100%"}
+            height={pieGraphSize}
+            borderRadius={20}
             alignItems={"center"}
             justifyContent={"center"}
+            bg={"gray.50"}
           >
-            <Text fontWeight={"semibold"} fontSize={25}>
-              자산 비율
+            <Text fontWeight={"semibold"} color={"gray.400"} fontSize={25}>
+              그래프를 불러오는 중입니다.
             </Text>
           </Box>
-        </Box>
+        ) : (
+          <Box w={"100%"} alignItems={"center"} justifyContent={"center"}>
+            <PieChart
+              data={chartData}
+              width={pieGraphSize}
+              height={pieGraphSize}
+              chartConfig={{
+                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              }}
+              accessor="assetRatio"
+              hasLegend={false}
+              center={[pieGraphSize * pieGraphPositionFixValue, 0]}
+            />
+            <Box
+              position={"absolute"}
+              w={pieGraphCenterCircleSize}
+              h={pieGraphCenterCircleSize}
+              borderRadius={pieGraphCenterCircleSize * 0.5}
+              bg={"white"}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              <Text fontWeight={"semibold"} fontSize={25}>
+                자산 비율
+              </Text>
+            </Box>
+          </Box>
+        )}
         <Box w={"100%"} mb={10}>
           {chartData.map((el, index) => (
             <ChartLabelComponent

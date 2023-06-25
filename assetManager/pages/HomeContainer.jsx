@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { btnStyle, btnTextStyle } from "../styles";
 import { StyleSheet } from "react-native";
 import CustomPieChart from "../components/CustomPieChart";
+import { inputPriceFormat } from "../utils";
 
 const totalStyle = StyleSheet.create({
   outBox: {
@@ -33,7 +34,7 @@ const totalStyle = StyleSheet.create({
 });
 
 //데이터 받아온 것 가정
-const assetData = {
+const tempData = {
   totalDepositAndSavings: 42200000,
   totalApt: 1610000000,
   totalCar: 310862153,
@@ -42,11 +43,21 @@ const assetData = {
   totalCoin: 4416844461,
   totalAccountBalance: 200207,
 };
+const initialAsssetData = {
+  totalDepositAndSavings: 0,
+  totalApt: 0,
+  totalCar: 0,
+  totalGoldAndExchange: 0,
+  totalStock: 0,
+  totalCoin: 0,
+  totalAccountBalance: 0,
+};
 
 function HomeContainer() {
   const navigation = useNavigation();
   const { token } = useSelector((state) => state.login);
-  const [totalAsset, setTotalAsset] = useState("0");
+  const [totalAsset, setTotalAsset] = useState(1);
+  const [assetData, setAssetData] = useState(initialAsssetData);
 
   const mokdonPlanner = () => {
     navigation.navigate("mokdonPlanner");
@@ -63,14 +74,35 @@ function HomeContainer() {
         userId: token,
       },
     }).then((res) => {
-      setTotalAsset(res.data);
+      const {
+        totalDepositAndSavings,
+        totalApt,
+        totalCar,
+        totalGoldAndExchange,
+        totalStock,
+        totalCoin,
+        totalAccountBalance,
+      } = tempData;
+
+      const total =
+        totalDepositAndSavings +
+        totalApt +
+        totalCar +
+        totalGoldAndExchange +
+        totalStock +
+        totalCoin +
+        totalAccountBalance;
+
+      setAssetData(tempData);
+      setTotalAsset(total);
+      // setTotalAsset(res.data); // 여기 받는 방법 수정
     });
   }, []);
 
   const totalBox = ({ boxStyle, title = "", value = 0 }) => {
     return (
       <Box {...boxStyle}>
-        {value === "0" ? (
+        {value === 1 ? (
           <Box>
             <Text fontSize="xl" fontWeight={"bold"} color={"gray.400"}>
               {title} 계산중입니다.
@@ -81,13 +113,13 @@ function HomeContainer() {
             <Text fontSize="xl" fontWeight={"bold"}>
               {title}
             </Text>
-            <Text fontSize="xl">{value}원</Text>
+            <Text fontSize="xl">{inputPriceFormat(value)}원</Text>
           </Box>
         )}
       </Box>
     );
   };
-  console.log(Number(totalAsset.replaceAll(",", "")));
+
   return (
     <>
       <ContentScrollView>
@@ -101,13 +133,10 @@ function HomeContainer() {
             {totalBox({
               boxStyle: { ...totalStyle.inBox, bg: "darkBlue.100", mt: 2.5 },
               title: "총 부채",
-              value: "123,456",
+              value: 123456,
             })}
           </Stack>
-          <CustomPieChart
-            totalValue={Number(totalAsset.replaceAll(",", ""))}
-            assetData={assetData}
-          />
+          <CustomPieChart totalValue={totalAsset} assetData={assetData} />
           <DropdownModal
             content={[
               {
