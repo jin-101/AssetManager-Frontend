@@ -14,15 +14,16 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { apiPath } from "../../services";
 import {havingStockUpdate} from "../../action"
+import { useNavigation } from "@react-navigation/native";
 
 function StockCRUDpageUpdate({ parentLoading }) {
+  const navigation = useNavigation();
   const { token } = useSelector((state) => state.login);
   const havingStock =useSelector((state)=>state.havingStockUpdate);
   const dispatch = useDispatch();
-  const [stocks, setStocks] = useState(null);
   const [avergeGain, setAvergeGain] = useState(0);
 
-  const onPress = ()=> (console.log(havingStock));
+  const onGoToService = ()=> (navigation.navigate("StockService"));
 
   useEffect(() => {
     const fetchStock = async () => {
@@ -120,10 +121,10 @@ function StockCRUDpageUpdate({ parentLoading }) {
           </Box>
         ))}
         <HStack alignSelf="center" mb="2">
-          <Button mt="5" mx="1" onPress={onPress}>
+          <Button mt="5" mx="1">
             잔고수정
           </Button>
-          <Button mt="5" mx="1">
+          <Button mt="5" mx="1" onPress={onGoToService}>
             주식 서비스
           </Button>
         </HStack>
