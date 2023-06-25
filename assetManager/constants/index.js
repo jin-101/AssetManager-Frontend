@@ -18,7 +18,7 @@ import {
   CAR_YEAR_UPDATE,
 } from "./car";
 
-import { STOCK_UPDATE, STOCK_RESET ,HAVINGSTOCK_UPDATE} from "./stock";
+import { STOCK_UPDATE, STOCK_RESET, HAVINGSTOCK_UPDATE } from "./stock";
 
 import { CURRENCY_UPDATE, CURRENCY_RESET } from "./currency";
 
@@ -61,5 +61,4 @@ export {
   USER_CAR_INITIALIZE,
   USER_CAR_UPDATE,
   USER_CAR_REMOVE,
-
 };
