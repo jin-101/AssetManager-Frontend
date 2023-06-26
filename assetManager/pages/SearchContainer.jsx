@@ -1,9 +1,10 @@
 //연습중..
-import { Box, Center, Divider, Input, View } from "native-base";
+import { Box, Center, Divider, Input, Text, View } from "native-base";
 import React from "react";
 import { ScrollView } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { footerHeight } from "../styles";
+import { footerHeight, windowHeight } from "../styles";
+import ContentScrollView from "../components/ContentScrollView";
 
 function SearchContainer() {
   console.log("SeachContainer >>>");
@@ -15,7 +16,7 @@ function SearchContainer() {
           <Box
             bg="blue.100"
             w="90%"
-            h={120}
+            h={windowHeight * 0.12}
             p="5"
             borderRadius="2xl"
             mt="10"
@@ -28,13 +29,33 @@ function SearchContainer() {
             </Box>
           </Box>
           <Divider />
+
           <Box
-            bg={"amber.700"}
+            bg={"gray.200"}
             w="90%"
-            h={300}
+            h={windowHeight * 0.5}
             mt="10"
+            mb="10"
             borderRadius="2xl"
-          ></Box>
+          >
+            <ContentScrollView>
+              <Text fontSize={25}>aaaaaaa</Text>
+              <Text fontSize={25}>bbbbbbb</Text>
+              <Text fontSize={25}>ccccccc</Text>
+              <Text fontSize={25}>ddddddd</Text>
+              <Text fontSize={25}>eeeeeee</Text>
+              <Text fontSize={25}>aaa</Text>
+              <Text fontSize={25}>bbb</Text>
+              <Text fontSize={25}>ccc</Text>
+              <Text fontSize={25}>ddd</Text>
+              <Text fontSize={25}>esee</Text>
+              <Text fontSize={25}>aaaaa</Text>
+              <Text fontSize={25}>bbbbb</Text>
+              <Text fontSize={25}>ccccc</Text>
+              <Text fontSize={25}>ddddd</Text>
+              <Text fontSize={25}>eeeee</Text>
+            </ContentScrollView>
+          </Box>
         </Center>
       </View>
       <View style={{ height: footerHeight }}></View>

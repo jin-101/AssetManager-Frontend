@@ -1,7 +1,5 @@
-import { Box } from "native-base";
 import React from "react";
 import { FlatList } from "react-native";
-import { isAndroid } from "../utils";
 
 function ContentScrollView({ children }) {
   return (
