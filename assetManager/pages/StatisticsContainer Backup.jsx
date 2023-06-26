@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { apiPath } from "../services";
-import { Box, Button, HStack, VStack, Text } from "native-base";
+import { Box, Button, Divider, HStack, Text, VStack } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
 import ContentScrollView from "@components/ContentScrollView";
 import axios from "axios";
 import Loading from "../components/Loading";
-import {
-  List,
-  MD3Colors,
-  Divider,
-  Badge,
-  TouchableRipple,
-} from "react-native-paper";
+import SelectComponent from "../components/SelectComponent";
+import InputTextComponent from "../components/InputTextComponent";
 import { BarChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
-import { View } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import Icon2 from "react-native-vector-icons/AntDesign";
+import { List, MD3Colors } from "react-native-paper";
+import { StyleSheet } from "react-native";
 
 function StatisticsContainer() {
   const dispatch = useDispatch();
@@ -31,7 +29,12 @@ function StatisticsContainer() {
   const changeTab = (index) => setTab(index);
   // 재무지표 graph data
   const data = {
-    labels: ["A", "B", "C", "D"],
+    labels: [
+      "총부채부담",
+      "거주주택마련부채부담",
+      "금융투자성향",
+      "금융투자비중",
+    ],
     datasets: [
       {
         data: [
@@ -65,6 +68,27 @@ function StatisticsContainer() {
       });
   }, []);
 
+  //
+  const getNewFiIndData = () => {
+    axios({
+      url: `${apiPath}/getNewFiInd`,
+      method: "GET",
+      params: {
+        userId: token,
+      },
+    })
+      .then((res) => {
+        const result = res.data;
+        console.log("변경 버튼 클릭시 " + result);
+        //setFiInd(result);
+        //setSalary(result.salary); // 총소득
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   console.log(fiInd);
 
   if (isLoading) return <Loading />;
@@ -90,7 +114,7 @@ function StatisticsContainer() {
           onPress={() => changeTab(1)}
           _pressed={{ bg: "light.50" }}
         >
-          <Text color={"red.400"} fontSize={18} fontWeight={"semibold"}>
+          <Text color={"pink.400"} fontSize={18} fontWeight={"semibold"}>
             재무지표
           </Text>
         </Button>
@@ -112,14 +136,27 @@ function StatisticsContainer() {
       {/* 재무지표 */}
       {tab === 1 && (
         <VStack mt={5} mb={5} ml={5} mr={5}>
-          <Text
-            color={"red.400"}
-            fontSize={18}
-            //fontWeight={"semibold"}
-          >{`${token} 님의 재무건강 상태`}</Text>
+          <Box bg="blue.100" alignItems="center" p="5">
+            <InputTextComponent
+              value={String(salary)}
+              parentSetState={setSalary}
+              inputType="number"
+              priceFormat={true}
+              formControlLabelProps={{ text: `${token}님의 연 소득` }}
+              formControlHelperProps={{
+                text: "연 소득 금액이 달라진 경우 재입력 후 변경해주세요",
+              }}
+              formControlProps={{
+                marginBottom: 5,
+              }}
+            ></InputTextComponent>
+            <Button onPress={getNewFiIndData} width={"30%"}>
+              변경
+            </Button>
+          </Box>
           <List.Section>
             <List.Accordion
-              title={`A. 총부채부담지표 : ${fiInd.totalDebtBurdenInd} %`}
+              title={`총부채부담지표 : ${fiInd.totalDebtBurdenInd} %`}
             >
               <List.Item
                 title="권장 가이드라인 : 40% 이하"
@@ -133,7 +170,7 @@ function StatisticsContainer() {
           </List.Section>
           <List.Section>
             <List.Accordion
-              title={`B. 거주주택마련부채부담지표  : ${fiInd.mortgageLoanBurdenInd} %`}
+              title={`거주주택마련부채부담지표  : ${fiInd.mortgageLoanBurdenInd} %`}
             >
               <List.Item
                 title="권장 가이드라인 : 30% 이하"
@@ -147,7 +184,7 @@ function StatisticsContainer() {
           </List.Section>
           <List.Section>
             <List.Accordion
-              title={`C. 금융투자성향지표  : ${fiInd.fiInvestInd} %`}
+              title={`금융투자성향지표  : ${fiInd.fiInvestInd} %`}
             >
               <List.Item
                 title="권장 가이드라인 : 30% 이상"
@@ -164,9 +201,7 @@ function StatisticsContainer() {
             </List.Accordion>
           </List.Section>
           <List.Section>
-            <List.Accordion
-              title={`D. 금융자산비중지표 : ${fiInd.fiAssetInd} %`}
-            >
+            <List.Accordion title={`금융자산비중지표 : ${fiInd.fiAssetInd} %`}>
               <List.Item
                 title="권장 가이드라인 : 40% 이상"
                 left={(props) => <List.Icon {...props} icon="equal" />}
@@ -177,13 +212,23 @@ function StatisticsContainer() {
               />
             </List.Accordion>
           </List.Section>
+          {/* <List.Accordion
+                title="Controlled Accordion"
+                left={(props) => <List.Icon {...props} icon="folder" />}
+                expanded={expanded}
+                onPress={handlePress}
+              >
+                <List.Item title="First item" />
+                <List.Item title="Second item" />
+              </List.Accordion> 
+            </List.Section>*/}
           <BarChart
             style={(borderRadius = 16)}
             data={data}
             // 차트 전체너비
             width={screenWidth * 0.9}
             // 차트 전체높이
-            height={300}
+            height={400}
             yAxisSuffix=" %" // y축 라벨 (yAxisLabel은 접두사)
             chartConfig={chartConfig}
             verticalLabelRotation={0} // x축 라벨 회전 관련
@@ -193,6 +238,17 @@ function StatisticsContainer() {
     </ContentScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  custom1: {
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 5,
+    marginRight: 5,
+    //alignContent={"center"},
+    //alignItems="center" },
+  },
+});
 
 const screenWidth = Dimensions.get("window").width;
 
