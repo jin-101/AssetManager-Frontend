@@ -13,17 +13,19 @@ import {
     ScrollView,
     useDisclose
   } from "native-base";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import axios from "axios";
 import { apiPath } from "../services";
+import { useNavigation } from "@react-navigation/native";
+import { bestWorstPageUpdate } from "../action/stock";
 
 function StockService(){
+    const navigation = useNavigation();
     const {isOpen,onOpen,onClose} = useDisclose();
     const {token} = useSelector((state)=>state.login);
     const havingStock = useSelector((state)=>state.havingStockUpdate);
     const [gains,setGains] = useState([]);
 
-    
 
     const fecthReturn = async (stockCode,stockMarket) => {
         try {
@@ -82,6 +84,21 @@ function StockService(){
                 </HStack>
             </Box>
         ))}
+            <Box>
+                <HStack justifyContent="center" space={10} mt="8">
+                    <Button onPress={()=>{
+                        navigation.navigate("BestWorst",{pageMode:"upper"});
+                    }}>
+                        전일 수익률 10%이상
+                    </Button>
+                    <Button onPress={()=>{
+                        navigation.navigate("BestWorst");
+                        navigation.navigate("BestWorst",{pageMode:"lower"});
+                    }}>
+                        전일 손실률 -10%이상
+                    </Button>
+                </HStack>
+            </Box>
         </ScrollView>
     );
 }
