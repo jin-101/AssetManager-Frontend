@@ -15,6 +15,7 @@ import {
 import { BarChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 import { View } from "react-native";
+import { btnStyle, btnTextStyle } from "../styles";
 
 function StatisticsContainer() {
   const dispatch = useDispatch();
@@ -73,26 +74,31 @@ function StatisticsContainer() {
       {/* 상단 버튼 */}
       <HStack mt={"5"} space={5} justifyContent="center">
         <Button
-          width={"40%"}
-          bg={"white"}
-          borderRadius={15}
+          {...btnStyle}
+          //borderColor="info.400"
+          _text={{ ...btnTextStyle, color: "blue.400" }} // color: "info.400"
+          _pressed={{
+            bg: "blue.200",
+            borderColor: "white",
+          }}
           onPress={() => changeTab(0)}
-          _pressed={{ bg: "light.50" }}
         >
-          <Text color={"blue.400"} fontSize={18} fontWeight={"semibold"}>
+          소비통계
+          {/* <Text color={"blue.400"} fontSize={18} fontWeight={"semibold"}>
             소비통계
-          </Text>
+          </Text> */}
         </Button>
         <Button
-          width={"40%"}
-          bg={"white"}
-          borderRadius={15}
+          {...btnStyle}
+          //borderColor="secondary.400"
+          _text={{ ...btnTextStyle, color: "secondary.400" }}
+          _pressed={{
+            bg: "secondary.200",
+            borderColor: "white",
+          }}
           onPress={() => changeTab(1)}
-          _pressed={{ bg: "light.50" }}
         >
-          <Text color={"red.400"} fontSize={18} fontWeight={"semibold"}>
-            재무지표
-          </Text>
+          재무지표
         </Button>
       </HStack>
 
