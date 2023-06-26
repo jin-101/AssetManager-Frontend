@@ -2,6 +2,18 @@
 
 import { Alert } from "react-native";
 
+export const randomColor = ({ firstColor, lastColor }) => {
+  const letters = "0123456789ABCDEF";
+  let color;
+  do {
+    color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+  } while (color === firstColor || color === lastColor);
+  return color;
+};
+
 export const carTaxCalculate = (model, useType, price) => {
   const tax = {
     register: price * 0.05,
