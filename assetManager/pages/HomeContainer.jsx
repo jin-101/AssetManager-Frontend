@@ -6,8 +6,8 @@ import ContentScrollView from "@components/ContentScrollView";
 import axios from "axios";
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";
-import { btnStyle, btnTextStyle } from "../styles";
-import { StyleSheet } from "react-native";
+import { btnStyle, btnTextStyle, footerHeight } from "../styles";
+import { StyleSheet, View } from "react-native";
 import CustomPieChart from "../components/CustomPieChart";
 import { inputPriceFormat } from "../utils";
 
@@ -191,6 +191,7 @@ function HomeContainer() {
           </Button>
         </VStack>
       </ContentScrollView>
+      <View style={{ height: footerHeight }}></View>
     </>
   );
 }
