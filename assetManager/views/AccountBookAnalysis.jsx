@@ -129,13 +129,6 @@ function AccountBookAnalysis({ route }) {
     <ScrollView>
       <Text>분석 페이지!</Text>
       <Text>{currentMonth}월 소비패턴</Text>
-      {/* <View>
-        {extractedData.map((item, index) => (
-          <Text key={index}>
-            월: {item.month}, 비율: {item.ratio}
-          </Text>
-        ))}
-      </View> */}
       <PieChart
         data={data}
         width={screenWidth}
@@ -145,8 +138,6 @@ function AccountBookAnalysis({ route }) {
         backgroundColor={"transparent"}
         paddingLeft={"15"}
         center={[10, 10]}
-        animate={true} // Enable animation
-        animationConfig={chartAnimationConfig}
       />
       <Text>가계수지지표</Text>
       {extractedData.length > 0 && (
@@ -155,8 +146,6 @@ function AccountBookAnalysis({ route }) {
           width={screenWidth}
           height={275}
           chartConfig={chartConfig}
-          animate={true}
-          animationConfig={chartAnimationConfig}
         />
       )}
     </ScrollView>
