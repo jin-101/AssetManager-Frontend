@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Dimensions, ScrollView } from "react-native";
 import {
   LineChart,
@@ -8,18 +8,30 @@ import {
   ContributionGraph,
   StackedBarChart,
 } from "react-native-chart-kit";
+import { apiPath } from "../services";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { Easing } from "react-native";
+
 const screenWidth = Dimensions.get("window").width;
 
 function AccountBookAnalysis({ route }) {
   const { itemList } = route.params;
   const { currentMonth } = route.params;
+  const { token } = useSelector((state) => state.login); //아이디 가져오는 법
+
+  const chartAnimationConfig = {
+    duration: 500, // Animation duration in milliseconds
+    easing: Easing.linear, // Animation easing function
+  };
 
   const chartConfig = {
-    backgroundGradientFrom: "#1E2923",
+    propsForBackgroundLines: {},
+    backgroundGradientFrom: "#FFFFFF",
     backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#08130D",
+    backgroundGradientTo: "#FFFFFF",
     backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    color: (opacity = 1) => `rgba(0, 127, 255, ${opacity})`,
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false, // optional
@@ -27,7 +39,7 @@ function AccountBookAnalysis({ route }) {
 
   // console.log("아이템 리스트 : " + JSON.stringify(itemList));
 
-  // withdraw 속성의 총합 계산
+  // withdraw의 총합 계산
   const totalWithdraw = itemList.reduce(
     (total, item) => total + item.withdraw,
     0
@@ -60,7 +72,8 @@ function AccountBookAnalysis({ route }) {
         legendFontColor: "#7F7F7F",
         legendFontSize: 15,
       };
-    });
+    })
+    .sort((a, b) => b.population - a.population); // 비율에 따라 내림차순으로 정렬
 
   function getRandomColor() {
     const letters = "0123456789ABCDEF";
@@ -70,12 +83,59 @@ function AccountBookAnalysis({ route }) {
     }
     return color;
   }
+  ///////////////////////////////////////////////////////////
+  ///////////////////////가계수지지표////////////////////////
+  const [alldata, setAlldata] = useState({});
+  const [extractedData, setExtractedData] = useState([]);
+
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: apiPath + "/rest/webboard/alllist.do",
+      data: JSON.stringify({
+        memberId: token,
+      }),
+      headers: { "Content-Type": `application/json` },
+    })
+      .then((response) => {
+        console.log("axios 성공 : " + JSON.stringify(response.data));
+        setAlldata(response.data);
+      })
+      .catch((error) => {
+        console.log("axios 실패 : " + error);
+      });
+  }, []);
+
+  useEffect(() => {
+    // withdraw 값과 deposit 값만 추출
+    const dataForChart = Object.entries(alldata).map(([month, item]) => ({
+      month: month,
+      ratio: (item.withdraw / item.deposit) * 100,
+    }));
+
+    setExtractedData(dataForChart);
+  }, [alldata]);
+
+  const chartData = {
+    labels: extractedData.map((item) => item.month),
+    datasets: [
+      {
+        data: extractedData.map((item) => item.ratio),
+      },
+    ],
+  };
 
   return (
     <ScrollView>
       <Text>분석 페이지!</Text>
-      <Text>{currentMonth}월</Text>
-
+      <Text>{currentMonth}월 소비패턴</Text>
+      {/* <View>
+        {extractedData.map((item, index) => (
+          <Text key={index}>
+            월: {item.month}, 비율: {item.ratio}
+          </Text>
+        ))}
+      </View> */}
       <PieChart
         data={data}
         width={screenWidth}
@@ -85,8 +145,20 @@ function AccountBookAnalysis({ route }) {
         backgroundColor={"transparent"}
         paddingLeft={"15"}
         center={[10, 10]}
-        legendPosition={"bottom"}
+        animate={true} // Enable animation
+        animationConfig={chartAnimationConfig}
       />
+      <Text>가계수지지표</Text>
+      {extractedData.length > 0 && (
+        <LineChart
+          data={chartData}
+          width={screenWidth}
+          height={275}
+          chartConfig={chartConfig}
+          animate={true}
+          animationConfig={chartAnimationConfig}
+        />
+      )}
     </ScrollView>
   );
 }
