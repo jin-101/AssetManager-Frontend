@@ -13,7 +13,7 @@ import { inputPriceFormat } from "../utils";
 
 const totalStyle = StyleSheet.create({
   outBox: {
-    w: "80%",
+    w: "85%",
     h: "250",
     bg: "white",
     justifyContent: "center",
@@ -126,12 +126,12 @@ function HomeContainer() {
         <VStack space={10} alignItems="center" mt="10" mb="10">
           <Stack {...totalStyle.outBox}>
             {totalBox({
-              boxStyle: { ...totalStyle.inBox, bg: "amber.100", mb: 2.5 },
+              boxStyle: { ...totalStyle.inBox, bg: "#fff0f5", mb: 2.5 }, // lavenderblush (기존 bg: "amber.100")
               title: "총 자산",
               value: totalAsset,
             })}
             {totalBox({
-              boxStyle: { ...totalStyle.inBox, bg: "darkBlue.100", mt: 2.5 },
+              boxStyle: { ...totalStyle.inBox, bg: "#e6e6fa", mt: 2.5 }, // lavender (기존 bg: "darkBlue.100")
               title: "총 부채",
               value: 123456,
             })}
