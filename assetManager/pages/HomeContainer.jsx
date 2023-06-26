@@ -47,6 +47,7 @@ function HomeContainer() {
   const navigation = useNavigation();
   const { token } = useSelector((state) => state.login);
   const [totalAsset, setTotalAsset] = useState(1);
+  const [totalLiability, setTotalLiability] = useState(1);
   const [assetData, setAssetData] = useState(initialAsssetData);
 
   const mokdonPlanner = () => {
@@ -64,15 +65,25 @@ function HomeContainer() {
         userId: token,
       },
     }).then((res) => {
-      console.log(res.data);
+      const {
+        totalDepositAndSavings: deposit,
+        totalApt: apt,
+        totalCar: car,
+        totalGoldAndExchange: goldExchange,
+        totalStock: stock,
+        totalCoin: coin,
+        totalAccountBalance: balance,
+        totalLiability: liability,
+      } = res.data;
+
       const rowData = {
-        totalDepositAndSavings: Math.round(res.data.totalDepositAndSavings),
-        totalApt: Math.round(res.data.totalApt),
-        totalCar: Math.round(res.data.totalCar),
-        totalGoldAndExchange: Math.round(res.data.totalGoldAndExchange),
-        totalStock: Math.round(res.data.totalStock),
-        totalCoin: Math.round(res.data.totalCoin),
-        totalAccountBalance: Math.round(res.data.totalAccountBalance),
+        totalDepositAndSavings: Math.round(deposit),
+        totalApt: Math.round(apt),
+        totalCar: Math.round(car),
+        totalGoldAndExchange: Math.round(goldExchange),
+        totalStock: Math.round(stock),
+        totalCoin: Math.round(coin),
+        totalAccountBalance: Math.round(balance),
       };
 
       const total =
@@ -86,7 +97,7 @@ function HomeContainer() {
 
       setAssetData(rowData);
       setTotalAsset(total);
-      // setTotalAsset(res.data); // 여기 받는 방법 수정
+      setTotalLiability(liability);
     });
   }, []);
 
@@ -124,7 +135,7 @@ function HomeContainer() {
             {totalBox({
               boxStyle: { ...totalStyle.inBox, bg: "darkBlue.100", mt: 2.5 },
               title: "총 부채",
-              value: 123456,
+              value: totalLiability,
             })}
           </Stack>
           <CustomPieChart totalValue={totalAsset} assetData={assetData} />
