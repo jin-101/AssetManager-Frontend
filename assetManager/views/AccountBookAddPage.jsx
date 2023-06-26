@@ -6,7 +6,7 @@ import {
   Button as NBButton,
 } from "native-base";
 import React, { useState } from "react";
-import { Text, ScrollView, StyleSheet, Button } from "react-native";
+import { Text, ScrollView, StyleSheet, Button, View } from "react-native";
 import InputRadioComponent from "@components/InputRadioComponent";
 import InputTextComponent from "@components/InputTextComponent";
 import InputDateComponent from "@components/InputDateComponent";
@@ -221,53 +221,39 @@ function AccountBookAddPage({ route }) {
               parentSetState={setSelectedDate}
             />
             {/* 시간 부분 */}
-            <TextInput
-              style={{
-                ...inputTagCommonStyle,
-                // width: 190,
-                // height: 45,
-                // backgroundColor: "white",
-                textAlign: left,
-                paddingLeft: 10,
-                marginBottom: 10,
-              }}
-              //placeholder={substringTime} //스트링 값이 들어가야 함
-              placeholderTextColor="lightgray"
-              editable={false}
-              value={TimeforValue}
-            />
-            <NBButton onPress={handleOpenPicker}>시간을 입력하세요</NBButton>
-            {showPicker && (
-              <DateTimePicker
-                value={selectedTime}
-                mode="time"
-                onChange={handleTimeChange}
+            <View style={{ flexDirection: "row" }}>
+              <TextInput
+                style={{
+                  ...inputTagCommonStyle,
+                  width: 190,
+                  height: 45,
+                  // backgroundColor: "white",
+                  textAlign: "center",
+                  paddingLeft: 10,
+                  marginBottom: 10,
+                  color: "gray",
+                }}
+                //placeholder={substringTime} //스트링 값이 들어가야 함
+                placeholderTextColor="lightgray"
+                editable={false}
+                value={TimeforValue}
               />
-            )}
-            {/* <InputDateComponent
-              name="startDate"
-              formControlProps={{ mb: "5" }}
-              formControlLabelProps={{ text: "날짜" }}
-              value={selectedDate}
-              datePickerProps={{
-                isCustom: true,
-                customData: [
-                  ["1", "2", "3", "4", "5", "6"],
-                  ["1", "2", "3", "4", "5", "6"],
-                  [],
-                ],
-                type: "YYYY-MM",
-                // minDate: `${year - 5}-01-01`,
-                // maxDate: `${year + 5}-12-31`,
-                yearSuffix: "시",
-                monthSuffix: "분",
-                width: 300,
-                rowHeight: 60,
-                selectedBorderLineWidth: "2",
-                toolBarCancelStyle: { color: "black" },
-              }}
-              parentSetState={setSelectedDate}
-            /> */}
+
+              <NBButton
+                onPress={handleOpenPicker}
+                style={{ height: 45, width: 135, marginLeft: 8 }}
+              >
+                시간을 입력하세요
+              </NBButton>
+
+              {showPicker && (
+                <DateTimePicker
+                  value={selectedTime}
+                  mode="time"
+                  onChange={handleTimeChange}
+                />
+              )}
+            </View>
 
             <InputTextComponent
               name="price"
