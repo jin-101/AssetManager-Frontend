@@ -98,27 +98,26 @@ function StatisticsContainer() {
 
       {/* 소비통계 */}
       {tab === 0 && (
-        <VStack mt="5" alignItems="center">
-          <Box
-            bg="blue.100"
-            w="90%"
-            p="5"
-            borderRadius="2xl"
-            mb="5"
-            alignItems={"center"}
-          >
-            <Text>dldodod</Text>
+        <VStack mt={5} mb={5} ml={5} mr={5}>
+          <Box p="2.5" alignItems={"center"} bg={"white"}>
+            <Text
+              color={"blue.400"}
+              fontSize={18}
+              //fontWeight={"semibold"}
+            >{`${token} (${fiInd.age}세) 님의 소비통계`}</Text>
           </Box>
         </VStack>
       )}
       {/* 재무지표 */}
       {tab === 1 && (
         <VStack mt={5} mb={5} ml={5} mr={5}>
-          <Text
-            color={"red.400"}
-            fontSize={18}
-            //fontWeight={"semibold"}
-          >{`${token} 님의 재무건강 상태`}</Text>
+          <Box p="2.5" alignItems={"center"} bg={"white"}>
+            <Text
+              color={"red.400"}
+              fontSize={18}
+              //fontWeight={"semibold"}
+            >{`${token} (${fiInd.age}세) 님의 재무상태`}</Text>
+          </Box>
           <List.Section>
             <List.Accordion
               title={`A. 총부채부담지표 : ${fiInd.totalDebtBurdenInd} %`}

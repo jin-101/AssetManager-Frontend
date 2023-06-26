@@ -186,7 +186,7 @@ function MokdonPlanner(props) {
         <Button
           {...btnStyle}
           borderColor="info.400"
-          _text={{ ...btnTextStyle, color: "info.400" }}
+          _text={{ ...btnTextStyle, color: "black" }} // color: "info.400"
           _pressed={{
             bg: "info.200",
             borderColor: "white",
@@ -198,7 +198,7 @@ function MokdonPlanner(props) {
         <Button
           {...btnStyle}
           borderColor="secondary.400"
-          _text={{ ...btnTextStyle, color: "secondary.400" }}
+          _text={{ ...btnTextStyle, color: "black" }} // color: "secondary.400"
           _pressed={{
             bg: "secondary.200",
             borderColor: "white",
@@ -213,7 +213,7 @@ function MokdonPlanner(props) {
       {btnStatus ? (
         <VStack mt="5" mb="10" alignItems="center">
           <Box
-            bg="blue.100"
+            bg="blue.50"
             w="90%"
             p="5"
             borderRadius="2xl"
@@ -331,7 +331,7 @@ function MokdonPlanner(props) {
           </Box>
 
           {btnStatus === true && result.type === "예금" && (
-            <Box bg="violet.100" w="90%" p="5" borderRadius="2xl">
+            <Box bg="violet.50" w="90%" p="5" borderRadius="2xl">
               <InputTextComponent
                 value={result.totalPai}
                 formControlLabelProps={{
@@ -362,7 +362,7 @@ function MokdonPlanner(props) {
             </Box>
           )}
           {btnStatus === true && result.type === "적금" && (
-            <Box bg="violet.100" w="90%" p="5" borderRadius="2xl">
+            <Box bg="violet.50" w="90%" p="5" borderRadius="2xl">
               <InputTextComponent
                 value={result.totalPai}
                 formControlLabelProps={{
@@ -397,7 +397,7 @@ function MokdonPlanner(props) {
         // (2) 이자 계산기 파트
         <VStack mt="5" mb="10" alignItems="center">
           <Box
-            bg="red.100"
+            bg="red.50"
             w="90%"
             p="5"
             borderRadius="2xl"
@@ -510,7 +510,7 @@ function MokdonPlanner(props) {
           </Box>
 
           {btnStatus === false && result.type === "예금" && (
-            <Box bg="green.100" w="90%" p="5" borderRadius="2xl" mb="5">
+            <Box bg="green.50" w="90%" p="5" borderRadius="2xl" mb="5">
               <InputTextComponent
                 value={result.netIntr15_4}
                 formControlLabelProps={{
