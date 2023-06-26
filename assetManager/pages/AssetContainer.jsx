@@ -1,4 +1,12 @@
 import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Fontisto } from "@expo/vector-icons";
+import { Foundation } from "@expo/vector-icons";
+import { Octicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import { Box, HStack } from "native-base";
 import React, { useState } from "react";
 import { View, Text, Dimensions } from "react-native";
@@ -13,7 +21,6 @@ import CurrencyCrudPage from "../views/crudPage/CurrencyCrudPage";
 import Loading from "@components/Loading";
 import StockCRUDpageUpdate from "../views/crudPage/StockCRUDpageUpdate";
 import CoinCrudPage from "../views/crudPage/CoinCrudPage";
-
 
 const entries = [
   { key: "1", title: "예/적금", naviPath: "depositCrud" },
@@ -50,17 +57,17 @@ function AssetContainer() {
       case "1":
         return <FontAwesome name="money" {...iconStyle} />;
       case "2":
-        return <FontAwesome name="money" {...iconStyle} />;
+        return <MaterialIcons name="house" {...iconStyle} />;
       case "3":
-        return <FontAwesome name="money" {...iconStyle} />;
+        return <Ionicons name="car-sport-sharp" {...iconStyle} />;
       case "4":
-        return <FontAwesome name="money" {...iconStyle} />;
+        return <MaterialCommunityIcons name="gold" {...iconStyle} />;
       case "5":
-        return <FontAwesome name="money" {...iconStyle} />;
+        return <Fontisto name="money-symbol" {...iconStyle} />;
       case "6":
-        return <FontAwesome name="money" {...iconStyle} />;
+        return <Octicons name="graph" {...iconStyle} />;
       case "7":
-        return <FontAwesome name="money" {...iconStyle} />;
+        return <MaterialCommunityIcons name="bitcoin" {...iconStyle} />;
       // case "8":
       //   return <FontAwesome name="money" {...iconStyle} />;
       // case "9":
