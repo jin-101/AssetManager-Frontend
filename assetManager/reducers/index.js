@@ -14,6 +14,7 @@ import avgRate from "./avgRate";
 import loan from "./loan";
 import havingStockUpdate from "./havingStock";
 import userCar from "./userCar";
+import bestWorst from "./BestWorst";
 
 const rootReducer = combineReducers({
   // 리듀서들을 입력한다.
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
   avgRate,
   loan,
   havingStockUpdate,
-  userCar
+  userCar,
+  bestWorst
 });
 
 export default rootReducer;
