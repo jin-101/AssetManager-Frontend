@@ -19,10 +19,15 @@ import SelectComponent from "../components/SelectComponent";
 import { getAvgRate } from "../action/avgRate";
 import Loading from "../components/Loading";
 import { bankType } from "../utils";
-import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { btnStyle, btnTextStyle } from "../styles";
 
 function MokdonPlanner(props) {
+  const iconStyle = {
+    size: 40,
+    color: "black",
+  };
+  const iconName = "angle-double-down"; // 적용할 아이콘 이름 변수
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const { bankAndAvgRate } = useSelector((state) => state.avgRate);
@@ -331,66 +336,72 @@ function MokdonPlanner(props) {
           </Box>
 
           {btnStatus === true && result.type === "예금" && (
-            <Box bg="violet.50" w="90%" p="5" borderRadius="2xl">
-              <InputTextComponent
-                value={result.totalPai}
-                formControlLabelProps={{
-                  text: `내가 저축한 총 원리금`,
-                }}
-                // 부가 설정
-                textInputProps={{ readOnly: true }}
-                //textInputStyle={{ width: "85%" }}
-              ></InputTextComponent>
-              <InputTextComponent
-                value={result.lackingAmount}
-                formControlLabelProps={{
-                  text: `부족한 금액`,
-                }}
-                // 부가 설정
-                textInputProps={{ readOnly: true }}
-                //textInputStyle={{ width: "85%" }}
-              ></InputTextComponent>
-              <InputTextComponent
-                value={result.requiredPrincipal}
-                formControlLabelProps={{
-                  text: `추가로 필요한 예치금 (${result.type} 가입 시)`,
-                }}
-                // 부가 설정
-                textInputProps={{ readOnly: true }}
-                //textInputStyle={{ width: "85%" }}
-              ></InputTextComponent>
-            </Box>
+            <>
+              <FontAwesome name={iconName} {...iconStyle} />
+              <Box bg="violet.50" w="90%" p="5" borderRadius="2xl">
+                <InputTextComponent
+                  value={result.totalPai}
+                  formControlLabelProps={{
+                    text: `내가 저축한 총 원리금`,
+                  }}
+                  // 부가 설정
+                  textInputProps={{ readOnly: true }}
+                  //textInputStyle={{ width: "85%" }}
+                ></InputTextComponent>
+                <InputTextComponent
+                  value={result.lackingAmount}
+                  formControlLabelProps={{
+                    text: `부족한 금액`,
+                  }}
+                  // 부가 설정
+                  textInputProps={{ readOnly: true }}
+                  //textInputStyle={{ width: "85%" }}
+                ></InputTextComponent>
+                <InputTextComponent
+                  value={result.requiredPrincipal}
+                  formControlLabelProps={{
+                    text: `추가로 필요한 예치금 (${result.type} 가입 시)`,
+                  }}
+                  // 부가 설정
+                  textInputProps={{ readOnly: true }}
+                  //textInputStyle={{ width: "85%" }}
+                ></InputTextComponent>
+              </Box>
+            </>
           )}
           {btnStatus === true && result.type === "적금" && (
-            <Box bg="violet.50" w="90%" p="5" borderRadius="2xl">
-              <InputTextComponent
-                value={result.totalPai}
-                formControlLabelProps={{
-                  text: `내가 저축한 총 원리금`,
-                }}
-                // 부가 설정
-                textInputProps={{ readOnly: true }}
-                //textInputStyle={{ width: "85%" }}
-              ></InputTextComponent>
-              <InputTextComponent
-                value={result.lackingAmount}
-                formControlLabelProps={{
-                  text: `부족한 금액`,
-                }}
-                // 부가 설정
-                textInputProps={{ readOnly: true }}
-                //textInputStyle={{ width: "85%" }}
-              ></InputTextComponent>
-              <InputTextComponent
-                value={result.requiredPrincipal}
-                formControlLabelProps={{
-                  text: `추가로 필요한 월납입액 (${result.type} 가입 시)`,
-                }}
-                // 부가 설정
-                textInputProps={{ readOnly: true }}
-                //textInputStyle={{ width: "85%" }}
-              ></InputTextComponent>
-            </Box>
+            <>
+              <FontAwesome name={iconName} {...iconStyle} />
+              <Box bg="violet.50" w="90%" p="5" borderRadius="2xl">
+                <InputTextComponent
+                  value={result.totalPai}
+                  formControlLabelProps={{
+                    text: `내가 저축한 총 원리금`,
+                  }}
+                  // 부가 설정
+                  textInputProps={{ readOnly: true }}
+                  //textInputStyle={{ width: "85%" }}
+                ></InputTextComponent>
+                <InputTextComponent
+                  value={result.lackingAmount}
+                  formControlLabelProps={{
+                    text: `부족한 금액`,
+                  }}
+                  // 부가 설정
+                  textInputProps={{ readOnly: true }}
+                  //textInputStyle={{ width: "85%" }}
+                ></InputTextComponent>
+                <InputTextComponent
+                  value={result.requiredPrincipal}
+                  formControlLabelProps={{
+                    text: `추가로 필요한 월납입액 (${result.type} 가입 시)`,
+                  }}
+                  // 부가 설정
+                  textInputProps={{ readOnly: true }}
+                  //textInputStyle={{ width: "85%" }}
+                ></InputTextComponent>
+              </Box>
+            </>
           )}
         </VStack>
       ) : (
@@ -510,84 +521,90 @@ function MokdonPlanner(props) {
           </Box>
 
           {btnStatus === false && result.type === "예금" && (
-            <Box bg="green.50" w="90%" p="5" borderRadius="2xl" mb="5">
-              <InputTextComponent
-                value={result.netIntr15_4}
-                formControlLabelProps={{
-                  text: `${result.type} - 일반 (15.4%)`,
-                }}
-                // 부가 설정
-                textInputProps={{ readOnly: true }}
-                //textInputStyle={{ width: "85%" }}
-              ></InputTextComponent>
-              <InputTextComponent
-                value={result.netIntr9_5}
-                formControlLabelProps={{
-                  text: `${result.type} - 세금우대 (9.5%)`,
-                }}
-                // 부가 설정
-                textInputProps={{ readOnly: true }}
-                //textInputStyle={{ width: "85%" }}
-              ></InputTextComponent>
-              <InputTextComponent
-                value={result.netIntr1_4}
-                formControlLabelProps={{
-                  text: `${result.type} - 세금우대 (1.4%)`,
-                }}
-                // 부가 설정
-                textInputProps={{ readOnly: true }}
-                //textInputStyle={{ width: "85%" }}
-              ></InputTextComponent>
-              <InputTextComponent
-                value={result.netIntr0_0}
-                formControlLabelProps={{
-                  text: `${result.type} - 비과세 (0.0%)`,
-                }}
-                // 부가 설정
-                textInputProps={{ readOnly: true }}
-                //textInputStyle={{ width: "85%" }}
-              ></InputTextComponent>
-            </Box>
+            <>
+              <FontAwesome name={iconName} {...iconStyle} />
+              <Box bg="green.50" w="90%" p="5" borderRadius="2xl" mb="5">
+                <InputTextComponent
+                  value={result.netIntr15_4}
+                  formControlLabelProps={{
+                    text: `${result.type} - 일반 (15.4%)`,
+                  }}
+                  // 부가 설정
+                  textInputProps={{ readOnly: true }}
+                  //textInputStyle={{ width: "85%" }}
+                ></InputTextComponent>
+                <InputTextComponent
+                  value={result.netIntr9_5}
+                  formControlLabelProps={{
+                    text: `${result.type} - 세금우대 (9.5%)`,
+                  }}
+                  // 부가 설정
+                  textInputProps={{ readOnly: true }}
+                  //textInputStyle={{ width: "85%" }}
+                ></InputTextComponent>
+                <InputTextComponent
+                  value={result.netIntr1_4}
+                  formControlLabelProps={{
+                    text: `${result.type} - 세금우대 (1.4%)`,
+                  }}
+                  // 부가 설정
+                  textInputProps={{ readOnly: true }}
+                  //textInputStyle={{ width: "85%" }}
+                ></InputTextComponent>
+                <InputTextComponent
+                  value={result.netIntr0_0}
+                  formControlLabelProps={{
+                    text: `${result.type} - 비과세 (0.0%)`,
+                  }}
+                  // 부가 설정
+                  textInputProps={{ readOnly: true }}
+                  //textInputStyle={{ width: "85%" }}
+                ></InputTextComponent>
+              </Box>
+            </>
           )}
           {btnStatus === false && result.type === "적금" && (
-            <Box bg="green.100" w="90%" p="5" borderRadius="2xl" mb="5">
-              <InputTextComponent
-                value={result.netIntr15_4}
-                formControlLabelProps={{
-                  text: `${result.type} - 일반 (15.4%)`,
-                }}
-                // 부가 설정
-                textInputProps={{ readOnly: true }}
-                //textInputStyle={{ width: "85%" }}
-              ></InputTextComponent>
-              <InputTextComponent
-                value={result.netIntr9_5}
-                formControlLabelProps={{
-                  text: `${result.type} - 세금우대 (9.5%)`,
-                }}
-                // 부가 설정
-                textInputProps={{ readOnly: true }}
-                //textInputStyle={{ width: "85%" }}
-              ></InputTextComponent>
-              <InputTextComponent
-                value={result.netIntr1_4}
-                formControlLabelProps={{
-                  text: `${result.type} - 세금우대 (1.4%)`,
-                }}
-                // 부가 설정
-                textInputProps={{ readOnly: true }}
-                //textInputStyle={{ width: "85%" }}
-              ></InputTextComponent>
-              <InputTextComponent
-                value={result.netIntr0_0}
-                formControlLabelProps={{
-                  text: `${result.type} - 비과세 (0.0%)`,
-                }}
-                // 부가 설정
-                textInputProps={{ readOnly: true }}
-                //textInputStyle={{ width: "85%" }}
-              ></InputTextComponent>
-            </Box>
+            <>
+              <FontAwesome name={iconName} {...iconStyle} />
+              <Box bg="green.100" w="90%" p="5" borderRadius="2xl" mb="5">
+                <InputTextComponent
+                  value={result.netIntr15_4}
+                  formControlLabelProps={{
+                    text: `${result.type} - 일반 (15.4%)`,
+                  }}
+                  // 부가 설정
+                  textInputProps={{ readOnly: true }}
+                  //textInputStyle={{ width: "85%" }}
+                ></InputTextComponent>
+                <InputTextComponent
+                  value={result.netIntr9_5}
+                  formControlLabelProps={{
+                    text: `${result.type} - 세금우대 (9.5%)`,
+                  }}
+                  // 부가 설정
+                  textInputProps={{ readOnly: true }}
+                  //textInputStyle={{ width: "85%" }}
+                ></InputTextComponent>
+                <InputTextComponent
+                  value={result.netIntr1_4}
+                  formControlLabelProps={{
+                    text: `${result.type} - 세금우대 (1.4%)`,
+                  }}
+                  // 부가 설정
+                  textInputProps={{ readOnly: true }}
+                  //textInputStyle={{ width: "85%" }}
+                ></InputTextComponent>
+                <InputTextComponent
+                  value={result.netIntr0_0}
+                  formControlLabelProps={{
+                    text: `${result.type} - 비과세 (0.0%)`,
+                  }}
+                  // 부가 설정
+                  textInputProps={{ readOnly: true }}
+                  //textInputStyle={{ width: "85%" }}
+                ></InputTextComponent>
+              </Box>
+            </>
           )}
         </VStack>
       )}
@@ -599,7 +616,7 @@ function MokdonPlanner(props) {
 
 const styles = StyleSheet.create({
   calculateBtn: {
-    width: "70%",
+    width: "50%",
   },
 });
 
