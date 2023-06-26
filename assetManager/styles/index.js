@@ -56,9 +56,9 @@ export const btnStyle = StyleSheet.create({
   variant: "outline",
   backgroundColor: "white",
   colorScheme: "gray",
-  borderColor: "gray.400",
-  borderRadius: 5,
-  width: "40%",
+  borderColor: "#d3d3d3", // 기존 - borderColor: "gray.400" / #e6e6fa / 현재 - #d3d3d3 (lightgray)
+  borderRadius: 10,
+  width: "42.5%",
   height: "50",
 });
 export const btnTextStyle = StyleSheet.create({
