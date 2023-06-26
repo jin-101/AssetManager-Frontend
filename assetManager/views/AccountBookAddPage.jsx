@@ -130,19 +130,31 @@ function AccountBookAddPage({ route }) {
               borderRadius="lg"
               backgroundColor="amber.100"
             >
-              <Text style={{ fontSize: 25, margin: 10 }}>가계부 추가</Text>
+              <Text
+                style={{
+                  fontSize: 25,
+                  marginTop: 10,
+                  marginLeft: 10,
+                  marginRight: 10,
+                  marginBottom: 15,
+                }}
+              >
+                가계부 추가
+              </Text>
             </HStack>
-            <InputTextComponent
-              name="money"
-              inputType={"number"}
-              priceFormat={true}
-              formControlProps={{ mb: "5" }}
-              formControlLabelProps={{ text: "금액(원)" }}
-              alertContent={"정확한 금액을 입력해주세요."}
-              placeholder="0"
-              value={money}
-              parentSetState={setMoney}
-            />
+            <View style={{ marginBottom: 0 }}>
+              <InputTextComponent
+                name="money"
+                inputType={"number"}
+                priceFormat={true}
+                formControlProps={{ mb: "5" }}
+                formControlLabelProps={{ text: "금액(원)" }}
+                alertContent={"정확한 금액을 입력해주세요."}
+                placeholder="0"
+                value={money}
+                parentSetState={setMoney}
+              />
+            </View>
             <InputRadioComponent
               name="Type"
               formControlProps={{ mb: "8", isDisabled: true }}
@@ -175,7 +187,7 @@ function AccountBookAddPage({ route }) {
                   ...inputTagCommonStyle,
                   textAlign: left,
                   paddingLeft: 10,
-                  marginBottom: 10,
+                  marginBottom: 50,
                 }}
                 placeholder="미분류"
                 placeholderTextColor="lightgray"
@@ -241,7 +253,12 @@ function AccountBookAddPage({ route }) {
 
               <NBButton
                 onPress={handleOpenPicker}
-                style={{ height: 45, width: 135, marginLeft: 8 }}
+                style={{
+                  height: 45,
+                  width: 135,
+                  marginLeft: 8,
+                  marginBottom: 40,
+                }}
               >
                 시간을 입력하세요
               </NBButton>
@@ -264,6 +281,7 @@ function AccountBookAddPage({ route }) {
               placeholder="메모 입력"
               value={memo}
               parentSetState={setMemo}
+              // formControlHelperProps={{ text: "상품을 선택하세요." }}
             />
             <NBButton size="lg" onPress={SaveOneAccount}>
               저장하기

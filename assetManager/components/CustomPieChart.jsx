@@ -3,6 +3,7 @@ import { Dimensions } from "react-native";
 import { Box, View, Text } from "native-base";
 import { PieChart } from "react-native-chart-kit";
 import ChartLabelComponent from "../components/ChartLabelComponent";
+import { randomColor } from "../utils";
 
 const screenWidth = Dimensions.get("window").width;
 const pieGraphSize = screenWidth * 0.95;
@@ -18,7 +19,7 @@ const graphColor = [
   "#000099", //남
   "#9933cc", //보
 ];
-const assetTitle = {
+const assetT = {
   totalDepositAndSavings: "예적금",
   totalApt: "부동산",
   totalCar: "자동차",
@@ -28,12 +29,21 @@ const assetTitle = {
   totalAccountBalance: "가계부 잔액",
 };
 
-function CustomPieChart({ totalValue = 1, assetData = {} }) {
-  const chartData = Object.keys(assetData).map((el, index) => ({
-    name: assetTitle[el],
-    assetRatio: assetData[el],
-    color: graphColor[index],
-  }));
+function CustomPieChart({
+  totalValue = 1,
+  centerTitle = "자산 비율",
+  assetTitle = assetT,
+  assetData = {},
+}) {
+  let preColor = graphColor[graphColor.length - 1];
+  const chartData = Object.keys(assetData).map((el, index) => {
+    preColor = randomColor({ firstColor: graphColor[0], lastColor: preColor });
+    return {
+      name: assetTitle[el],
+      assetRatio: assetData[el],
+      color: graphColor.length <= index ? preColor : graphColor[index],
+    };
+  });
 
   return (
     <View w={"95%"} alignItems={"center"} justifyContent={"center"}>
@@ -81,7 +91,7 @@ function CustomPieChart({ totalValue = 1, assetData = {} }) {
               justifyContent={"center"}
             >
               <Text fontWeight={"semibold"} fontSize={25}>
-                자산 비율
+                {centerTitle}
               </Text>
             </Box>
           </Box>

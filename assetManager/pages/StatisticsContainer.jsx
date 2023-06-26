@@ -106,7 +106,9 @@ function StatisticsContainer() {
             borderRadius="2xl"
             mb="5"
             alignItems={"center"}
-          ></Box>
+          >
+            <Text>dldodod</Text>
+          </Box>
         </VStack>
       )}
       {/* 재무지표 */}
