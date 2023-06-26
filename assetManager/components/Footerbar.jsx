@@ -1,5 +1,9 @@
 import React, { useCallback } from "react";
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import { Center, HStack, Icon, Text } from "native-base";
 import { Pressable, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -106,8 +110,8 @@ function Footerbar() {
             <Icon
               mb="1"
               as={
-                <MaterialCommunityIcons
-                  name={pageState === 3 ? "wallet" : "wallet-outline"}
+                <Ionicons
+                  name={pageState === 3 ? "bar-chart" : "bar-chart-outline"}
                 />
               }
               color="white"
