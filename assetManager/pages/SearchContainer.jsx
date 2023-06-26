@@ -1,51 +1,66 @@
 //연습중..
-import { Box } from "native-base";
+import { Box, Center, Divider, Input, Text, View } from "native-base";
 import React from "react";
-import { StyleSheet, ScrollView } from "react-native";
-import SelectComponent from "@components/SelectComponent";
+import { ScrollView } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+import { footerHeight, windowHeight } from "../styles";
+import ContentScrollView from "../components/ContentScrollView";
 
-function SearchContainer({}) {
+function SearchContainer() {
   console.log("SeachContainer >>>");
 
-  const selectItem = [
-    { label: "UX Research", value: "ux" },
-    { label: "UX Research", value: "ux" },
-    { label: "UX Research", value: "ux" },
-    { label: "UX Research", value: "ux" },
-    { label: "UX Research", value: "ux" },
-    { label: "UX Research", value: "ux" },
-    { label: "UX Research", value: "ux" },
-    { label: "UX Research", value: "ux" },
-    { label: "UX Research", value: "ux" },
-    { label: "UX Research", value: "ux" },
-    { label: "UX Research", value: "ux" },
-    { label: "UX Research", value: "ux" },
-  ];
   return (
-    <ScrollView>
-      <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
-        <Box w="100%" bg="amber.100"></Box>
-      </Box>
-    </ScrollView>
+    <>
+      <View>
+        <Center>
+          <Box
+            bg="blue.100"
+            w="90%"
+            h={windowHeight * 0.12}
+            p="5"
+            borderRadius="2xl"
+            mt="10"
+            mb="10"
+            justifyContent={"center"}
+          >
+            <Input bg={"white"}></Input>
+            <Box position={"absolute"} right={30}>
+              <AntDesign name="search1" size={30} color="black" />
+            </Box>
+          </Box>
+          <Divider />
+
+          <Box
+            bg={"gray.200"}
+            w="90%"
+            h={windowHeight * 0.5}
+            mt="10"
+            mb="10"
+            borderRadius="2xl"
+          >
+            <ContentScrollView>
+              <Text fontSize={25}>aaaaaaa</Text>
+              <Text fontSize={25}>bbbbbbb</Text>
+              <Text fontSize={25}>ccccccc</Text>
+              <Text fontSize={25}>ddddddd</Text>
+              <Text fontSize={25}>eeeeeee</Text>
+              <Text fontSize={25}>aaa</Text>
+              <Text fontSize={25}>bbb</Text>
+              <Text fontSize={25}>ccc</Text>
+              <Text fontSize={25}>ddd</Text>
+              <Text fontSize={25}>esee</Text>
+              <Text fontSize={25}>aaaaa</Text>
+              <Text fontSize={25}>bbbbb</Text>
+              <Text fontSize={25}>ccccc</Text>
+              <Text fontSize={25}>ddddd</Text>
+              <Text fontSize={25}>eeeee</Text>
+            </ContentScrollView>
+          </Box>
+        </Center>
+      </View>
+      <View style={{ height: footerHeight }}></View>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  modalContainer: {
-    position: "absolute",
-    top: 0,
-    width: "100%",
-    height: "100%",
-    justifyContent: "flex-end",
-  },
-  modal: {
-    position: "absolute",
-    top: 0,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "gray",
-    opacity: 0.5,
-  },
-});
 
 export default SearchContainer;

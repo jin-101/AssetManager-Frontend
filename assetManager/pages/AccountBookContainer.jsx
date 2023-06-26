@@ -27,6 +27,7 @@ import {
   Select,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
+import { footerHeight } from "../styles";
 
 function AccountBookContainer() {
   const styles = StyleSheet.create({
@@ -444,6 +445,7 @@ function AccountBookContainer() {
           })}
         </ScrollView>
       </View>
+      <View style={{ height: footerHeight }}></View>
       {/* {isLoading && <Loading />} */}
     </>
   );
