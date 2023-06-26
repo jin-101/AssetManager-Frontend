@@ -35,9 +35,13 @@ function CalculatePage(props) {
     disabledPerson: 0,
     woman: 0,
     oneParent: 0,
+    newBirthChild: 0,
+    loanRepaymentPrincipal: 0,
+    loanRepaymentInterest: 0,
+    ginapbuseaek: 0,
   }); //연말정산 관련 받아온 데이터가 있을 때 담기
   const [paging, setPaging] = useState(0);
-  const maxPage = 2;
+  const maxPage = 3;
   const [btnIsVisible, setBtnIsVisible] = useState(false);
   const [calculateUpdate, setCalculateUpdate] = useState(false);
   const navigation = useNavigation();
@@ -135,6 +139,10 @@ function CalculatePage(props) {
     //   disabledPerson: 1,
     //   woman: 1,
     //   oneParent: 1,
+    //   newBirthChild: 0,
+    //   loanRepaymentPrincipal: 0,
+    //   loanRepaymentInterest: 0,
+    //   ginapbuseaek: 0,
     // });
   }, []);
 
@@ -385,6 +393,120 @@ function CalculatePage(props) {
                       value={data?.oneParent}
                       parentSetState={onChangeValue}
                     />
+                  </Box>
+                  {updateOrSubmitButton()}
+                </Box>
+              )}
+              {paging === 3 && (
+                <Box bg={"light.50"} w={"100%"} borderRadius={20}>
+                  <InputRadioComponent
+                    name="newBirthChild"
+                    formControlProps={{ mt: 12, ml: 5, mb: 5 }}
+                    formControlLabelProps={{
+                      text: "이번해 출생 또는 입양한 자녀",
+                      fontSize: 20,
+                    }}
+                    radioButtonList={[
+                      {
+                        text: "없음",
+                        value: 0,
+                        liStyle: {
+                          alignItems: "center",
+                          ml: "2",
+                          mr: "2.5",
+                        },
+                        RadioButtonItemProps: {
+                          size: "sm",
+                          isDisabled: !calculateUpdate,
+                        },
+                      },
+                      {
+                        text: "첫째",
+                        value: 1,
+                        liStyle: {
+                          alignItems: "center",
+                          ml: "2.5",
+                          mr: "2.5",
+                        },
+                        RadioButtonItemProps: {
+                          size: "sm",
+                          isDisabled: !calculateUpdate,
+                        },
+                      },
+                      {
+                        text: "둘째",
+                        value: 2,
+                        liStyle: { alignItems: "center", ml: "2.5", mr: "2.5" },
+                        RadioButtonItemProps: {
+                          size: "sm",
+                          isDisabled: !calculateUpdate,
+                        },
+                      },
+                      {
+                        text: "셋째이상",
+                        value: 3,
+                        liStyle: { alignItems: "center", ml: "2.5" },
+                        RadioButtonItemProps: {
+                          size: "sm",
+                          isDisabled: !calculateUpdate,
+                        },
+                      },
+                    ]}
+                    formControlHelperProps={{ h: 0 }}
+                    value={data?.newBirthChild}
+                    parentSetState={onChangeValue}
+                  />
+                  <Box alignItems={"center"}>
+                    <Box w={"90%"}>
+                      <InputTextComponent
+                        name="loanRepaymentPrincipal"
+                        inputType="number"
+                        value={data?.loanRepaymentPrincipal}
+                        parentSetState={onChangeValue}
+                        formControlLabelProps={{ text: "대출상환원금" }}
+                        priceFormat={true}
+                        textInputProps={{
+                          editable: calculateUpdate,
+                        }}
+                        textInputStyle={{
+                          color: calculateUpdate ? "black" : "gray",
+                        }}
+                        formControlProps={{ marginTop: 5 }}
+                        formControlHelperProps={{ h: 0 }}
+                      />
+                      <InputTextComponent
+                        name="loanRepaymentInterest"
+                        inputType="number"
+                        value={data?.loanRepaymentInterest}
+                        parentSetState={onChangeValue}
+                        formControlLabelProps={{ text: "대출상환이자" }}
+                        priceFormat={true}
+                        textInputProps={{
+                          editable: calculateUpdate,
+                        }}
+                        textInputStyle={{
+                          color: calculateUpdate ? "black" : "gray",
+                        }}
+                        formControlProps={{ marginTop: 5 }}
+                        formControlHelperProps={{ h: 0 }}
+                      />
+                      <InputTextComponent
+                        name="ginapbuseaek"
+                        inputType="number"
+                        value={data?.ginapbuseaek}
+                        parentSetState={onChangeValue}
+                        formControlLabelProps={{ text: "기납부세액" }}
+                        priceFormat={true}
+                        textInputProps={{
+                          editable: calculateUpdate,
+                        }}
+                        textInputStyle={{
+                          color: calculateUpdate ? "black" : "gray",
+                        }}
+                        formControlProps={{ marginTop: 5 }}
+                        formControlHelperProps={{ h: 0 }}
+                      />
+                    </Box>
                   </Box>
                   {updateOrSubmitButton()}
                 </Box>

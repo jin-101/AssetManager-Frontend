@@ -33,16 +33,6 @@ const totalStyle = StyleSheet.create({
   },
 });
 
-//데이터 받아온 것 가정
-const tempData = {
-  totalDepositAndSavings: 42200000,
-  totalApt: 1610000000,
-  totalCar: 310862153,
-  totalGoldAndExchange: 167929312,
-  totalStock: 265469710,
-  totalCoin: 4416844461,
-  totalAccountBalance: 200207,
-};
 const initialAsssetData = {
   totalDepositAndSavings: 0,
   totalApt: 0,
@@ -74,26 +64,27 @@ function HomeContainer() {
         userId: token,
       },
     }).then((res) => {
-      const {
-        totalDepositAndSavings,
-        totalApt,
-        totalCar,
-        totalGoldAndExchange,
-        totalStock,
-        totalCoin,
-        totalAccountBalance,
-      } = tempData;
+      console.log(res.data);
+      const rowData = {
+        totalDepositAndSavings: Math.round(res.data.totalDepositAndSavings),
+        totalApt: Math.round(res.data.totalApt),
+        totalCar: Math.round(res.data.totalCar),
+        totalGoldAndExchange: Math.round(res.data.totalGoldAndExchange),
+        totalStock: Math.round(res.data.totalStock),
+        totalCoin: Math.round(res.data.totalCoin),
+        totalAccountBalance: Math.round(res.data.totalAccountBalance),
+      };
 
       const total =
-        totalDepositAndSavings +
-        totalApt +
-        totalCar +
-        totalGoldAndExchange +
-        totalStock +
-        totalCoin +
-        totalAccountBalance;
+        rowData.totalDepositAndSavings +
+        rowData.totalApt +
+        rowData.totalCar +
+        rowData.totalGoldAndExchange +
+        rowData.totalStock +
+        rowData.totalCoin +
+        rowData.totalAccountBalance;
 
-      setAssetData(tempData);
+      setAssetData(rowData);
       setTotalAsset(total);
       // setTotalAsset(res.data); // 여기 받는 방법 수정
     });
