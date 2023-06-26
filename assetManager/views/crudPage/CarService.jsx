@@ -111,7 +111,7 @@ function CarService({}) {
         <HStack mt={"5"} space={5} justifyContent="center">
           <Button
             {...btnStyle}
-            borderColor="blue.400"
+            //borderColor="blue.400"
             _text={{ ...btnTextStyle, color: "blue.400" }}
             _pressed={{
               bg: "blue.200",
@@ -123,7 +123,7 @@ function CarService({}) {
           </Button>
           <Button
             {...btnStyle}
-            borderColor="pink.400"
+            //borderColor="pink.400"
             _text={{ ...btnTextStyle, color: "pink.400" }}
             _pressed={{
               bg: "pink.200",

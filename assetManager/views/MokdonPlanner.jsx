@@ -190,8 +190,8 @@ function MokdonPlanner(props) {
       <HStack space={5} justifyContent="center">
         <Button
           {...btnStyle}
-          borderColor="info.400"
-          _text={{ ...btnTextStyle, color: "black" }} // color: "info.400"
+          //borderColor="info.400"
+          _text={{ ...btnTextStyle, color: "info.400" }} // color: "info.400"
           _pressed={{
             bg: "info.200",
             borderColor: "white",
@@ -202,8 +202,8 @@ function MokdonPlanner(props) {
         </Button>
         <Button
           {...btnStyle}
-          borderColor="secondary.400"
-          _text={{ ...btnTextStyle, color: "black" }} // color: "secondary.400"
+          //borderColor="secondary.400"
+          _text={{ ...btnTextStyle, color: "secondary.400" }} // color: "secondary.400"
           _pressed={{
             bg: "secondary.200",
             borderColor: "white",

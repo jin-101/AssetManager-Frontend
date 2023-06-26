@@ -57,7 +57,7 @@ function AptCrudPage({ parentLoading }) {
         ]}
         updateBtn={{ title: "내역수정", onPress: updateOnPress }}
         serviceBtn={{
-          title: "우리동네 평당가 순위(DTI, DSR 계산??)",
+          title: "우리집 시세동향",
           onPress: serviceOnPress,
         }}
       />
