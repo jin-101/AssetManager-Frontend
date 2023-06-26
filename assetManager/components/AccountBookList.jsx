@@ -86,6 +86,19 @@ function AccountBookList({ item, setItemList, itemList, index, setDel }) {
       });
   };
 
+  const inputPriceFormat = (str) => {
+    //console.log("s", str);
+    const comma = (str) => {
+      str = String(str);
+      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    };
+    const uncomma = (str) => {
+      str = String(str);
+      return str.replace(/[^\d]+/g, "");
+    };
+    return comma(uncomma(str));
+  };
+
   console.log("왜 두번찍혀", index);
   // console.log(categoryData.length);
   return (
@@ -128,9 +141,9 @@ function AccountBookList({ item, setItemList, itemList, index, setDel }) {
           <Text>{item.content}</Text>
           <View style={{ flex: 1, alignItems: "flex-end" }}>
             {item.withdraw > 0 ? (
-              <Text>- {item.withdraw.toLocaleString()}원</Text>
+              <Text>- {inputPriceFormat(item.withdraw)}원</Text>
             ) : (
-              <Text>{item.deposit.toLocaleString()}원</Text>
+              <Text>{inputPriceFormat(item.deposit)}원</Text>
             )}
           </View>
         </View>
@@ -144,7 +157,7 @@ function AccountBookList({ item, setItemList, itemList, index, setDel }) {
 
           <View style={{ flex: 1, alignItems: "flex-end" }}>
             <Text style={styles.smallgray}>
-              {item.balance.toLocaleString()}원
+              {inputPriceFormat(item.balance)}원
             </Text>
           </View>
         </View>
