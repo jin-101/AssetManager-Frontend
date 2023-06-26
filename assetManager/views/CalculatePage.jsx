@@ -15,10 +15,27 @@ import React, { useState, useEffect } from "react";
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";
 import ContentScrollView from "@components/ContentScrollView";
-import Counter from "../components/Counter";
-import InputTextComponent from "../components/InputTextComponent";
-import InputRadioComponent from "../components/InputRadioComponent";
+import Counter from "@components/Counter";
+import InputTextComponent from "@components/InputTextComponent";
+import InputRadioComponent from "@components/InputRadioComponent";
 import { btnStyle, btnTextStyle } from "../styles";
+import axios from "axios";
+import { inputPriceFormat } from "../utils";
+import { Alert } from "react-native";
+
+const taxCheck = (value) => {
+  const str = value.toString();
+  const obj = { type: "", val: "" };
+  if (str.indexOf("-") !== -1) {
+    const fixVal = str.replace("-", "");
+    obj.type = "환급";
+    obj.val = inputPriceFormat(fixVal);
+  } else {
+    obj.type = "납부";
+    obj.val = inputPriceFormat(str);
+  }
+  return `${obj.val}원\n${obj.type}예정입니다.`;
+};
 
 function CalculatePage(props) {
   const { token } = useSelector((state) => state.login);
@@ -40,10 +57,12 @@ function CalculatePage(props) {
     loanRepaymentInterest: 0,
     ginapbuseaek: 0,
   }); //연말정산 관련 받아온 데이터가 있을 때 담기
+  const [tax, setTax] = useState(0);
   const [paging, setPaging] = useState(0);
   const maxPage = 3;
   const [btnIsVisible, setBtnIsVisible] = useState(false);
   const [calculateUpdate, setCalculateUpdate] = useState(false);
+  const [detailC, setDetailC] = useState("");
   const navigation = useNavigation();
 
   const accountBookNavi = () => {
@@ -71,7 +90,24 @@ function CalculatePage(props) {
   };
   // 등록시 axios로 데이터 보내기
   const register = () => {
-    console.log(data);
+    if (Object.keys(data).every((el) => data[el] !== "")) {
+      update();
+      axios({
+        url: `${apiPath}/rest/yearEndTax/saveAndUpdateTaxInformation.do`,
+        method: "POST",
+        headers: { "Content-Type": `application/json` },
+        data: JSON.stringify({
+          ...data,
+          detailCode: detailC,
+          memberId: token,
+          userId: token,
+        }),
+      }).then((res) => {
+        setTax(res.data);
+      });
+    } else {
+      Alert.alert("", "입력이 누락된 항목이 있습니다.");
+    }
   };
 
   // 각각의 상태값 변경
@@ -115,46 +151,38 @@ function CalculatePage(props) {
 
   //처음 시작시 데이터 받아오기
   useEffect(() => {
-    // axios({
-    //   url: `${apiPath}/rest/yearEndTax/saveTaxInformation.do`,
-    //   method: "GET",
-    //   params: {
-    //     userId: token,
-    //   },
-    // }).then((res) => {
-    //   setData(res.data);
-    // });
-    //모의 데이터
-    // setData({
-    //   ...data,
-    //   salary: 36000000,
-    //   nonTaxIncome: 1200000,
-    //   spouse: 1,
-    //   parents: 2,
-    //   children: 1,
-    //   sibling: 1,
-    //   fosterChildren: 1,
-    //   lowIncomePeople: 1,
-    //   oldPeople: 1,
-    //   disabledPerson: 1,
-    //   woman: 1,
-    //   oneParent: 1,
-    //   newBirthChild: 0,
-    //   loanRepaymentPrincipal: 0,
-    //   loanRepaymentInterest: 0,
-    //   ginapbuseaek: 0,
-    // });
+    axios({
+      url: `${apiPath}/rest/yearEndTax/saveTaxInformation.do`,
+      method: "GET",
+      params: {
+        userId: token,
+      },
+    }).then((res) => {
+      const { calculatedTax, detailCode, memberId, year, ...rest } = res.data;
+      setData(rest);
+      setDetailC(detailCode);
+      setTax(calculatedTax || 0);
+      if (calculatedTax) buttonControl();
+    });
   }, []);
-
-  console.log(data);
 
   return (
     <ContentScrollView>
       <Center>
         {Object.keys(data)?.length > 0 && data.salary !== 0 && (
-          <Box mt={5} mb={5} w={"90%"} bg={"amber.100"}>
+          <Box
+            mt={5}
+            mb={5}
+            w={"90%"}
+            bg={"gray.200"}
+            borderRadius={20}
+            alignItems={"center"}
+            justifyContent={"center"}
+          >
             <Box mt={5} mb={5}>
-              <Text>연말정산 예상 환급액 여기 만들기</Text>
+              <Text fontSize={20}>
+                {token}님은 {taxCheck(tax)}
+              </Text>
             </Box>
           </Box>
         )}
