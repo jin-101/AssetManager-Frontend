@@ -8,6 +8,7 @@ import {
   Spacer,
   Center,
   View,
+  Icon,
 } from "native-base";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -17,8 +18,10 @@ import { useNavigation } from "@react-navigation/native";
 import { inputPriceFormat } from "../../utils";
 import { Button } from "react-native-paper";
 import { leftPaperButton, rightPaperButtonNoWidth } from "../../styles";
+import { Feather } from "@expo/vector-icons";
 
 function StockCRUDpageUpdate({ parentLoading }) {
+  const trendingUp = () => <Feather name="trending-up"></Feather>;
   const navigation = useNavigation();
   const { token } = useSelector((state) => state.login);
   const havingStock = useSelector((state) => state.havingStockUpdate);
@@ -81,11 +84,21 @@ function StockCRUDpageUpdate({ parentLoading }) {
           >
             <HStack>
               <HStack space={[2, 3]} w={"50%"} pl={3} alignItems={"center"}>
-                <Avatar
-                  size="50px"
-                  source={require("@assets/bear.jpg")}
-                  ml="1"
-                />
+                {el.gain > 0 ? (
+                  <Avatar background={"white"}>
+                    <Feather name="trending-up" size={20} color="red"></Feather>
+                  </Avatar>
+                ) : (
+                  <Avatar background={"white"}>
+                    <Feather
+                      name="trending-down"
+                      size={20}
+                      color="blue"
+                    ></Feather>
+                    {/* size="40px"  */}
+                    {/* source={require("@assets/bear.jpg")} */}
+                  </Avatar>
+                )}
                 <VStack>
                   <Text
                     _dark={{ color: "warmGray.50" }}
@@ -112,7 +125,7 @@ function StockCRUDpageUpdate({ parentLoading }) {
                   _dark={{ color: "warmGray.50" }}
                   color={el.gain > 0 ? "danger.600" : "info.600"}
                   // alignSelf="center"
-                  bold
+                  //bold
                 >
                   수익률 : {(el.gain * 100).toFixed(2)}%
                 </Text>
