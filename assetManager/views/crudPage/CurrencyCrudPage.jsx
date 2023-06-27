@@ -9,6 +9,7 @@ import { apiPath } from "../../services";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { leftPaperButton, rightPaperButtonNoWidth } from "../../styles";
 import { Button } from "react-native-paper";
+import { Feather } from "@expo/vector-icons";
 
 const showCurrencyName = (currency) => {
   switch (currency) {
@@ -108,16 +109,27 @@ function CurrencyCrudPage({ parentLoading }) {
                 <Box
                   w={50}
                   h={50}
-                  bg={"gray.200"}
+                  bg={"white"}
+                  //borderWidth={1}
                   borderRadius={"full"}
                   justifyContent={"center"}
                   alignItems={"center"}
                 >
-                  <Icon
+                  {item.gain > 0 ? (
+                    <Feather name="trending-up" size={20} color="red"></Feather>
+                  ) : (
+                    <Feather
+                      name="trending-down"
+                      size={20}
+                      color="blue"
+                    ></Feather>
+                  )}
+                  {/* ★외환 아이콘 (통일성을 위해 외환 아이콘 대신 up, down 그래프 사용해봤음)
+                   <Icon
                     name={showCurrencyImg(item.currency)}
-                    size={30}
+                    size={20}
                     color="black"
-                  />
+                  /> */}
                 </Box>
 
                 <VStack>
@@ -147,7 +159,7 @@ function CurrencyCrudPage({ parentLoading }) {
                     _dark={{ color: "warmGray.50" }}
                     color={item.gain > 0 ? "danger.600" : "info.600"}
                     // alignSelf="center"
-                    bold
+                    // bold
                   >
                     수익률 : {(item.gain * 100).toFixed(2)}%
                   </Text>
