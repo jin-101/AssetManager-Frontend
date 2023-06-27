@@ -128,12 +128,12 @@ function HomeContainer({ flatListRef }) {
         <VStack space={10} alignItems="center" mt="10" mb="10">
           <Stack {...totalStyle.outBox}>
             {totalBox({
-              boxStyle: { ...totalStyle.inBox, bg: "#fff0f5", mb: 2.5 }, // lavenderblush (기존 bg: "amber.100")
+              boxStyle: { ...totalStyle.inBox, bg: "#ECEEFF", mb: 2.5 }, // 기존 : "#fff0f5" => 변경 : "#ECEEFF" (메인 컬러)
               title: "총 자산",
               value: totalAsset,
             })}
             {totalBox({
-              boxStyle: { ...totalStyle.inBox, bg: "#e6e6fa", mt: 2.5 }, // lavender (기존 bg: "darkBlue.100")
+              boxStyle: { ...totalStyle.inBox, bg: "#FFEBF0", mt: 2.5 }, // 기존 : "#e6e6fa" => 변경 : "#FFEBF0" (서브 컬러)
               title: "총 부채",
               value: totalLiability,
             })}
