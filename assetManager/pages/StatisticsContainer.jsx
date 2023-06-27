@@ -102,7 +102,6 @@ function StatisticsContainer() {
             재무지표
           </Button>
         </HStack>
-
         {/* 소비통계 */}
         {tab === 0 && (
           <VStack mt={5} mb={5} ml={5} mr={5}>
