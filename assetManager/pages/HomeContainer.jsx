@@ -43,7 +43,7 @@ const initialAsssetData = {
   totalAccountBalance: 0,
 };
 
-function HomeContainer() {
+function HomeContainer({ flatListRef }) {
   const navigation = useNavigation();
   const { token } = useSelector((state) => state.login);
   const [totalAsset, setTotalAsset] = useState(1);
@@ -124,7 +124,7 @@ function HomeContainer() {
 
   return (
     <>
-      <ContentScrollView>
+      <ContentScrollView flatListRef={flatListRef}>
         <VStack space={10} alignItems="center" mt="10" mb="10">
           <Stack {...totalStyle.outBox}>
             {totalBox({
