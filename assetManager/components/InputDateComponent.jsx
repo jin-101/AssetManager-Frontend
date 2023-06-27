@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from "react";
-import { Button, FormControl, HStack, Text } from "native-base";
+import { FormControl, HStack, Text } from "native-base";
 import { inputTagCommonStyle } from "../utils";
 import { TextInput } from "react-native";
 import DatePickerModal from "./DatePickerModal";
 import { formControlLableBasicStyle } from "../styles";
+import { Button } from "react-native-paper";
 
 function InputDateComponent({
   name = "",
@@ -67,8 +68,15 @@ function InputDateComponent({
             readOnly={true}
             {...textInputProps}
           />
-          <Button h="45" ml="2" onTouchEnd={modalShow} {...buttonProps}>
-            날짜를 선택하세요
+          <Button
+            mode="contained"
+            style={{ marginLeft: 20, width: "35%" }}
+            h="45"
+            ml="2"
+            onTouchEnd={modalShow}
+            {...buttonProps}
+          >
+            날짜 선택
           </Button>
         </HStack>
         <FormControl.HelperText {...formControlHelperStyleProps}>
