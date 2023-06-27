@@ -69,6 +69,11 @@ export const rightPaperButton = {
   style: { width: "30%" },
 };
 
+export const rightPaperButtonNoWidth = {
+  mode: "outlined",
+  buttonColor: "#F8F8FF",
+};
+
 export const boxStyle = StyleSheet.create({
   backgroundColor: "#ECEEFF",
   width: "90%",
