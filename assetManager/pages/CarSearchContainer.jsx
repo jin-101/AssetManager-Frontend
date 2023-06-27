@@ -3,6 +3,7 @@ import InputTextComponent from "@components/InputTextComponent";
 import { Box, Button, Stack } from "native-base";
 import { useSelector } from "react-redux";
 import { carIdUpdate } from "../action";
+import { boxStyle } from "../styles";
 
 function CarSearchContainer({ register }) {
   const { carId } = useSelector((state) => state.car);
@@ -13,7 +14,7 @@ function CarSearchContainer({ register }) {
     register("add1");
   };
   return (
-    <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+    <Box {...boxStyle} mt="5" mb="5">
       <Stack>
         <InputTextComponent
           name="car"

@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { depositDelete, depositUpdate } from "../action";
 import { IconButton } from "react-native-paper";
 import { makeDateString } from "../utils";
+import { boxStyle } from "../styles";
 
 function DepositAddContainer({ item, isOnlyOne, bankList }) {
   console.log("DepoAddContainer >>", item);
@@ -23,7 +24,7 @@ function DepositAddContainer({ item, isOnlyOne, bankList }) {
   }, []);
 
   return (
-    <Box bg="blue.50" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+    <Box {...boxStyle} mt="5" mb="5">
       <Box w="100%">
         <HStack
           justifyContent="space-between"
