@@ -19,6 +19,8 @@ const graphColor = [
   "#008FA6", //#초록 008FA6
   "#4874CC", //#파랑 4874CC
   "#8B64B5", //#보라 8B64B5
+  "#A9AABC",
+  "#454655",
 ];
 const assetT = {
   totalDepositAndSavings: "예적금",

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Box, FormControl, HStack, Button } from "native-base";
+import { Box, FormControl, HStack } from "native-base";
+
 import { View, StyleSheet } from "react-native";
 import InputTextComponent from "@components/InputTextComponent";
 import InputDateComponent from "@components/InputDateComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { addLoanValue } from "../action";
 import { loanInitialize } from "../action/loan";
+import { Button } from "react-native-paper";
 
 function LoanInput(props) {
   const dispatch = useDispatch();
@@ -28,11 +30,19 @@ function LoanInput(props) {
       <View style={styles.container}>
         <Box mb={5}>
           {isVisible ? (
-            <Button size="lg" onPress={buttonControl}>
+            <Button
+              mode="contained"
+              //size="lg"
+              onPress={buttonControl}
+            >
               숨기기
             </Button>
           ) : (
-            <Button size="lg" onPress={buttonControl}>
+            <Button
+              mode="contained"
+              //size="lg"
+              onPress={buttonControl}
+            >
               대출 정보 입력하기
             </Button>
           )}
