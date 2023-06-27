@@ -94,9 +94,9 @@ function StatisticsContainer() {
           <Button
             {...btnStyle}
             //borderColor="secondary.400"
-            _text={{ ...btnTextStyle, color: "secondary.400" }}
+            _text={{ ...btnTextStyle, color: "red.400" }}
             _pressed={{
-              bg: "secondary.200",
+              bg: "red.200",
               borderColor: "white",
             }}
             onPress={() => changeTab(1)}
