@@ -4,7 +4,6 @@ import { LineChart } from "react-native-chart-kit";
 import { apiPath } from "../services";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { Easing } from "react-native";
 import CustomPieChart from "./CustomPieChart";
 import YearAndMonthSelect from "./YearAndMonthSelect";
 import { accountInputData } from "../action";
@@ -131,7 +130,6 @@ function AccountBookAnalysis() {
     accountTotalList[yearAndMonth?.year + yearAndMonth?.month] &&
     Object.keys(accountTotalList).length > 0
   ) {
-    console.log("그리기");
     totalWithdraw = accountTotalList[
       yearAndMonth?.year + yearAndMonth?.month
     ].reduce((total, item) => total + item.withdraw, 0);
@@ -150,14 +148,22 @@ function AccountBookAnalysis() {
         assetTitle[index] = el;
       });
   }
+
+  console.log(assetData, assetTitle);
   return (
     <>
       <Box mb={10} w={"100%"} alignItems={"center"} justifyContent={"center"}>
         <YearAndMonthSelect parentCallback={makeYM} />
         <CustomPieChart
           totalValue={totalWithdraw}
-          centerTitle="소비 패턴"
-          assetTitle={assetTitle}
+          centerTitle={
+            Object.keys(assetData).length > 0 ? "소비 패턴" : "내역 없음"
+          }
+          assetTitle={
+            Object.keys(assetData).length === 1
+              ? { [Object.keys(assetData)[0]]: "전체" }
+              : assetTitle
+          }
           assetData={assetData}
         />
       </Box>

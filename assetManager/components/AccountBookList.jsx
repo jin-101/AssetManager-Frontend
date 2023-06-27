@@ -77,7 +77,7 @@ function AccountBookList({ item, preData, index, yearMonthKey }) {
     })
       .then(() => {
         dispatch(accountDeleteData(yearMonthKey, detailCode));
-        dispatch(isAddDeleteData("add"));
+        dispatch(isAddDeleteData("DELETE"));
         //삭제한 detailCode의 아이템만 빼고 선택하여 아이템 리스트에 새로 넣어주는 것
         //item.detailCode : 전체 아이템의 디테일 코드
         //detailCode : 삭제한 디테일 코드
