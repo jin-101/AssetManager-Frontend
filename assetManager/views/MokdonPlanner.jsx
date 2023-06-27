@@ -25,6 +25,9 @@ import {
   boxStyle2,
   btnStyle,
   btnTextStyle,
+  btnTextStyle2,
+  leftBtnPressStyle,
+  rightBtnPressStyle,
   rightPaperButton,
   rightPaperButtonNoWidth,
 } from "../styles";
@@ -201,13 +204,8 @@ function MokdonPlanner(props) {
         <Button
           {...btnStyle}
           //borderColor="info.400"
-          backgroundColor="white"
-          _text={{ ...btnTextStyle, color: "gray.500" }} // color: "info.400"
-          _pressed={{
-            bg: "#ECEEFF",
-            //bg: "info.200",
-            borderColor: "gray",
-          }}
+          _text={btnTextStyle2}
+          _pressed={leftBtnPressStyle}
           onPress={mokdonBtn}
         >
           목돈 마련 플래너
@@ -215,12 +213,8 @@ function MokdonPlanner(props) {
         <Button
           {...btnStyle}
           //borderColor="secondary.400"
-          backgroundColor={"white"}
-          _text={{ ...btnTextStyle, color: "gray.500" }} // color: "secondary.400"
-          _pressed={{
-            bg: "#FFEBF0",
-            borderColor: "gray",
-          }}
+          _text={btnTextStyle2}
+          _pressed={rightBtnPressStyle}
           onPress={calculatorBtn}
         >
           예적금 이자 계산기
