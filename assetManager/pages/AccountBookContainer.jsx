@@ -1,6 +1,4 @@
 import axios from "axios";
-import ModalSelector from "react-native-modal-selector";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,27 +8,17 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Modal,
   ScrollView,
   StyleSheet,
 } from "react-native";
 import { apiPath } from "../services";
 import AccountBookList from "@components/AccountBookList";
-import {
-  Button,
-  Pressable,
-  HStack,
-  Center,
-  Icon,
-  Box,
-  FormControl,
-  Select,
-} from "native-base";
+import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import {
   accountInputData,
   accountUpdateData,
-  isAddData,
+  isAddDeleteData,
 } from "../action/account";
 import YearAndMonthSelect from "../components/YearAndMonthSelect";
 import { footerHeight } from "../styles";
@@ -83,12 +71,8 @@ function AccountBookContainer() {
     container: {
       flex: 1,
       width: "100%",
-      // justifyContent: "center",
-      // alignItems: "center",
     },
     picker: {
-      // height: 50,
-      // width: 200,
       fontSize: 15, // 글씨 크기 조정
       backgroundColor: "white",
     },
@@ -97,61 +81,73 @@ function AccountBookContainer() {
     },
   });
 
-  const today = new Date();
-  const year = today.getFullYear(); // 연도
-  const month = today.getMonth() + 1; // 월 (0부터 시작하므로 1을 더함)
+  const [yearAndMonth, setYearAndMonth] = useState({
+    year: "",
+    month: "",
+  });
+  const { year: currentYear, month: currentMonth } = yearAndMonth;
 
-  const [currentYear, setCurrentYear] = useState(year);
-  const [currentMonth, setCurrentMonth] = useState(month);
-  const [selectedYear, setSelectedYear] = useState(year);
-  const [selectedMonth, setSelectedMonth] = useState(month);
-  const [currentYearMonthKey, setCurrentYearMonthKey] = useState(
-    // currentYear.toString() + currentMonth.toString()
-    ""
-  );
+  const makeYM = (year, month) => {
+    setYearAndMonth({
+      ...yearAndMonth,
+      year: year.toString(),
+      month: month.toString(),
+    });
+  };
+
+  const [isAddOrDelete, setIsAddOrDelete] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
   const { token } = useSelector((state) => state.login); //아이디 가져오는 법
-  // const [isLoading, setIsLoading] = useState(false);
-  const { accountTotalList, isAdd, key } = useSelector(
-    (state) => state.account
-  );
+  const { accountTotalList, isAdd } = useSelector((state) => state.account); // isAdd, key
   const dispatch = useDispatch();
-  let itemList = accountTotalList[key] || [];
-  // const [itemList, setItemList] = useState(
-  //   accountTotalList[currentYearMonthKey] || []
-  // );
 
-  useEffect(() => {
+  const axiosGetList = ({ callback, year, month }) => {
     axios({
       method: "post",
       url: apiPath + "/rest/webboard/list.do",
       data: JSON.stringify({
-        year: currentYear,
-        month: currentMonth,
+        year: year,
+        month: month,
         memberId: token,
       }),
       headers: { "Content-Type": `application/json` },
     })
       .then((response) => {
-        const myKey = currentYear.toString() + currentMonth.toString();
-        console.log(myKey, "??");
-        // if (
-        //   !Object.keys(accountTotalList).includes(myKey) ||
-        //   isAdd.length > 0
-        // ) {
-        dispatch(accountInputData(myKey, response.data, ""));
-        // } else {
-        //   dispatch(currentKey(myKey));
-        // }
-        // setCurrentYearMonthKey(currentKey);
+        console.log(year + month, ">>>??");
+        dispatch(accountInputData(year + month, response.data, ""));
+        if (callback) callback();
       })
       .catch((error) => {});
-  }, [currentMonth, isAdd, key]);
+  };
+
+  // 렌더링
+  useEffect(() => {
+    const { year, month } = yearAndMonth;
+    console.log(isAdd, "Effect");
+    if (year !== "" && month !== "" && !accountTotalList[year + month]) {
+      console.log("useEffect 여기는 없을떄만 들어와!");
+      axiosGetList({ year, month });
+    }
+  }, [yearAndMonth, isAddOrDelete]); //key ,isAdd
+
+  //추가 삭제시 엑시오스 다시 요청
+  if (isAdd === "Add" || isAdd === "DELETE") {
+    dispatch(isAddDeleteData(""));
+    axiosGetList({
+      year: currentYear,
+      month: currentMonth,
+      callback: () => setIsAddOrDelete(!isAddOrDelete),
+    });
+  }
+
+  let itemList = accountTotalList[currentYear + currentMonth] || [];
+  console.log("out", isAdd, { yearAndMonth }, Object.keys(accountTotalList));
+
   const ListSave = () => {
     dispatch(
       accountUpdateData(
-        key,
+        currentYear + currentMonth,
         itemList.detailCode,
         itemList.memo,
         itemList.category
@@ -169,47 +165,6 @@ function AccountBookContainer() {
         console.log(error);
       });
   };
-
-  const handleMinusMonth = () => {
-    if (currentMonth === 1) {
-      setCurrentYear((prevYear) => prevYear - 1);
-      setCurrentMonth(12);
-    } else {
-      setCurrentMonth((prevMonth) => prevMonth - 1);
-    }
-  };
-
-  const handlePlusMonth = () => {
-    if (currentMonth === 12) {
-      setCurrentYear((prevYear) => prevYear + 1);
-      setCurrentMonth(1);
-    } else {
-      setCurrentMonth((prevMonth) => prevMonth + 1);
-    }
-  };
-
-  const handleToggleModal = () => {
-    setShowModal((prevState) => !prevState);
-    setSelectedYear(currentYear);
-    setSelectedMonth(currentMonth);
-  };
-
-  const handleSelectMonth = () => {
-    setCurrentYear(selectedYear);
-    setCurrentMonth(selectedMonth);
-    setShowModal(false);
-  };
-
-  const handleBackdropPress = () => {
-    setShowModal(false);
-  };
-
-  // useEffect(() => {
-  //   if (currentYearMonthKey !== "") {
-  //     console.log("!@#$%^&*", currentYearMonthKey);
-  //     setItemList(accountTotalList[currentYearMonthKey]);
-  //   }
-  // }, [accountTotalList[currentYearMonthKey]]);
 
   const calculateWithdrawTotal = () => {
     return itemList.reduce(
@@ -239,13 +194,6 @@ function AccountBookContainer() {
 
   const navigation = useNavigation();
 
-  const moveToAnalysis = () => {
-    // navigation.navigate("AccountBookAnalysis", {
-    //   itemList,
-    //   currentMonth,
-    // });
-  };
-
   const moveToAccountUpload = () => {
     navigation.navigate("AccountBookUpload");
   };
@@ -254,6 +202,7 @@ function AccountBookContainer() {
     navigation.navigate("CashReceiptUpload");
   };
 
+  //추가 페이지로 보내기
   const moveToAdd = () => {
     navigation.navigate("AccountBookAddPage", { itemList });
   };
@@ -262,20 +211,17 @@ function AccountBookContainer() {
   const modalShow = (e) => {
     setShow((prev) => !prev);
   };
-  console.log(key, "//..");
-  console.log("axios data >>><<<<<>><<", accountTotalList[key]);
 
   return (
     <>
       <View>
         <View>
           <View style={{ backgroundColor: "gray" }}>
-            <YearAndMonthSelect />
+            <YearAndMonthSelect parentCallback={makeYM} />
           </View>
           <View style={{ backgroundColor: "pink" }}>
             <Button onPress={moveToAccountUpload}>업로드</Button>
             <Button onPress={moveToCashReceiptUpload}>연말정산</Button>
-            <Button onPress={moveToAnalysis}>분석</Button>
           </View>
         </View>
 
@@ -315,14 +261,14 @@ function AccountBookContainer() {
 
       {/* 카드내역 스크롤 뷰 자리 */}
       <ScrollView style={{ alignSelf: "center" }}>
-        {itemList.map((item, index) => {
+        {itemList?.map((item, index) => {
           return (
             <AccountBookList
               key={item.detailCode}
               item={item}
               preData={itemList[index - 1]?.exchangeDate}
               index={index}
-              yearMonthKey={key}
+              yearMonthKey={currentYear + currentMonth}
             />
           );
         })}
