@@ -45,39 +45,37 @@ function CurrencyAddPage() {
       buyDay,
       shares: buyQuantity,
     };
-    
 
-
-
-    
     try {
-
-      if(currencyInputDTO.currency==="" || currencyInputDTO.price===""|| currencyInputDTO.buyDay===""||currencyInputDTO.shares===""){
-        throw new Error("모든 요소를 입력해주세요")
+      if (
+        currencyInputDTO.currency === "" ||
+        currencyInputDTO.price === "" ||
+        currencyInputDTO.buyDay === "" ||
+        currencyInputDTO.shares === ""
+      ) {
+        throw new Error("모든 요소를 입력해주세요");
       }
 
       axios
-      .post(`${apiPath}/currency/currencyAssetInput`, null, {
-        params: currencyInputDTO,
-      })
-      .then(function (response) {
-        if (response.data === "등록완료") {
-          Alert.alert("자산등록완료");
-          onReset();
-        } else {
-          Alert.alert("자산등록실패 다시 등록해주세요");
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-        Alert.alert("서버에러 잠시만 기다려주세요0");
-      });
-
+        .post(`${apiPath}/currency/currencyAssetInput`, null, {
+          params: currencyInputDTO,
+        })
+        .then(function (response) {
+          if (response.data === "등록완료") {
+            Alert.alert("자산등록완료");
+            onReset();
+          } else {
+            Alert.alert("자산등록실패 다시 등록해주세요");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          Alert.alert("서버에러 잠시만 기다려주세요0");
+        });
     } catch (e) {
       Alert.alert("모든 요소를 입력하세요");
       onReset();
     }
-
   };
 
   const onReset = () => dispatch(currencyRest());
@@ -128,7 +126,7 @@ function CurrencyAddPage() {
               />
               <InputTextComponent
                 name="buyPrice"
-                inputType={"text"}
+                inputType={"number"}
                 formControlProps={{ mb: "5" }}
                 formControlLabelProps={{ text: "매수환율" }}
                 textInputStyle={{ width: "100%" }}
@@ -138,11 +136,11 @@ function CurrencyAddPage() {
               />
               <InputTextComponent
                 name="buyQuantity"
-                inputType={"text"}
+                inputType={"number"}
                 formControlProps={{ mb: "2.5" }}
                 formControlLabelProps={{ text: "매수수량" }}
                 textInputStyle={{ width: "100%" }}
-                placeholder="EX)100USD"
+                //placeholder="EX) 100 USD"
                 value={buyQuantity}
                 dispatchF={currencyInputUpdate}
               />

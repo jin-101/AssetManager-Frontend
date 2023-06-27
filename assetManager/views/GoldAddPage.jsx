@@ -35,33 +35,32 @@ function GoldAddPage() {
     console.log(goldInputDTO);
 
     try {
-      
-      if(goldInputDTO.price===""||goldInputDTO.buyDay===""||goldInputDTO.buyGram===""){
-        throw new Error("모든")
+      if (
+        goldInputDTO.price === "" ||
+        goldInputDTO.buyDay === "" ||
+        goldInputDTO.buyGram === ""
+      ) {
+        throw new Error("모든");
       }
 
       axios
-      .post(`${apiPath}/gold/goldAssetInput`, null, { params: goldInputDTO })
-      .then(function (response) {
-        if (response.data === "등록완료") {
-          Alert.alert("자산등록완료");
-          onReset();
-        } else {
-          Alert.alert("자산등록실패 다시 등록해주세요");
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-        Alert.alert("서버에러 잠시만 기다려주세요0");
-      });
-
-      
+        .post(`${apiPath}/gold/goldAssetInput`, null, { params: goldInputDTO })
+        .then(function (response) {
+          if (response.data === "등록완료") {
+            Alert.alert("자산등록완료");
+            onReset();
+          } else {
+            Alert.alert("자산등록실패 다시 등록해주세요");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          Alert.alert("서버에러 잠시만 기다려주세요0");
+        });
     } catch (error) {
       Alert.alert("모든요소를 입력하세요");
       onReset();
     }
-
-
   }, [buyGram, buyDate, buyPrice]);
 
   return (
@@ -99,7 +98,7 @@ function GoldAddPage() {
             />
             <InputTextComponent
               name="buyPrice"
-              inputType={"text"}
+              inputType={"number"}
               formControlProps={{ mb: "2.5" }}
               formControlLabelProps={{ text: "매수가격" }}
               textInputStyle={{ width: "100%" }}

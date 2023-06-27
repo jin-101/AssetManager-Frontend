@@ -42,7 +42,7 @@ const iconStyle = {
 };
 function AssetContainer() {
   const sliderWidth = windowWidth;
-  const itemWidth = windowWidth - 100;
+  const itemWidth = windowWidth - 60;
   const [loading, setLoading] = useState(true);
   const itemLength = 7; // item이 늘어나면 숫자 높여준다.
   let loadingCount = 0; // 자식에 데이터가 들어왔는지 판단하기 위한 변수
@@ -134,7 +134,7 @@ function AssetContainer() {
         style={{
           marginTop: 20,
           marginBottom: 20,
-          backgroundColor: "lightgray",
+          backgroundColor: "#A9AABC",
           borderRadius: 20,
         }}
       >
