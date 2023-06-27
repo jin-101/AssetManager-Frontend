@@ -76,13 +76,15 @@ export const rightPaperButtonNoWidth = {
   buttonColor: "#F8F8FF",
 };
 
+export const mainColor = "#ECEEFF";
+export const subColor = "#FFEBF0";
+
 export const boxStyle = StyleSheet.create({
   backgroundColor: "#ECEEFF", // ★★★ 우리 앱 메인 컬러
   width: "90%",
   p: "5",
   borderRadius: "2xl",
 });
-
 export const boxStyle2 = StyleSheet.create({
   backgroundColor: "#FFEBF0", // ★★★ 우리 앱 세컨 컬러 (테스트중)
   width: "90%",
@@ -108,6 +110,21 @@ export const btnTextStyle = StyleSheet.create({
 export const btnPressStyle = StyleSheet.create({
   bg: "gray.200",
   borderColor: "white",
+});
+export const btnTextStyle2 = StyleSheet.create({
+  color: "gray.600",
+  fontWeight: "semibold",
+  fontSize: 16,
+});
+// 1. 왼쪽 상단 버튼 Press
+export const leftBtnPressStyle = StyleSheet.create({
+  bg: mainColor,
+  borderColor: "gray",
+});
+// 2. 오른쪽 상단 버튼 Press
+export const rightBtnPressStyle = StyleSheet.create({
+  bg: subColor,
+  borderColor: "gray",
 });
 
 export const formControlLableBasicStyle = StyleSheet.create({
