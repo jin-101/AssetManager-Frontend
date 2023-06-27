@@ -77,7 +77,14 @@ export const rightPaperButtonNoWidth = {
 };
 
 export const boxStyle = StyleSheet.create({
-  backgroundColor: "#ECEEFF",
+  backgroundColor: "#ECEEFF", // ★★★ 우리 앱 메인 컬러
+  width: "90%",
+  p: "5",
+  borderRadius: "2xl",
+});
+
+export const boxStyle2 = StyleSheet.create({
+  backgroundColor: "#FFEBF0", // ★★★ 우리 앱 세컨 컬러 (테스트중)
   width: "90%",
   p: "5",
   borderRadius: "2xl",
@@ -92,6 +99,7 @@ export const btnStyle = StyleSheet.create({
   width: "42.5%",
   height: "50",
 });
+
 export const btnTextStyle = StyleSheet.create({
   color: "gray.900",
   fontWeight: "semibold",
