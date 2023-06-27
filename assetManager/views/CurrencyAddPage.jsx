@@ -4,10 +4,10 @@ import {
   FormControl,
   ScrollView,
   VStack,
-  Button,
   Select,
   Text,
   CheckIcon,
+  Stack,
 } from "native-base";
 import InputDateComponent from "@components/InputDateComponent";
 import InputTextComponent from "@components/InputTextComponent";
@@ -16,9 +16,15 @@ import { makeDateString } from "../utils";
 import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { boxStyle, formControlLableBasicStyle } from "../styles";
+import {
+  boxStyle,
+  formControlLableBasicStyle,
+  leftPaperButton,
+  rightPaperButton,
+} from "../styles";
 import { currencyInputUpdate, currencyRest } from "../action";
 import { apiPath } from "../services";
+import { Button } from "react-native-paper";
 
 function CurrencyAddPage() {
   const currentDate = makeDateString(new Date());
@@ -124,10 +130,27 @@ function CurrencyAddPage() {
                 value={buyQuantity}
                 dispatchF={currencyInputUpdate}
               />
-              <Button mb="5" onPress={onSubmit}>
-                외환등록
-              </Button>
-              <Button onPress={onReset}>초기화</Button>
+              <Stack
+                mb="2.5"
+                direction="row" // direction="row" => "column"으로 바꾸면 수직으로 쌓이게 됨
+                space={2}
+                // mx 이거 적용하면 버튼 너비가 줄어듦.
+                mx={{
+                  base: "auto",
+                  md: "0",
+                }}
+              >
+                <Button {...leftPaperButton} onPress={onReset}>
+                  초기화
+                </Button>
+                <Button
+                  {...rightPaperButton}
+                  style={{ width: "50%" }}
+                  onPress={onSubmit}
+                >
+                  외환등록
+                </Button>
+              </Stack>
             </FormControl>
           </Box>
         </Box>
