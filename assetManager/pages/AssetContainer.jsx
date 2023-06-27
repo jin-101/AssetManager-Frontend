@@ -21,6 +21,7 @@ import CurrencyCrudPage from "../views/crudPage/CurrencyCrudPage";
 import Loading from "@components/Loading";
 import StockCRUDpageUpdate from "../views/crudPage/StockCRUDpageUpdate";
 import CoinCrudPage from "../views/crudPage/CoinCrudPage";
+import { footerHeight, windowWidth } from "../styles";
 
 const entries = [
   { key: "1", title: "예/적금", naviPath: "depositCrud" },
@@ -40,8 +41,8 @@ const iconStyle = {
   color: "black",
 };
 function AssetContainer() {
-  const sliderWidth = Dimensions.get("window").width;
-  const itemWidth = Dimensions.get("window").width - 100;
+  const sliderWidth = windowWidth;
+  const itemWidth = windowWidth - 100;
   const [loading, setLoading] = useState(true);
   const itemLength = 7; // item이 늘어나면 숫자 높여준다.
   let loadingCount = 0; // 자식에 데이터가 들어왔는지 판단하기 위한 변수
@@ -176,6 +177,7 @@ function AssetContainer() {
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
         />
+        <View style={{ height: footerHeight }}></View>
       </ContentScrollView>
       {loading && <Loading />}
     </>
