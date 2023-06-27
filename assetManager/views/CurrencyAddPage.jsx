@@ -123,7 +123,7 @@ function CurrencyAddPage() {
               <InputTextComponent
                 name="buyQuantity"
                 inputType={"text"}
-                formControlProps={{ mb: "5" }}
+                formControlProps={{ mb: "2.5" }}
                 formControlLabelProps={{ text: "매수수량" }}
                 textInputStyle={{ width: "100%" }}
                 placeholder="EX)100USD"
