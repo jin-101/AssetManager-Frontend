@@ -25,7 +25,12 @@ import { useSelector } from "react-redux";
 import Loading from "@components/Loading";
 import ContentScrollView from "@components/ContentScrollView";
 import LoanInput from "../components/LoanInput";
-import { boxStyle, btnTextStyle } from "../styles";
+import {
+  boxStyle,
+  btnTextStyle,
+  leftPaperButton,
+  rightPaperButton,
+} from "../styles";
 import { Divider } from "react-native-paper";
 //import { AptSidoSelect, AptGuSelect } from "../components/AptSidoSelect";
 
@@ -438,9 +443,8 @@ function AptAddPage(props) {
           <ReactNativePaperButton
             //width={"80%"} // 버튼 너비
             //style={(size = "lg")}
-            mode="elevated"
-            style={{ width: "30%" }}
             //variant="subtle"
+            {...rightPaperButton}
             onPress={handleSubmit}
           >
             추가

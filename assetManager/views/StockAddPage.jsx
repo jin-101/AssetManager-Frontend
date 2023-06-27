@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, FormControl, ScrollView, VStack, Button } from "native-base";
+import { Box, FormControl, ScrollView, VStack, Stack } from "native-base";
 import InputDateComponent from "@components/InputDateComponent";
 import InputTextComponent from "@components/InputTextComponent";
 import { makeDateString } from "../utils";
@@ -8,7 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { stockInputUpdate, stockInputReset } from "../action";
 import axios from "axios";
 import { apiPath } from "../services";
-import { boxStyle } from "../styles";
+import { boxStyle, leftPaperButton, rightPaperButton } from "../styles";
+import { Button } from "react-native-paper";
 
 function StockAddPage() {
   const currentDate = makeDateString(new Date());
@@ -91,17 +92,34 @@ function StockAddPage() {
             <InputTextComponent
               name="buyQuantity"
               inputType={"text"}
-              formControlProps={{ mb: "5" }}
+              formControlProps={{ mb: "2.5" }}
               formControlLabelProps={{ text: "매수수량" }}
               textInputStyle={{ width: "100%" }}
               placeholder="EX)100주"
               value={buyQuantity}
               dispatchF={stockInputUpdate}
             />
-            <Button mb="5" onPress={onSubmit}>
-              자산등록
-            </Button>
-            <Button onPress={onRest}>초기화</Button>
+            <Stack
+              mb="2.5"
+              direction="row" // direction="row" => "column"으로 바꾸면 수직으로 쌓이게 됨
+              space={2}
+              // mx 이거 적용하면 버튼 너비가 줄어듦.
+              mx={{
+                base: "auto",
+                md: "0",
+              }}
+            >
+              <Button {...leftPaperButton} onPress={onRest}>
+                초기화
+              </Button>
+              <Button
+                {...rightPaperButton}
+                style={{ width: "50%" }}
+                onPress={onSubmit}
+              >
+                자산등록
+              </Button>
+            </Stack>
           </Box>
         </Box>
       </VStack>
