@@ -125,7 +125,7 @@ function StockCRUDpageUpdate({ parentLoading }) {
                   _dark={{ color: "warmGray.50" }}
                   color={el.gain > 0 ? "danger.600" : "info.600"}
                   // alignSelf="center"
-                  bold
+                  //bold
                 >
                   수익률 : {(el.gain * 100).toFixed(2)}%
                 </Text>
