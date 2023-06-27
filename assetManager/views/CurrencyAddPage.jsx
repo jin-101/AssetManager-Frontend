@@ -45,8 +45,18 @@ function CurrencyAddPage() {
       buyDay,
       shares: buyQuantity,
     };
+    
 
-    axios
+
+
+    
+    try {
+
+      if(currencyInputDTO.currency==="" || currencyInputDTO.price===""|| currencyInputDTO.buyDay===""||currencyInputDTO.shares===""){
+        throw new Error("모든 요소를 입력해주세요")
+      }
+
+      axios
       .post(`${apiPath}/currency/currencyAssetInput`, null, {
         params: currencyInputDTO,
       })
@@ -62,6 +72,12 @@ function CurrencyAddPage() {
         console.log(error);
         Alert.alert("서버에러 잠시만 기다려주세요0");
       });
+
+    } catch (e) {
+      Alert.alert("모든 요소를 입력하세요");
+      onReset();
+    }
+
   };
 
   const onReset = () => dispatch(currencyRest());

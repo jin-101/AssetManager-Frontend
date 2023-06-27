@@ -34,7 +34,13 @@ function GoldAddPage() {
 
     console.log(goldInputDTO);
 
-    axios
+    try {
+      
+      if(goldInputDTO.price===""||goldInputDTO.buyDay===""||goldInputDTO.buyGram===""){
+        throw new Error("모든")
+      }
+
+      axios
       .post(`${apiPath}/gold/goldAssetInput`, null, { params: goldInputDTO })
       .then(function (response) {
         if (response.data === "등록완료") {
@@ -48,6 +54,14 @@ function GoldAddPage() {
         console.log(error);
         Alert.alert("서버에러 잠시만 기다려주세요0");
       });
+
+      
+    } catch (error) {
+      Alert.alert("모든요소를 입력하세요");
+      onReset();
+    }
+
+
   }, [buyGram, buyDate, buyPrice]);
 
   return (
