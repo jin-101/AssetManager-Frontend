@@ -82,7 +82,7 @@ function StockAddPage() {
             />
             <InputTextComponent
               name="buyPrice"
-              inputType={"text"}
+              inputType={"number"}
               formControlProps={{ mb: "5" }}
               formControlLabelProps={{ text: "매수가격" }}
               textInputStyle={{ width: "100%" }}
@@ -91,11 +91,11 @@ function StockAddPage() {
             />
             <InputTextComponent
               name="buyQuantity"
-              inputType={"text"}
+              inputType={"number"}
               formControlProps={{ mb: "2.5" }}
               formControlLabelProps={{ text: "매수수량" }}
               textInputStyle={{ width: "100%" }}
-              placeholder="EX)100주"
+              placeholder="EX) 100주"
               value={buyQuantity}
               dispatchF={stockInputUpdate}
             />
