@@ -11,13 +11,14 @@ const pieGraphPositionFixValue = 0.25;
 const pieGraphCenterCircleSize = screenWidth * 0.37;
 
 const graphColor = [
-  "#FF3300", //빨
-  "#FF9900", //주
-  "#F8C12C", //노
-  "#00cc33", //초
-  "#0033ff", //파
-  "#000099", //남
-  "#9933cc", //보
+  "#E5669A", //#핑크 E5669A
+  "#FF9C76", //#주황 FF9C76
+  "#FFC463", //#노랑 FFC463
+  "#8BAA4D", //#연두 8BAA4D
+  "#55C8AD", //#민트 55C8AD
+  "#008FA6", //#초록 008FA6
+  "#4874CC", //#파랑 4874CC
+  "#8B64B5", //#보라 8B64B5
 ];
 const assetT = {
   totalDepositAndSavings: "예적금",
