@@ -16,6 +16,7 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { apiPath } from "../../services";
 import { inputPriceFormat } from "../../utils";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const showCurrencyName = (currency) => {
   switch (currency) {
@@ -34,25 +35,22 @@ const showCurrencyName = (currency) => {
   }
 };
 
-
-
-const showCurrencyImg = (currency)=>{
+const showCurrencyImg = (currency) => {
   switch (currency) {
     case "jpy":
-      return <Avatar size="50px" source={require("@assets/currency/yen.png") }ml="1"/> ;
+      return "currency-jpy";
     case "usd":
-      return <Avatar size="50px" source={require("@assets/currency/dollor.png") }ml="1"/>;
+      return "currency-usd";
     case "eur":
-      return <Avatar size="50px" source={require("@assets/currency/euro.png") }ml="1"/>;
+      return "currency-eur";
     case "gbp":
-      return <Avatar size="50px" source={require("@assets/currency/pound.png") }ml="1"/>;
+      return "currency-gbp";
     case "cnh":
-      return <Avatar size="50px" source={require("@assets/currency/yuan.png") }ml="1"/>;
+      return "currency-cny";
     default:
       break;
   }
-
-}
+};
 
 function CurrencyCrudPage({ parentLoading }) {
   const navigation = useNavigation();
@@ -89,69 +87,101 @@ function CurrencyCrudPage({ parentLoading }) {
   return (
     <View bgColor={"white"} w={"90%"} borderRadius={20}>
       <Box mt="3">
-        <Center mb="5">
-          <Text fontSize="2xl" bold color={avergeGain>0?"danger.600":"info.600"}>평균수익률:{avergeGain.toFixed(4)*100}%</Text>              
+        <Center mt="5" mb="5">
+          <HStack justifyContent={"center"} alignItems={"center"}>
+            <Text fontSize={20} bold>
+              평균수익률 :
+            </Text>
+            <Text
+              fontSize={20}
+              bold
+              color={avergeGain > 0 ? "danger.600" : "info.600"}
+            >
+              {" " + Math.round(avergeGain.toFixed(4) * 1000) / 10}%
+            </Text>
+          </HStack>
         </Center>
         {currency?.map((item, index) => (
           <Box
             key={index}
-            borderBottomWidth="1"
+            borderBottomWidth="0.5"
             _dark={{ borderColor: "muted.50" }}
-            borderColor="muted.800"
+            borderColor="gray.200"
             pl={["0", "4"]}
             pr={["0", "5"]}
             py="2"
           >
-            <HStack space={[3, 3]} justifyContent="space-between">
-              {showCurrencyImg(item.currency)}
-              <VStack>
-                <Text
-                  _dark={{ color: "warmGray.50" }}
-                  color="coolGray.800"
-                  bold
-                  fontSize="lg"
+            <HStack>
+              <HStack ml={5} space={[3, 3]} w={"45%"}>
+                <Box
+                  w={50}
+                  h={50}
+                  bg={"gray.200"}
+                  borderRadius={"full"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
                 >
-                  {item.currency.toUpperCase()}
-                </Text>
-                <Text
-                  color="coolGray.600"
-                  _dark={{ color: "warmGray.200" }}
-                  fontSize="md"
-                >
-                  {showCurrencyName(item.currency)}
-                </Text>
-              </VStack>
-              <Spacer />
-              <VStack>
-                <Text
-                  fontSize="xs"
-                  pr="5"
-                  _dark={{ color: "warmGray.50" }}
-                  color={item.gain>0?"danger.600":"info.600"}
-                  alignSelf="center"
-                  bold
-                >
-                  수익률  :  {(item.gain*100).toFixed(2)}%
-                  
-                </Text>
-                <Text
-                  fontSize="xs"
-                  pr="5"
-                  _dark={{ color: "warmGray.50" }}
-                  color="coolGray.800"
-                  alignSelf="center"
-                >
-                  현재환율 : {item.marketPrice.toFixed(2)}원
-                </Text>
-                <Text
-                  fontSize="xs"
-                  pr="5"
-                  _dark={{ color: "warmGray.50" }}
-                  color="coolGray.800"
-                  alignSelf="center"
-                >
-                  매입환율:{item.buyPrice.toFixed(2)}원
-                </Text>
+                  <Icon
+                    name={showCurrencyImg(item.currency)}
+                    size={30}
+                    color="black"
+                  />
+                </Box>
+
+                <VStack>
+                  <Text
+                    _dark={{ color: "warmGray.50" }}
+                    color="coolGray.800"
+                    bold
+                    fontSize="lg"
+                  >
+                    {item.currency.toUpperCase()}
+                  </Text>
+                  <Text
+                    color="coolGray.600"
+                    _dark={{ color: "warmGray.200" }}
+                    fontSize="md"
+                  >
+                    {showCurrencyName(item.currency)}
+                  </Text>
+                </VStack>
+                <Spacer />
+              </HStack>
+              <VStack w={"50%"}>
+                <Box>
+                  <Text
+                    fontSize="xs"
+                    pr="5"
+                    _dark={{ color: "warmGray.50" }}
+                    color={item.gain > 0 ? "danger.600" : "info.600"}
+                    // alignSelf="center"
+                    bold
+                  >
+                    수익률 : {(item.gain * 100).toFixed(2)}%
+                  </Text>
+                </Box>
+                <Box>
+                  <Text
+                    fontSize="xs"
+                    pr="5"
+                    _dark={{ color: "warmGray.50" }}
+                    color="coolGray.800"
+                    // alignSelf="center"
+                  >
+                    현재환율 : {item.marketPrice.toFixed(2)}원
+                  </Text>
+                </Box>
+                <Box>
+                  <Text
+                    fontSize="xs"
+                    pr="5"
+                    _dark={{ color: "warmGray.50" }}
+                    color="coolGray.800"
+                    // alignSelf="center"
+                  >
+                    매입환율:{item.buyPrice.toFixed(2)}원
+                  </Text>
+                </Box>
               </VStack>
             </HStack>
           </Box>
