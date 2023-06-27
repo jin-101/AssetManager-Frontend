@@ -3,9 +3,11 @@ import { isAndroid } from "../utils";
 
 export const { width: windowWidth, height: windowHeight } =
   Dimensions.get("window");
-export const footerHeight = isAndroid
-  ? windowHeight * 0.1
-  : windowHeight * 0.15;
+// export const footerHeight = isAndroid
+//   ? windowHeight * 0.1
+//   : windowHeight * 0.15;
+
+export const footerHeight = windowHeight * 0.1;
 
 export const modalBg = {
   ...StyleSheet.absoluteFillObject,

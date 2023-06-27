@@ -30,7 +30,7 @@ function AssetSurmary({
       <Box w={"90%"}>
         {data?.map((el, index) => (
           <Box
-            bgColor={"amber.50"}
+            bgColor={"#ECEEFF"} // 기존 : amber.50
             key={index}
             mt={index === 0 ? 2.5 : 5}
             mb={index === data?.length - 1 ? 5 : 2.5}
