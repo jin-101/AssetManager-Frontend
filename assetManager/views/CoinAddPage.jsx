@@ -23,6 +23,7 @@ import ContentScrollView from "@components/ContentScrollView";
 import SelectComponent from "../components/SelectComponent";
 import { View } from "react-native";
 import { Modal } from "react-native";
+import { boxStyle } from "../styles";
 
 function CoinAddPage(props) {
   const [market, setMarket] = useState("");
@@ -171,7 +172,7 @@ function CoinAddPage(props) {
   return (
     <ContentScrollView>
       <VStack mt="10" mb="10" alignItems="center">
-        <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mb="5">
+        <Box {...boxStyle} mb="5">
           <FormControl>
             <Box mb="10">
               <HStack alignItems="center">

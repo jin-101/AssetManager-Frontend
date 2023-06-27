@@ -6,7 +6,7 @@ import InputDateComponent from "@components/InputDateComponent";
 import axios from "axios";
 import { apiPath } from "../services";
 import { Text } from "react-native";
-import { formControlLableBasicStyle } from "../styles";
+import { boxStyle, formControlLableBasicStyle } from "../styles";
 import { useDispatch, useSelector } from "react-redux";
 import {
   carCompanyListSearch,
@@ -65,7 +65,7 @@ function CarAddContainer({ register }) {
   }, [carCompany]);
 
   return (
-    <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+    <Box {...boxStyle} mt="5" mb="5">
       <Box w="100%">
         <Text
           style={{

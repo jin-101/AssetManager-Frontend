@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { stockInputUpdate, stockInputReset } from "../action";
 import axios from "axios";
 import { apiPath } from "../services";
+import { boxStyle } from "../styles";
 
 function StockAddPage() {
   const currentDate = makeDateString(new Date());
@@ -49,7 +50,7 @@ function StockAddPage() {
   return (
     <ScrollView>
       <VStack alignItems="center" mt="5" mb="5">
-        <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+        <Box {...boxStyle} mt="5" mb="5">
           <Box w="100%">
             <InputTextComponent
               name="stockName"

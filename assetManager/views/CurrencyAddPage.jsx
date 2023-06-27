@@ -16,7 +16,7 @@ import { makeDateString } from "../utils";
 import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { formControlLableBasicStyle } from "../styles";
+import { boxStyle, formControlLableBasicStyle } from "../styles";
 import { currencyInputUpdate, currencyRest } from "../action";
 import { apiPath } from "../services";
 
@@ -63,7 +63,7 @@ function CurrencyAddPage() {
   return (
     <ContentScrollView>
       <VStack alignItems="center" mt="5" mb="5">
-        <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+        <Box {...boxStyle} mt="5" mb="5">
           <Box w="100%">
             <FormControl>
               <FormControl.Label>
