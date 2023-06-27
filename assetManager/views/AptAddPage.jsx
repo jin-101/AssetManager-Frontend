@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 import Loading from "@components/Loading";
 import ContentScrollView from "@components/ContentScrollView";
 import LoanInput from "../components/LoanInput";
+import { boxStyle } from "../styles";
 //import { AptSidoSelect, AptGuSelect } from "../components/AptSidoSelect";
 
 function AptAddPage(props) {
@@ -236,7 +237,15 @@ function AptAddPage(props) {
   return (
     <ContentScrollView>
       <VStack mt="5" mb="5" alignItems="center">
-        <Box bg="blue.100" w="90%" p="5" borderRadius="2xl">
+        <Box
+          {...boxStyle}
+          bg="#ECEEFF" // 색 참조 : https://mycolor.space/?hex=%234F69C6&sub=1
+          // 다른 색 : #F8F8FF
+          // bg="blue.100"
+          w="90%"
+          p="5"
+          borderRadius="2xl"
+        >
           <FormControl>
             <Box mb="5">
               <Text mb={5} fontSize={25}>
@@ -412,7 +421,7 @@ function AptAddPage(props) {
           </FormControl>
         </Box>
         {/* 6. 대출 Show/Hide 코드 */}
-        <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+        <Box {...boxStyle} mt="5" mb="5">
           <LoanInput />
         </Box>
         {/* <ShowHideBox state={aaaa} setState={setAaaa}></ShowHideBox> */}
