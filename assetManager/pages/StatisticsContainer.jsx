@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { apiPath } from "../services";
-import { Box, Button, HStack, VStack, Text } from "native-base";
+import { Box, Button, HStack, VStack, Text, Center } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
 import ContentScrollView from "@components/ContentScrollView";
 import axios from "axios";
@@ -106,16 +106,18 @@ function StatisticsContainer() {
         </HStack>
         {/* 소비통계 */}
         {tab === 0 && (
-          <VStack mt={5} mb={5} ml={5} mr={5}>
-            <Box p="2.5" alignItems={"center"} bg={"white"}>
-              <Text
-                color={"blue.400"}
-                fontSize={18}
-                //fontWeight={"semibold"}
-              >{`${token} (${fiInd.age}세) 님의 소비통계`}</Text>
-            </Box>
+          <Center>
+            <VStack w={"85%"} mt={5} mb={10} ml={5} mr={5}>
+              <Box p="2.5" alignItems={"center"} bg={"white"}>
+                <Text
+                  color={"blue.400"}
+                  fontSize={18}
+                  //fontWeight={"semibold"}
+                >{`${token} (${fiInd.age}세) 님의 소비통계`}</Text>
+              </Box>
+            </VStack>
             <AccountBookAnalysis />
-          </VStack>
+          </Center>
         )}
         {/* 재무지표 */}
         {tab === 1 && (

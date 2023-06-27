@@ -58,6 +58,24 @@ export const commonHeaderStyle = {
   // ),
 };
 
+export const leftPaperButton = {
+  mode: "contained",
+  style: { width: "30%" },
+};
+
+export const rightPaperButton = {
+  mode: "outlined",
+  buttonColor: "#F8F8FF",
+  style: { width: "30%" },
+};
+
+export const boxStyle = StyleSheet.create({
+  backgroundColor: "#ECEEFF",
+  width: "90%",
+  p: "5",
+  borderRadius: "2xl",
+});
+
 export const btnStyle = StyleSheet.create({
   variant: "outline",
   backgroundColor: "white",

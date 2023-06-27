@@ -26,17 +26,18 @@ function LoanInput(props) {
         </FormControl.Label>
       </HStack>
       <View style={styles.container}>
-        {isVisible ? (
-          <Button size="lg" onPress={buttonControl}>
-            숨기기
-          </Button>
-        ) : (
-          <Button size="lg" onPress={buttonControl}>
-            대출 정보 입력하기
-          </Button>
-        )}
-
-        <Box mt="5">
+        <Box mb={5}>
+          {isVisible ? (
+            <Button size="lg" onPress={buttonControl}>
+              숨기기
+            </Button>
+          ) : (
+            <Button size="lg" onPress={buttonControl}>
+              대출 정보 입력하기
+            </Button>
+          )}
+        </Box>
+        <Box>
           {isVisible && (
             <View style={styles.box}>
               <InputTextComponent
@@ -86,7 +87,7 @@ function LoanInput(props) {
               <InputTextComponent
                 name="maturityDate"
                 formControlLabelProps={{ text: "대출만기 (남은 기간)" }}
-                placeholder="1년 ~ 50년"
+                placeholder="최소 1년 ~ 최대 50년"
                 inputType="number"
                 value={maturityDate}
                 dispatchF={addLoanValue}
