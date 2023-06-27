@@ -15,6 +15,8 @@ import {
 import { BarChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 import { View } from "react-native";
+import YearAndMonthSelect from "../components/YearAndMonthSelect";
+import AccountBookAnalysis from "../components/AccountBookAnalysis";
 import { btnStyle, btnTextStyle, footerHeight } from "../styles";
 
 function StatisticsContainer() {
@@ -112,6 +114,7 @@ function StatisticsContainer() {
                 //fontWeight={"semibold"}
               >{`${token} (${fiInd.age}세) 님의 소비통계`}</Text>
             </Box>
+            <AccountBookAnalysis />
           </VStack>
         )}
         {/* 재무지표 */}

@@ -6,7 +6,14 @@ import {
   Button as NBButton,
 } from "native-base";
 import React, { useState } from "react";
-import { Text, ScrollView, StyleSheet, Button, View } from "react-native";
+import {
+  Text,
+  ScrollView,
+  StyleSheet,
+  Button,
+  View,
+  Alert,
+} from "react-native";
 import InputRadioComponent from "@components/InputRadioComponent";
 import InputTextComponent from "@components/InputTextComponent";
 import InputDateComponent from "@components/InputDateComponent";
@@ -20,11 +27,13 @@ import { left } from "@popperjs/core";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import axios from "axios";
 import { apiPath } from "../services";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { isAddDeleteData } from "../action";
 
 function AccountBookAddPage({ route }) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const { token } = useSelector((state) => state.login);
   const currentDate = makeDateString(new Date());
   const [selectedDate, setSelectedDate] = useState(currentDate);
@@ -34,6 +43,7 @@ function AccountBookAddPage({ route }) {
   const [content, setContent] = useState("");
   const [memo, setMemo] = useState("");
   const [category, setCategory] = useState("");
+  const { isAdd } = useSelector((state) => state.account);
 
   const { itemList } = route.params;
   const uniqueAccountNumbers = [
@@ -43,7 +53,6 @@ function AccountBookAddPage({ route }) {
 
   const [show, setShow] = useState(false);
   const modalShow = (e) => {
-    console.log("///");
     setShow((prev) => !prev);
   };
 
@@ -74,7 +83,7 @@ function AccountBookAddPage({ route }) {
 
   //시간만 스트링 형태로 출력 12:00:00 AM
   const selectedTimeString = selectedTime.toLocaleTimeString();
-  console.log(selectedTimeString);
+  // console.log(selectedTimeString);
 
   //12:00:00 AM의 길이
   const TimeLength = selectedTimeString.length;
@@ -92,6 +101,18 @@ function AccountBookAddPage({ route }) {
   console.log("화면출력용!" + TimeforValue);
 
   const SaveOneAccount = () => {
+    if (money === "") {
+      Alert.alert("", "금액을 입력해주세요.");
+      return;
+    }
+    if (content === "") {
+      Alert.alert("", "거래처를 입력해주세요.");
+      return;
+    }
+    if (selectedAccountNumber === "") {
+      Alert.alert("", "거래수단을 선택해주세요.");
+      return;
+    }
     axios({
       url: apiPath + "/rest/webboard/saveoneaccount.do",
       method: "post",
@@ -110,7 +131,9 @@ function AccountBookAddPage({ route }) {
     })
       .then(() => {
         console.log("axios 가계부 한건 추가 성공");
-        navigation.navigate("AccountBook");
+        dispatch(isAddDeleteData("Delete"));
+        // navigation.navigate("AccountBook", { type: "add" });
+        navigation.goBack();
       })
       .catch((err) => {
         console.log(err);

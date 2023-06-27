@@ -14,6 +14,7 @@ import avgRate from "./avgRate";
 import loan from "./loan";
 import havingStockUpdate from "./havingStock";
 import userCar from "./userCar";
+import account from "./account";
 import bestWorst from "./BestWorst";
 
 const rootReducer = combineReducers({
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
   loan,
   havingStockUpdate,
   userCar,
-  bestWorst
+  account,
+  bestWorst,
 });
 
 export default rootReducer;
