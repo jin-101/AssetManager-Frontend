@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { StyleSheet, View, Pressable, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -62,7 +62,7 @@ function MainPage() {
   const returnComponent = () => {
     switch (pageState) {
       case 0:
-        return <HomeContainer />;
+        return <HomeContainer flatListRef={flatListRef} />;
       case 1:
         return <SearchContainer />;
       case 2:
@@ -72,7 +72,15 @@ function MainPage() {
       case 4:
         return <AccountBookContainer />;
       default:
-        return <HomeContainer />;
+        return <HomeContainer flatListRef={flatListRef} />;
+    }
+  };
+
+  const flatListRef = useRef();
+
+  const handleResetScroll = () => {
+    if (flatListRef.current) {
+      flatListRef.current.scrollToOffset({ offset: 0, animated: true });
     }
   };
 
@@ -81,17 +89,14 @@ function MainPage() {
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
         <View style={styles.container}>
           {returnComponent()}
-          <Footerbar />
+          <Footerbar onPress={handleResetScroll} />
         </View>
       </KeyboardAvoidingView>
       <Modal
-        // backdropColor="white"
-        // backdropOpacity={1}
         style={{
           width: "100%",
           height: "100%",
           backgroundColor: "white",
-          // alignItems: "stretch",
         }}
         isVisible={slideModalOpen}
         animationIn="slideInRight"

@@ -21,9 +21,9 @@ function AssetSurmary({
     serviceBtn;
 
   return (
-    <Center borderRadius={20} mt={10} mb={10}>
+    <Center borderRadius={20} mt={8} mb={10}>
       <Box>
-        <Text fontSize={20} mb={2.5} fontWeight={"bold"}>
+        <Text fontSize={20} mb={5} fontWeight={"bold"}>
           {title}
         </Text>
       </Box>
