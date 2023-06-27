@@ -15,6 +15,7 @@ import axios from "axios";
 import { apiPath } from "../../services";
 import {havingStockUpdate} from "../../action"
 import { useNavigation } from "@react-navigation/native";
+import { inputPriceFormat } from "../../utils";
 
 function StockCRUDpageUpdate({ parentLoading }) {
   const navigation = useNavigation();
@@ -54,8 +55,8 @@ function StockCRUDpageUpdate({ parentLoading }) {
   return (
     <View bgColor={"white"} w={"90%"} borderRadius={20}>
       <Box mt="3">
-        <Center _text={{ fontSize: "lg", fontWeight: "bold" }}>
-          평균수익률Update:{avergeGain}
+        <Center mb="5">
+          <Text fontSize="2xl" bold color={avergeGain>0?"danger.600":"info.600"}>평균손익률:{avergeGain.toFixed(4)*100}%</Text>
         </Center>
         {havingStock?.map((el, index) => (
           <Box
@@ -93,10 +94,11 @@ function StockCRUDpageUpdate({ parentLoading }) {
                   fontSize="xs"
                   pr="5"
                   _dark={{ color: "warmGray.50" }}
-                  color="coolGray.800"
+                  color={el.gain>0?"danger.600":"info.600"}
                   alignSelf="center"
+                  bold
                 >
-                  현재가:{el.stockPrice}
+                  수익률 : {(el.gain*100).toFixed(2)}%
                 </Text>
                 <Text
                   fontSize="xs"
@@ -105,7 +107,7 @@ function StockCRUDpageUpdate({ parentLoading }) {
                   color="coolGray.800"
                   alignSelf="center"
                 >
-                  평균단가:{el.price}
+                  현재가:{inputPriceFormat(el.stockPrice)}원
                 </Text>
                 <Text
                   fontSize="xs"
@@ -114,7 +116,7 @@ function StockCRUDpageUpdate({ parentLoading }) {
                   color="coolGray.800"
                   alignSelf="center"
                 >
-                  수익률:{el.gain}
+                  매수가:{inputPriceFormat(el.price)}원
                 </Text>
               </VStack>
             </HStack>
