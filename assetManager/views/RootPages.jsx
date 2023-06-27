@@ -36,6 +36,7 @@ import {
   CalculatePage,
   CurrencyGraphPage,
   StockService,
+  BestWorstStockPage,
 } from "@views";
 // import CustomHeader from "../components/CustomHeader";
 
@@ -191,7 +192,12 @@ function RootPages() {
           <Stack.Screen
             name="StockService"
             component={StockService}
-            options={{ ...commonHeaderStyle, title: "주식서비스" }}
+            options={{ ...commonHeaderStyle, title: "주식수익률 순위조회" }}
+          />
+          <Stack.Screen
+            name="BestWorst"
+            component={BestWorstStockPage}
+            options={{ ...commonHeaderStyle, title: "주식상한가 하한가" }}
           />
         </>
       ) : (

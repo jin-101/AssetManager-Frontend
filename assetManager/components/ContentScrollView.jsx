@@ -3,11 +3,13 @@ import { FlatList } from "react-native";
 
 function ContentScrollView({ children }) {
   return (
-    <FlatList
-      data={[{ key: "content" }]}
-      keyExtractor={(item) => item.key}
-      renderItem={({ item }) => <>{children}</>}
-    />
+    <>
+      <FlatList
+        data={[{ key: "content" }]}
+        keyExtractor={(item) => item.key}
+        renderItem={({ item }) => <>{children}</>}
+      />
+    </>
   );
 }
 

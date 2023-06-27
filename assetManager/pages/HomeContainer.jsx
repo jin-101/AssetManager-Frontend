@@ -6,14 +6,14 @@ import ContentScrollView from "@components/ContentScrollView";
 import axios from "axios";
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";
-import { btnStyle, btnTextStyle } from "../styles";
-import { StyleSheet } from "react-native";
+import { btnStyle, btnTextStyle, footerHeight } from "../styles";
+import { StyleSheet, View } from "react-native";
 import CustomPieChart from "../components/CustomPieChart";
 import { inputPriceFormat } from "../utils";
 
 const totalStyle = StyleSheet.create({
   outBox: {
-    w: "80%",
+    w: "85%",
     h: "250",
     bg: "white",
     justifyContent: "center",
@@ -33,16 +33,6 @@ const totalStyle = StyleSheet.create({
   },
 });
 
-//데이터 받아온 것 가정
-const tempData = {
-  totalDepositAndSavings: 42200000,
-  totalApt: 1610000000,
-  totalCar: 310862153,
-  totalGoldAndExchange: 167929312,
-  totalStock: 265469710,
-  totalCoin: 4416844461,
-  totalAccountBalance: 200207,
-};
 const initialAsssetData = {
   totalDepositAndSavings: 0,
   totalApt: 0,
@@ -57,6 +47,7 @@ function HomeContainer() {
   const navigation = useNavigation();
   const { token } = useSelector((state) => state.login);
   const [totalAsset, setTotalAsset] = useState(1);
+  const [totalLiability, setTotalLiability] = useState(1);
   const [assetData, setAssetData] = useState(initialAsssetData);
 
   const mokdonPlanner = () => {
@@ -75,27 +66,38 @@ function HomeContainer() {
       },
     }).then((res) => {
       const {
-        totalDepositAndSavings,
-        totalApt,
-        totalCar,
-        totalGoldAndExchange,
-        totalStock,
-        totalCoin,
-        totalAccountBalance,
-      } = tempData;
+        totalDepositAndSavings: deposit,
+        totalApt: apt,
+        totalCar: car,
+        totalGoldAndExchange: goldExchange,
+        totalStock: stock,
+        totalCoin: coin,
+        totalAccountBalance: balance,
+        totalLiability: liability,
+      } = res.data;
+
+      const rowData = {
+        totalDepositAndSavings: Math.round(deposit),
+        totalApt: Math.round(apt),
+        totalCar: Math.round(car),
+        totalGoldAndExchange: Math.round(goldExchange),
+        totalStock: Math.round(stock),
+        totalCoin: Math.round(coin),
+        totalAccountBalance: Math.round(balance),
+      };
 
       const total =
-        totalDepositAndSavings +
-        totalApt +
-        totalCar +
-        totalGoldAndExchange +
-        totalStock +
-        totalCoin +
-        totalAccountBalance;
+        rowData.totalDepositAndSavings +
+        rowData.totalApt +
+        rowData.totalCar +
+        rowData.totalGoldAndExchange +
+        rowData.totalStock +
+        rowData.totalCoin +
+        rowData.totalAccountBalance;
 
-      setAssetData(tempData);
+      setAssetData(rowData);
       setTotalAsset(total);
-      // setTotalAsset(res.data); // 여기 받는 방법 수정
+      setTotalLiability(liability);
     });
   }, []);
 
@@ -126,14 +128,14 @@ function HomeContainer() {
         <VStack space={10} alignItems="center" mt="10" mb="10">
           <Stack {...totalStyle.outBox}>
             {totalBox({
-              boxStyle: { ...totalStyle.inBox, bg: "amber.100", mb: 2.5 },
+              boxStyle: { ...totalStyle.inBox, bg: "#fff0f5", mb: 2.5 }, // lavenderblush (기존 bg: "amber.100")
               title: "총 자산",
               value: totalAsset,
             })}
             {totalBox({
-              boxStyle: { ...totalStyle.inBox, bg: "darkBlue.100", mt: 2.5 },
+              boxStyle: { ...totalStyle.inBox, bg: "#e6e6fa", mt: 2.5 }, // lavender (기존 bg: "darkBlue.100")
               title: "총 부채",
-              value: 123456,
+              value: totalLiability,
             })}
           </Stack>
           <CustomPieChart totalValue={totalAsset} assetData={assetData} />
@@ -189,6 +191,7 @@ function HomeContainer() {
           </Button>
         </VStack>
       </ContentScrollView>
+      <View style={{ height: footerHeight }}></View>
     </>
   );
 }

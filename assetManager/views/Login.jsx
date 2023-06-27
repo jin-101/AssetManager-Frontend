@@ -22,6 +22,7 @@ import { loginLayoutStyle } from "../styles";
 import { signinInitialize } from "../action/signin";
 import Loading from "@components/Loading";
 import ContentScrollView from "@components/ContentScrollView";
+import { KeyboardAvoidingView } from "react-native";
 
 const style = StyleSheet.create(loginLayoutStyle);
 
@@ -98,7 +99,7 @@ function Login() {
 
   if (isLoading) return <Loading />;
   return (
-    <>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
       <View style={style.container}>
         <ContentScrollView>
           <Box w="100%" mt={20}>
@@ -224,7 +225,7 @@ function Login() {
           </Stack>
         </View>
       </View>
-    </>
+    </KeyboardAvoidingView>
   );
 }
 

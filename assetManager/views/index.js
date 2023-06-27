@@ -29,6 +29,7 @@ import CurrencyGraphPage from "@views/CurrencyGraphPage";
 import GoldGraphPage from "@views/GoldGraphPage";
 import StockCRUDpageUpdate from "@views/crudPage/StockCRUDpageUpdate";
 import StockService from "@views/StockService";
+import BestWorstStockPage from "./BestWorstStockPage";
 
 export {
   Login,
@@ -62,4 +63,5 @@ export {
   GoldGraphPage,
   StockCRUDpageUpdate,
   StockService,
+  BestWorstStockPage,
 };

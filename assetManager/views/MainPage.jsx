@@ -12,7 +12,7 @@ import AssetContainer from "@pages/AssetContainer";
 import AccountBookContainer from "@pages/AccountBookContainer";
 import MainPageModalContent from "@pages/MainPageModalContent";
 import { pageInitialize } from "../action";
-import { HStack, useToast } from "native-base";
+import { KeyboardAvoidingView, useToast } from "native-base";
 import StatisticsContainer from "@pages/StatisticsContainer";
 
 const styles = StyleSheet.create({
@@ -78,10 +78,12 @@ function MainPage() {
 
   return (
     <>
-      <View style={styles.container}>
-        {returnComponent()}
-        <Footerbar />
-      </View>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
+        <View style={styles.container}>
+          {returnComponent()}
+          <Footerbar />
+        </View>
+      </KeyboardAvoidingView>
       <Modal
         // backdropColor="white"
         // backdropOpacity={1}
