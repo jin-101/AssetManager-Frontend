@@ -19,7 +19,12 @@ import { useDispatch } from "react-redux";
 
 import { apiPath } from "../services";
 import { loginStateUpdate } from "../action";
-import { boxStyle, loginLayoutStyle } from "../styles";
+import {
+  boxStyle,
+  leftPaperButton,
+  loginLayoutStyle,
+  rightPaperButton,
+} from "../styles";
 import { signinInitialize } from "../action/signin";
 import Loading from "@components/Loading";
 import ContentScrollView from "@components/ContentScrollView";
@@ -182,17 +187,14 @@ function Login() {
                   space={5}
                 >
                   <Button
-                    mode="contained"
-                    style={{ width: "30%" }}
+                    {...leftPaperButton}
                     //colorScheme="primary"
                     onPress={signUpBtn}
                   >
                     회원가입
                   </Button>
                   <Button
-                    mode="outlined"
-                    buttonColor="#F8F8FF"
-                    style={{ width: "30%" }}
+                    {...rightPaperButton}
                     //colorScheme="primary"
                     onPress={loginBtn}
                   >

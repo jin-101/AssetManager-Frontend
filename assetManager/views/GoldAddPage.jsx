@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
-import { Box, FormControl, ScrollView, VStack, Button } from "native-base";
+import { Box, FormControl, ScrollView, Stack, VStack } from "native-base";
+
 import InputDateComponent from "@components/InputDateComponent";
 import InputTextComponent from "@components/InputTextComponent";
 import { makeDateString } from "../utils";
@@ -8,7 +9,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { goldInputReset, goldInputUpdate } from "../action";
 import axios from "axios";
 import { apiPath } from "../services";
-import { boxStyle } from "../styles";
+import { boxStyle, leftPaperButton, rightPaperButton } from "../styles";
+import { Button } from "react-native-paper";
 
 function GoldAddPage() {
   const currentDate = makeDateString(new Date());
@@ -32,7 +34,13 @@ function GoldAddPage() {
 
     console.log(goldInputDTO);
 
-    axios
+    try {
+      
+      if(goldInputDTO.price===""||goldInputDTO.buyDay===""||goldInputDTO.buyGram===""){
+        throw new Error("모든")
+      }
+
+      axios
       .post(`${apiPath}/gold/goldAssetInput`, null, { params: goldInputDTO })
       .then(function (response) {
         if (response.data === "등록완료") {
@@ -46,6 +54,14 @@ function GoldAddPage() {
         console.log(error);
         Alert.alert("서버에러 잠시만 기다려주세요0");
       });
+
+      
+    } catch (error) {
+      Alert.alert("모든요소를 입력하세요");
+      onReset();
+    }
+
+
   }, [buyGram, buyDate, buyPrice]);
 
   return (
@@ -84,16 +100,33 @@ function GoldAddPage() {
             <InputTextComponent
               name="buyPrice"
               inputType={"text"}
-              formControlProps={{ mb: "5" }}
+              formControlProps={{ mb: "2.5" }}
               formControlLabelProps={{ text: "매수가격" }}
               textInputStyle={{ width: "100%" }}
               value={buyPrice}
               dispatchF={goldInputUpdate}
             />
-            <Button mb="5" onPress={onSubmit}>
-              자산등록
-            </Button>
-            <Button onPress={onReset}>초기화</Button>
+            <Stack
+              mb="2.5"
+              direction="row" // direction="row" => "column"으로 바꾸면 수직으로 쌓이게 됨
+              space={2}
+              // mx 이거 적용하면 버튼 너비가 줄어듦.
+              mx={{
+                base: "auto",
+                md: "0",
+              }}
+            >
+              <Button {...leftPaperButton} onPress={onReset}>
+                초기화
+              </Button>
+              <Button
+                {...rightPaperButton}
+                style={{ width: "50%" }}
+                onPress={onSubmit}
+              >
+                자산등록
+              </Button>
+            </Stack>
             {/* </FormControl> */}
           </Box>
         </Box>

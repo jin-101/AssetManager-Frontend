@@ -9,10 +9,10 @@ import {
   Text,
   VStack,
   Select,
-  Button,
   Icon,
   Ionicons,
 } from "native-base";
+import { Button } from "react-native-paper";
 import axios from "axios";
 import { TextInput, FlatList, Alert, TouchableOpacity } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
 import { apiPath } from "../services";
@@ -23,7 +23,7 @@ import ContentScrollView from "@components/ContentScrollView";
 import SelectComponent from "../components/SelectComponent";
 import { View } from "react-native";
 import { Modal } from "react-native";
-import { boxStyle } from "../styles";
+import { boxStyle, leftPaperButton, rightPaperButton } from "../styles";
 
 function CoinAddPage(props) {
   const [market, setMarket] = useState("");
@@ -172,24 +172,18 @@ function CoinAddPage(props) {
   return (
     <ContentScrollView>
       <VStack mt="10" mb="10" alignItems="center">
-        <Box {...boxStyle} mb="5">
+        <Box {...boxStyle}>
           <FormControl>
-            <Box mb="10">
-              <HStack alignItems="center">
-                <FormControl.Label w="100%">
-                  보유중인 코인을 추가하세요.
-                </FormControl.Label>
-              </HStack>
+            <Box mt="2.5">
+              <SelectComponent
+                selectItem={marketList}
+                value={selectedValue}
+                parentSetState={handleValueChange}
+                formControlLabelProps={{
+                  text: "거래소",
+                }}
+              ></SelectComponent>
             </Box>
-            <SelectComponent
-              selectItem={marketList}
-              value={selectedValue}
-              parentSetState={handleValueChange}
-              formControlLabelProps={{
-                text: "거래소",
-              }}
-            ></SelectComponent>
-
             {/*  ★★★★★ 검색기능 시작 */}
             <Box mb="5">
               <FormControl.Label>코인 검색하기</FormControl.Label>
@@ -218,9 +212,9 @@ function CoinAddPage(props) {
               {/*  ★★★★★ 검색기능 끝 */}
             </Box>
             <Box mb="5">
-              <FormControl.Label>선택한 코인</FormControl.Label>
+              <FormControl.Label>코인 이름</FormControl.Label>
               <Input
-                placeholder="검색한 코인을 터치하세요"
+                placeholder="코인 검색 후 터치해주세요"
                 value={coinName}
                 onChangeText={(coinName) => setCoinName(coinName)}
                 isReadOnly={true}
@@ -245,7 +239,7 @@ function CoinAddPage(props) {
             ></InputTextComponent>
 
             {/* SendAndResetButton 컴포넌트로 대체하고 싶은 부분 */}
-            <Box mb="5">
+            <Box>
               <Stack
                 mb="2.5"
                 mt="1.5"
@@ -258,21 +252,24 @@ function CoinAddPage(props) {
                 }}
               >
                 <Button
-                  size="lg"
-                  variant="subtle"
-                  colorScheme="secondary"
+                  //size="lg"
+                  //variant="subtle"
+                  //colorScheme="secondary"
+                  {...leftPaperButton}
                   onPress={handleReset}
                 >
                   초기화
                 </Button>
-                <Button size="lg" variant="subtle" onPress={handleSubmit}>
+                <Button
+                  //size="lg"
+                  //variant="subtle"
+                  {...rightPaperButton}
+                  onPress={handleSubmit}
+                >
                   추가
                 </Button>
               </Stack>
             </Box>
-            {/* <Box>
-              <AlertExample></AlertExample>
-            </Box> */}
           </FormControl>
         </Box>
       </VStack>

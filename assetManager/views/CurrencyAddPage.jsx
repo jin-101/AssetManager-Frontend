@@ -4,10 +4,10 @@ import {
   FormControl,
   ScrollView,
   VStack,
-  Button,
   Select,
   Text,
   CheckIcon,
+  Stack,
 } from "native-base";
 import InputDateComponent from "@components/InputDateComponent";
 import InputTextComponent from "@components/InputTextComponent";
@@ -16,9 +16,15 @@ import { makeDateString } from "../utils";
 import { Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { boxStyle, formControlLableBasicStyle } from "../styles";
+import {
+  boxStyle,
+  formControlLableBasicStyle,
+  leftPaperButton,
+  rightPaperButton,
+} from "../styles";
 import { currencyInputUpdate, currencyRest } from "../action";
 import { apiPath } from "../services";
+import { Button } from "react-native-paper";
 
 function CurrencyAddPage() {
   const currentDate = makeDateString(new Date());
@@ -39,8 +45,18 @@ function CurrencyAddPage() {
       buyDay,
       shares: buyQuantity,
     };
+    
 
-    axios
+
+
+    
+    try {
+
+      if(currencyInputDTO.currency==="" || currencyInputDTO.price===""|| currencyInputDTO.buyDay===""||currencyInputDTO.shares===""){
+        throw new Error("모든 요소를 입력해주세요")
+      }
+
+      axios
       .post(`${apiPath}/currency/currencyAssetInput`, null, {
         params: currencyInputDTO,
       })
@@ -56,6 +72,12 @@ function CurrencyAddPage() {
         console.log(error);
         Alert.alert("서버에러 잠시만 기다려주세요0");
       });
+
+    } catch (e) {
+      Alert.alert("모든 요소를 입력하세요");
+      onReset();
+    }
+
   };
 
   const onReset = () => dispatch(currencyRest());
@@ -117,17 +139,34 @@ function CurrencyAddPage() {
               <InputTextComponent
                 name="buyQuantity"
                 inputType={"text"}
-                formControlProps={{ mb: "5" }}
+                formControlProps={{ mb: "2.5" }}
                 formControlLabelProps={{ text: "매수수량" }}
                 textInputStyle={{ width: "100%" }}
                 placeholder="EX)100USD"
                 value={buyQuantity}
                 dispatchF={currencyInputUpdate}
               />
-              <Button mb="5" onPress={onSubmit}>
-                외환등록
-              </Button>
-              <Button onPress={onReset}>초기화</Button>
+              <Stack
+                mb="2.5"
+                direction="row" // direction="row" => "column"으로 바꾸면 수직으로 쌓이게 됨
+                space={2}
+                // mx 이거 적용하면 버튼 너비가 줄어듦.
+                mx={{
+                  base: "auto",
+                  md: "0",
+                }}
+              >
+                <Button {...leftPaperButton} onPress={onReset}>
+                  초기화
+                </Button>
+                <Button
+                  {...rightPaperButton}
+                  style={{ width: "50%" }}
+                  onPress={onSubmit}
+                >
+                  외환등록
+                </Button>
+              </Stack>
             </FormControl>
           </Box>
         </Box>
