@@ -19,7 +19,6 @@ import {
   GuestPage,
   CurrencyAddPage,
   GoldAddPage,
-  AccountBookAnalysis,
   MokdonPlanner,
   UserInfoPage,
   AccountBookUpload,
@@ -36,7 +35,7 @@ import {
   StockCRUDpageUpdate,
   CalculatePage,
   CurrencyGraphPage,
-  StockService
+  StockService,
 } from "@views";
 // import CustomHeader from "../components/CustomHeader";
 
@@ -69,12 +68,6 @@ function RootPages() {
             name="AccountBook"
             component={AccountBookContainer}
             options={{ ...commonHeaderStyle, title: "가계부" }}
-          />
-          {/* 가계부 분석 페이지 */}
-          <Stack.Screen
-            name="AccountBookAnalysis"
-            component={AccountBookAnalysis}
-            options={{ ...commonHeaderStyle, title: "가계부 분석" }}
           />
           {/* 가계부 업로드 페이지 */}
           <Stack.Screen

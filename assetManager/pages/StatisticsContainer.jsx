@@ -15,6 +15,8 @@ import {
 import { BarChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 import { View } from "react-native";
+import YearAndMonthSelect from "../components/YearAndMonthSelect";
+import AccountBookAnalysis from "../components/AccountBookAnalysis";
 
 function StatisticsContainer() {
   const dispatch = useDispatch();
@@ -107,7 +109,7 @@ function StatisticsContainer() {
             mb="5"
             alignItems={"center"}
           >
-            <Text>dldodod</Text>
+            <AccountBookAnalysis />
           </Box>
         </VStack>
       )}

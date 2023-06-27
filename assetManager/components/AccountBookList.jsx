@@ -13,6 +13,8 @@ import {
 import { isAndroid } from "../utils";
 import { apiPath } from "../services";
 import CategoryModal from "./CategoryModal";
+import { useDispatch, useSelector } from "react-redux";
+import { accountDeleteData, isAddDeleteData } from "../action/account";
 
 const styles = StyleSheet.create({
   categorytouchable: {
@@ -38,15 +40,17 @@ const styles = StyleSheet.create({
   },
 });
 
-function AccountBookList({ item, setItemList, itemList, index, setDel }) {
+function AccountBookList({ item, preData, index, yearMonthKey }) {
+  //setItemList, itemList
   const [memo, setMemo] = useState(item.memo);
   const [category, setCategory] = useState(item.category);
   const [show, setShow] = useState(false);
-
+  const dispatch = useDispatch();
+  const { accountTotalList } = useSelector((state) => state.account);
+  const [itemList, setItemList] = useState(accountTotalList[yearMonthKey]);
   const modalShow = (e) => {
     setShow((prev) => !prev);
   };
-
   const InputMemo = (text) => {
     //set 함수는 비동기 함수
     //그래서 밑의 문장이 끝나는 걸 기다리지 않는다. 받은 text를 바로 넣어줘야
@@ -57,10 +61,7 @@ function AccountBookList({ item, setItemList, itemList, index, setDel }) {
     });
     setItemList(itemList);
   };
-  const previousItem = index > 0 ? itemList[index - 1] : null;
-  const showDate =
-    !previousItem ||
-    previousItem.exchangeDate.slice(0, 10) !== item.exchangeDate.slice(0, 10); //!null은 true
+  const showDate = item?.exchangeDate?.slice(0, 10) !== preData?.slice(0, 10);
 
   const handleDelete = () => {
     Alert.alert("삭제 확인", "정말 삭제하시겠습니까?", [
@@ -75,7 +76,8 @@ function AccountBookList({ item, setItemList, itemList, index, setDel }) {
       method: "delete",
     })
       .then(() => {
-        setDel((prv) => !prv);
+        dispatch(accountDeleteData(yearMonthKey, detailCode));
+        dispatch(isAddDeleteData("add"));
         //삭제한 detailCode의 아이템만 빼고 선택하여 아이템 리스트에 새로 넣어주는 것
         //item.detailCode : 전체 아이템의 디테일 코드
         //detailCode : 삭제한 디테일 코드
@@ -99,7 +101,7 @@ function AccountBookList({ item, setItemList, itemList, index, setDel }) {
     return comma(uncomma(str));
   };
 
-  console.log("왜 두번찍혀", index);
+  // console.log("왜 두번찍혀", index);
   // console.log(categoryData.length);
   return (
     <>
