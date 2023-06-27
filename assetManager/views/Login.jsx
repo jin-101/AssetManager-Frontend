@@ -108,7 +108,7 @@ function Login() {
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
       <View style={style.container}>
         <ContentScrollView>
-          <Box w="100%" mt={20}>
+          <Box w="100%" mt={10}>
             <Box space={4} mb="10" alignItems="center">
               <Text fontSize={40}>Welcome</Text>
             </Box>
