@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  VStack,
-  Button,
-  Text,
-  HStack,
-  Avatar,
-  Spacer,
-  Center,
-  View,
-} from "native-base";
-import { Alert } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { Box, VStack, Text, HStack, Spacer, Center, View } from "native-base";
+// import { Alert } from "react-native";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { apiPath } from "../../services";
-import { inputPriceFormat } from "../../utils";
+// import { inputPriceFormat } from "../../utils";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { leftPaperButton, rightPaperButtonNoWidth } from "../../styles";
+import { Button } from "react-native-paper";
 
 const showCurrencyName = (currency) => {
   switch (currency) {
@@ -186,11 +178,19 @@ function CurrencyCrudPage({ parentLoading }) {
             </HStack>
           </Box>
         ))}
-        <HStack alignSelf="center" mb="4">
-          <Button mt="5" mx="1">
+        <HStack alignSelf="center" mt="5" mb="5">
+          <Button
+            {...leftPaperButton}
+            style={{ marginRight: 5 }}
+            // mt="5" mx="1"
+          >
             잔고수정
           </Button>
-          <Button mt="5" mx="1" onPress={goTOcurrencyService}>
+          <Button
+            {...rightPaperButtonNoWidth}
+            // mt="5" mx="1"
+            onPress={goTOcurrencyService}
+          >
             외화 서비스
           </Button>
         </HStack>
