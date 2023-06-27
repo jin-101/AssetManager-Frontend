@@ -10,6 +10,7 @@ import {
   Stack,
   Button, // as NativeBaseButton (별명으로 지정해줄 수도 있다! by 역시한신)
 } from "native-base";
+import { Button as ReactNativePaperButton } from "react-native-paper";
 import { Alert, StyleSheet, View, TouchableOpacity } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
 import { Picker } from "@react-native-picker/picker";
 import ShowHideBox from "@components/ShowHideBox";
@@ -24,7 +25,8 @@ import { useSelector } from "react-redux";
 import Loading from "@components/Loading";
 import ContentScrollView from "@components/ContentScrollView";
 import LoanInput from "../components/LoanInput";
-import { boxStyle } from "../styles";
+import { boxStyle, btnTextStyle } from "../styles";
+import { Divider } from "react-native-paper";
 //import { AptSidoSelect, AptGuSelect } from "../components/AptSidoSelect";
 
 function AptAddPage(props) {
@@ -236,22 +238,19 @@ function AptAddPage(props) {
   if (isLoading) return <Loading />;
   return (
     <ContentScrollView>
-      <VStack mt="5" mb="5" alignItems="center">
+      <VStack mt="5" alignItems="center">
         <Box
           {...boxStyle}
           bg="#ECEEFF" // 색 참조 : https://mycolor.space/?hex=%234F69C6&sub=1
           // 다른 색 : #F8F8FF
           // bg="blue.100"
-          w="90%"
-          p="5"
-          borderRadius="2xl"
         >
           <FormControl>
-            <Box mb="5">
-              <Text mb={5} fontSize={25}>
-                지역 선택
-              </Text>
-              <FormControl.Label>시/도</FormControl.Label>
+            <Box mb="2.5">
+              <Box>
+                <Text fontSize={18}>지역 선택</Text>
+              </Box>
+              <FormControl.Label mt={2.5}>시/도</FormControl.Label>
               {/* AptSidoSelect 컴포넌트로 분리하고 싶은 부분 */}
               <View style={styles.container}>
                 <Select
@@ -260,7 +259,7 @@ function AptAddPage(props) {
                   style={styles.picker}
                   itemStyle={styles.pickerItem}
                 >
-                  <Select.Item label="시/도 선택" value="" />
+                  <Select.Item label="선택해주세요" value="" />
                   <Select.Item label="서울특별시" value="서울특별시" />
                   <Select.Item label="부산광역시" value="부산광역시" />
                   <Select.Item label="대구광역시" value="대구광역시" />
@@ -294,7 +293,7 @@ function AptAddPage(props) {
               </View>
             </Box>
 
-            <Box mb="5">
+            <Box mb="2.5">
               {/* AptGuSelect 컴포넌트로 분리하고 싶은 부분 */}
               <FormControl.Label>구</FormControl.Label>
               {/* <AptGuSelect></AptGuSelect> */}
@@ -304,7 +303,7 @@ function AptAddPage(props) {
                 style={styles.picker}
                 itemStyle={styles.pickerItem}
               >
-                <Select.Item label="구 선택" value=""></Select.Item>
+                <Select.Item label="선택해주세요" value=""></Select.Item>
                 {/* ★★★★★(ChatGPT 참조) 
                 1. dataMap.entries()를 사용하여 Map의 키-값 쌍을 배열로 변환
                 2. Array.map() 메서드(여기선 [...dataMap.entries()].map을 의미)를 사용하여 각 쌍을 Picker.Item 컴포넌트로 변환
@@ -323,7 +322,7 @@ function AptAddPage(props) {
                 style={styles.picker}
                 itemStyle={styles.pickerItem}
               >
-                <Select.Item label="동 선택" value=""></Select.Item>
+                <Select.Item label="선택해주세요" value=""></Select.Item>
                 {[...dongMap.entries()].map(([key, value]) => (
                   <Select.Item key={key} label={key} value={key} />
                 ))}
@@ -332,9 +331,14 @@ function AptAddPage(props) {
           </FormControl>
           <FormControl>
             {/*  ★★★★★ 검색기능 시작 */}
-            <Box mt={10}>
+            <Divider></Divider>
+            <Box mt={5}>
               <InputTextComponent
-                formControlLabelProps={{ text: "아파트 이름 검색하기" }}
+                formControlLabelProps={{ text: "아파트 검색하기" }}
+                formControlHelperProps={{
+                  text: "아파트 이름 검색 후 터치해주세요",
+                }}
+                formControlProps={{ marginBottom: 2.5 }}
                 value={searchKeyword}
                 parentSetState={handleSearch}
                 // 스타일 적용
@@ -358,12 +362,13 @@ function AptAddPage(props) {
                 ))}
               {/*  ★★★★★ 검색기능 끝 */}
 
-              <Box mb="5">
+              <Box>
                 <FormControl.Label>아파트 이름</FormControl.Label>
                 <Input
                   label={aptName}
                   value={aptName}
                   placeholder="아파트 이름 검색 후 터치해주세요"
+                  isReadOnly={"true"}
                 />
               </Box>
 
@@ -378,7 +383,6 @@ function AptAddPage(props) {
               </Box>
             </Box>
 
-            {/* <Box mb="5"> */}
             {/* 일단 원으로 하고 나중에 상황봐서 억원, 천만원으로 바꾸자 */}
             <InputTextComponent
               formControlLabelProps={{ text: "매입가격 (원)" }}
@@ -387,9 +391,7 @@ function AptAddPage(props) {
               value={String(purchasePrice)}
               parentSetState={setPurchasePrice}
             ></InputTextComponent>
-            {/* </Box> */}
 
-            {/* <Box mb="5"> */}
             <InputDateComponent
               formControlLabelProps={{ text: "매입날짜" }}
               dateTimePicker={{ display: "spinner" }}
@@ -397,7 +399,6 @@ function AptAddPage(props) {
               parentSetState={setPurchaseDate}
               // ★ 상태를 변경하려면 (1)value와 (2)parentSetState 2개 모두 필요
               textInputStyle={{ color: "gray" }}
-              formControlProps={{ mb: "5" }}
               helperText={"아파트 매입 날짜를 선택하세요."}
               // 달력 모양 설정
               datePickerProps={{
@@ -417,14 +418,12 @@ function AptAddPage(props) {
                 color: "black",
               }}
             ></InputDateComponent>
-            {/* </Box> */}
           </FormControl>
         </Box>
         {/* 6. 대출 Show/Hide 코드 */}
         <Box {...boxStyle} mt="5" mb="5">
           <LoanInput />
         </Box>
-        {/* <ShowHideBox state={aaaa} setState={setAaaa}></ShowHideBox> */}
         <Stack
           mb="10"
           mt="1.5"
@@ -436,14 +435,16 @@ function AptAddPage(props) {
             md: "0",
           }}
         >
-          <Button
-            width={"80%"} // 버튼 너비
-            size="lg"
-            variant="subtle"
+          <ReactNativePaperButton
+            //width={"80%"} // 버튼 너비
+            //style={(size = "lg")}
+            mode="elevated"
+            style={{ width: "30%" }}
+            //variant="subtle"
             onPress={handleSubmit}
           >
             추가
-          </Button>
+          </ReactNativePaperButton>
         </Stack>
       </VStack>
     </ContentScrollView>
