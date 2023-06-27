@@ -77,13 +77,13 @@ function HomeContainer() {
       } = res.data;
 
       const rowData = {
+        totalAccountBalance: Math.round(balance),
         totalDepositAndSavings: Math.round(deposit),
         totalApt: Math.round(apt),
         totalCar: Math.round(car),
-        totalGoldAndExchange: Math.round(goldExchange),
         totalStock: Math.round(stock),
         totalCoin: Math.round(coin),
-        totalAccountBalance: Math.round(balance),
+        totalGoldAndExchange: Math.round(goldExchange),
       };
 
       const total =
@@ -150,8 +150,8 @@ function HomeContainer() {
                   { title: "자동차", key: "AddCar" },
                   { title: "주식", key: "AddStock" },
                   { title: "코인", key: "AddCoin" },
-                  { title: "금", key: "AddGold" },
                   { title: "외환", key: "AddExchange" },
+                  { title: "금", key: "AddGold" },
                 ],
               },
               {

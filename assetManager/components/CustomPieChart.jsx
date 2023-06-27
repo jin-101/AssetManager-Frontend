@@ -35,6 +35,7 @@ function CustomPieChart({
   centerTitle = "자산 비율",
   assetTitle = assetT,
   assetData = {},
+  isRank = false,
 }) {
   let preColor = graphColor[graphColor.length - 1];
   const chartData = Object.keys(assetData).map((el, index) => {
@@ -45,6 +46,7 @@ function CustomPieChart({
       color: graphColor.length <= index ? preColor : graphColor[index],
     };
   });
+  if (isRank) chartData.sort((a, b) => b.assetRatio - a.assetRatio); // 순위매기기
 
   return (
     <View w={"95%"} alignItems={"center"} justifyContent={"center"}>
