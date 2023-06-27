@@ -119,7 +119,7 @@ function StatisticsContainer() {
         <VStack mt={5} mb={5} ml={5} mr={5}>
           <Box p="2.5" alignItems={"center"} bg={"white"}>
             <Text
-              color={"red.400"}
+              color={"secondary.400"}
               fontSize={18}
               //fontWeight={"semibold"}
             >{`${token} (${fiInd.age}세) 님의 재무상태`}</Text>
