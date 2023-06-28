@@ -100,7 +100,7 @@ function StockService(){
                                     <Actionsheet.Item key={index}>
                                         <HStack>
                                             {showMedal(index+1)}
-                                            <Text bold fontSize={20}>{el.id.toUpperCase()} : </Text>
+                                            <Text bold fontSize={20}>{el.id.substr(0, 2).toUpperCase()+"**"} : </Text>
                                             <Text fontSize={20}>{(el.gain*100).toFixed(2)}%</Text>
                                         </HStack>
                                         
