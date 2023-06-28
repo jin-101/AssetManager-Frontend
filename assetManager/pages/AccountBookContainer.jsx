@@ -269,14 +269,10 @@ function AccountBookContainer() {
     <>
       <View>
         <View>
-          <View style={{ backgroundColor: "gray" }}>
-            <YearAndMonthSelect />
-          </View>
-          <View style={{ backgroundColor: "pink" }}>
-            <Button onPress={moveToAccountUpload}>업로드</Button>
-            <Button onPress={moveToCashReceiptUpload}>연말정산</Button>
-            <Button onPress={moveToAnalysis}>분석</Button>
-          </View>
+          <YearAndMonthSelect />
+          <Button onPress={moveToAccountUpload}>업로드</Button>
+          <Button onPress={moveToCashReceiptUpload}>연말정산</Button>
+          <Button onPress={moveToAnalysis}>분석</Button>
         </View>
 
         <View

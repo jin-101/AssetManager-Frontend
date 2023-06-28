@@ -172,8 +172,6 @@ function AccountBookAnalysis() {
     <>
       <YearAndMonthSelect parentCallback={makeYM} />
       <ScrollView style={{ width: "100%" }}>
-        <Text>분석 페이지!</Text>
-        <Text>{yearAndMonth?.month}월 소비패턴</Text>
         <Center>
           <CustomPieChart
             totalValue={totalWithdraw}
