@@ -197,7 +197,7 @@ function RootPages() {
           <Stack.Screen
             name="BestWorst"
             component={BestWorstStockPage}
-            options={{ ...commonHeaderStyle, title: "주식상한가 하한가" }}
+            options={{ ...commonHeaderStyle, title: "상한가 하한가" }}
           />
         </>
       ) : (

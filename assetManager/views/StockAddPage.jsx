@@ -32,7 +32,14 @@ function StockAddPage() {
       shares: buyQuantity,
     };
 
-    axios
+
+    try {
+
+      if(stockInputDTO.stockName==="" || stockInputDTO.price ==="" || stockInputDTO.buyDay ==="" || stockInputDTO.shares === ""){
+        throw new Error("모든 요소");
+      } 
+
+      axios
       .post(`${apiPath}/stock/stockAssetInput`, null, { params: stockInputDTO })
       .then(function (response) {
         if (response.data === "등록완료") {
@@ -46,6 +53,15 @@ function StockAddPage() {
         console.log(error);
         Alert.alert("서버에러 잠시만 기다려주세요0");
       });
+
+      
+    } catch (e) {
+      Alert.alert("모든요소를 입력해주세요")
+      onRest();
+    }
+
+
+
   };
 
   return (

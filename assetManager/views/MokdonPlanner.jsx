@@ -5,10 +5,10 @@ import {
   Stack,
   Text,
   VStack,
-  Button,
   HStack,
   Divider,
   Radio,
+  Button,
 } from "native-base";
 import axios from "axios";
 import { Alert, StyleSheet, View, Pressable } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
@@ -20,10 +20,23 @@ import { getAvgRate } from "../action/avgRate";
 import Loading from "../components/Loading";
 import { bankType } from "../utils";
 import { FontAwesome } from "@expo/vector-icons";
-import { btnStyle, btnTextStyle } from "../styles";
+import {
+  boxStyle,
+  boxStyle2,
+  btnStyle,
+  btnTextStyle,
+  btnTextStyle2,
+  leftBtnPressStyle,
+  rightBtnPressStyle,
+  rightPaperButton,
+  rightPaperButtonNoWidth,
+} from "../styles";
+import { Button as ReactNativePaperButton } from "react-native-paper";
 
 function MokdonPlanner(props) {
   const iconStyle = {
+    marginTop: 5,
+    marginBottom: 5,
     size: 40,
     color: "black",
   };
@@ -191,11 +204,8 @@ function MokdonPlanner(props) {
         <Button
           {...btnStyle}
           //borderColor="info.400"
-          _text={{ ...btnTextStyle, color: "info.400" }} // color: "info.400"
-          _pressed={{
-            bg: "info.200",
-            borderColor: "white",
-          }}
+          _text={btnTextStyle2}
+          _pressed={leftBtnPressStyle}
           onPress={mokdonBtn}
         >
           목돈 마련 플래너
@@ -203,11 +213,8 @@ function MokdonPlanner(props) {
         <Button
           {...btnStyle}
           //borderColor="secondary.400"
-          _text={{ ...btnTextStyle, color: "secondary.400" }} // color: "secondary.400"
-          _pressed={{
-            bg: "secondary.200",
-            borderColor: "white",
-          }}
+          _text={btnTextStyle2}
+          _pressed={rightBtnPressStyle}
           onPress={calculatorBtn}
         >
           예적금 이자 계산기
@@ -217,15 +224,8 @@ function MokdonPlanner(props) {
       {/* (1) 목돈 마련 플래너 파트 */}
       {btnStatus ? (
         <VStack mt="5" mb="10" alignItems="center">
-          <Box
-            bg="blue.50"
-            w="90%"
-            p="5"
-            borderRadius="2xl"
-            mb="5"
-            alignItems={"center"}
-          >
-            <Text mb={2.5} fontSize={25}>
+          <Box {...boxStyle} alignItems={"center"}>
+            <Text mb={2.5} fontSize={20}>
               목돈 마련 플래너
             </Text>
             <Divider></Divider>
@@ -330,15 +330,19 @@ function MokdonPlanner(props) {
                 )}
               </>
             )}
-            <Button style={styles.calculateBtn} onPress={mokdoncalculatorBtn}>
+            <ReactNativePaperButton
+              {...rightPaperButtonNoWidth}
+              //style={styles.calculateBtn}
+              onPress={mokdoncalculatorBtn}
+            >
               계산하기
-            </Button>
+            </ReactNativePaperButton>
           </Box>
 
           {btnStatus === true && result.type === "예금" && (
             <>
               <FontAwesome name={iconName} {...iconStyle} />
-              <Box bg="violet.50" w="90%" p="5" borderRadius="2xl">
+              <Box {...boxStyle}>
                 <InputTextComponent
                   value={result.totalPai}
                   formControlLabelProps={{
@@ -372,7 +376,7 @@ function MokdonPlanner(props) {
           {btnStatus === true && result.type === "적금" && (
             <>
               <FontAwesome name={iconName} {...iconStyle} />
-              <Box bg="violet.50" w="90%" p="5" borderRadius="2xl">
+              <Box {...boxStyle}>
                 <InputTextComponent
                   value={result.totalPai}
                   formControlLabelProps={{
@@ -407,15 +411,8 @@ function MokdonPlanner(props) {
       ) : (
         // (2) 이자 계산기 파트
         <VStack mt="5" mb="10" alignItems="center">
-          <Box
-            bg="red.50"
-            w="90%"
-            p="5"
-            borderRadius="2xl"
-            mb="5"
-            alignItems={"center"}
-          >
-            <Text mb={2.5} fontSize={25}>
+          <Box {...boxStyle2} alignItems={"center"}>
+            <Text mb={2.5} fontSize={20}>
               예적금 이자 계산기
             </Text>
             <Divider></Divider>
@@ -466,14 +463,6 @@ function MokdonPlanner(props) {
                 inputType="double"
               ></InputTextComponent>
             )}
-            {/* <InputTextComponent
-              inputType="number"
-              value={amount}
-              parentSetState={setAmount}
-              helperText={"목표기간 동안 예치할 금액을 입력해주세요"}
-              formControlLabelProps={{ text: "예치금액 (만원)" }}
-              priceFormat={true}
-            ></InputTextComponent> */}
             <Radio.Group
               mb={5}
               alignItems="center"
@@ -515,15 +504,19 @@ function MokdonPlanner(props) {
               value={period}
               parentSetState={setPeriod}
             ></InputTextComponent>
-            <Button style={styles.calculateBtn} onPress={interestCalculatorBtn}>
+            <ReactNativePaperButton
+              {...rightPaperButtonNoWidth}
+              //style={styles.calculateBtn}
+              onPress={interestCalculatorBtn}
+            >
               계산하기
-            </Button>
+            </ReactNativePaperButton>
           </Box>
 
           {btnStatus === false && result.type === "예금" && (
             <>
               <FontAwesome name={iconName} {...iconStyle} />
-              <Box bg="green.50" w="90%" p="5" borderRadius="2xl" mb="5">
+              <Box {...boxStyle2} mb="5">
                 <InputTextComponent
                   value={result.netIntr15_4}
                   formControlLabelProps={{
@@ -531,7 +524,6 @@ function MokdonPlanner(props) {
                   }}
                   // 부가 설정
                   textInputProps={{ readOnly: true }}
-                  //textInputStyle={{ width: "85%" }}
                 ></InputTextComponent>
                 <InputTextComponent
                   value={result.netIntr9_5}
@@ -540,7 +532,6 @@ function MokdonPlanner(props) {
                   }}
                   // 부가 설정
                   textInputProps={{ readOnly: true }}
-                  //textInputStyle={{ width: "85%" }}
                 ></InputTextComponent>
                 <InputTextComponent
                   value={result.netIntr1_4}
@@ -549,7 +540,6 @@ function MokdonPlanner(props) {
                   }}
                   // 부가 설정
                   textInputProps={{ readOnly: true }}
-                  //textInputStyle={{ width: "85%" }}
                 ></InputTextComponent>
                 <InputTextComponent
                   value={result.netIntr0_0}
@@ -558,7 +548,6 @@ function MokdonPlanner(props) {
                   }}
                   // 부가 설정
                   textInputProps={{ readOnly: true }}
-                  //textInputStyle={{ width: "85%" }}
                 ></InputTextComponent>
               </Box>
             </>
@@ -566,7 +555,7 @@ function MokdonPlanner(props) {
           {btnStatus === false && result.type === "적금" && (
             <>
               <FontAwesome name={iconName} {...iconStyle} />
-              <Box bg="green.100" w="90%" p="5" borderRadius="2xl" mb="5">
+              <Box {...boxStyle2} mb="5">
                 <InputTextComponent
                   value={result.netIntr15_4}
                   formControlLabelProps={{
@@ -574,7 +563,6 @@ function MokdonPlanner(props) {
                   }}
                   // 부가 설정
                   textInputProps={{ readOnly: true }}
-                  //textInputStyle={{ width: "85%" }}
                 ></InputTextComponent>
                 <InputTextComponent
                   value={result.netIntr9_5}
@@ -583,7 +571,6 @@ function MokdonPlanner(props) {
                   }}
                   // 부가 설정
                   textInputProps={{ readOnly: true }}
-                  //textInputStyle={{ width: "85%" }}
                 ></InputTextComponent>
                 <InputTextComponent
                   value={result.netIntr1_4}
@@ -592,7 +579,6 @@ function MokdonPlanner(props) {
                   }}
                   // 부가 설정
                   textInputProps={{ readOnly: true }}
-                  //textInputStyle={{ width: "85%" }}
                 ></InputTextComponent>
                 <InputTextComponent
                   value={result.netIntr0_0}
@@ -613,11 +599,5 @@ function MokdonPlanner(props) {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  calculateBtn: {
-    width: "50%",
-  },
-});
 
 export default MokdonPlanner;
