@@ -152,6 +152,26 @@ function AccountBookAnalysis() {
   console.log(assetData, assetTitle);
   return (
     <>
+<<<<<<< HEAD
+      <YearAndMonthSelect parentCallback={makeYM} />
+      <ScrollView style={{ width: "100%" }}>
+        <Center>
+          <CustomPieChart
+            totalValue={totalWithdraw}
+            centerTitle="소비 패턴"
+            assetTitle={assetTitle}
+            assetData={assetData}
+          />
+        </Center>
+
+        {/* <Text>가계수지지표</Text>
+      {extractedData.length > 0 && (
+        <LineChart
+          data={chartData}
+          width={screenWidth}
+          height={275}
+          chartConfig={chartConfig}
+=======
       <Box mb={10} w={"100%"} alignItems={"center"} justifyContent={"center"}>
         <YearAndMonthSelect parentCallback={makeYM} />
         <CustomPieChart
@@ -165,6 +185,7 @@ function AccountBookAnalysis() {
               : assetTitle
           }
           assetData={assetData}
+>>>>>>> 23c95db643cf2643690d8f56c63065498f41fbc9
         />
       </Box>
       <Box mb={5} w={"100%"} alignItems={"center"} justifyContent={"center"}>
