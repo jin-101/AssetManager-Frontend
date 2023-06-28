@@ -2,28 +2,33 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   VStack,
-  Button,
   Text,
   HStack,
   Avatar,
   Spacer,
   Center,
   View,
+  Icon,
 } from "native-base";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { apiPath } from "../../services";
-import {havingStockUpdate} from "../../action"
+import { havingStockUpdate } from "../../action";
 import { useNavigation } from "@react-navigation/native";
+import { inputPriceFormat } from "../../utils";
+import { Button } from "react-native-paper";
+import { leftPaperButton, rightPaperButtonNoWidth } from "../../styles";
+import { Feather } from "@expo/vector-icons";
 
 function StockCRUDpageUpdate({ parentLoading }) {
+  const trendingUp = () => <Feather name="trending-up"></Feather>;
   const navigation = useNavigation();
   const { token } = useSelector((state) => state.login);
-  const havingStock =useSelector((state)=>state.havingStockUpdate);
+  const havingStock = useSelector((state) => state.havingStockUpdate);
   const dispatch = useDispatch();
   const [avergeGain, setAvergeGain] = useState(0);
 
-  const onGoToService = ()=> (navigation.navigate("StockService"));
+  const onGoToService = () => navigation.navigate("StockService");
 
   useEffect(() => {
     const fetchStock = async () => {
@@ -40,10 +45,9 @@ function StockCRUDpageUpdate({ parentLoading }) {
           gainMutipleByInvestedAmount +=
             response.data[i]["investedAmount"] * response.data[i]["gain"];
         }
-        setAvergeGain(gainMutipleByInvestedAmount / totalInvestedAmount);                
+        setAvergeGain(gainMutipleByInvestedAmount / totalInvestedAmount);
         dispatch(havingStockUpdate(response.data));
         parentLoading();
-        
       } catch (e) {
         console.log(e);
       }
@@ -54,77 +58,113 @@ function StockCRUDpageUpdate({ parentLoading }) {
   return (
     <View bgColor={"white"} w={"90%"} borderRadius={20}>
       <Box mt="3">
-        <Center _text={{ fontSize: "lg", fontWeight: "bold" }}>
-          평균수익률Update:{avergeGain}
+        <Center mt="5" mb="5">
+          <HStack justifyContent={"center"} alignItems={"center"}>
+            <Text fontSize={20} bold>
+              평균수익률 :
+            </Text>
+            <Text
+              fontSize={20}
+              bold
+              color={avergeGain > 0 ? "danger.600" : "info.600"}
+            >
+              {" " + Math.round(avergeGain.toFixed(4) * 1000) / 10}%
+            </Text>
+          </HStack>
         </Center>
         {havingStock?.map((el, index) => (
           <Box
             key={index}
-            borderBottomWidth="1"
+            borderBottomWidth="0.5"
             _dark={{ borderColor: "muted.50" }}
-            borderColor="muted.800"
+            borderColor="gray.200"
             pl={["0", "4"]}
             pr={["0", "5"]}
             py="2"
           >
-            <HStack space={[2, 3]} justifyContent="space-between">
-              <Avatar size="50px" source={require("@assets/bear.jpg")} ml="1" />
-              <VStack>
+            <HStack>
+              <HStack space={[2, 3]} w={"50%"} pl={3} alignItems={"center"}>
+                {el.gain > 0 ? (
+                  <Avatar background={"white"}>
+                    <Feather name="trending-up" size={20} color="red"></Feather>
+                  </Avatar>
+                ) : (
+                  <Avatar background={"white"}>
+                    <Feather
+                      name="trending-down"
+                      size={20}
+                      color="blue"
+                    ></Feather>
+                    {/* size="40px"  */}
+                    {/* source={require("@assets/bear.jpg")} */}
+                  </Avatar>
+                )}
+                <VStack>
+                  <Text
+                    _dark={{ color: "warmGray.50" }}
+                    color="coolGray.800"
+                    bold
+                    fontSize="sm"
+                  >
+                    {el.stockName}
+                  </Text>
+                  <Text
+                    color="coolGray.600"
+                    _dark={{ color: "warmGray.200" }}
+                    fontSize="sm"
+                  >
+                    {el.stockCode}
+                  </Text>
+                </VStack>
+                <Spacer />
+              </HStack>
+              <VStack w={"50%"} pl={5}>
                 <Text
+                  fontSize="xs"
+                  pr="5"
                   _dark={{ color: "warmGray.50" }}
-                  color="coolGray.800"
-                  bold
-                  fontSize="lg"
+                  color={el.gain > 0 ? "danger.600" : "info.600"}
+                  // alignSelf="center"
+                  //bold
                 >
-                  {el.stockName}
+                  수익률 : {(el.gain * 100).toFixed(2)}%
                 </Text>
-                <Text
-                  color="coolGray.600"
-                  _dark={{ color: "warmGray.200" }}
-                  fontSize="md"
-                >
-                  {el.stockCode}
-                </Text>
-              </VStack>
-              <Spacer />
-
-              <VStack>
                 <Text
                   fontSize="xs"
                   pr="5"
                   _dark={{ color: "warmGray.50" }}
                   color="coolGray.800"
-                  alignSelf="center"
+                  // alignSelf="center"
                 >
-                  현재가:{el.stockPrice}
+                  현재가 : {inputPriceFormat(el.stockPrice)}원
                 </Text>
                 <Text
                   fontSize="xs"
                   pr="5"
                   _dark={{ color: "warmGray.50" }}
                   color="coolGray.800"
-                  alignSelf="center"
+                  // alignSelf="center"
                 >
-                  평균단가:{el.price}
-                </Text>
-                <Text
-                  fontSize="xs"
-                  pr="5"
-                  _dark={{ color: "warmGray.50" }}
-                  color="coolGray.800"
-                  alignSelf="center"
-                >
-                  수익률:{el.gain}
+                  매수가 : {inputPriceFormat(el.price)}원
                 </Text>
               </VStack>
             </HStack>
           </Box>
         ))}
-        <HStack alignSelf="center" mb="2">
-          <Button mt="5" mx="1">
+        <HStack alignSelf="center" mt="5" mb="5">
+          <Button
+            {...leftPaperButton}
+            style={{ marginRight: 5 }}
+            // mt="5" mx="1"
+          >
             잔고수정
           </Button>
-          <Button mt="5" mx="1" onPress={onGoToService}>
+          <Button
+            {...rightPaperButtonNoWidth}
+            // mt="5"
+            // mx="1"
+            onPress={onGoToService}
+          >
             주식 서비스
           </Button>
         </HStack>

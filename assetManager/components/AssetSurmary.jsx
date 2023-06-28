@@ -1,6 +1,12 @@
-import { Box, Center, HStack, Text, Button } from "native-base";
+import { Box, Center, HStack, Text } from "native-base";
 import React from "react";
 import { inputPriceFormat } from "../utils";
+import { Button } from "react-native-paper";
+import {
+  leftPaperButton,
+  rightPaperButton,
+  rightPaperButtonNoWidth,
+} from "../styles";
 
 function AssetSurmary({
   data,
@@ -15,7 +21,7 @@ function AssetSurmary({
     serviceBtn;
 
   return (
-    <Center borderRadius={20} mt={10} mb={10}>
+    <Center borderRadius={20} mt={8} mb={10}>
       <Box>
         <Text fontSize={20} mb={5} fontWeight={"bold"}>
           {title}
@@ -24,7 +30,7 @@ function AssetSurmary({
       <Box w={"90%"}>
         {data?.map((el, index) => (
           <Box
-            bgColor={"amber.50"}
+            bgColor={"#ECEEFF"} // 기존 : amber.50
             key={index}
             mt={index === 0 ? 2.5 : 5}
             mb={index === data?.length - 1 ? 5 : 2.5}
@@ -46,10 +52,21 @@ function AssetSurmary({
         ))}
       </Box>
       <HStack>
-        <Button mb="5" mx="1" onPress={updateBtnOnPress}>
+        <Button
+          {...leftPaperButton}
+          style={{ marginRight: 5 }}
+          //mb="2.5"
+          //mx="1"
+          onPress={updateBtnOnPress}
+        >
           {updateBtnTitle}
         </Button>
-        <Button mb="5" mx="1" onPress={serviceBtnOnPress}>
+        <Button
+          {...rightPaperButtonNoWidth}
+          //mb="2.5"
+          //mx="1"
+          onPress={serviceBtnOnPress}
+        >
           {serviceBtnTitle}
         </Button>
       </HStack>

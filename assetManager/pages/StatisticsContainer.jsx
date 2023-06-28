@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { apiPath } from "../services";
-import { Box, Button, HStack, VStack, Text } from "native-base";
+import { Box, Button, HStack, VStack, Text, Center } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
 import ContentScrollView from "@components/ContentScrollView";
 import axios from "axios";
@@ -17,11 +17,20 @@ import { Dimensions } from "react-native";
 import { View } from "react-native";
 import YearAndMonthSelect from "../components/YearAndMonthSelect";
 import AccountBookAnalysis from "../components/AccountBookAnalysis";
-import { btnStyle, btnTextStyle, footerHeight } from "../styles";
+import {
+  btnStyle,
+  btnTextStyle,
+  btnTextStyle2,
+  footerHeight,
+  leftBtnPressStyle,
+  mainColor,
+  rightBtnPressStyle,
+  rightBtnTextStyle,
+  subColor,
+} from "../styles";
 
 function StatisticsContainer() {
   const dispatch = useDispatch();
-
   //////// List 쓰기 위해 필요한 state
   const [expanded, setExpanded] = React.useState(true);
   const handlePress = () => setExpanded(!expanded);
@@ -78,12 +87,8 @@ function StatisticsContainer() {
         <HStack mt={"5"} space={5} justifyContent="center">
           <Button
             {...btnStyle}
-            //borderColor="info.400"
-            _text={{ ...btnTextStyle, color: "blue.400" }} // color: "info.400"
-            _pressed={{
-              bg: "blue.200",
-              borderColor: "white",
-            }}
+            _text={btnTextStyle2} // color: "info.400"
+            _pressed={leftBtnPressStyle}
             onPress={() => changeTab(0)}
           >
             소비통계
@@ -93,12 +98,8 @@ function StatisticsContainer() {
           </Button>
           <Button
             {...btnStyle}
-            //borderColor="secondary.400"
-            _text={{ ...btnTextStyle, color: "secondary.400" }}
-            _pressed={{
-              bg: "secondary.200",
-              borderColor: "white",
-            }}
+            _text={btnTextStyle2}
+            _pressed={rightBtnPressStyle}
             onPress={() => changeTab(1)}
           >
             재무지표
@@ -106,16 +107,18 @@ function StatisticsContainer() {
         </HStack>
         {/* 소비통계 */}
         {tab === 0 && (
-          <VStack mt={5} mb={5} ml={5} mr={5}>
-            <Box p="2.5" alignItems={"center"} bg={"white"}>
-              <Text
-                color={"blue.400"}
-                fontSize={18}
-                //fontWeight={"semibold"}
-              >{`${token} (${fiInd.age}세) 님의 소비통계`}</Text>
-            </Box>
+          <Center>
+            <VStack w={"85%"} mt={5} mb={10} ml={5} mr={5}>
+              <Box p="2.5" alignItems={"center"} bg={"white"}>
+                <Text
+                  color={"blue.400"}
+                  fontSize={18}
+                  //fontWeight={"semibold"}
+                >{`${token} (${fiInd.age}세) 님의 소비통계`}</Text>
+              </Box>
+            </VStack>
             <AccountBookAnalysis />
-          </VStack>
+          </Center>
         )}
         {/* 재무지표 */}
         {tab === 1 && (

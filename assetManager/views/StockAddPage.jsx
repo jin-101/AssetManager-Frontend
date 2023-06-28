@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, FormControl, ScrollView, VStack, Button } from "native-base";
+import { Box, FormControl, ScrollView, VStack, Stack } from "native-base";
 import InputDateComponent from "@components/InputDateComponent";
 import InputTextComponent from "@components/InputTextComponent";
 import { makeDateString } from "../utils";
@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { stockInputUpdate, stockInputReset } from "../action";
 import axios from "axios";
 import { apiPath } from "../services";
+import { boxStyle, leftPaperButton, rightPaperButton } from "../styles";
+import { Button } from "react-native-paper";
 
 function StockAddPage() {
   const currentDate = makeDateString(new Date());
@@ -49,7 +51,7 @@ function StockAddPage() {
   return (
     <ScrollView>
       <VStack alignItems="center" mt="5" mb="5">
-        <Box bg="blue.100" w="90%" p="5" borderRadius="2xl" mt="5" mb="5">
+        <Box {...boxStyle} mt="5" mb="5">
           <Box w="100%">
             <InputTextComponent
               name="stockName"
@@ -80,7 +82,7 @@ function StockAddPage() {
             />
             <InputTextComponent
               name="buyPrice"
-              inputType={"text"}
+              inputType={"number"}
               formControlProps={{ mb: "5" }}
               formControlLabelProps={{ text: "매수가격" }}
               textInputStyle={{ width: "100%" }}
@@ -89,18 +91,35 @@ function StockAddPage() {
             />
             <InputTextComponent
               name="buyQuantity"
-              inputType={"text"}
-              formControlProps={{ mb: "5" }}
+              inputType={"number"}
+              formControlProps={{ mb: "2.5" }}
               formControlLabelProps={{ text: "매수수량" }}
               textInputStyle={{ width: "100%" }}
-              placeholder="EX)100주"
+              placeholder="EX) 100주"
               value={buyQuantity}
               dispatchF={stockInputUpdate}
             />
-            <Button mb="5" onPress={onSubmit}>
-              자산등록
-            </Button>
-            <Button onPress={onRest}>초기화</Button>
+            <Stack
+              mb="2.5"
+              direction="row" // direction="row" => "column"으로 바꾸면 수직으로 쌓이게 됨
+              space={2}
+              // mx 이거 적용하면 버튼 너비가 줄어듦.
+              mx={{
+                base: "auto",
+                md: "0",
+              }}
+            >
+              <Button {...leftPaperButton} onPress={onRest}>
+                초기화
+              </Button>
+              <Button
+                {...rightPaperButton}
+                style={{ width: "50%" }}
+                onPress={onSubmit}
+              >
+                자산등록
+              </Button>
+            </Stack>
           </Box>
         </Box>
       </VStack>

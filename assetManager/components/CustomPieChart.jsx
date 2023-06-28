@@ -11,13 +11,16 @@ const pieGraphPositionFixValue = 0.25;
 const pieGraphCenterCircleSize = screenWidth * 0.37;
 
 const graphColor = [
-  "#FF3300", //빨
-  "#FF9900", //주
-  "#F8C12C", //노
-  "#00cc33", //초
-  "#0033ff", //파
-  "#000099", //남
-  "#9933cc", //보
+  "#E5669A", //#핑크 E5669A
+  "#FF9C76", //#주황 FF9C76
+  "#FFC463", //#노랑 FFC463
+  "#8BAA4D", //#연두 8BAA4D
+  "#55C8AD", //#민트 55C8AD
+  "#008FA6", //#초록 008FA6
+  "#4874CC", //#파랑 4874CC
+  "#8B64B5", //#보라 8B64B5
+  "#A9AABC",
+  "#454655",
 ];
 const assetT = {
   totalDepositAndSavings: "예적금",
@@ -34,6 +37,7 @@ function CustomPieChart({
   centerTitle = "자산 비율",
   assetTitle = assetT,
   assetData = {},
+  isRank = false,
 }) {
   let preColor = graphColor[graphColor.length - 1];
   const chartData = Object.keys(assetData).map((el, index) => {
@@ -44,6 +48,7 @@ function CustomPieChart({
       color: graphColor.length <= index ? preColor : graphColor[index],
     };
   });
+  if (isRank) chartData.sort((a, b) => b.assetRatio - a.assetRatio); // 순위매기기
 
   return (
     <View w={"95%"} alignItems={"center"} justifyContent={"center"}>

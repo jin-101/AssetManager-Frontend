@@ -1,27 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Dimensions, ScrollView } from "react-native";
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
+import { Text, Dimensions } from "react-native";
+import { LineChart } from "react-native-chart-kit";
 import { apiPath } from "../services";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { Easing } from "react-native";
 import CustomPieChart from "./CustomPieChart";
 import YearAndMonthSelect from "./YearAndMonthSelect";
 import { accountInputData } from "../action";
-import { Center } from "native-base";
+import { Box } from "native-base";
 
 const screenWidth = Dimensions.get("window").width;
 
 function AccountBookAnalysis() {
-  // const { itemList } = route.params;
-  // const { currentMonth } = route.params;
   const { token } = useSelector((state) => state.login); //아이디 가져오는 법
   const { accountTotalList } = useSelector((state) => state.account);
   const [yearAndMonth, setYearAndMonth] = useState({
@@ -29,25 +19,20 @@ function AccountBookAnalysis() {
     month: "",
   });
 
-  const chartAnimationConfig = {
-    duration: 500, // Animation duration in milliseconds
-    easing: Easing.linear, // Animation easing function
+  const chartConfig = {
+    propsForBackgroundLines: {
+      rx: 8, // x축 모서리의 둥근 정도 설정
+      ry: 8, // y축 모서리의 둥근 정도 설정
+    },
+    backgroundGradientFrom: "#FFFFFF",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#FFFFFF",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false, // optional
   };
-
-  // const chartConfig = {
-  //   propsForBackgroundLines: {
-  //     rx: 8, // x축 모서리의 둥근 정도 설정
-  //     ry: 8, // y축 모서리의 둥근 정도 설정
-  //   },
-  //   backgroundGradientFrom: "#FFFFFF",
-  //   backgroundGradientFromOpacity: 0,
-  //   backgroundGradientTo: "#FFFFFF",
-  //   backgroundGradientToOpacity: 0.5,
-  //   color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-  //   strokeWidth: 2, // optional, default 3
-  //   barPercentage: 0.5,
-  //   useShadowColorFromDataset: false, // optional
-  // };
 
   // withdraw의 총합 계산
 
@@ -56,9 +41,6 @@ function AccountBookAnalysis() {
 
   const assetTitle = {};
   const assetData = {};
-
-  // console.log(categoryExpenses);
-  // console.log(totalWithdraw);
 
   ///////////////////////////////////////////////////////////
   ///////////////////////가계수지지표////////////////////////
@@ -127,15 +109,15 @@ function AccountBookAnalysis() {
     setExtractedData(dataForChart);
   }, [alldata]);
 
-  // const chartData = {
-  //   labels: extractedData.map((item) => item.month),
-  //   datasets: [
-  //     {
-  //       data: extractedData.map((item) => item.ratio),
-  //     },
-  //   ],
-  // };
-  // console.log(data);
+  const chartData = {
+    labels: extractedData.map((item) => item.month),
+    datasets: [
+      {
+        data: extractedData.map((item) => item.ratio),
+      },
+    ],
+  };
+
   let totalWithdraw;
   const makeYM = (year, month) => {
     setYearAndMonth({
@@ -148,7 +130,6 @@ function AccountBookAnalysis() {
     accountTotalList[yearAndMonth?.year + yearAndMonth?.month] &&
     Object.keys(accountTotalList).length > 0
   ) {
-    console.log("그리기");
     totalWithdraw = accountTotalList[
       yearAndMonth?.year + yearAndMonth?.month
     ].reduce((total, item) => total + item.withdraw, 0);
@@ -168,8 +149,10 @@ function AccountBookAnalysis() {
       });
   }
 
+  console.log(assetData, assetTitle);
   return (
     <>
+<<<<<<< HEAD
       <YearAndMonthSelect parentCallback={makeYM} />
       <ScrollView style={{ width: "100%" }}>
         <Center>
@@ -188,9 +171,34 @@ function AccountBookAnalysis() {
           width={screenWidth}
           height={275}
           chartConfig={chartConfig}
+=======
+      <Box mb={10} w={"100%"} alignItems={"center"} justifyContent={"center"}>
+        <YearAndMonthSelect parentCallback={makeYM} />
+        <CustomPieChart
+          totalValue={totalWithdraw}
+          centerTitle={
+            Object.keys(assetData).length > 0 ? "소비 패턴" : "내역 없음"
+          }
+          assetTitle={
+            Object.keys(assetData).length === 1
+              ? { [Object.keys(assetData)[0]]: "전체" }
+              : assetTitle
+          }
+          assetData={assetData}
+>>>>>>> 23c95db643cf2643690d8f56c63065498f41fbc9
         />
-      )} */}
-      </ScrollView>
+      </Box>
+      <Box mb={5} w={"100%"} alignItems={"center"} justifyContent={"center"}>
+        <Text>가계수지지표</Text>
+        {extractedData.length > 0 && (
+          <LineChart
+            data={chartData}
+            width={screenWidth}
+            height={275}
+            chartConfig={chartConfig}
+          />
+        )}
+      </Box>
     </>
   );
 }

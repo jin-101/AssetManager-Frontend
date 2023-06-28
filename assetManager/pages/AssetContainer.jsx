@@ -27,10 +27,10 @@ const entries = [
   { key: "1", title: "예/적금", naviPath: "depositCrud" },
   { key: "2", title: "부동산", naviPath: "" },
   { key: "3", title: "자동차", naviPath: "carCrud" },
-  { key: "4", title: "금", naviPath: "" },
-  { key: "5", title: "외환", naviPath: "" },
-  { key: "6", title: "주식", naviPath: "stockCrud" },
-  { key: "7", title: "코인", naviPath: "" },
+  { key: "4", title: "주식", naviPath: "stockCrud" },
+  { key: "5", title: "코인", naviPath: "" },
+  { key: "6", title: "외환", naviPath: "" },
+  { key: "7", title: "금", naviPath: "" },
   // { key: "8", title: "부채1", naviPath: "" },
   // { key: "9", title: "부채2", naviPath: "" },
   // { key: "10", title: "부채3", naviPath: "" },
@@ -42,7 +42,7 @@ const iconStyle = {
 };
 function AssetContainer() {
   const sliderWidth = windowWidth;
-  const itemWidth = windowWidth - 100;
+  const itemWidth = windowWidth - 60;
   const [loading, setLoading] = useState(true);
   const itemLength = 7; // item이 늘어나면 숫자 높여준다.
   let loadingCount = 0; // 자식에 데이터가 들어왔는지 판단하기 위한 변수
@@ -62,13 +62,13 @@ function AssetContainer() {
       case "3":
         return <Ionicons name="car-sport-sharp" {...iconStyle} />;
       case "4":
-        return <MaterialCommunityIcons name="gold" {...iconStyle} />;
-      case "5":
-        return <Fontisto name="money-symbol" {...iconStyle} />;
-      case "6":
         return <Octicons name="graph" {...iconStyle} />;
-      case "7":
+      case "5":
         return <MaterialCommunityIcons name="bitcoin" {...iconStyle} />;
+      case "6":
+        return <Fontisto name="money-symbol" {...iconStyle} />;
+      case "7":
+        return <MaterialCommunityIcons name="gold" {...iconStyle} />;
       // case "8":
       //   return <FontAwesome name="money" {...iconStyle} />;
       // case "9":
@@ -90,13 +90,13 @@ function AssetContainer() {
       case "3":
         return <CarCrudPage parentLoading={parentLoading} />;
       case "4":
-        return <GoldCrudPage parentLoading={parentLoading} />;
-      case "5":
-        return <CurrencyCrudPage parentLoading={parentLoading} />;
-      case "6":
         return <StockCRUDpageUpdate parentLoading={parentLoading} />;
-      case "7":
+      case "5":
         return <CoinCrudPage parentLoading={parentLoading} />;
+      case "6":
+        return <CurrencyCrudPage parentLoading={parentLoading} />;
+      case "7":
+        return <GoldCrudPage parentLoading={parentLoading} />;
 
       // case "8":
       //   return (
@@ -134,7 +134,7 @@ function AssetContainer() {
         style={{
           marginTop: 20,
           marginBottom: 20,
-          backgroundColor: "lightgray",
+          backgroundColor: "#A9AABC",
           borderRadius: 20,
         }}
       >

@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
 import {
   Box,
-  Button,
+  //Button,
   HStack,
   Icon,
   Input,
@@ -11,6 +11,7 @@ import {
   Text,
   useToast,
 } from "native-base";
+import { Button } from "react-native-paper";
 import React, { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -18,7 +19,12 @@ import { useDispatch } from "react-redux";
 
 import { apiPath } from "../services";
 import { loginStateUpdate } from "../action";
-import { loginLayoutStyle } from "../styles";
+import {
+  boxStyle,
+  leftPaperButton,
+  loginLayoutStyle,
+  rightPaperButton,
+} from "../styles";
 import { signinInitialize } from "../action/signin";
 import Loading from "@components/Loading";
 import ContentScrollView from "@components/ContentScrollView";
@@ -102,12 +108,14 @@ function Login() {
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
       <View style={style.container}>
         <ContentScrollView>
-          <Box w="100%" mt={20}>
+          <Box w="100%" mt={10}>
             <Box space={4} mb="10" alignItems="center">
               <Text fontSize={40}>Welcome</Text>
             </Box>
             <Box
-              bg="blue.100"
+              //{...boxStyle}
+              bg="#ECEEFF"
+              //bg="blue.100"
               borderRadius="30"
               height={400}
               w="90%"
@@ -179,15 +187,15 @@ function Login() {
                   space={5}
                 >
                   <Button
-                    style={{ width: "30%" }}
-                    colorScheme="primary"
+                    {...leftPaperButton}
+                    //colorScheme="primary"
                     onPress={signUpBtn}
                   >
                     회원가입
                   </Button>
                   <Button
-                    style={{ width: "30%" }}
-                    colorScheme="primary"
+                    {...rightPaperButton}
+                    //colorScheme="primary"
                     onPress={loginBtn}
                   >
                     로그인

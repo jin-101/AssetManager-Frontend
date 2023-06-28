@@ -131,8 +131,7 @@ function AccountBookAddPage({ route }) {
     })
       .then(() => {
         console.log("axios 가계부 한건 추가 성공");
-        dispatch(isAddDeleteData("Delete"));
-        // navigation.navigate("AccountBook", { type: "add" });
+        dispatch(isAddDeleteData("Add"));
         navigation.goBack();
       })
       .catch((err) => {

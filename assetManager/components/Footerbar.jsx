@@ -13,7 +13,7 @@ import { loginLayoutStyle } from "../styles";
 
 const styles = StyleSheet.create(loginLayoutStyle);
 
-function Footerbar() {
+function Footerbar({ onPress }) {
   const { pageState } = useSelector((state) => state.footerNav);
   const navigation = useNavigation();
 
@@ -34,6 +34,7 @@ function Footerbar() {
           py="3"
           flex={1}
           onPress={() => {
+            onPress();
             footNaviAction(0);
             navigation.setOptions({ title: "홈" });
           }}
