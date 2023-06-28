@@ -1,43 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { apiPath } from "../services";
 import { Box, Button, HStack, VStack, Text, Center } from "native-base";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ContentScrollView from "@components/ContentScrollView";
 import axios from "axios";
-import Loading from "../components/Loading";
-import {
-  List,
-  MD3Colors,
-  Divider,
-  Badge,
-  TouchableRipple,
-} from "react-native-paper";
+import Loading from "@components/Loading";
+import { List } from "react-native-paper";
 import { BarChart } from "react-native-chart-kit";
-import { Dimensions } from "react-native";
-import { View } from "react-native";
-import YearAndMonthSelect from "../components/YearAndMonthSelect";
-import AccountBookAnalysis from "../components/AccountBookAnalysis";
+import { Dimensions, View } from "react-native";
+import AccountBookAnalysis from "@components/AccountBookAnalysis";
 import {
   btnStyle,
-  btnTextStyle,
   btnTextStyle2,
   footerHeight,
   leftBtnPressStyle,
-  mainColor,
   rightBtnPressStyle,
-  rightBtnTextStyle,
-  subColor,
 } from "../styles";
 
 function StatisticsContainer() {
-  const dispatch = useDispatch();
   //////// List 쓰기 위해 필요한 state
-  const [expanded, setExpanded] = React.useState(true);
-  const handlePress = () => setExpanded(!expanded);
+  // const [expanded, setExpanded] = React.useState(true);
   ///////////////////////////////////
   const { token } = useSelector((state) => state.login);
   const [fiInd, setFiInd] = useState({});
-  const [salary, setSalary] = useState("");
+  // const [salary, setSalary] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [tab, setTab] = useState(0);
   const changeTab = (index) => setTab(index);
@@ -69,7 +55,7 @@ function StatisticsContainer() {
       .then((res) => {
         const result = res.data;
         setFiInd(result);
-        setSalary(result.salary); // 총소득
+        // setSalary(result.salary); // 총소득
         setIsLoading(false);
       })
       .catch((err) => {
@@ -79,7 +65,7 @@ function StatisticsContainer() {
 
   console.log(fiInd);
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading isMainPage={true} />;
   return (
     <>
       <ContentScrollView>

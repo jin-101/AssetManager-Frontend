@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-// import Loading from "@components/Loading";
+import Loading from "@components/Loading";
 import { isAndroid } from "../utils";
 import {
   Text,
@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { apiPath } from "../services";
 import AccountBookList from "@components/AccountBookList";
-import { Button } from "native-base";
+import { Button, HStack } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import {
   accountInputData,
@@ -23,69 +23,72 @@ import {
 import YearAndMonthSelect from "../components/YearAndMonthSelect";
 import { footerHeight } from "../styles";
 
-function AccountBookContainer() {
-  const styles = StyleSheet.create({
-    depositandwithdraw: {
-      fontSize: 16,
-      fontWeight: "bold",
-      marginTop: 3,
-      marginLeft: 10,
-    },
-    modalBg: {
-      position: "absolute",
-      top: 0,
-      width: "100%",
-      height: "100%",
-      backgroundColor: "gray",
-      opacity: 0.5,
-    },
-    modalContaniner: {
-      position: "absolute",
-      top: 0,
-      width: "100%",
-      height: "100%",
-      flex: 1,
-      justifyContent: "flex-end",
-    },
-    modalTitle: {
-      height: 60,
-      backgroundColor: "white",
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
-      justifyContent: "space-around",
-      alignItems: "center",
-      borderBottomWidth: 0.5,
-      borderColor: "lightgray",
-    },
-    modalTitleText: {
-      fontSize: 20,
-      fontWeight: 700,
-    },
-    modalContent: {
-      backgroundColor: "white",
-    },
-    modalFooter: {
-      height: isAndroid ? 0 : 20,
-      backgroundColor: "white",
-    },
-    container: {
-      flex: 1,
-      width: "100%",
-    },
-    picker: {
-      fontSize: 15, // 글씨 크기 조정
-      backgroundColor: "white",
-    },
-    pickerItem: {
-      fontSize: 10, // 글씨 크기 조정
-    },
-  });
+const styles = StyleSheet.create({
+  depositandwithdraw: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 3,
+    marginLeft: 10,
+  },
+  modalBg: {
+    position: "absolute",
+    top: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "gray",
+    opacity: 0.5,
+  },
+  modalContaniner: {
+    position: "absolute",
+    top: 0,
+    width: "100%",
+    height: "100%",
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  modalTitle: {
+    height: 60,
+    backgroundColor: "white",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    justifyContent: "space-around",
+    alignItems: "center",
+    borderBottomWidth: 0.5,
+    borderColor: "lightgray",
+  },
+  modalTitleText: {
+    fontSize: 20,
+    fontWeight: 700,
+  },
+  modalContent: {
+    backgroundColor: "white",
+  },
+  modalFooter: {
+    height: isAndroid ? 0 : 20,
+    backgroundColor: "white",
+  },
+  container: {
+    flex: 1,
+    width: "100%",
+  },
+  picker: {
+    fontSize: 15, // 글씨 크기 조정
+    backgroundColor: "white",
+  },
+  pickerItem: {
+    fontSize: 10, // 글씨 크기 조정
+  },
+});
 
+function AccountBookContainer() {
   const [yearAndMonth, setYearAndMonth] = useState({
     year: "",
     month: "",
   });
   const { year: currentYear, month: currentMonth } = yearAndMonth;
+  const { token } = useSelector((state) => state.login); //아이디 가져오는 법
+  const { accountTotalList, isAdd } = useSelector((state) => state.account); // isAdd, key
+  const dispatch = useDispatch();
 
   const makeYM = (year, month) => {
     setYearAndMonth({
@@ -95,14 +98,7 @@ function AccountBookContainer() {
     });
   };
 
-  const [isAddOrDelete, setIsAddOrDelete] = useState(false);
-
-  const [showModal, setShowModal] = useState(false);
-  const { token } = useSelector((state) => state.login); //아이디 가져오는 법
-  const { accountTotalList, isAdd } = useSelector((state) => state.account); // isAdd, key
-  const dispatch = useDispatch();
-
-  const axiosGetList = ({ callback, year, month }) => {
+  const axiosGetList = ({ year, month }) => {
     axios({
       method: "post",
       url: apiPath + "/rest/webboard/list.do",
@@ -114,9 +110,7 @@ function AccountBookContainer() {
       headers: { "Content-Type": `application/json` },
     })
       .then((response) => {
-        console.log(year + month, ">>>??");
         dispatch(accountInputData(year + month, response.data, ""));
-        if (callback) callback();
       })
       .catch((error) => {});
   };
@@ -124,25 +118,23 @@ function AccountBookContainer() {
   // 렌더링
   useEffect(() => {
     const { year, month } = yearAndMonth;
-    console.log(isAdd, "Effect");
     if (year !== "" && month !== "" && !accountTotalList[year + month]) {
-      console.log("useEffect 여기는 없을떄만 들어와!");
       axiosGetList({ year, month });
     }
-  }, [yearAndMonth, isAddOrDelete]); //key ,isAdd
+  }, [yearAndMonth]); //key ,isAdd
 
-  //추가 삭제시 엑시오스 다시 요청
-  if (isAdd === "Add" || isAdd === "DELETE") {
-    dispatch(isAddDeleteData(""));
-    axiosGetList({
-      year: currentYear,
-      month: currentMonth,
-      callback: () => setIsAddOrDelete(!isAddOrDelete),
-    });
-  }
+  useEffect(() => {
+    //추가 삭제시 엑시오스 다시 요청
+    if (isAdd === "Add" || isAdd === "DELETE") {
+      dispatch(isAddDeleteData(""));
+      axiosGetList({
+        year: currentYear,
+        month: currentMonth,
+      });
+    }
+  }, [isAdd]);
 
   let itemList = accountTotalList[currentYear + currentMonth] || [];
-  console.log("out", isAdd, { yearAndMonth }, Object.keys(accountTotalList));
 
   const ListSave = () => {
     dispatch(
@@ -198,32 +190,40 @@ function AccountBookContainer() {
     navigation.navigate("AccountBookUpload");
   };
 
-  const moveToCashReceiptUpload = () => {
-    navigation.navigate("CashReceiptUpload");
-  };
+  // const moveToCashReceiptUpload = () => {
+  //   navigation.navigate("CashReceiptUpload");
+  // };
 
   //추가 페이지로 보내기
   const moveToAdd = () => {
     navigation.navigate("AccountBookAddPage", { itemList });
   };
-
-  const [show, setShow] = useState(false);
-  const modalShow = (e) => {
-    setShow((prev) => !prev);
-  };
-
+  console.log(itemList.length);
   return (
-    <>
+    <View style={{ position: "relative" }}>
+      {itemList.length === 0 && <Loading isMainPage={true} />}
       <View>
-        <View>
-          <View style={{ backgroundColor: "gray" }}>
+        <HStack mt={5} alignSelf="center">
+          <View
+            style={{
+              width: "50%",
+              justifyContent: "center",
+            }}
+          >
             <YearAndMonthSelect parentCallback={makeYM} />
           </View>
-          <View style={{ backgroundColor: "pink" }}>
-            <Button onPress={moveToAccountUpload}>업로드</Button>
-            <Button onPress={moveToCashReceiptUpload}>연말정산</Button>
-          </View>
-        </View>
+          <HStack
+            style={{
+              width: "45%",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Button mr={3} onPress={moveToAccountUpload}>
+              업로드
+            </Button>
+            {/* <Button onPress={moveToCashReceiptUpload}>연말정산</Button> */}
+          </HStack>
+        </HStack>
 
         <View
           style={{ flexDirection: "row", justifyContent: "flex-end" }}
@@ -274,8 +274,7 @@ function AccountBookContainer() {
         })}
       </ScrollView>
       <View style={{ height: footerHeight }}></View>
-      {/* {isLoading && <Loading />} */}
-    </>
+    </View>
   );
 }
 
