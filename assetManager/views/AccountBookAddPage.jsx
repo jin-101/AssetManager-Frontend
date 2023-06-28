@@ -43,7 +43,6 @@ function AccountBookAddPage({ route }) {
   const [content, setContent] = useState("");
   const [memo, setMemo] = useState("");
   const [category, setCategory] = useState("");
-  const { isAdd } = useSelector((state) => state.account);
 
   const { itemList } = route.params;
   const uniqueAccountNumbers = [

@@ -15,6 +15,9 @@ export const modalBg = {
   width: windowWidth,
   height: windowHeight,
   top: 0,
+  left: 0,
+  bottom: 0,
+  right: 0,
   backgroundColor: "gray",
   opacity: 0.5,
 };

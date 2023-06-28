@@ -1,26 +1,25 @@
-import { FontAwesome } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Fontisto } from "@expo/vector-icons";
-import { Foundation } from "@expo/vector-icons";
-import { Octicons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  Fontisto,
+  Octicons,
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 import { Box, HStack } from "native-base";
 import React, { useState } from "react";
-import { View, Text, Dimensions } from "react-native";
+import { View, Text } from "react-native";
 import Carousel from "../external/Carousel";
 import ContentScrollView from "@components/ContentScrollView";
-import CarCrudPage from "../views/crudPage/CarCrudPage";
-import DepositCrudPage from "../views/crudPage/DepositCrudPage";
-import StockCRUDpage from "../views/crudPage/StockCRUDpage";
-import AptCrudPage from "../views/crudPage/AptCrudPage";
-import GoldCrudPage from "../views/crudPage/GoldCrudPage";
-import CurrencyCrudPage from "../views/crudPage/CurrencyCrudPage";
+import CarCrudPage from "@views/crudPage/CarCrudPage";
+import DepositCrudPage from "@views/crudPage/DepositCrudPage";
+import AptCrudPage from "@views/crudPage/AptCrudPage";
+import GoldCrudPage from "@views/crudPage/GoldCrudPage";
+import CurrencyCrudPage from "@views/crudPage/CurrencyCrudPage";
 import Loading from "@components/Loading";
-import StockCRUDpageUpdate from "../views/crudPage/StockCRUDpageUpdate";
-import CoinCrudPage from "../views/crudPage/CoinCrudPage";
+import StockCRUDpageUpdate from "@views/crudPage/StockCRUDpageUpdate";
+import CoinCrudPage from "@views/crudPage/CoinCrudPage";
 import { footerHeight, windowWidth } from "../styles";
 
 const entries = [
@@ -169,7 +168,8 @@ function AssetContainer() {
     </>
   );
   return (
-    <>
+    <View style={{ position: "relative" }}>
+      {loading && <Loading isMainPage={true} />}
       <ContentScrollView>
         <Carousel
           data={entries}
@@ -179,8 +179,7 @@ function AssetContainer() {
         />
         <View style={{ height: footerHeight }}></View>
       </ContentScrollView>
-      {loading && <Loading />}
-    </>
+    </View>
   );
 }
 
