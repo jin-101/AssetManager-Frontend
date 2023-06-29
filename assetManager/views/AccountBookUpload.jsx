@@ -1,13 +1,26 @@
 import React, { useState } from "react";
-import { Button, View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import axios from "axios";
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";
+import { Button } from "native-base";
+import {
+  boxStyle,
+  boxStyle2,
+  btnStyle,
+  btnTextStyle,
+  btnTextStyle2,
+  leftBtnPressStyle,
+  rightBtnPressStyle,
+  rightPaperButton,
+  rightPaperButtonNoWidth,
+} from "../styles";
 
 function AccountBookUpload(props) {
   const { token } = useSelector((state) => state.login); //아이디 가져오는 법
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isFisrt, setIsFirst] = useState(true);
 
   const handleFileSelect = async () => {
     try {
@@ -16,6 +29,7 @@ function AccountBookUpload(props) {
       if (!result.cancelled) {
         setSelectedFile(result.uri);
       }
+      if (isFisrt) setIsFirst(false);
     } catch (error) {
       console.log("Error selecting file:", error);
     }
@@ -23,8 +37,8 @@ function AccountBookUpload(props) {
 
   const handleFileUpload = async () => {
     try {
-      if (!selectedFile) {
-        console.log("No file selected.");
+      if (selectedFile !== csv) {
+        setShowAlert(true);
         return;
       }
 
@@ -60,14 +74,37 @@ function AccountBookUpload(props) {
     }
   };
 
+  const fileExtension = selectedFile?.split(".").pop(); // 파일 확장자 추출
+  const [showAlert, setShowAlert] = useState(false);
+
   return (
-    <View>
-      <Button title="파일 선택하기" onPress={handleFileSelect} />
-      {selectedFile && (
-        <View>
-          <Text>CSV File: {selectedFile}</Text>
-          <Button title="파일 저장하기" onPress={handleFileUpload} />
-        </View>
+    <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+      <Button
+        {...btnStyle}
+        //borderColor="secondary.400"
+        _text={btnTextStyle2}
+        _pressed={leftBtnPressStyle}
+        onPress={handleFileSelect}
+      >
+        파일 선택하기
+      </Button>
+
+      {fileExtension !== "csv" &&
+        !isFisrt &&
+        Alert.alert("잘못된 확장자입니다.", "파일 유형을 다시 확인해주세요.")}
+
+      {selectedFile && fileExtension === "csv" && (
+        <>
+          <Button
+            {...btnStyle}
+            style={{ marginTop: 20 }}
+            _text={btnTextStyle2}
+            _pressed={leftBtnPressStyle}
+            onPress={handleFileUpload}
+          >
+            파일 저장하기
+          </Button>
+        </>
       )}
     </View>
   );

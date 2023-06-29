@@ -68,12 +68,12 @@ function YearAndMonthSelect({ parentCallback }) {
           <TouchableOpacity onPress={handleMinusMonth}>
             <Ionicons
               name="caret-back-outline"
-              style={{ marginTop: 9, marginRight: 10, fontSize: 13 }}
+              style={{ marginTop: 9, marginRight: 10, fontSize: 16 }}
             ></Ionicons>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={handleToggleModal}>
-            <Text style={{ fontSize: 18, fontWeight: "bold", marginTop: 3 }}>
+            <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 3 }}>
               {currentYear}년 {currentMonth}월
             </Text>
           </TouchableOpacity>
@@ -204,7 +204,7 @@ function YearAndMonthSelect({ parentCallback }) {
           <TouchableOpacity onPress={handlePlusMonth}>
             <Ionicons
               name="caret-forward-outline"
-              style={{ marginTop: 9, marginLeft: 10, fontSize: 13 }}
+              style={{ marginTop: 9, marginLeft: 10, fontSize: 16 }}
             ></Ionicons>
           </TouchableOpacity>
         </View>
