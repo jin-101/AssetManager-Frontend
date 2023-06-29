@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { apiPath } from "../services";
 import AccountBookList from "@components/AccountBookList";
-import { Button, HStack } from "native-base";
+import { HStack } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import {
   accountInputData,
@@ -21,7 +21,8 @@ import {
   isAddDeleteData,
 } from "../action/account";
 import YearAndMonthSelect from "../components/YearAndMonthSelect";
-import { footerHeight } from "../styles";
+import { footerHeight, leftBtnPressStyle, leftPaperButton } from "../styles";
+import { Button } from "react-native-paper";
 
 const styles = StyleSheet.create({
   depositandwithdraw: {
@@ -218,7 +219,12 @@ function AccountBookContainer() {
               justifyContent: "flex-end",
             }}
           >
-            <Button mr={3} onPress={moveToAccountUpload}>
+            <Button
+              {...leftPaperButton}
+              style={{ width: "70%", marginRight: 10 }}
+              //mr={10}
+              onPress={moveToAccountUpload}
+            >
               업로드
             </Button>
             {/* <Button onPress={moveToCashReceiptUpload}>연말정산</Button> */}
