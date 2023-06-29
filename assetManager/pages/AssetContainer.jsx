@@ -133,7 +133,8 @@ function AssetContainer() {
         style={{
           marginTop: 20,
           marginBottom: 20,
-          backgroundColor: "#A9AABC",
+          backgroundColor: "#AAA9BC", // #B0A8B9 , #A9AABC
+          // 자산 탭 - 가장 바깥 테두리 색
           borderRadius: 20,
         }}
       >

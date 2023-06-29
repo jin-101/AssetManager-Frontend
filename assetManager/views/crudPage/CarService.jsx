@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ContentScrollView from "@components/ContentScrollView";
 import InputTextComponent from "@components/InputTextComponent";
-import { Box, Button, HStack, Text, VStack } from "native-base";
+import { Box, HStack, Text, VStack, Button } from "native-base";
 import SelectComponent from "../../components/SelectComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { apiPath } from "../../services";
@@ -11,7 +11,20 @@ import { Alert } from "react-native";
 import { inputPriceFormat } from "../../utils";
 import Loading from "../../components/Loading";
 import CarRegister from "../../components/CarRegister";
-import { btnStyle, btnTextStyle } from "../../styles";
+import {
+  boxStyle,
+  boxStyle2,
+  btnStyle,
+  btnTextStyle,
+  btnTextStyle2,
+  leftBtnPressStyle,
+  leftPaperButton,
+  leftPaperButtonNoWidth,
+  rightBtnPressStyle,
+  rightPaperButton,
+  rightPaperButtonNoWidth,
+} from "../../styles";
+import { Button as ReactNativePaperButton } from "react-native-paper";
 
 function CarService({}) {
   const dispatch = useDispatch();
@@ -111,24 +124,18 @@ function CarService({}) {
         <HStack mt={"5"} space={5} justifyContent="center">
           <Button
             {...btnStyle}
-            //borderColor="blue.400"
-            _text={{ ...btnTextStyle, color: "blue.400" }}
-            _pressed={{
-              bg: "blue.200",
-              borderColor: "white",
-            }}
+            //borderColor="info.400"
+            _text={btnTextStyle2}
+            _pressed={leftBtnPressStyle}
             onPress={() => changeTab(0)}
           >
             자동차 추천
           </Button>
           <Button
             {...btnStyle}
-            //borderColor="pink.400"
-            _text={{ ...btnTextStyle, color: "pink.400" }}
-            _pressed={{
-              bg: "pink.200",
-              borderColor: "white",
-            }}
+            //borderColor="secondary.400"
+            _text={btnTextStyle2}
+            _pressed={rightBtnPressStyle}
             onPress={() => changeTab(1)}
           >
             차 취득세 계산기
@@ -137,14 +144,7 @@ function CarService({}) {
         {/* 차 추천 */}
         {tab === 0 && (
           <VStack mt="5" alignItems="center">
-            <Box
-              bg="blue.100"
-              w="90%"
-              p="5"
-              borderRadius="2xl"
-              mb="5"
-              alignItems={"center"}
-            >
+            <Box {...boxStyle} mb="5" alignItems={"center"}>
               <Text mb={2.5} fontSize={25} fontWeight={"bold"}>
                 중고 자동차 추천
               </Text>
@@ -192,9 +192,12 @@ function CarService({}) {
                 formControlProps={{ marginTop: 5 }}
                 // formControlHelperProps={{ h: 0 }}
               />
-              <Button w={"40%"} onPress={carRecomandOnPress}>
+              <ReactNativePaperButton
+                {...rightPaperButtonNoWidth}
+                onPress={carRecomandOnPress}
+              >
                 검색하기
-              </Button>
+              </ReactNativePaperButton>
             </Box>
             {/* 검색결과 리스트 */}
             {isResultOpen && (
@@ -267,14 +270,7 @@ function CarService({}) {
         )}
         {tab === 1 && (
           <VStack mt="5" mb="5" alignItems="center">
-            <Box
-              bg="red.100"
-              w="90%"
-              p="5"
-              borderRadius="2xl"
-              mb="5"
-              alignItems={"center"}
-            >
+            <Box {...boxStyle2} mb="5" alignItems={"center"}>
               <Text mb={2.5} fontSize={25} fontWeight={"bold"}>
                 자동차 취등록세 계산
               </Text>

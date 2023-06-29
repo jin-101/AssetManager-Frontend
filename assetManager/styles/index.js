@@ -74,11 +74,16 @@ export const rightPaperButton = {
   style: { width: "30%" },
 };
 
+export const leftPaperButtonNoWidth = {
+  mode: "contained",
+  //buttonColor: "#F8F8FF",
+};
 export const rightPaperButtonNoWidth = {
   mode: "outlined",
   buttonColor: "#F8F8FF",
 };
 
+// Box, Button 등에 쓰인 연보라색(메인컬러), 연분홍색(서브컬러)
 export const mainColor = "#ECEEFF";
 export const subColor = "#FFEBF0";
 

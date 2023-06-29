@@ -183,7 +183,7 @@ function CurrencyCrudPage({ parentLoading }) {
                     color="coolGray.800"
                     // alignSelf="center"
                   >
-                    매입환율:{item.buyPrice.toFixed(2)}원
+                    매입환율 : {item.buyPrice.toFixed(2)}원
                   </Text>
                 </Box>
               </VStack>

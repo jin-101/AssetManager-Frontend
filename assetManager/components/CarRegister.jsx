@@ -1,10 +1,16 @@
-import { Box, Button, Center, Divider, HStack, Stack, Text } from "native-base";
+import { Box, Center, Divider, HStack, Stack, Text } from "native-base";
 import React, { useState } from "react";
 import InputRadioComponent from "./InputRadioComponent";
 import InputTextComponent from "./InputTextComponent";
 import { carTaxCalculate, inputPriceFormat } from "../utils";
 import { StyleSheet } from "react-native";
 import { light } from "@mui/material/styles/createPalette";
+import { Button } from "react-native-paper";
+import {
+  leftPaperButton,
+  leftPaperButtonNoWidth,
+  rightPaperButtonNoWidth,
+} from "../styles";
 
 const textListInfo = [
   { title: "제조사", key: "company" },
@@ -31,8 +37,8 @@ function CarRegister({ element, index, totalLen }) {
     <Stack>
       <Box
         bgColor={"white"}
-        mt={index === 0 ? 2.5 : 5}
-        mb={index === totalLen - 1 ? 5 : 2.5}
+        mt={index === 0 ? 1 : 2}
+        mb={index === totalLen - 1 ? 2 : 1}
         padding={5}
         borderRadius={20}
       >
@@ -95,8 +101,8 @@ function CarRegister({ element, index, totalLen }) {
           formControlHelperProps={{ h: 0 }}
         />
         <Center mt={3}>
-          <Button w={"40%"} onPress={onPress}>
-            <Text color={"white"}>계산하기</Text>
+          <Button {...leftPaperButtonNoWidth} w={"40%"} onPress={onPress}>
+            계산하기
           </Button>
         </Center>
         {tax && (
