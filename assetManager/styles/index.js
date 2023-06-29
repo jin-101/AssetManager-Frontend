@@ -74,6 +74,10 @@ export const rightPaperButton = {
   style: { width: "30%" },
 };
 
+export const leftPaperButtonNoWidth = {
+  mode: "contained",
+  //buttonColor: "#F8F8FF",
+};
 export const rightPaperButtonNoWidth = {
   mode: "outlined",
   buttonColor: "#F8F8FF",
