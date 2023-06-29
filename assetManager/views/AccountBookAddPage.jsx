@@ -1,19 +1,6 @@
-import {
-  HStack,
-  VStack,
-  Box,
-  FormControl,
-  Button as NBButton,
-} from "native-base";
+import { HStack, VStack, Box, FormControl } from "native-base";
 import React, { useState } from "react";
-import {
-  Text,
-  ScrollView,
-  StyleSheet,
-  Button,
-  View,
-  Alert,
-} from "react-native";
+import { Text, ScrollView, StyleSheet, View, Alert } from "react-native";
 import InputRadioComponent from "@components/InputRadioComponent";
 import InputTextComponent from "@components/InputTextComponent";
 import InputDateComponent from "@components/InputDateComponent";
@@ -30,6 +17,13 @@ import { apiPath } from "../services";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { isAddDeleteData } from "../action";
+import {
+  boxStyle,
+  leftPaperButton,
+  loginLayoutStyle,
+  rightPaperButton,
+} from "../styles";
+import { Button } from "react-native-paper";
 
 function AccountBookAddPage({ route }) {
   const navigation = useNavigation();
@@ -254,7 +248,7 @@ function AccountBookAddPage({ route }) {
               parentSetState={setSelectedDate}
             />
             {/* 시간 부분 */}
-            <View style={{ flexDirection: "row" }}>
+            <HStack h={45} alignItems="center" mb={10}>
               <TextInput
                 style={{
                   ...inputTagCommonStyle,
@@ -262,8 +256,6 @@ function AccountBookAddPage({ route }) {
                   height: 45,
                   // backgroundColor: "white",
                   textAlign: "center",
-                  paddingLeft: 10,
-                  marginBottom: 10,
                   color: "gray",
                 }}
                 //placeholder={substringTime} //스트링 값이 들어가야 함
@@ -272,17 +264,14 @@ function AccountBookAddPage({ route }) {
                 value={TimeforValue}
               />
 
-              <NBButton
+              <Button
+                {...leftPaperButton}
+                style={{ width: "35%", marginLeft: 20, height: 40 }}
                 onPress={handleOpenPicker}
-                style={{
-                  height: 45,
-                  width: 135,
-                  marginLeft: 8,
-                  marginBottom: 40,
-                }}
+                backgroundColor="red"
               >
-                시간을 입력하세요
-              </NBButton>
+                시간 선택
+              </Button>
 
               {showPicker && (
                 <DateTimePicker
@@ -291,7 +280,7 @@ function AccountBookAddPage({ route }) {
                   onChange={handleTimeChange}
                 />
               )}
-            </View>
+            </HStack>
 
             <InputTextComponent
               name="price"
@@ -304,9 +293,15 @@ function AccountBookAddPage({ route }) {
               parentSetState={setMemo}
               // formControlHelperProps={{ text: "상품을 선택하세요." }}
             />
-            <NBButton size="lg" onPress={SaveOneAccount}>
-              저장하기
-            </NBButton>
+            <Box alignItems={"center"}>
+              <Button
+                {...rightPaperButton}
+                style={{ width: 320 }}
+                onPress={SaveOneAccount}
+              >
+                저장하기
+              </Button>
+            </Box>
           </Box>
         </Box>
         <CategoryModal

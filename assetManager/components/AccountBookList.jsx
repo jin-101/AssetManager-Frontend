@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
   },
   smallgray: {
     fontSize: 13,
-    color: "gray",
+    //color: "gray",
+    //fontWeight: "bold",
   },
   leftSpace: {
     flex: 1,
@@ -108,8 +109,14 @@ function AccountBookList({ item, preData, index, yearMonthKey }) {
       <View>
         {showDate && (
           <View>
-            <Text style={{ marginTop: index === 0 ? 5 : 30 }}>
-              {item.exchangeDate.slice(0, 10)}
+            <Text
+              style={{
+                marginTop: index === 0 ? 5 : 30,
+                fontWeight: "bold",
+                fontSize: 16,
+              }}
+            >
+              {item.exchangeDate.slice(8, 10)}일
             </Text>
 
             <View
@@ -140,12 +147,20 @@ function AccountBookList({ item, preData, index, yearMonthKey }) {
             flexDirection: "row",
           }}
         >
-          <Text>{item.content}</Text>
+          <Text style={{ fontSize: 16 }}>{item.content}</Text>
           <View style={{ flex: 1, alignItems: "flex-end" }}>
             {item.withdraw > 0 ? (
-              <Text>- {inputPriceFormat(item.withdraw)}원</Text>
+              <Text
+                style={{ fontWeight: "bold", color: "#4f69c6", fontSize: 16 }}
+              >
+                - {inputPriceFormat(item.withdraw)}원
+              </Text>
             ) : (
-              <Text>{inputPriceFormat(item.deposit)}원</Text>
+              <Text
+                style={{ fontWeight: "bold", color: "#ff3333", fontSize: 16 }}
+              >
+                {inputPriceFormat(item.deposit)}원
+              </Text>
             )}
           </View>
         </View>
@@ -170,14 +185,14 @@ function AccountBookList({ item, preData, index, yearMonthKey }) {
               setShow((prev) => !prev);
             }}
           >
-            <Text style={{ color: "gray" }}>
+            <Text style={{ color: "gray", fontSize: 16 }}>
               {category !== null ? category : "카테고리 입력"}
             </Text>
           </TouchableOpacity>
 
           <View style={{ flex: 1, alignItems: "flex-end" }}>
             <TextInput
-              style={{ color: "gray" }}
+              style={{ color: "gray", fontSize: 16 }}
               placeholder="메모 입력"
               onChangeText={InputMemo}
               value={memo}

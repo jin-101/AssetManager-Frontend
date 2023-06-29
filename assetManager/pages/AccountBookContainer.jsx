@@ -26,7 +26,7 @@ import { Button } from "react-native-paper";
 
 const styles = StyleSheet.create({
   depositandwithdraw: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "bold",
     marginTop: 3,
     marginLeft: 10,
@@ -219,15 +219,9 @@ function AccountBookContainer() {
               justifyContent: "flex-end",
             }}
           >
-            <Button
-              {...leftPaperButton}
-              style={{ width: "70%", marginRight: 10 }}
-              //mr={10}
-              onPress={moveToAccountUpload}
-            >
+            <Button mr={3} onPress={moveToAccountUpload}>
               업로드
             </Button>
-            {/* <Button onPress={moveToCashReceiptUpload}>연말정산</Button> */}
           </HStack>
         </HStack>
 
