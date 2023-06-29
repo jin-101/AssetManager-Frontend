@@ -81,7 +81,7 @@ function CarService({}) {
       Alert.alert("", "제조사를 선택해주세요.");
     } else if (type === "") {
       Alert.alert("", "차 유형을 선택해주세요.");
-    } else if (maxPrice < minPrice) {
+    } else if (Number(maxPrice) < Number(minPrice)) {
       Alert.alert("", "최저금액이 최고금액보다 크게 입력되었습니다.");
     } else {
       axios({
