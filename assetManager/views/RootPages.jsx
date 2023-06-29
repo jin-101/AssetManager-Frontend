@@ -24,7 +24,6 @@ import {
   AccountBookUpload,
   DepositCrudPage,
   CarCrudPage,
-  StockCRUDpage,
   AccountBookAddPage,
   CashReceiptUpload,
   GoldGraphPage,
@@ -38,7 +37,6 @@ import {
   StockService,
   BestWorstStockPage,
 } from "@views";
-// import CustomHeader from "../components/CustomHeader";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
@@ -46,9 +44,14 @@ function RootPages() {
 
   return (
     <Stack.Navigator
-    // screenOptions={{
-    //   header: () => <CustomHeader />,
-    // }}
+      screenOptions={{
+        headerStyle: {
+          position: "absolute", // 상단에 고정
+          top: 0, // 화면 맨 위에 위치
+          left: 0,
+          right: 0,
+        },
+      }}
     >
       {token !== "" ? (
         <>
