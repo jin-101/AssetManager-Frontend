@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "assetmanger",
-    "slug": "assetmanger",
+    "name": "assetManager",
+    "slug": "assetManager",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/iconBlue.jpg",
+    "icon": "./assets/iconBlue.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/iconLongBlue.png",
@@ -18,17 +18,17 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/iconBlue.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.jin101.assetManager"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/iconBlue.png"
     },
     "extra": {
       "eas": {
-        "projectId": "c09666be-fdc2-4d75-9a70-583701200251"
+        "projectId": "7170d44f-574d-4080-8101-ed1e995d6850"
       }
     }
   }
