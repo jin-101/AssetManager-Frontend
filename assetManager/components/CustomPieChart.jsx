@@ -6,7 +6,7 @@ import ChartLabelComponent from "../components/ChartLabelComponent";
 import { randomColor } from "../utils";
 
 const screenWidth = Dimensions.get("window").width;
-const pieGraphSize = screenWidth * 0.95;
+const pieGraphSize = screenWidth * 0.80;
 const pieGraphPositionFixValue = 0.25;
 const pieGraphCenterCircleSize = screenWidth * 0.37;
 
@@ -76,6 +76,7 @@ function CustomPieChart({
         ) : (
           <Box w={"100%"} alignItems={"center"} justifyContent={"center"}>
             <PieChart
+              backgroundColor="white"
               data={chartData}
               width={pieGraphSize}
               height={pieGraphSize}
