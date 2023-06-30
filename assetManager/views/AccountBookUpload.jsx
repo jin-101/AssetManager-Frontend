@@ -5,6 +5,7 @@ import axios from "axios";
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";
 import { Button } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 import {
   boxStyle,
   boxStyle2,
@@ -21,6 +22,7 @@ function AccountBookUpload(props) {
   const { token } = useSelector((state) => state.login); //아이디 가져오는 법
   const [selectedFile, setSelectedFile] = useState(null);
   const [isFisrt, setIsFirst] = useState(true);
+  const navigation = useNavigation();
 
   const handleFileSelect = async () => {
     try {
@@ -28,8 +30,8 @@ function AccountBookUpload(props) {
 
       if (!result.cancelled) {
         setSelectedFile(result.uri);
+        setIsFirst(false);
       }
-      if (isFisrt) setIsFirst(false);
     } catch (error) {
       console.log("Error selecting file:", error);
     }
@@ -37,8 +39,8 @@ function AccountBookUpload(props) {
 
   const handleFileUpload = async () => {
     try {
-      if (selectedFile !== csv) {
-        setShowAlert(true);
+      if (!selectedFile) {
+        console.log("No file selected.");
         return;
       }
 
@@ -69,13 +71,18 @@ function AccountBookUpload(props) {
       );
 
       console.log("File uploaded:", response.data);
+      Alert.alert("저장 완료", "저장에 성공했습니다.", [
+        {
+          text: "OK",
+          onPress: () => navigation.goBack(),
+        },
+      ]);
     } catch (error) {
       console.log("Error uploading file:", error);
     }
   };
 
   const fileExtension = selectedFile?.split(".").pop(); // 파일 확장자 추출
-  const [showAlert, setShowAlert] = useState(false);
 
   return (
     <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
