@@ -317,7 +317,7 @@ function AccountBookContainer() {
           );
         })}
       </ScrollView>
-      <View style={{ height: footerHeight }}></View>
+      <View style={{ height: footerHeight + 50 }}></View>
     </View>
   );
 }
