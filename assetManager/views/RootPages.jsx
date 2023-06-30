@@ -27,6 +27,7 @@ import {
   AccountBookAddPage,
   CashReceiptUpload,
   GoldGraphPage,
+  AptService,
   DepositUpdate,
   SavingsUpdate,
   CarUpdate,
@@ -36,6 +37,7 @@ import {
   CurrencyGraphPage,
   StockService,
   BestWorstStockPage,
+  TempPage,
 } from "@views";
 
 function RootPages() {
@@ -102,6 +104,11 @@ function RootPages() {
             name="AddApt"
             component={AptAddPage}
             options={{ ...commonHeaderStyle, title: "부동산 추가" }}
+          />
+          <Stack.Screen
+            name="AddService"
+            component={AptService}
+            options={{ ...commonHeaderStyle, title: "우리집 시세동향" }}
           />
           <Stack.Screen
             name="AddCar"
@@ -185,12 +192,12 @@ function RootPages() {
           <Stack.Screen
             name="currencyGraphPage"
             component={CurrencyGraphPage}
-            options={{ ...commonHeaderStyle, title: "외화서비스" }}
+            options={{ ...commonHeaderStyle, title: "시세조회" }}
           />
           <Stack.Screen
             name="GoldGraphPage"
             component={GoldGraphPage}
-            options={{ ...commonHeaderStyle, title: "금서비스" }}
+            options={{ ...commonHeaderStyle, title: "시세조회" }}
           />
           <Stack.Screen
             name="StockService"
@@ -201,6 +208,11 @@ function RootPages() {
             name="BestWorst"
             component={BestWorstStockPage}
             options={{ ...commonHeaderStyle, title: "상한가 하한가" }}
+          />
+          <Stack.Screen
+            name="TempPage"
+            component={TempPage}
+            options={{ ...commonHeaderStyle, title: "뒤로가기" }}
           />
         </>
       ) : (

@@ -1,16 +1,15 @@
-import InputTextComponent from "@components/InputTextComponent";
 import axios from "axios";
-import { Center, View, Text, Box, HStack, Button, Divider } from "native-base";
+import { View } from "native-base";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { apiPath } from "../../services";
-import { inputPriceFormat } from "../../utils";
 import AssetSurmary from "../../components/AssetSurmary";
+import { useNavigation } from "@react-navigation/native";
 
 function CoinCrudPage({ parentLoading }) {
   const { token } = useSelector((state) => state.login);
   const [userCoin, setUserCoin] = useState([]);
-  const [totalAvgRate, setTotalAvgRate] = useState("");
+  const navigation = useNavigation();
   useEffect(() => {
     axios({
       url: apiPath + `/coin/coinCrud`,
@@ -22,9 +21,6 @@ function CoinCrudPage({ parentLoading }) {
       .then((res) => {
         const result = res.data;
         setUserCoin(result);
-        // const length = result.length;
-        // console.log("몇이여? " + length);
-        // setTotalAvgRate(result !== [] ? result[length - 1].totalAvgRate : "");
         parentLoading();
         console.log(res.data);
       })
@@ -33,10 +29,8 @@ function CoinCrudPage({ parentLoading }) {
       });
   }, []);
 
-  const updateOnPress = () => {
-    //navigation.navigate("depositUpdate");
-  };
-  const serviceOnPress = () => {};
+  const updateOnPress = () => navigation.navigate("TempPage");
+  const serviceOnPress = () => navigation.navigate("TempPage");
 
   return (
     <View bgColor={"white"} w={"90%"} borderRadius={20}>

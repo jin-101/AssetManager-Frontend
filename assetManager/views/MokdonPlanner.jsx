@@ -11,7 +11,7 @@ import {
   Button,
 } from "native-base";
 import axios from "axios";
-import { Alert, StyleSheet, View, Pressable } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
+import { Alert } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
 import { apiPath } from "../services";
 import { useDispatch, useSelector } from "react-redux";
 import InputTextComponent from "@components/InputTextComponent";
@@ -24,16 +24,14 @@ import {
   boxStyle,
   boxStyle2,
   btnStyle,
-  btnTextStyle,
   btnTextStyle2,
   leftBtnPressStyle,
   rightBtnPressStyle,
-  rightPaperButton,
   rightPaperButtonNoWidth,
 } from "../styles";
 import { Button as ReactNativePaperButton } from "react-native-paper";
 
-function MokdonPlanner(props) {
+function MokdonPlanner({ route }) {
   const iconStyle = {
     marginTop: 5,
     marginBottom: 5,
@@ -176,15 +174,15 @@ function MokdonPlanner(props) {
 
   // ★ 진이형한테 질문 - 왜 여기선 setter로 변경된 값이 바로 반영되고
   console.log("길이 " + Object.keys(bankAndAvgRate));
-
+  console.log(route);
   // 3. 목돈 <-> 계산기 왔다갔다 상단 버튼
-  const [btnStatus, setBtnStatus] = useState(true);
+  const [btnStatus, setBtnStatus] = useState(route?.params?.naviState || 0);
   const mokdonBtn = () => {
-    setBtnStatus(true);
+    setBtnStatus(0);
     reset();
   };
   const calculatorBtn = () => {
-    setBtnStatus(false);
+    setBtnStatus(1);
     reset();
   };
   console.log("목돈계산기 타입 " + type);
@@ -222,7 +220,7 @@ function MokdonPlanner(props) {
       </HStack>
 
       {/* (1) 목돈 마련 플래너 파트 */}
-      {btnStatus ? (
+      {btnStatus === 0 ? (
         <VStack mt="5" mb="10" alignItems="center">
           <Box {...boxStyle} alignItems={"center"}>
             <Text mb={2.5} fontSize={20}>
@@ -339,7 +337,7 @@ function MokdonPlanner(props) {
             </ReactNativePaperButton>
           </Box>
 
-          {btnStatus === true && result.type === "예금" && (
+          {btnStatus === 0 && result.type === "예금" && (
             <>
               <FontAwesome name={iconName} {...iconStyle} />
               <Box {...boxStyle}>
@@ -373,7 +371,7 @@ function MokdonPlanner(props) {
               </Box>
             </>
           )}
-          {btnStatus === true && result.type === "적금" && (
+          {btnStatus === 0 && result.type === "적금" && (
             <>
               <FontAwesome name={iconName} {...iconStyle} />
               <Box {...boxStyle}>
@@ -513,7 +511,7 @@ function MokdonPlanner(props) {
             </ReactNativePaperButton>
           </Box>
 
-          {btnStatus === false && result.type === "예금" && (
+          {btnStatus === 1 && result.type === "예금" && (
             <>
               <FontAwesome name={iconName} {...iconStyle} />
               <Box {...boxStyle2} mb="5">
@@ -552,7 +550,7 @@ function MokdonPlanner(props) {
               </Box>
             </>
           )}
-          {btnStatus === false && result.type === "적금" && (
+          {btnStatus === 1 && result.type === "적금" && (
             <>
               <FontAwesome name={iconName} {...iconStyle} />
               <Box {...boxStyle2} mb="5">

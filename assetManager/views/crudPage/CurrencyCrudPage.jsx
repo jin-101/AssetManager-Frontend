@@ -51,6 +51,7 @@ function CurrencyCrudPage({ parentLoading }) {
   const [currency, setCurrency] = useState(null);
   const [avergeGain, setAvergeGain] = useState(0);
 
+  const goTOcurrencyUpdate = () => navigation.navigate("TempPage");
   const goTOcurrencyService = () => navigation.navigate("currencyGraphPage");
 
   useEffect(() => {
@@ -195,6 +196,7 @@ function CurrencyCrudPage({ parentLoading }) {
             {...leftPaperButton}
             style={{ marginRight: 5 }}
             // mt="5" mx="1"
+            onPress={goTOcurrencyUpdate}
           >
             잔고수정
           </Button>
@@ -203,7 +205,7 @@ function CurrencyCrudPage({ parentLoading }) {
             // mt="5" mx="1"
             onPress={goTOcurrencyService}
           >
-            외화 서비스
+            시세조회
           </Button>
         </HStack>
       </Box>

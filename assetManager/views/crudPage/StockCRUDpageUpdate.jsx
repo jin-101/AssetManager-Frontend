@@ -21,13 +21,14 @@ import { leftPaperButton, rightPaperButtonNoWidth } from "../../styles";
 import { Feather } from "@expo/vector-icons";
 
 function StockCRUDpageUpdate({ parentLoading }) {
-  const trendingUp = () => <Feather name="trending-up"></Feather>;
+  // const trendingUp = () => <Feather name="trending-up"></Feather>;
   const navigation = useNavigation();
   const { token } = useSelector((state) => state.login);
   const havingStock = useSelector((state) => state.havingStockUpdate);
   const dispatch = useDispatch();
   const [avergeGain, setAvergeGain] = useState(0);
 
+  const onGoToUpdate = () => navigation.navigate("TempPage");
   const onGoToService = () => navigation.navigate("StockService");
 
   useEffect(() => {
@@ -156,6 +157,7 @@ function StockCRUDpageUpdate({ parentLoading }) {
             {...leftPaperButton}
             style={{ marginRight: 5 }}
             // mt="5" mx="1"
+            onPress={onGoToUpdate}
           >
             잔고수정
           </Button>
@@ -165,7 +167,7 @@ function StockCRUDpageUpdate({ parentLoading }) {
             // mx="1"
             onPress={onGoToService}
           >
-            주식 서비스
+            수익률 순위조회
           </Button>
         </HStack>
       </Box>

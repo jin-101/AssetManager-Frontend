@@ -16,20 +16,21 @@ import AccountBookUpload from "@views/AccountBookUpload";
 import AccountBookAddPage from "@views/AccountBookAddPage";
 import MokdonPlanner from "@views/MokdonPlanner";
 import UserInfoPage from "@views/UserInfoPage";
+import AptService from "@views/crudPage/AptService";
 import DepositCrudPage from "@views/crudPage/DepositCrudPage";
 import DepositUpdate from "@views/crudPage/DepositUpdate";
 import SavingsUpdate from "@views/crudPage/SavingsUpdate";
 import CarUpdate from "@views/crudPage/CarUpdate";
 import CarService from "@views/crudPage/CarService";
 import CarCrudPage from "@views/crudPage/CarCrudPage";
-import StockCRUDpage from "@views/crudPage/StockCRUDpage";
 import CalculatePage from "@views/CalculatePage";
 import CashReceiptUpload from "@views/CashReceiptUpload";
 import CurrencyGraphPage from "@views/CurrencyGraphPage";
 import GoldGraphPage from "@views/GoldGraphPage";
 import StockCRUDpageUpdate from "@views/crudPage/StockCRUDpageUpdate";
 import StockService from "@views/StockService";
-import BestWorstStockPage from "./BestWorstStockPage";
+import BestWorstStockPage from "@views/BestWorstStockPage";
+import TempPage from "@views/TempPage";
 
 export {
   Login,
@@ -50,13 +51,13 @@ export {
   AccountBookAddPage,
   MokdonPlanner,
   UserInfoPage,
+  AptService,
   DepositCrudPage,
   DepositUpdate,
   SavingsUpdate,
   CarUpdate,
   CarService,
   CarCrudPage,
-  StockCRUDpage,
   CalculatePage,
   CashReceiptUpload,
   CurrencyGraphPage,
@@ -64,4 +65,5 @@ export {
   StockCRUDpageUpdate,
   StockService,
   BestWorstStockPage,
+  TempPage,
 };

@@ -86,12 +86,12 @@ function MainPage() {
 
   return (
     <>
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
           {returnComponent()}
           <Footerbar onPress={handleResetScroll} />
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </View>
       <Modal
         style={{
           width: "100%",
