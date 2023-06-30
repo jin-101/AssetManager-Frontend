@@ -12,7 +12,7 @@ import currecny from "./currecny";
 import gold from "./gold";
 import avgRate from "./avgRate";
 import loan from "./loan";
-import havingStockUpdate from "./havingStock";
+import havingStock from "./havingStock";
 import userCar from "./userCar";
 import account from "./account";
 import bestWorst from "./BestWorst";
@@ -30,7 +30,7 @@ const rootReducer = combineReducers({
   gold,
   avgRate,
   loan,
-  havingStockUpdate,
+  havingStock,
   userCar,
   account,
   bestWorst,
