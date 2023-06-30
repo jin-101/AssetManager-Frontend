@@ -24,12 +24,13 @@ function StockCRUDpageUpdate({ parentLoading }) {
   const trendingUp = () => <Feather name="trending-up"></Feather>;
   const navigation = useNavigation();
   const { token } = useSelector((state) => state.login);
-  const havingStock = useSelector((state) => state.havingStockUpdate);
+  const havingStock = useSelector((state) => state.havingStock);
   const dispatch = useDispatch();
   const [avergeGain, setAvergeGain] = useState(0);
 
   const onGoToService = () => navigation.navigate("StockService");
 
+  /*
   useEffect(() => {
     const fetchStock = async () => {
       try {
@@ -54,6 +55,19 @@ function StockCRUDpageUpdate({ parentLoading }) {
     };
     fetchStock();
   }, []);
+  */
+
+  useEffect(()=>{
+    let totalInvestedAmount = 0;
+    let gainMutipleByInvestedAmount = 0;
+    for (let i = 0; i < havingStock.length; i++) {
+      totalInvestedAmount += havingStock[i]["investedAmount"];
+      gainMutipleByInvestedAmount +=
+      havingStock[i]["investedAmount"] * havingStock[i]["gain"];
+    }
+    setAvergeGain(gainMutipleByInvestedAmount / totalInvestedAmount);
+    parentLoading();
+  },[]);
 
   return (
     <View bgColor={"white"} w={"90%"} borderRadius={20}>

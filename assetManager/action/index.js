@@ -20,9 +20,10 @@ import {
 import {
   stockInputUpdate,
   stockInputReset,
-  havingStockUpdate,
   bestWorstPageUpdate,
 } from "./stock";
+
+import {havingStockUpdate} from './havingStock'
 
 import { currencyInputUpdate, currencyRest } from "./currency";
 
