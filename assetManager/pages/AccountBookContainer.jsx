@@ -21,7 +21,7 @@ import {
   isAddDeleteData,
 } from "../action/account";
 import YearAndMonthSelect from "../components/YearAndMonthSelect";
-import { footerHeight, leftBtnPressStyle, leftPaperButton } from "../styles";
+import { footerHeight, leftPaperButton, windowWidth } from "../styles";
 import { Button } from "react-native-paper";
 
 const styles = StyleSheet.create({
@@ -202,13 +202,19 @@ function AccountBookContainer() {
   console.log(itemList.length);
 
   return (
-    <View style={{ position: "relative" }}>
+    <View
+      style={{
+        position: "relative",
+        alignSelf: "center",
+        width: windowWidth * 0.9,
+      }}
+    >
       {itemList.length === 0 && <Loading isMainPage={true} />}
       <View>
         <HStack mt={5} alignSelf="center">
           <View
             style={{
-              width: "50%",
+              width: "55%",
               justifyContent: "center",
             }}
           >
@@ -216,7 +222,7 @@ function AccountBookContainer() {
           </View>
           <HStack
             style={{
-              width: "45%",
+              width: "40%",
               justifyContent: "flex-end",
             }}
           >
@@ -267,7 +273,7 @@ function AccountBookContainer() {
       </View>
 
       {/* 카드내역 스크롤 뷰 자리 */}
-      <ScrollView style={{ alignSelf: "center" }}>
+      <ScrollView style={{ alignSelf: "center", width: "90%" }}>
         {itemList?.map((item, index) => {
           return (
             <AccountBookList

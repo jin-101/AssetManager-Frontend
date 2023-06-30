@@ -60,16 +60,11 @@ function AccountBookAddPage({ route }) {
       setShowPicker(true);
     }
   };
-  const handleClosePicker = () => {
-    if (showPicker) {
-      setShowPicker(false);
-    }
-  };
   const handleTimeChange = (event, selectedTime) => {
     if (selectedTime) {
       setShowPicker(false);
       setSelectedTime(selectedTime);
-      console.log(selectedTime);
+      // console.log(selectedTime);
     } else {
       setShowPicker(false);
     }
@@ -91,11 +86,11 @@ function AccountBookAddPage({ route }) {
   const TimeForSave =
     TimeForSaveLength == 7 ? "0" + TimeForSaveData : TimeForSaveData;
 
-  console.log("db저장용!!!" + TimeForSave);
+  // console.log("db저장용!!!" + TimeForSave);
 
   //화면에 보여주기 위한 시간 12:00 형식
   const TimeforValue = selectedTimeString.substring(0, TimeLength - 6);
-  console.log("화면출력용!" + TimeforValue);
+  // console.log("화면출력용!" + TimeforValue);
 
   const SaveOneAccount = () => {
     if (money === "") {
@@ -132,7 +127,7 @@ function AccountBookAddPage({ route }) {
         navigation.goBack();
       })
       .catch((err) => {
-        console.log(err);
+        console.log("가계부 add error", err);
       });
   };
 
