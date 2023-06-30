@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "assetmanger",
-    "slug": "assetmanger",
+    "slug": "assetmanager",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/iconBlue.jpg",
@@ -28,7 +28,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "c09666be-fdc2-4d75-9a70-583701200251"
+        "projectId": "6a93b9dd-56c2-4b09-866b-771d4d405ee4"
       }
     }
   }
