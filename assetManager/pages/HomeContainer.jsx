@@ -157,11 +157,7 @@ function HomeContainer({ flatListRef }) {
               {
                 index: 1,
                 title: "부채",
-                list: [
-                  { title: "부채항목1", key: "Addtest1" },
-                  { title: "부채항목2", key: "Addtest2" },
-                  { title: "부채항목3", key: "Addtest3" },
-                ],
+                list: [{ title: "부채등록", key: "TempPage" }],
               },
             ]}
           />

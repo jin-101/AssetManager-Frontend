@@ -10,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Box, Button, Divider, HStack } from "native-base";
+import { Box, Button, Divider, HStack, PresenceTransition } from "native-base";
 import { loginInitialize, resetAvgRate } from "../action";
 import axios from "axios";
 import { apiPath } from "../services";
@@ -61,7 +61,7 @@ function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
   async function basicInfoChangeBtn() {
     console.log("기본정보 변경 페이지로 이동", navigation.navigate);
     await onPress(); // 받은 모달변경함수 실행(모달 종료)
-    await delay(300);
+    await delay(200);
     navigation.navigate("UserInfo");
   }
 
@@ -93,7 +93,9 @@ function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
   async function navigatorChoice(naviItem) {
     console.log({ naviItem });
     await onPress(); // 받은 모달변경함수 실행(모달 종료)
+    await delay(200);
     navigation.navigate(naviItem.go, { naviState: naviItem?.naviState });
+    // onPress();
   }
 
   return (
@@ -240,22 +242,38 @@ function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
                   </Box>
                   {dropdownState === j &&
                     secondItem.list?.map((thirdItem, k) => (
-                      <Box
+                      <PresenceTransition
                         key={
                           searchNavigate[firstCategory]?.key +
                           secondItem.key +
                           thirdItem.key
                         }
-                        bg={"gray.100"}
-                        alignItems={"center"}
-                        justifyContent={"center"}
-                        height={30}
-                        w={"100%"}
-                        borderBottomWidth={0.3}
-                        onTouchEnd={() => navigatorChoice(thirdItem)}
+                        visible={dropdownState === j}
+                        initial={{
+                          opacity: 0,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          transition: {
+                            duration: 250,
+                          },
+                        }}
+                        style={{ width: "100%", alignItems: "center" }}
                       >
-                        <Text style={{ fontSize: 12 }}>{thirdItem.title}</Text>
-                      </Box>
+                        <Box
+                          bg={"gray.100"}
+                          alignItems={"center"}
+                          justifyContent={"center"}
+                          height={30}
+                          w={"100%"}
+                          // borderBottomWidth={0.3}
+                          onTouchEnd={() => navigatorChoice(thirdItem)}
+                        >
+                          <Text style={{ fontSize: 12 }}>
+                            {thirdItem.title}
+                          </Text>
+                        </Box>
+                      </PresenceTransition>
                     ))}
                 </>
               ))}

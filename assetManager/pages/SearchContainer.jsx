@@ -121,7 +121,7 @@ function SearchContainer() {
           <Divider />
           <ScrollView
             style={{
-              backgroundColor: "lightgray", //"#eaf1f2"
+              backgroundColor: "white", //"#eaf1f2"
               width: "90%",
               height: windowHeight * 0.5,
               marginTop: 40,

@@ -1,24 +1,16 @@
 import React, { useState } from "react";
-import { View, Text, Alert } from "react-native";
+import { View, Alert } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import axios from "axios";
 import { apiPath } from "../services";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-import {
-  boxStyle,
-  boxStyle2,
-  btnStyle,
-  btnTextStyle,
-  btnTextStyle2,
-  leftBtnPressStyle,
-  rightBtnPressStyle,
-  rightPaperButton,
-  rightPaperButtonNoWidth,
-} from "../styles";
+import { btnStyle, btnTextStyle2, leftBtnPressStyle } from "../styles";
+import { isAddDeleteData } from "../action";
 
 function AccountBookUpload(props) {
+  const dispatch = useDispatch();
   const { token } = useSelector((state) => state.login); //아이디 가져오는 법
   const [selectedFile, setSelectedFile] = useState(null);
   const [isFisrt, setIsFirst] = useState(true);
@@ -57,24 +49,22 @@ function AccountBookUpload(props) {
       });
 
       // Axios를 사용하여 파일을 서버로 전송
-      const response = await axios.post(
-        apiPath + "/rest/webboard/filesave.do",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          data: {
-            memberid: token,
-          },
-        }
-      );
-
-      console.log("File uploaded:", response.data);
+      await axios.post(apiPath + "/rest/webboard/filesave.do", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        data: {
+          memberid: token,
+        },
+      });
+      // console.log("File uploaded:", response.data);
       Alert.alert("저장 완료", "저장에 성공했습니다.", [
         {
           text: "OK",
-          onPress: () => navigation.goBack(),
+          onPress: () => {
+            dispatch(isAddDeleteData("Add"));
+            navigation.goBack();
+          },
         },
       ]);
     } catch (error) {
@@ -88,7 +78,6 @@ function AccountBookUpload(props) {
     <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
       <Button
         {...btnStyle}
-        //borderColor="secondary.400"
         _text={btnTextStyle2}
         _pressed={leftBtnPressStyle}
         onPress={handleFileSelect}
