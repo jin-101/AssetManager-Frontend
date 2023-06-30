@@ -28,11 +28,7 @@
     },
     "extra": {
       "eas": {
-<<<<<<< HEAD
         "projectId": "7170d44f-574d-4080-8101-ed1e995d6850"
-=======
-        "projectId": "6a93b9dd-56c2-4b09-866b-771d4d405ee4"
->>>>>>> 046b42fc27d5a99bca0b10d209c1474381fc1ef1
       }
     }
   }
