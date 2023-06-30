@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "@components/Loading";
+// import Loading from "@components/Loading";
 import { isAndroid } from "../utils";
 import {
   Text,
@@ -204,7 +204,7 @@ function AccountBookContainer() {
         width: windowWidth * 0.9,
       }}
     >
-      {itemList.length === 0 && <Loading isMainPage={true} />}
+      {/* {itemList.length === 0 && <Loading isMainPage={true} />} */}
       <View>
         <HStack mt={5} alignSelf="center">
           <View
