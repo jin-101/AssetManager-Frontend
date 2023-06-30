@@ -46,13 +46,18 @@ function AccountBookAddPage({ route }) {
   const uniqueAccountNumbers = [
     ...new Set(itemList.map((item) => item.accountNumber)),
   ];
+
+  //업로드를 안하면 계좌가 없으므로 단계진행 안되도록 예외처리
+  if (uniqueAccountNumbers.length === 0) {
+    navigation.goBack();
+    Alert.alert("", "등록된 계좌가 없습니다.\n가계부를 먼저 업로드해주세요.");
+  }
   const [selectedAccountNumber, setSelectedAccountNumber] = useState("");
 
   const [show, setShow] = useState(false);
   const modalShow = (e) => {
     setShow((prev) => !prev);
   };
-
   const [showPicker, setShowPicker] = useState(false);
 
   const handleOpenPicker = () => {
@@ -74,8 +79,8 @@ function AccountBookAddPage({ route }) {
   const [selectedTime, setSelectedTime] = useState(currentTimeData);
 
   //시간만 스트링 형태로 출력 12:00:00 AM
-  const selectedTimeString = selectedTime.toLocaleTimeString();
-  // console.log(selectedTimeString);
+  const selectedTimeString = selectedTime.toLocaleTimeString("en-US"); //미국시간으로 변경
+  console.log(selectedTimeString);
 
   //12:00:00 AM의 길이
   const TimeLength = selectedTimeString.length;
@@ -93,6 +98,7 @@ function AccountBookAddPage({ route }) {
   // console.log("화면출력용!" + TimeforValue);
 
   const SaveOneAccount = () => {
+    console.log({ money, TimeForSave });
     if (money === "") {
       Alert.alert("", "금액을 입력해주세요.");
       return;
@@ -251,7 +257,7 @@ function AccountBookAddPage({ route }) {
               <TextInput
                 style={{
                   ...inputTagCommonStyle,
-                  width: 190,
+                  width: "58%",
                   height: 45,
                   // backgroundColor: "white",
                   textAlign: "center",
@@ -277,6 +283,7 @@ function AccountBookAddPage({ route }) {
                   value={selectedTime}
                   mode="time"
                   onChange={handleTimeChange}
+                  locale={"en-US"}
                 />
               )}
             </HStack>
