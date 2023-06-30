@@ -2,6 +2,7 @@ import ModalSelector from "react-native-modal-selector";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useEffect, useState } from "react";
 import { Text, View, TouchableOpacity, Modal } from "react-native";
+import DatePickerModal from "./DatePickerModal";
 
 function YearAndMonthSelect({ parentCallback }) {
   const [showModal, setShowModal] = useState(false);
@@ -41,9 +42,10 @@ function YearAndMonthSelect({ parentCallback }) {
   };
 
   const handleToggleModal = () => {
-    setShowModal((prevState) => !prevState);
-    setSelectedYear(currentYear);
-    setSelectedMonth(currentMonth);
+    setDatePickerVisible(!isDatePickerVisible);
+    // setShowModal((prevState) => !prevState);
+    // setSelectedYear(currentYear);
+    // setSelectedMonth(currentMonth);
   };
 
   const handleSelectMonth = () => {
@@ -55,6 +57,8 @@ function YearAndMonthSelect({ parentCallback }) {
   const handleBackdropPress = () => {
     setShowModal(false);
   };
+
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
   return (
     <View
@@ -78,8 +82,17 @@ function YearAndMonthSelect({ parentCallback }) {
             </Text>
           </TouchableOpacity>
 
+          {isDatePickerVisible && (
+            <DatePickerModal
+              modalControlState={{
+                state: isDatePickerVisible,
+                setState: handleToggleModal,
+              }}
+            />
+          )}
+
           {/* 월별 선택 모달 */}
-          <Modal
+          {/* <Modal
             visible={showModal}
             animationType="slide"
             transparent={true}
@@ -199,7 +212,7 @@ function YearAndMonthSelect({ parentCallback }) {
                 </View>
               </View>
             </TouchableOpacity>
-          </Modal>
+          </Modal> */}
           {/* 월별 선택 모달 */}
           <TouchableOpacity onPress={handlePlusMonth}>
             <Ionicons

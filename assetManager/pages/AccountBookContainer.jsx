@@ -198,7 +198,9 @@ function AccountBookContainer() {
   const moveToAdd = () => {
     navigation.navigate("AccountBookAddPage", { itemList });
   };
+
   console.log(itemList.length);
+
   return (
     <View style={{ position: "relative" }}>
       {itemList.length === 0 && <Loading isMainPage={true} />}
