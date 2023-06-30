@@ -5,11 +5,12 @@ import { useNavigation } from "@react-navigation/native";
 import ContentScrollView from "@components/ContentScrollView";
 import axios from "axios";
 import { apiPath } from "../services";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { btnStyle, btnTextStyle, footerHeight } from "../styles";
 import { StyleSheet, View } from "react-native";
 import CustomPieChart from "../components/CustomPieChart";
 import { inputPriceFormat } from "../utils";
+import { havingStockUpdate } from "../action";
 
 const totalStyle = StyleSheet.create({
   outBox: {
@@ -45,6 +46,7 @@ const initialAsssetData = {
 
 function HomeContainer({ flatListRef }) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const { token } = useSelector((state) => state.login);
   const [totalAsset, setTotalAsset] = useState(1);
   const [totalLiability, setTotalLiability] = useState(1);
@@ -55,6 +57,17 @@ function HomeContainer({ flatListRef }) {
   };
   const calculate = () => {
     navigation.navigate("calculate");
+  };
+
+  const fetchStock = async () => {
+    try {
+      const response = await axios.get(`${apiPath}/stock/stockCrud`, {
+        params: { id: token },
+      });
+      dispatch(havingStockUpdate(response.data));
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
@@ -99,6 +112,7 @@ function HomeContainer({ flatListRef }) {
       setTotalAsset(total);
       setTotalLiability(liability);
     });
+    fetchStock();
   }, []);
 
   const totalBox = ({ boxStyle, title = "", value = 0 }) => {

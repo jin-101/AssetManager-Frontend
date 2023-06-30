@@ -21,9 +21,10 @@ import {
 import {
   STOCK_UPDATE,
   STOCK_RESET,
-  HAVINGSTOCK_UPDATE,
   BESTWORST_PAGEMODE,
 } from "./stock";
+
+import {HAVINGSTOCK_UPDATE} from "./havingStock"
 
 import { CURRENCY_UPDATE, CURRENCY_RESET } from "./currency";
 
