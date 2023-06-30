@@ -25,7 +25,7 @@ function StockService(){
     const navigation = useNavigation();
     const {isOpen,onOpen,onClose} = useDisclose();
     const {token} = useSelector((state)=>state.login);
-    const havingStock = useSelector((state)=>state.havingStockUpdate);
+    const havingStock = useSelector((state)=>state.havingStock);
     const [gains,setGains] = useState([]);
     let picture = require("../assets/olympic.png");
 
