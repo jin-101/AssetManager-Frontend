@@ -13,22 +13,16 @@ import {
 } from "native-base";
 import { Button } from "react-native-paper";
 import React, { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View, KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 
 import { apiPath } from "../services";
 import { loginStateUpdate } from "../action";
-import {
-  boxStyle,
-  leftPaperButton,
-  loginLayoutStyle,
-  rightPaperButton,
-} from "../styles";
+import { leftPaperButton, loginLayoutStyle, rightPaperButton } from "../styles";
 import { signinInitialize } from "../action/signin";
 import Loading from "@components/Loading";
 import ContentScrollView from "@components/ContentScrollView";
-import { KeyboardAvoidingView } from "react-native";
 
 const style = StyleSheet.create(loginLayoutStyle);
 

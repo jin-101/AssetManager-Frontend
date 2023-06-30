@@ -5,36 +5,33 @@ import { Box, HStack, Text, VStack, Button } from "native-base";
 import SelectComponent from "../../components/SelectComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { apiPath } from "../../services";
-import { carCompanyListSearch } from "../../action";
+import { carCompanyListSearch, userCarUpdate } from "../../action";
 import axios from "axios";
 import { Alert } from "react-native";
 import { inputPriceFormat } from "../../utils";
-import Loading from "../../components/Loading";
 import CarRegister from "../../components/CarRegister";
 import {
   boxStyle,
   boxStyle2,
   btnStyle,
-  btnTextStyle,
   btnTextStyle2,
   leftBtnPressStyle,
-  leftPaperButton,
-  leftPaperButtonNoWidth,
   rightBtnPressStyle,
-  rightPaperButton,
   rightPaperButtonNoWidth,
 } from "../../styles";
 import { Button as ReactNativePaperButton } from "react-native-paper";
 
-function CarService({}) {
+function CarService({ route }) {
+  console.log(route);
   const dispatch = useDispatch();
   const { companyList } = useSelector((state) => state.carList);
   const [carType, setCarType] = useState([]);
-  const [tab, setTab] = useState(0);
+  const [tab, setTab] = useState(route?.params?.naviState || 0);
   const [isResultOpen, setIsResultOpen] = useState(false);
   const [searchList, setSearchList] = useState([]);
 
   const { userCar } = useSelector((state) => state.userCar);
+  const { token } = useSelector((state) => state.login);
 
   const [carRecomand, setCarRecomand] = useState({
     carCompany: "",
@@ -81,7 +78,7 @@ function CarService({}) {
       Alert.alert("", "제조사를 선택해주세요.");
     } else if (type === "") {
       Alert.alert("", "차 유형을 선택해주세요.");
-    } else if (maxPrice < minPrice) {
+    } else if (Number(maxPrice) < Number(minPrice)) {
       Alert.alert("", "최저금액이 최고금액보다 크게 입력되었습니다.");
     } else {
       axios({
@@ -110,6 +107,21 @@ function CarService({}) {
       })
         .then((res) => {
           dispatch(carCompanyListSearch(res.data));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    if (userCar.length === 0) {
+      axios({
+        url: `${apiPath}/car/carCrud`,
+        method: "GET",
+        params: {
+          userId: token,
+        },
+      }) //id 넘겨줘야됨
+        .then((res) => {
+          dispatch(userCarUpdate(res.data));
         })
         .catch((err) => {
           console.log(err);

@@ -14,111 +14,8 @@ import { Box, Button, Divider, HStack } from "native-base";
 import { loginInitialize, resetAvgRate } from "../action";
 import axios from "axios";
 import { apiPath } from "../services";
-import { delay } from "../utils";
+import { delay, searchNavigate } from "../utils";
 import { btnStyle, btnTextStyle } from "../styles";
-
-// 데이터 받아올 형식,,, 추후 삭제
-const tempData = [
-  {
-    key: "A",
-    title: "자산",
-    list: [
-      {
-        key: "A1",
-        title: "A",
-        list: [
-          { key: "a11", title: "a1", go: "1a1" },
-          { key: "a12", title: "a2", go: "2a2" },
-          { key: "a13", title: "a3", go: "3a3" },
-        ],
-      },
-      {
-        key: "A2",
-        title: "AA",
-        list: [
-          { key: "a21", title: "aa1", go: "1aa1" },
-          { key: "a22", title: "aa2", go: "2aa2" },
-          { key: "a23", title: "aa3", go: "3aa3" },
-        ],
-      },
-      {
-        key: "A3",
-        title: "AAA",
-        list: [
-          { key: "a31", title: "aaa1", go: "1aaa1" },
-          { key: "a32", title: "aaa2", go: "2aaa2" },
-          { key: "a33", title: "aaa3", go: "3aaa3" },
-        ],
-      },
-    ],
-  },
-  {
-    key: "B",
-    title: "통계",
-    list: [
-      {
-        key: "B1",
-        title: "B",
-        list: [
-          { key: "b11", title: "b1", go: "1b1" },
-          { key: "b12", title: "b2", go: "2b2" },
-          { key: "b13", title: "b3", go: "3b3" },
-        ],
-      },
-      {
-        key: "B2",
-        title: "BB",
-        list: [
-          { key: "b21", title: "bb1", go: "1bb1" },
-          { key: "b22", title: "bb2", go: "2bb2" },
-          { key: "b23", title: "bb3", go: "3bb3" },
-        ],
-      },
-      {
-        key: "B3",
-        title: "BBB",
-        list: [
-          { key: "b31", title: "bbb1", go: "1bbb1" },
-          { key: "b32", title: "bbb2", go: "2bbb2" },
-          { key: "b33", title: "bbb3", go: "3bbb3" },
-        ],
-      },
-    ],
-  },
-  {
-    key: "C",
-    title: "가계부",
-    list: [
-      {
-        key: "C1",
-        title: "C",
-        list: [
-          { key: "c11", title: "c1", go: "1c1" },
-          { key: "c12", title: "c2", go: "2c2" },
-          { key: "c13", title: "c3", go: "3c3" },
-        ],
-      },
-      {
-        key: "C2",
-        title: "CC",
-        list: [
-          { key: "c21", title: "cc1", go: "1cc1" },
-          { key: "c22", title: "cc2", go: "2cc2" },
-          { key: "c23", title: "cc3", go: "3cc3" },
-        ],
-      },
-      {
-        key: "C3",
-        title: "CCC",
-        list: [
-          { key: "c31", title: "ccc1", go: "1ccc1" },
-          { key: "c32", title: "ccc2", go: "2ccc2" },
-          { key: "c33", title: "ccc3", go: "3ccc3" },
-        ],
-      },
-    ],
-  },
-];
 
 function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
   const navigation = useNavigation();
@@ -193,9 +90,11 @@ function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
   };
 
   // 전체보기 최종 선택 시 콜백함수
-  const navigatorChoice = (index, naviText) => {
-    console.log(firstCategory, dropdownState, index, naviText);
-  };
+  async function navigatorChoice(naviItem) {
+    console.log({ naviItem });
+    await onPress(); // 받은 모달변경함수 실행(모달 종료)
+    navigation.navigate(naviItem.go, { naviState: naviItem?.naviState });
+  }
 
   return (
     <>
@@ -234,11 +133,7 @@ function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
           </Pressable>
         </HStack>
       </HStack>
-
-      {/* 기본정보변경 + 리스트 */}
-      <ScrollView
-        style={{ marginTop: native.titleLayout.height, height: "100%" }}
-      >
+      <View style={{ marginTop: native.titleLayout.height }}>
         {/* 기본정보변경 */}
         <HStack justifyContent={"center"}>
           <View
@@ -293,54 +188,73 @@ function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
           </View>
         </HStack>
         <Divider bg={"black"} />
-
+      </View>
+      {/* 기본정보변경 + 리스트 */}
+      <ScrollView style={{ height: "100%" }}>
         {/* 카테고리 리스트(콘텐츠) */}
-        <View
-          style={{ minHeight: modalContentHeight, backgroundColor: "pink" }}
-        >
+        <View style={{ minHeight: modalContentHeight, borderColor: "gray" }}>
           <HStack h={"100%"}>
             {/* 왼쪽 가장 큰 카테고리 */}
-            <Box pl={1} pr={1} borderRightWidth={1} w={"35%"}>
-              {tempData.map((fistItem, index) => (
+            <Box borderRightWidth={0.8} borderColor={"gray.400"} w={"35%"}>
+              {searchNavigate?.map((fistItem, index) => (
                 <Box
                   key={fistItem.key}
-                  borderWidth={1}
-                  borderColor={"blue.100"}
+                  borderBottomWidth={0.5}
+                  borderColor={"gray.400"}
+                  bg={firstCategory === index ? "amber.100" : "white"}
                   onTouchEnd={() => firstCategoryChoice(index)}
                 >
                   <Text style={native.contentLeft}>{fistItem.title}</Text>
                 </Box>
               ))}
             </Box>
-            <Box pl={1} pr={1} w={"60%"}>
-              {tempData[firstCategory]?.list.map((secondItem, j) => (
+            <Box w={"60%"} alignItems={"center"}>
+              {searchNavigate[firstCategory]?.list?.map((secondItem, j) => (
                 /* 여기 오른쪽 두번째 카테고리 부터 */
                 <>
                   <Box
-                    key={secondItem.key}
-                    backgroundColor={"blue.200"}
-                    height={90}
-                    borderWidth={1}
-                    borderColor={"blue.100"}
-                    onTouchEnd={() => dropdwonChoice(j)}
+                    key={searchNavigate[firstCategory]?.key + secondItem.key}
+                    backgroundColor={dropdownState === j ? "blue.100" : "white"}
+                    height={50}
+                    w={"100%"}
+                    borderBottomWidth={0.5}
+                    borderColor={"gray.400"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                    onTouchEnd={() => {
+                      if (secondItem?.list !== undefined) dropdwonChoice(j);
+                      else navigatorChoice(secondItem);
+                    }}
                   >
-                    <Text style={{ width: "100%", fontSize: 25 }}>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        color:
+                          dropdownState === j || secondItem?.list === undefined
+                            ? "black"
+                            : "gray",
+                      }}
+                    >
                       {secondItem.title}
                     </Text>
                   </Box>
                   {dropdownState === j &&
-                    secondItem.list.map((thirdItem, k) => (
+                    secondItem.list?.map((thirdItem, k) => (
                       <Box
-                        key={thirdItem.key + k}
-                        backgroundColor={"yellow.200"}
-                        height={50}
-                        borderWidth={1}
-                        borderColor={"blue.100"}
-                        onTouchEnd={() => navigatorChoice(k, thirdItem.go)}
+                        key={
+                          searchNavigate[firstCategory]?.key +
+                          secondItem.key +
+                          thirdItem.key
+                        }
+                        bg={"gray.100"}
+                        alignItems={"center"}
+                        justifyContent={"center"}
+                        height={30}
+                        w={"100%"}
+                        borderBottomWidth={0.3}
+                        onTouchEnd={() => navigatorChoice(thirdItem)}
                       >
-                        <Text style={{ width: "100%", fontSize: 25 }}>
-                          {thirdItem.title}
-                        </Text>
+                        <Text style={{ fontSize: 12 }}>{thirdItem.title}</Text>
                       </Box>
                     ))}
                 </>
@@ -386,7 +300,7 @@ const native = StyleSheet.create({
     marginTop: 30,
     marginBottom: 30,
     width: "100%",
-    fontSize: 25,
+    fontSize: 20,
     textAlign: "center",
   },
 });

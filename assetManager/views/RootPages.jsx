@@ -24,10 +24,10 @@ import {
   AccountBookUpload,
   DepositCrudPage,
   CarCrudPage,
-  StockCRUDpage,
   AccountBookAddPage,
   CashReceiptUpload,
   GoldGraphPage,
+  AptService,
   DepositUpdate,
   SavingsUpdate,
   CarUpdate,
@@ -37,8 +37,8 @@ import {
   CurrencyGraphPage,
   StockService,
   BestWorstStockPage,
+  TempPage,
 } from "@views";
-// import CustomHeader from "../components/CustomHeader";
 
 function RootPages() {
   const Stack = createNativeStackNavigator();
@@ -46,9 +46,14 @@ function RootPages() {
 
   return (
     <Stack.Navigator
-    // screenOptions={{
-    //   header: () => <CustomHeader />,
-    // }}
+      screenOptions={{
+        headerStyle: {
+          position: "absolute", // 상단에 고정
+          top: 0, // 화면 맨 위에 위치
+          left: 0,
+          right: 0,
+        },
+      }}
     >
       {token !== "" ? (
         <>
@@ -99,6 +104,11 @@ function RootPages() {
             name="AddApt"
             component={AptAddPage}
             options={{ ...commonHeaderStyle, title: "부동산 추가" }}
+          />
+          <Stack.Screen
+            name="AddService"
+            component={AptService}
+            options={{ ...commonHeaderStyle, title: "우리집 시세동향" }}
           />
           <Stack.Screen
             name="AddCar"
@@ -182,12 +192,12 @@ function RootPages() {
           <Stack.Screen
             name="currencyGraphPage"
             component={CurrencyGraphPage}
-            options={{ ...commonHeaderStyle, title: "외화서비스" }}
+            options={{ ...commonHeaderStyle, title: "시세조회" }}
           />
           <Stack.Screen
             name="GoldGraphPage"
             component={GoldGraphPage}
-            options={{ ...commonHeaderStyle, title: "금서비스" }}
+            options={{ ...commonHeaderStyle, title: "시세조회" }}
           />
           <Stack.Screen
             name="StockService"
@@ -198,6 +208,11 @@ function RootPages() {
             name="BestWorst"
             component={BestWorstStockPage}
             options={{ ...commonHeaderStyle, title: "상한가 하한가" }}
+          />
+          <Stack.Screen
+            name="TempPage"
+            component={TempPage}
+            options={{ ...commonHeaderStyle, title: "뒤로가기" }}
           />
         </>
       ) : (

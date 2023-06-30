@@ -39,11 +39,15 @@ function DepositCrudPage({ parentLoading }) {
   const updateOnPress = () => {
     navigation.navigate("depositUpdate");
   };
-  const serviceOnPress = () => {};
+  const serviceOnPress = () => {
+    navigation.navigate("TempPage");
+  };
   const updateOnPressTwo = () => {
     navigation.navigate("savingsUpdate");
   };
-  const serviceOnPressTwo = () => {};
+  const serviceOnPressTwo = () => {
+    navigation.navigate("TempPage");
+  };
   return (
     <View bgColor={"white"} w={"90%"} borderRadius={20}>
       <AssetSurmary

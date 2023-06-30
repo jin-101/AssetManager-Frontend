@@ -1,4 +1,4 @@
-import { Box, Center, HStack, Text } from "native-base";
+import { Box, Center, HStack, Text, View } from "native-base";
 import React from "react";
 import { inputPriceFormat } from "../utils";
 import { Button, Divider } from "react-native-paper";
@@ -36,12 +36,11 @@ function AssetSurmary({
         //borderRadius={20}
       >
         {data?.map((el, index) => (
-          <>
+          <View key={index}>
             <Box
-              key={index}
               ml={45}
               mt={index === 0 ? 1 : 1.5} // 2.5 => 1로 변경
-              mb={index === data?.length - 1 ? 1 : 1} // 2.5 => 1로 변경
+              mb={1} // 2.5 => 1로 변경
               padding={2.5}
             >
               {textListInfo?.map((li, idx) => (
@@ -56,8 +55,8 @@ function AssetSurmary({
                 </HStack>
               ))}
             </Box>
-            <Divider></Divider>
-          </>
+            <Divider />
+          </View>
         ))}
       </Box>
       <HStack marginTop={2.5}>

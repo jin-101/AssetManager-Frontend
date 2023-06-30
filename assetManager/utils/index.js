@@ -257,3 +257,135 @@ export const bankType = [
   "케이뱅크",
   "한국산업은행",
 ];
+
+export const searchNavigate = [
+  {
+    key: "자산/",
+    title: "자산",
+    list: [
+      {
+        key: "예금/",
+        title: "예금",
+        list: [
+          { key: "추가", title: "추가", go: "AddDeposit" },
+          { key: "수정", title: "수정", go: "depositUpdate" },
+          { key: "서비스", title: "서비스", go: "TempPage" },
+        ],
+      },
+      {
+        key: "적금/",
+        title: "적금",
+        list: [
+          { key: "추가", title: "추가", go: "AddDeposit" },
+          { key: "수정", title: "수정", go: "savingsUpdate" },
+          { key: "서비스", title: "서비스", go: "TempPage" },
+        ],
+      },
+      {
+        key: "부동산/",
+        title: "부동산",
+        list: [
+          { key: "추가", title: "추가", go: "AddApt" },
+          { key: "수정", title: "수정", go: "TempPage" },
+          {
+            key: "우리집 시세동향",
+            title: "우리집 시세동향",
+            go: "AddService",
+          },
+        ],
+      },
+      {
+        key: "자동차/",
+        title: "자동차",
+        list: [
+          { key: "추가", title: "추가", go: "AddCar" },
+          { key: "수정", title: "수정", go: "carUpdate" },
+          {
+            key: "중고 자동차 추천",
+            title: "중고 자동차 추천",
+            go: "carService",
+          },
+          {
+            key: "차 취등록세 계산기",
+            title: "차 취등록세 계산기",
+            go: "carService",
+            naviState: 1,
+          },
+        ],
+      },
+      {
+        key: "주식/",
+        title: "주식",
+        list: [
+          { key: "추가", title: "추가", go: "AddStock" },
+          { key: "수정", title: "수정", go: "TempPage" },
+          {
+            key: "수익률 순위조회",
+            title: "수익률 순위조회",
+            go: "StockService",
+          },
+        ],
+      },
+      {
+        key: "코인/",
+        title: "코인",
+        list: [
+          { key: "추가", title: "추가", go: "AddCoin" },
+          { key: "수정", title: "수정", go: "TempPage" },
+          { key: "서비스", title: "서비스", go: "TempPage" },
+        ],
+      },
+      {
+        key: "외환/",
+        title: "외환",
+        list: [
+          { key: "추가", title: "추가", go: "AddExchange" },
+          { key: "수정", title: "수정", go: "TempPage" },
+          { key: "시세조회", title: "시세조회", go: "currencyGraphPage" },
+        ],
+      },
+      {
+        key: "금/",
+        title: "금",
+        list: [
+          { key: "추가", title: "추가", go: "AddGold" },
+          { key: "수정", title: "수정", go: "TempPage" },
+          { key: "시세조회", title: "시세조회", go: "GoldGraphPage" },
+        ],
+      },
+    ],
+  },
+  {
+    key: "가계부/",
+    title: "가계부",
+    list: [
+      {
+        key: "가계부 업로드",
+        title: "가계부 업로드",
+        go: "AccountBookUpload",
+      },
+    ],
+  },
+  {
+    key: "부가서비스/",
+    title: "부가서비스",
+    list: [
+      {
+        key: "목돈마련 플래너",
+        title: "목돈마련 플래너",
+        go: "mokdonPlanner",
+      },
+      {
+        key: "예적금 이자계산기",
+        title: "예적금 이자계산기",
+        go: "mokdonPlanner",
+        naviState: 1,
+      },
+      {
+        key: "연말정산 예상 계산기",
+        title: "연말정산 예상 계산기",
+        go: "calculate",
+      },
+    ],
+  },
+];

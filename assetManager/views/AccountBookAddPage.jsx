@@ -1,15 +1,25 @@
 import { HStack, VStack, Box, FormControl } from "native-base";
 import React, { useState } from "react";
-import { Text, ScrollView, StyleSheet, View, Alert } from "react-native";
+import {
+  Text,
+  ScrollView,
+  StyleSheet,
+  View,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import InputRadioComponent from "@components/InputRadioComponent";
 import InputTextComponent from "@components/InputTextComponent";
 import InputDateComponent from "@components/InputDateComponent";
 import SelectComponent from "@components/SelectComponent";
 import { inputTagCommonStyle, makeDateString } from "../utils";
 import CategoryModal from "../components/CategoryModal";
-import { TouchableOpacity } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { formControlLableBasicStyle } from "../styles";
+import {
+  formControlLableBasicStyle,
+  leftPaperButton,
+  rightPaperButton,
+} from "../styles";
 import { left } from "@popperjs/core";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import axios from "axios";
@@ -17,12 +27,6 @@ import { apiPath } from "../services";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { isAddDeleteData } from "../action";
-import {
-  boxStyle,
-  leftPaperButton,
-  loginLayoutStyle,
-  rightPaperButton,
-} from "../styles";
 import { Button } from "react-native-paper";
 
 function AccountBookAddPage({ route }) {

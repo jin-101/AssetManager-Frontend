@@ -1,16 +1,11 @@
-import { Box, Center, Divider, HStack, Stack, Text } from "native-base";
+import { Box, Center, HStack, Stack, Text } from "native-base";
 import React, { useState } from "react";
 import InputRadioComponent from "./InputRadioComponent";
 import InputTextComponent from "./InputTextComponent";
 import { carTaxCalculate, inputPriceFormat } from "../utils";
 import { StyleSheet } from "react-native";
-import { light } from "@mui/material/styles/createPalette";
 import { Button } from "react-native-paper";
-import {
-  leftPaperButton,
-  leftPaperButtonNoWidth,
-  rightPaperButtonNoWidth,
-} from "../styles";
+import { leftPaperButtonNoWidth } from "../styles";
 
 const textListInfo = [
   { title: "제조사", key: "company" },
@@ -32,7 +27,6 @@ function CarRegister({ element, index, totalLen }) {
   const onPress = () => {
     setTax(carTaxCalculate(element.model, carUseType, carBuyPrice));
   };
-  console.log(tax, "??");
   return (
     <Stack>
       <Box
