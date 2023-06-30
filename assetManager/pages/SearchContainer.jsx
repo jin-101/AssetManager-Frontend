@@ -46,14 +46,14 @@ const makeSearchTextArray = () => {
 const textArr = makeSearchTextArray();
 
 function SearchContainer() {
-  console.log("SeachContainer >>>");
+  // console.log("SeachContainer >>>");
   const navigation = useNavigation();
   const [text, setText] = useState("");
   const onChangeText = (t) => {
     setText(t);
   };
   const onNavigationGo = (obj) => {
-    console.log(obj);
+    // console.log(obj);
     navigation.navigate(obj.go, { naviState: obj?.option });
   };
   const textRender = (arr, keyword) => {
@@ -88,10 +88,6 @@ function SearchContainer() {
     );
   };
 
-  // console.log(text);
-  // console.log(
-  //   Array.from(textArr.filter((el) => el.title.indexOf(text) !== -1))
-  // );
   return (
     <>
       <View>

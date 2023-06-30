@@ -152,10 +152,10 @@ function AccountBookContainer() {
       data: itemList,
     })
       .then((response) => {
-        console.log("카테고리, 메모 저장 axios 성공");
+        // console.log("카테고리, 메모 저장 axios 성공");
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 
@@ -190,16 +190,10 @@ function AccountBookContainer() {
     navigation.navigate("AccountBookUpload");
   };
 
-  // const moveToCashReceiptUpload = () => {
-  //   navigation.navigate("CashReceiptUpload");
-  // };
-
   //추가 페이지로 보내기
   const moveToAdd = () => {
     navigation.navigate("AccountBookAddPage", { itemList });
   };
-
-  console.log(itemList.length);
 
   return (
     <View
@@ -234,7 +228,6 @@ function AccountBookContainer() {
             >
               업로드
             </Button>
-            {/* <Button onPress={moveToCashReceiptUpload}>연말정산</Button> */}
           </HStack>
         </HStack>
 

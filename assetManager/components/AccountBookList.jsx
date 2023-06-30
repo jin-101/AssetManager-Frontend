@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
-import { Pressable, HStack, Center, Icon } from "native-base";
 import axios from "axios";
 import {
   Text,
@@ -10,7 +9,6 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-import { isAndroid } from "../utils";
 import { apiPath } from "../services";
 import CategoryModal from "./CategoryModal";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,8 +24,6 @@ const styles = StyleSheet.create({
   },
   smallgray: {
     fontSize: 13,
-    //color: "gray",
-    //fontWeight: "bold",
   },
   leftSpace: {
     flex: 1,
@@ -42,7 +38,6 @@ const styles = StyleSheet.create({
 });
 
 function AccountBookList({ item, preData, index, yearMonthKey }) {
-  //setItemList, itemList
   const [memo, setMemo] = useState(item.memo);
   const [category, setCategory] = useState(item.category);
   const [show, setShow] = useState(false);
@@ -57,10 +52,11 @@ function AccountBookList({ item, preData, index, yearMonthKey }) {
     //그래서 밑의 문장이 끝나는 걸 기다리지 않는다. 받은 text를 바로 넣어줘야
     //마지막 글자가 잘리지 않는다.
     setMemo(text);
-    itemList.map((data) => {
+    const newList = itemList.map((data) => {
       if (Number(data.detailCode) === Number(item.detailCode)) data.memo = text;
+      return data;
     });
-    setItemList(itemList);
+    setItemList(newList);
   };
   const showDate = item?.exchangeDate?.slice(0, 10) !== preData?.slice(0, 10);
 
@@ -82,10 +78,10 @@ function AccountBookList({ item, preData, index, yearMonthKey }) {
         //삭제한 detailCode의 아이템만 빼고 선택하여 아이템 리스트에 새로 넣어주는 것
         //item.detailCode : 전체 아이템의 디테일 코드
         //detailCode : 삭제한 디테일 코드
-        console.log("delete axios 성공");
+        // console.log("delete axios 성공");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -102,8 +98,6 @@ function AccountBookList({ item, preData, index, yearMonthKey }) {
     return comma(uncomma(str));
   };
 
-  // console.log("왜 두번찍혀", index);
-  // console.log(categoryData.length);
   return (
     <>
       <View>

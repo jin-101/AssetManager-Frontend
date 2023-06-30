@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
-import { StyleSheet, View, Pressable, Text } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
@@ -40,10 +40,7 @@ function MainPage() {
     return (
       <>
         <Pressable onPress={modalSlideFunction}>
-          {/* <HStack justifyContent={"center"} alignItems={"center"}> */}
-          {/* <Text style={{ color: "white" }}>메뉴</Text> */}
           <AntDesign name="bars" size={30} color="white" />
-          {/* </HStack> */}
         </Pressable>
       </>
     );

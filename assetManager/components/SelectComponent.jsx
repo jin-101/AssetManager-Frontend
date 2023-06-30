@@ -19,8 +19,6 @@ function SelectComponent({
   selectItem = [], // 선택 item
   selectItemStyle = {}, // 선택 item들의 공통스타일
 }) {
-  console.log("SelectComponent >>>");
-
   const dispatch = useDispatch();
   const { text: formControlLabelText = "", ...formControlLabelStyleProps } =
     useMemo(() => formControlLabelProps);
@@ -28,7 +26,6 @@ function SelectComponent({
     useMemo(() => formControlHelperProps);
 
   const onChange = (text) => {
-    console.log("change", text);
     if (parentSetState) parentSetState(text, id, name);
     if (dispatchF) dispatch(dispatchF(text, id, name));
   };

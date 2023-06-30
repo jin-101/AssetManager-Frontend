@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Box,
   FormControl,
-  ScrollView,
   VStack,
   Select,
   Text,

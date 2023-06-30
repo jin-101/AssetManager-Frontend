@@ -3,7 +3,6 @@ import { Box, FormControl, HStack } from "native-base";
 
 import { View, StyleSheet } from "react-native";
 import InputTextComponent from "@components/InputTextComponent";
-import InputDateComponent from "@components/InputDateComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { addLoanValue } from "../action";
 import { loanInitialize } from "../action/loan";
@@ -19,7 +18,6 @@ function LoanInput(props) {
   useEffect(() => {
     dispatch(loanInitialize());
   }, []);
-  console.log(loanAmount, rate, maturityDate);
   return (
     <Box mb="5">
       <HStack alignItems="center">
@@ -30,19 +28,11 @@ function LoanInput(props) {
       <View style={styles.container}>
         <Box mb={5}>
           {isVisible ? (
-            <Button
-              mode="contained"
-              //size="lg"
-              onPress={buttonControl}
-            >
+            <Button mode="contained" onPress={buttonControl}>
               숨기기
             </Button>
           ) : (
-            <Button
-              mode="contained"
-              //size="lg"
-              onPress={buttonControl}
-            >
+            <Button mode="contained" onPress={buttonControl}>
               대출 정보 입력하기
             </Button>
           )}
@@ -67,32 +57,6 @@ function LoanInput(props) {
                 value={rate}
                 dispatchF={addLoanValue}
               ></InputTextComponent>
-
-              {/* <InputDateComponent
-                name="maturityDate"
-                formControlProps={{ mb: "5" }}
-                formControlLabelProps={{
-                  text: "대출만기 (남은 기간)",
-                  fontWeight: "normal",
-                  fontSize: 15,
-                }}
-                value={maturityDate}
-                dispatchF={addLoanValue}
-                inputStyle={{
-                  color: maturityDate !== "" ? "black" : "lightgray",
-                }}
-                datePickerProps={{
-                  type: "YYYY-MM",
-                  minDate: `${year - 20}-01-01`,
-                  maxDate: `${year}-12-31`,
-                  yearSuffix: "년",
-                  monthSuffix: "개월",
-                  width: 300,
-                  rowHeight: 60,
-                  selectedBorderLineWidth: "2",
-                  toolBarCancelStyle: { color: "black" },
-                }}
-              /> */}
               {/* 0~ 40년 1~12개월 */}
               <InputTextComponent
                 name="maturityDate"

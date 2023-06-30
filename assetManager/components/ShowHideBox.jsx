@@ -16,7 +16,6 @@ const ShowHideBox = ({ state, setState }) => {
   const [price, setPrice] = useState(0);
   const [rate, setRate] = useState(0);
   const [date, setDate] = useState(0);
-  console.log({ price, rate, date });
 
   return (
     <>
@@ -38,7 +37,6 @@ const ShowHideBox = ({ state, setState }) => {
               <FormControl.Label>대출금액 (원)</FormControl.Label>
               <InputTextComponent
                 inputType="double"
-                // textLabel={{ endText: "%" }}
                 inputStyle={{ width: "100%" }}
                 value={price}
                 parentSetState={setPrice}
@@ -50,11 +48,6 @@ const ShowHideBox = ({ state, setState }) => {
                 value={rate}
                 parentSetState={setRate}
               ></InputTextComponent>
-              {/* <Input
-                keyboardType="numeric"
-                value={state.rate}
-                onChangeText={onChangeRate}
-              /> */}
               <FormControl.Label>대출만기 (남은 기간)</FormControl.Label>
               <InputTextComponent
                 placeholder="1~50년 사이로??"

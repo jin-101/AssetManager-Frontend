@@ -48,7 +48,6 @@ function YearAndMonthSelect({ parentCallback }) {
     <View
       style={{
         flexDirection: "row",
-        // marginTop: 20,
       }}
     >
       <View style={{ flex: 1, marginLeft: 15, marginBottom: 10 }}>

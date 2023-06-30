@@ -61,7 +61,6 @@ function DropdownModal({ content }) {
                     <Text
                       mr="2"
                       fontSize="2xl"
-                      // fontWeight="bold"
                       color={dropdown["item" + i] ? "green.700" : "black"}
                     >
                       {el.title}
