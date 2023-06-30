@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { apiPath } from "../services";
 import AccountBookList from "@components/AccountBookList";
-import { HStack } from "native-base";
+import { CheckIcon, HStack, Select } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import {
   accountInputData,
@@ -89,6 +89,7 @@ function AccountBookContainer() {
   const { year: currentYear, month: currentMonth } = yearAndMonth;
   const { token } = useSelector((state) => state.login); //아이디 가져오는 법
   const { accountTotalList, isAdd } = useSelector((state) => state.account); // isAdd, key
+  const [viewType, setViewType] = useState("전체");
   const dispatch = useDispatch();
 
   const makeYM = (year, month) => {
@@ -249,33 +250,70 @@ function AccountBookContainer() {
             수입 : {inputPriceFormat(calculateDepositTotal())}원
           </Text>
         </View>
+        <HStack
+          justifyContent={"space-around"}
+          alignItems={"center"}
+          mt={5}
+          mb={5}
+        >
+          <View>
+            <Select
+              selectedValue={viewType}
+              minWidth="100"
+              height={35}
+              accessibilityLabel="전체"
+              placeholder="전체"
+              _selectedItem={{
+                endIcon: <CheckIcon size="5" />,
+              }}
+              mt={1}
+              onValueChange={(itemValue) => {
+                setViewType(itemValue);
+              }}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              <Select.Item label="전체" value={"전체"} />
+              <Select.Item label="수입" value={"수입"} />
+              <Select.Item label="지출" value={"지출"} />
+            </Select>
+          </View>
+          <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+            <TouchableOpacity onPress={moveToAdd} style={{ marginRight: 25 }}>
+              <Text>
+                <Feather name="plus" size={15} color="black" /> 추가
+              </Text>
+            </TouchableOpacity>
 
-        <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
-          <TouchableOpacity onPress={moveToAdd} style={{ marginRight: 25 }}>
-            <Text>
-              <Feather name="plus" size={15} color="black" /> 추가
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={ListSave} style={{ marginRight: 25 }}>
-            <Text>
-              <Feather name="save" size={15} color="black" /> 저장
-            </Text>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity onPress={ListSave} style={{ marginRight: 25 }}>
+              <Text>
+                <Feather name="save" size={15} color="black" /> 저장
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </HStack>
       </View>
 
       {/* 카드내역 스크롤 뷰 자리 */}
       <ScrollView style={{ alignSelf: "center", width: "90%" }}>
         {itemList?.map((item, index) => {
+          let condition = true;
+          if (viewType === "수입" && item?.deposit === 0) {
+            console.log(item?.exchangeDate, itemList[index - 1]?.exchangeDate);
+            condition = false;
+          } else if (viewType === "지출" && item?.withdraw === 0) {
+            condition = false;
+          }
           return (
-            <AccountBookList
-              key={item.detailCode}
-              item={item}
-              preData={itemList[index - 1]?.exchangeDate}
-              index={index}
-              yearMonthKey={currentYear + currentMonth}
-            />
+            condition && (
+              <AccountBookList
+                key={item.detailCode}
+                item={item}
+                preData={itemList[index - 1]?.exchangeDate}
+                index={index}
+                yearMonthKey={currentYear + currentMonth}
+              />
+            )
           );
         })}
       </ScrollView>
