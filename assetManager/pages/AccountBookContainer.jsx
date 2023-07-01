@@ -23,6 +23,8 @@ import {
 import YearAndMonthSelect from "../components/YearAndMonthSelect";
 import { footerHeight, leftPaperButton, windowWidth } from "../styles";
 import { Button } from "react-native-paper";
+import SelectComponent from "../components/SelectComponent";
+import DropdownModal from "../components/DropdownModal";
 
 const styles = StyleSheet.create({
   depositandwithdraw: {
@@ -257,7 +259,13 @@ function AccountBookContainer() {
           </Text>
         </View>
 
-        <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            marginTop: 10,
+          }}
+        >
           <TouchableOpacity onPress={moveToAdd} style={{ marginRight: 25 }}>
             <Text>
               <Feather name="plus" size={15} color="black" /> 추가
