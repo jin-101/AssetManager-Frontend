@@ -128,6 +128,13 @@ function AccountBookAnalysis() {
         categoryExpenses[item.category] = item.withdraw;
       }
     });
+
+    // 카테고리 없는 경우 미분류 처리
+    if (categoryExpenses[""]) {
+      categoryExpenses["미분류"] = categoryExpenses[""];
+      delete categoryExpenses[""];
+    }
+
     Object.keys(categoryExpenses)
       .filter((el) => categoryExpenses[el] !== 0)
       .sort((a, b) => categoryExpenses[b] - categoryExpenses[a])
