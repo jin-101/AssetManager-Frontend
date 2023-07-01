@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
 });
 
 function AccountBookList({ item, preData, index, yearMonthKey }) {
+  const { token } = useSelector((state) => state.login); //아이디 가져오는 법
   const [memo, setMemo] = useState(item.memo);
   const [category, setCategory] = useState(item.category);
   const [show, setShow] = useState(false);
@@ -62,14 +63,21 @@ function AccountBookList({ item, preData, index, yearMonthKey }) {
 
   const handleDelete = () => {
     Alert.alert("삭제 확인", "정말 삭제하시겠습니까?", [
-      { text: "예", onPress: () => handleConfirmDelete(item.detailCode) },
+      {
+        text: "예",
+        onPress: () =>
+          handleConfirmDelete(item.detailCode, item.accountNumber, token),
+      },
       { text: "아니오", style: "cancel" },
     ]);
   };
 
-  const handleConfirmDelete = (detailCode) => {
+  const handleConfirmDelete = (detailCode, accountNumber, memberId) => {
+    console.log(memberId);
     axios({
-      url: apiPath + `/rest/webboard/deletelist.do/${detailCode}`,
+      url:
+        apiPath +
+        `/rest/webboard/deletelist.do/${detailCode}/${accountNumber}/${memberId}`,
       method: "delete",
     })
       .then(() => {
@@ -78,10 +86,10 @@ function AccountBookList({ item, preData, index, yearMonthKey }) {
         //삭제한 detailCode의 아이템만 빼고 선택하여 아이템 리스트에 새로 넣어주는 것
         //item.detailCode : 전체 아이템의 디테일 코드
         //detailCode : 삭제한 디테일 코드
-        // console.log("delete axios 성공");
+        console.log("delete axios 성공");
       })
       .catch((err) => {
-        // console.log(err);
+        console.log(err);
       });
   };
 

@@ -128,8 +128,8 @@ function AccountBookAddPage({ route }) {
       },
       headers: { "Content-Type": `application/json` },
     })
-      .then(() => {
-        console.log("axios 가계부 한건 추가 성공");
+      .then((response) => {
+        console.log("axios 가계부 한건 추가 성공 : " + response.data);
         dispatch(isAddDeleteData("Add"));
         navigation.goBack();
       })
