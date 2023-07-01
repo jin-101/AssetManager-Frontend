@@ -18,12 +18,8 @@ import {
 } from "../styles";
 
 function StatisticsContainer() {
-  //////// List 쓰기 위해 필요한 state
-  // const [expanded, setExpanded] = React.useState(true);
-  ///////////////////////////////////
   const { token } = useSelector((state) => state.login);
   const [fiInd, setFiInd] = useState({});
-  // const [salary, setSalary] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [tab, setTab] = useState(0);
   const changeTab = (index) => setTab(index);
@@ -55,7 +51,6 @@ function StatisticsContainer() {
       .then((res) => {
         const result = res.data;
         setFiInd(result);
-        // setSalary(result.salary); // 총소득
         setIsLoading(false);
       })
       .catch((err) => {
@@ -78,9 +73,6 @@ function StatisticsContainer() {
             onPress={() => changeTab(0)}
           >
             소비통계
-            {/* <Text color={"blue.400"} fontSize={18} fontWeight={"semibold"}>
-            소비통계
-          </Text> */}
           </Button>
           <Button
             {...btnStyle}
@@ -99,7 +91,6 @@ function StatisticsContainer() {
                 <Text
                   color={"blue.400"}
                   fontSize={18}
-                  //fontWeight={"semibold"}
                 >{`${token} (${fiInd.age}세) 님의 소비통계`}</Text>
               </Box>
             </VStack>
@@ -113,7 +104,6 @@ function StatisticsContainer() {
               <Text
                 color={"red.400"}
                 fontSize={18}
-                //fontWeight={"semibold"}
               >{`${token} (${fiInd.age}세) 님의 재무상태`}</Text>
             </Box>
             <List.Section>
@@ -177,7 +167,7 @@ function StatisticsContainer() {
               </List.Accordion>
             </List.Section>
             <BarChart
-              style={(borderRadius = 16)}
+              style={{ borderRadius: 16 }}
               data={data}
               // 차트 전체너비
               width={screenWidth * 0.9}

@@ -29,7 +29,6 @@ function Address({
     parentState || useSelector((state) => state.signin);
   const dispatch = useDispatch();
 
-  console.log(zonePost, addressFirst);
   return (
     <Stack
       w="100%"

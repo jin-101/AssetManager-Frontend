@@ -13,7 +13,8 @@ function ChartLabelComponent({
   totalValue = 1,
 }) {
   const chartCircleSize = screenWidth * dotRatio;
-  const percentText = Math.round((currentValue / totalValue) * 1000) / 10 + "%";
+  const percentText =
+    Math.round((currentValue / (totalValue || 1)) * 1000) / 10 + "%";
   const labelText = label + "  " + percentText;
   return (
     <HStack justifyContent={"space-between"} ml={5} mr={5} mt={3} mb={3}>

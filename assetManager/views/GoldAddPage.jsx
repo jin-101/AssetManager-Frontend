@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Box, FormControl, ScrollView, Stack, VStack } from "native-base";
+import { Box, ScrollView, Stack, VStack } from "native-base";
 
 import InputDateComponent from "@components/InputDateComponent";
 import InputTextComponent from "@components/InputTextComponent";

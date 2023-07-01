@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Button,
-  Divider,
-  ScrollView,
-  Text,
-  Box,
-  Icon,
-} from "native-base";
+import { View, Button, Divider, ScrollView, Text, Box } from "native-base";
 import UserId from "@pages/userInfoContainer/UserId";
 import SecurityNumber from "@pages/userInfoContainer/SecurityNumber";
 import UserPassword from "@pages/userInfoContainer/UserPassword";
@@ -16,10 +8,8 @@ import { inputFormCheckFunction } from "../utils";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
-import { useEffect } from "react";
 import Loading from "../components/Loading";
 import InputTextComponent from "@components/InputTextComponent";
-import { Feather } from "@expo/vector-icons";
 
 function SearchPwPage(props) {
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +53,7 @@ function SearchPwPage(props) {
       }),
     })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data !== "error") {
           setSearchPw(res.data);
           setIsNoneText("");
@@ -80,8 +70,8 @@ function SearchPwPage(props) {
   // 2. 새 비밀번호 등록 버튼
   const register = () => {
     const { userPw, userPwCheck } = inputPw;
-    console.log("userId : " + inputId);
-    console.log("userPw : " + inputPw.userPw);
+    // console.log("userId : " + inputId);
+    // console.log("userPw : " + inputPw.userPw);
     if (inputFormCheckFunction("userPw", userPw, userPwCheck)) return;
     console.log("패스워드 확인 조건 통과");
 
@@ -107,7 +97,7 @@ function SearchPwPage(props) {
       });
   };
 
-  console.log(inputId, inputSsn);
+  // console.log(inputId, inputSsn);
 
   // ★ isLoading이 true이면 Loading 컴포넌트를 리턴하게끔 설정
   if (isLoading) return <Loading />;

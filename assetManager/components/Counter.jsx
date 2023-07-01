@@ -1,6 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
-import { HStack, Pressable, Stack, Text } from "native-base";
-import React, { useState } from "react";
+import { HStack, Pressable, Text } from "native-base";
+import React from "react";
 
 function Counter({
   title,

@@ -6,7 +6,6 @@ import { DatePicker, CalendarList } from "react-native-common-date-picker";
 import { useDispatch } from "react-redux";
 import { isAndroid } from "../utils";
 import { modalBg } from "../styles";
-// import DatePicker from "../external/CustomDatePicker/DatePicker";
 
 const styles = StyleSheet.create({
   modalBg: modalBg,
@@ -126,7 +125,7 @@ function DatePickerModal({
               containerStyle={{ flex: 1 }}
               cancel={modalControlState.setState}
               confirm={(data) => {
-                console.log(data);
+                // console.log(data);
                 // onChange();
               }}
             />

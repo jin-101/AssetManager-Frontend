@@ -13,25 +13,17 @@ function InputDateComponent({
   parentSetState = undefined,
 
   value = "",
-  // title = "",
-  // helperText = "",
   formControlProps = {},
   formControlLabelProps = {},
   formControlHelperProps = {},
   textInputStyle = {},
   textInputProps = {},
   buttonProps = {},
-  // formControlHelperTextProps = {},
-  // formControlStyle = {}, //기존 제작 파라매타
-  // labelStyle = {}, //기존 제작 파라매타
-  //  //기존 제작 파라매타
 
   modalProps = {},
   layoutIsScroll = true,
   datePickerProps = {},
 }) {
-  console.log("InputDateComponent >>>");
-
   const { text: formControlLabelText = "", ...formControlLabelStyleProps } =
     useMemo(() => formControlLabelProps);
   const { text: formControlHelperText = "", ...formControlHelperStyleProps } =
@@ -48,12 +40,9 @@ function InputDateComponent({
         <Text
           style={{
             ...formControlLableBasicStyle.label,
-            // ...labelStyle,
             ...formControlLabelStyleProps,
           }}
-          // {...formControlLabelProps}
         >
-          {/* {title} */}
           {formControlLabelText}
         </Text>
         <HStack alignItems="center" justifyContent="center" w="100%" h="50">

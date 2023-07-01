@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import ContentScrollView from "@components/ContentScrollView";
 import axios from "axios";
 import { apiPath } from "../services";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { btnStyle, btnTextStyle, footerHeight } from "../styles";
 import { StyleSheet, View } from "react-native";
 import CustomPieChart from "../components/CustomPieChart";
@@ -66,7 +66,7 @@ function HomeContainer({ flatListRef }) {
       });
       dispatch(havingStockUpdate(response.data));
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 

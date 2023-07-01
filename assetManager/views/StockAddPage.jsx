@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, FormControl, ScrollView, VStack, Stack } from "native-base";
+import { Box, ScrollView, VStack, Stack } from "native-base";
 import InputDateComponent from "@components/InputDateComponent";
 import InputTextComponent from "@components/InputTextComponent";
 import { makeDateString } from "../utils";
@@ -32,36 +32,36 @@ function StockAddPage() {
       shares: buyQuantity,
     };
 
-
     try {
-
-      if(stockInputDTO.stockName==="" || stockInputDTO.price ==="" || stockInputDTO.buyDay ==="" || stockInputDTO.shares === ""){
+      if (
+        stockInputDTO.stockName === "" ||
+        stockInputDTO.price === "" ||
+        stockInputDTO.buyDay === "" ||
+        stockInputDTO.shares === ""
+      ) {
         throw new Error("모든 요소");
-      } 
+      }
 
       axios
-      .post(`${apiPath}/stock/stockAssetInput`, null, { params: stockInputDTO })
-      .then(function (response) {
-        if (response.data === "등록완료") {
-          Alert.alert("자산등록완료");
-          onRest();
-        } else {
-          Alert.alert("자산등록실패 다시 등록해주세요");
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-        Alert.alert("서버에러 잠시만 기다려주세요0");
-      });
-
-      
+        .post(`${apiPath}/stock/stockAssetInput`, null, {
+          params: stockInputDTO,
+        })
+        .then(function (response) {
+          if (response.data === "등록완료") {
+            Alert.alert("자산등록완료");
+            onRest();
+          } else {
+            Alert.alert("자산등록실패 다시 등록해주세요");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          Alert.alert("서버에러 잠시만 기다려주세요0");
+        });
     } catch (e) {
-      Alert.alert("모든요소를 입력해주세요")
+      Alert.alert("모든요소를 입력해주세요");
       onRest();
     }
-
-
-
   };
 
   return (

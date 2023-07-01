@@ -2,11 +2,7 @@ import { Box, Center, HStack, Text, View } from "native-base";
 import React from "react";
 import { inputPriceFormat } from "../utils";
 import { Button, Divider } from "react-native-paper";
-import {
-  leftPaperButton,
-  rightPaperButton,
-  rightPaperButtonNoWidth,
-} from "../styles";
+import { leftPaperButton, rightPaperButtonNoWidth } from "../styles";
 
 function AssetSurmary({
   data,
@@ -31,9 +27,6 @@ function AssetSurmary({
         w={"100%"}
         borderColor="#AAA9BC" // #401CA3 , #845EC2 , #B39CD0
         padding={2.5}
-        //bgColor={"#ECEEFF"} // 기존 : amber.50
-        //borderWidth={1}
-        //borderRadius={20}
       >
         {data?.map((el, index) => (
           <View key={index}>
@@ -63,18 +56,11 @@ function AssetSurmary({
         <Button
           {...leftPaperButton}
           style={{ marginRight: 5 }}
-          //mb="2.5"
-          //mx="1"
           onPress={updateBtnOnPress}
         >
           {updateBtnTitle}
         </Button>
-        <Button
-          {...rightPaperButtonNoWidth}
-          //mb="2.5"
-          //mx="1"
-          onPress={serviceBtnOnPress}
-        >
+        <Button {...rightPaperButtonNoWidth} onPress={serviceBtnOnPress}>
           {serviceBtnTitle}
         </Button>
       </HStack>

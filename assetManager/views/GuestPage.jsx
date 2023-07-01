@@ -1,13 +1,7 @@
-import { Text, View } from "native-base";
-import React, { useState } from "react";
+import React from "react";
 import DatePicker from "../external/CustomDatePicker/DatePicker";
-// import Loading from "../components/Loading";
-// import { DatePicker } from "react-native-common-date-picker";
 
 function GuestPage(props) {
-  // const [isLoading, setIsLoading] = useState(true);
-  // console.log(isLoading);
-  // if (isLoading) return <Loading />;
   const customData = [
     ["1", "2", "3", "4"],
     ["0", "1", "2", "3", "4"],

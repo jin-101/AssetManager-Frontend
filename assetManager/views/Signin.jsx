@@ -56,7 +56,7 @@ function Signin(props) {
     )
       return;
     if (inputFormCheckFunction("email", email)) return;
-    if (inputFormCheckFunction("zonePost", zonePost)) return;
+    // if (inputFormCheckFunction("zonePost", zonePost)) return; //주소 미 입력 시 등록 안되는 로직 (보륜)
 
     axios({
       headers: { "Content-Type": `application/json` },

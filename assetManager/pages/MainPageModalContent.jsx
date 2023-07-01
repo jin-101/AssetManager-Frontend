@@ -41,7 +41,7 @@ function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
       data: JSON.stringify({ userId: token }),
     })
       .then((res) => {
-        console.log("로그아웃 성공");
+        // console.log("로그아웃 성공");
 
         if (toast)
           toast.show({
@@ -53,13 +53,13 @@ function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
         navigation.navigate("Login");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
   //기본 정보 변경
   async function basicInfoChangeBtn() {
-    console.log("기본정보 변경 페이지로 이동", navigation.navigate);
+    // console.log("기본정보 변경 페이지로 이동", navigation.navigate);
     await onPress(); // 받은 모달변경함수 실행(모달 종료)
     await delay(200);
     navigation.navigate("UserInfo");
@@ -69,7 +69,7 @@ function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
   const userDeleteBtn = () => {
     //회원 탈퇴 터치 시 기능 구현 필요
     //axios로 리덕스 스토어 에서 꺼낸 id 값을 스프링부트로 보낸다
-    console.log("회원탈퇴 버튼을 터치");
+    // console.log("회원탈퇴 버튼을 터치");
   };
 
   // 로그아웃 시 초기화 함수
@@ -91,7 +91,7 @@ function MainPageModalContent({ onPress = async () => {}, toast = "" }) {
 
   // 전체보기 최종 선택 시 콜백함수
   async function navigatorChoice(naviItem) {
-    console.log({ naviItem });
+    // console.log({ naviItem });
     await onPress(); // 받은 모달변경함수 실행(모달 종료)
     await delay(200);
     navigation.navigate(naviItem.go, { naviState: naviItem?.naviState });
