@@ -30,9 +30,6 @@ const entries = [
   { key: "5", title: "코인", naviPath: "" },
   { key: "6", title: "외환", naviPath: "" },
   { key: "7", title: "금", naviPath: "" },
-  // { key: "8", title: "부채1", naviPath: "" },
-  // { key: "9", title: "부채2", naviPath: "" },
-  // { key: "10", title: "부채3", naviPath: "" },
 ];
 
 const iconStyle = {
@@ -68,12 +65,6 @@ function AssetContainer() {
         return <Fontisto name="money-symbol" {...iconStyle} />;
       case "7":
         return <MaterialCommunityIcons name="gold" {...iconStyle} />;
-      // case "8":
-      //   return <FontAwesome name="money" {...iconStyle} />;
-      // case "9":
-      //   return <FontAwesome name="money" {...iconStyle} />;
-      // case "10":
-      //   return <FontAwesome name="money" {...iconStyle} />;
 
       default:
         break;
@@ -96,32 +87,6 @@ function AssetContainer() {
         return <CurrencyCrudPage parentLoading={parentLoading} />;
       case "7":
         return <GoldCrudPage parentLoading={parentLoading} />;
-
-      // case "8":
-      //   return (
-      //     <View>
-      //       <Box>
-      //         <Text>부채1 관련 surmary</Text>
-      //       </Box>
-      //     </View>
-      //   );
-      // case "9":
-      //   return (
-      //     <View>
-      //       <Box>
-      //         <Text>부채2 관련 surmary</Text>
-      //       </Box>
-      //     </View>
-      //   );
-      // case "10":
-      //   return (
-      //     <View>
-      //       <Box>
-      //         <Text>부채3 관련 surmary</Text>
-      //       </Box>
-      //     </View>
-      //   );
-
       default:
         break;
     }

@@ -1,52 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   FormControl,
-  HStack,
   Input,
   Text,
   VStack,
   Select,
-  Stack,
-  Button, // as NativeBaseButton (별명으로 지정해줄 수도 있다! by 역시한신)
+  Stack, // as NativeBaseButton (별명으로 지정해줄 수도 있다! by 역시한신)
 } from "native-base";
 import { Button as ReactNativePaperButton } from "react-native-paper";
 import { Alert, StyleSheet, View, TouchableOpacity } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
-import { Picker } from "@react-native-picker/picker";
-import ShowHideBox from "@components/ShowHideBox";
-import { useState, useEffect } from "react";
 import axios from "axios";
 import { apiPath } from "../services";
 import InputDateComponent from "@components/InputDateComponent";
 import InputTextComponent from "@components/InputTextComponent";
 import { makeDateString } from "../utils";
-import { setRef } from "@mui/material";
 import { useSelector } from "react-redux";
 import Loading from "@components/Loading";
 import ContentScrollView from "@components/ContentScrollView";
 import LoanInput from "../components/LoanInput";
-import {
-  boxStyle,
-  btnTextStyle,
-  leftPaperButton,
-  rightPaperButton,
-} from "../styles";
+import { boxStyle, rightPaperButton } from "../styles";
 import { Divider } from "react-native-paper";
-//import { AptSidoSelect, AptGuSelect } from "../components/AptSidoSelect";
 
 function AptAddPage(props) {
   const { token } = useSelector((state) => state.login);
-
-  // 0. 입력값 초기화 함수
-  const resetAll = () => {
-    setAptName("");
-    setNetLeasableArea("");
-    setPurchasePrice("");
-    //setPurchaseDate("");
-    // setLoanAmount("");
-    // setRate("");
-    // setMaturityDate("");
-  };
 
   // 0. 로딩 페이지를 이용하기 위한 useState
   const [isLoading, setIsLoading] = useState(false);
@@ -230,14 +207,12 @@ function AptAddPage(props) {
       .then((res) => {
         console.log("데이터 전송 성공!!");
         // 스프링에서 제대로 Insert 됐는지 check
-        console.log(res.data); // ★ res.data : 스프링에서 보낸 데이터를 읽는 것!
+        // console.log(res.data); // ★ res.data : 스프링에서 보낸 데이터를 읽는 것!
         Alert.alert("Success", "자산 입력에 성공하였습니다");
       })
       .catch((err) => {
         console.log(`Error Msg : ${err}`);
       });
-    // 입력값 초기화
-    //resetAll();
   };
 
   if (isLoading) return <Loading />;

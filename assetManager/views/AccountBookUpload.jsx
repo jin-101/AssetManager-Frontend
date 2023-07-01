@@ -19,6 +19,7 @@ function AccountBookUpload(props) {
   const handleFileSelect = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({});
+      console.log("Error selecting file:");
 
       if (!result.cancelled) {
         setSelectedFile(result.uri);
@@ -49,24 +50,34 @@ function AccountBookUpload(props) {
       });
 
       // Axios를 사용하여 파일을 서버로 전송
-      await axios.post(apiPath + "/rest/webboard/filesave.do", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        data: {
-          memberid: token,
-        },
-      });
-      // console.log("File uploaded:", response.data);
-      Alert.alert("저장 완료", "저장에 성공했습니다.", [
-        {
-          text: "OK",
-          onPress: () => {
-            dispatch(isAddDeleteData("Add"));
-            navigation.goBack();
+      await axios
+        .post(apiPath + "/rest/webboard/filesave.do", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
           },
-        },
-      ]);
+          data: {
+            memberid: token,
+          },
+        })
+        .then((res) => {
+          if (res?.data.indexOf("Error") === -1) {
+            Alert.alert("저장 완료", "저장에 성공했습니다.", [
+              {
+                text: "OK",
+                onPress: () => {
+                  dispatch(isAddDeleteData("Add"));
+                  navigation.goBack();
+                },
+              },
+            ]);
+          } else {
+            Alert.alert("저장 실패", "저장에 실패했습니다.");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      // console.log("File uploaded:", response.data);
     } catch (error) {
       console.log("Error uploading file:", error);
     }

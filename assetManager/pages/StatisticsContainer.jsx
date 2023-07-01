@@ -18,12 +18,8 @@ import {
 } from "../styles";
 
 function StatisticsContainer() {
-  //////// List 쓰기 위해 필요한 state
-  // const [expanded, setExpanded] = React.useState(true);
-  ///////////////////////////////////
   const { token } = useSelector((state) => state.login);
   const [fiInd, setFiInd] = useState({});
-  // const [salary, setSalary] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [tab, setTab] = useState(0);
   const changeTab = (index) => setTab(index);
@@ -55,15 +51,20 @@ function StatisticsContainer() {
       .then((res) => {
         const result = res.data;
         setFiInd(result);
-        // setSalary(result.salary); // 총소득
         setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+
+        setIsLoading(false);
       });
   }, []);
 
   console.log(fiInd);
+  const convertUndefinedValue = (val) => {
+    if (val === undefined) return 0;
+    else return val;
+  };
 
   if (isLoading) return <Loading isMainPage={true} />;
   return (
@@ -78,9 +79,6 @@ function StatisticsContainer() {
             onPress={() => changeTab(0)}
           >
             소비통계
-            {/* <Text color={"blue.400"} fontSize={18} fontWeight={"semibold"}>
-            소비통계
-          </Text> */}
           </Button>
           <Button
             {...btnStyle}
@@ -99,8 +97,9 @@ function StatisticsContainer() {
                 <Text
                   color={"blue.400"}
                   fontSize={18}
-                  //fontWeight={"semibold"}
-                >{`${token} (${fiInd.age}세) 님의 소비통계`}</Text>
+                >{`${token} (${convertUndefinedValue(
+                  fiInd.age
+                )}세) 님의 소비통계`}</Text>
               </Box>
             </VStack>
             <AccountBookAnalysis />
@@ -113,12 +112,15 @@ function StatisticsContainer() {
               <Text
                 color={"red.400"}
                 fontSize={18}
-                //fontWeight={"semibold"}
-              >{`${token} (${fiInd.age}세) 님의 재무상태`}</Text>
+              >{`${token} (${convertUndefinedValue(
+                fiInd.age
+              )}세) 님의 재무상태`}</Text>
             </Box>
             <List.Section>
               <List.Accordion
-                title={`A. 총부채부담지표 : ${fiInd.totalDebtBurdenInd} %`}
+                title={`A. 총부채부담지표 : ${convertUndefinedValue(
+                  fiInd.totalDebtBurdenInd
+                )} %`}
               >
                 <List.Item
                   title="권장 가이드라인 : 40% 이하"
@@ -132,7 +134,9 @@ function StatisticsContainer() {
             </List.Section>
             <List.Section>
               <List.Accordion
-                title={`B. 거주주택마련부채부담지표  : ${fiInd.mortgageLoanBurdenInd} %`}
+                title={`B. 거주주택마련부채부담지표  : ${convertUndefinedValue(
+                  fiInd.mortgageLoanBurdenInd
+                )} %`}
               >
                 <List.Item
                   title="권장 가이드라인 : 30% 이하"
@@ -146,7 +150,9 @@ function StatisticsContainer() {
             </List.Section>
             <List.Section>
               <List.Accordion
-                title={`C. 금융투자성향지표  : ${fiInd.fiInvestInd} %`}
+                title={`C. 금융투자성향지표  : ${convertUndefinedValue(
+                  fiInd.fiInvestInd
+                )} %`}
               >
                 <List.Item
                   title="권장 가이드라인 : 30% 이상"
@@ -164,7 +170,9 @@ function StatisticsContainer() {
             </List.Section>
             <List.Section>
               <List.Accordion
-                title={`D. 금융자산비중지표 : ${fiInd.fiAssetInd} %`}
+                title={`D. 금융자산비중지표 : ${convertUndefinedValue(
+                  fiInd.fiAssetInd
+                )} %`}
               >
                 <List.Item
                   title="권장 가이드라인 : 40% 이상"
@@ -177,7 +185,7 @@ function StatisticsContainer() {
               </List.Accordion>
             </List.Section>
             <BarChart
-              style={(borderRadius = 16)}
+              style={{ borderRadius: 16 }}
               data={data}
               // 차트 전체너비
               width={screenWidth * 0.9}

@@ -50,11 +50,7 @@ function AccountBookAnalysis() {
   useEffect(() => {
     const { year, month } = yearAndMonth;
     const myKey = year + month;
-    //yearAndMonth
-    //accountTotalList
-    console.log(accountTotalList[myKey], "///");
     if (!accountTotalList[myKey]) {
-      console.log("????");
       axios({
         method: "post",
         url: apiPath + "/rest/webboard/list.do",
@@ -66,16 +62,8 @@ function AccountBookAnalysis() {
         headers: { "Content-Type": `application/json` },
       })
         .then((response) => {
-          console.log(response.data);
-          // if (
-          //   !Object.keys(accountTotalList).includes(myKey) ||
-          //   isAdd.length > 0
-          // ) {
+          // console.log(response.data);
           dispatch(accountInputData(myKey, response.data, ""));
-          // } else {
-          //   dispatch(currentKey(myKey));
-          // }
-          // setCurrentYearMonthKey(currentKey);
         })
         .catch((error) => {});
     }
@@ -91,11 +79,11 @@ function AccountBookAnalysis() {
       headers: { "Content-Type": `application/json` },
     })
       .then((response) => {
-        console.log("axios 성공 : " + JSON.stringify(response.data));
+        // console.log("axios 성공 : " + JSON.stringify(response.data));
         setAlldata(response.data);
       })
       .catch((error) => {
-        console.log("axios 실패 : " + error);
+        // console.log("axios 실패 : " + error);
       });
   }, []);
 
@@ -140,6 +128,13 @@ function AccountBookAnalysis() {
         categoryExpenses[item.category] = item.withdraw;
       }
     });
+
+    // 카테고리 없는 경우 미분류 처리
+    if (categoryExpenses[""]) {
+      categoryExpenses["미분류"] = categoryExpenses[""];
+      delete categoryExpenses[""];
+    }
+
     Object.keys(categoryExpenses)
       .filter((el) => categoryExpenses[el] !== 0)
       .sort((a, b) => categoryExpenses[b] - categoryExpenses[a])
@@ -149,7 +144,6 @@ function AccountBookAnalysis() {
       });
   }
 
-  console.log(assetData, assetTitle);
   return (
     <>
       <Box mb={10} w={"100%"} alignItems={"center"} justifyContent={"center"}>
@@ -167,17 +161,18 @@ function AccountBookAnalysis() {
           assetData={assetData}
         />
       </Box>
-      <Box mb={5} w={"100%"} alignItems={"center"} justifyContent={"center"}>
-        <Text>가계수지지표</Text>
-        {extractedData.length > 0 && (
+      {extractedData.length > 0 && (
+        <Box mb={5} w={"100%"} alignItems={"center"} justifyContent={"center"}>
+          <Text>가계수지지표</Text>
+
           <LineChart
             data={chartData}
             width={screenWidth}
             height={275}
             chartConfig={chartConfig}
           />
-        )}
-      </Box>
+        </Box>
+      )}
     </>
   );
 }

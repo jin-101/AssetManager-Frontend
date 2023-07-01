@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
-import { StyleSheet, View, Pressable, Text } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
@@ -11,7 +11,7 @@ import SearchContainer from "@pages/SearchContainer";
 import AssetContainer from "@pages/AssetContainer";
 import AccountBookContainer from "@pages/AccountBookContainer";
 import MainPageModalContent from "@pages/MainPageModalContent";
-import { pageInitialize } from "../action";
+import { accountInitialize, pageInitialize } from "../action";
 import { KeyboardAvoidingView, useToast } from "native-base";
 import StatisticsContainer from "@pages/StatisticsContainer";
 
@@ -40,10 +40,7 @@ function MainPage() {
     return (
       <>
         <Pressable onPress={modalSlideFunction}>
-          {/* <HStack justifyContent={"center"} alignItems={"center"}> */}
-          {/* <Text style={{ color: "white" }}>메뉴</Text> */}
           <AntDesign name="bars" size={30} color="white" />
-          {/* </HStack> */}
         </Pressable>
       </>
     );
@@ -57,6 +54,7 @@ function MainPage() {
 
   useEffect(() => {
     dispatch(pageInitialize());
+    dispatch(accountInitialize());
   }, []);
 
   const returnComponent = () => {

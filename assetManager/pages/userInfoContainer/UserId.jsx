@@ -43,7 +43,7 @@ function UserId({
       method: "GET",
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         Alert.alert(res.data);
         if (res.data === "사용가능한 ID입니다")
           dispatch(signinStates("userId", localUserId));
@@ -52,7 +52,7 @@ function UserId({
         }
       })
       .catch((err) => {
-        console.log(err, "//");
+        // console.log(err, "//");
         onchange("");
       });
   };

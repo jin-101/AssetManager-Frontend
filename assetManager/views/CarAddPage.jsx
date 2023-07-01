@@ -25,7 +25,7 @@ function CarAddPage(props) {
     dispatch(carInitialize());
   };
   const errorFunction = (err) => {
-    console.log("err", err);
+    // console.log("err", err);
     Alert.alert(
       "",
       "차량번호의 정보를 찾지 못했습니다. \n\n직접 입력해주세요."
@@ -40,14 +40,14 @@ function CarAddPage(props) {
         method: "POST",
       }) //id 넘겨줘야됨
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           responseFunction(res.data);
         })
         .catch((err) => {
           errorFunction(err);
         });
     } else if (type === "add2") {
-      console.log("고객정보", carCompany, carModel, carYear);
+      // console.log("고객정보", carCompany, carModel, carYear);
       axios({
         url:
           apiPath +
@@ -55,11 +55,11 @@ function CarAddPage(props) {
         method: "POST",
       })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           responseFunction(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           errorFunction(err);
         });
     }

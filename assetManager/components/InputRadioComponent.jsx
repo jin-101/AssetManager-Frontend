@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo } from "react";
 import { FormControl, HStack, Text, Radio } from "native-base";
-// import { RadioButton } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { formControlLableBasicStyle } from "../styles";
 function InputRadioComponent({
@@ -14,11 +13,9 @@ function InputRadioComponent({
   formControlProps = {}, // FormControl 속성적용
   formControlLabelProps = {}, //FormControl.Label 속성적용
   formControlHelperProps = {},
-  // labelStyle = {}, // style 속성적용
   radioButtonGroupProps = {}, //RadioButton.Group 속성적용
   inputStyle = {}, //HStack 속성적용
 }) {
-  console.log("InputRadioComponent >>>");
   const dispatch = useDispatch();
   const { text: formControlLabelText = "", ...formControlLabelStyleProps } =
     useMemo(() => formControlLabelProps);

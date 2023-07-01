@@ -58,17 +58,17 @@ function StockCRUDpageUpdate({ parentLoading }) {
   }, []);
   */
 
-  useEffect(()=>{
+  useEffect(() => {
     let totalInvestedAmount = 0;
     let gainMutipleByInvestedAmount = 0;
     for (let i = 0; i < havingStock.length; i++) {
       totalInvestedAmount += havingStock[i]["investedAmount"];
       gainMutipleByInvestedAmount +=
-      havingStock[i]["investedAmount"] * havingStock[i]["gain"];
+        havingStock[i]["investedAmount"] * havingStock[i]["gain"];
     }
-    setAvergeGain(gainMutipleByInvestedAmount / totalInvestedAmount);
+    setAvergeGain(gainMutipleByInvestedAmount / (totalInvestedAmount || 1));
     parentLoading();
-  },[]);
+  }, []);
 
   return (
     <View bgColor={"white"} w={"90%"} borderRadius={20}>

@@ -1,28 +1,14 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  FormControl,
-  HStack,
-  Input,
-  ScrollView,
-  Stack,
-  Text,
-  VStack,
-  Select,
-  Icon,
-  Ionicons,
-} from "native-base";
+import { Box, FormControl, Input, Stack, Text, VStack } from "native-base";
 import { Button } from "react-native-paper";
 import axios from "axios";
-import { TextInput, FlatList, Alert, TouchableOpacity } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
+import { Alert, TouchableOpacity } from "react-native"; // ★ Alert를 native-base가 아니라 react-native껄 쓰면 그나마 뭐라도 좀 되네
 import { apiPath } from "../services";
 import { useSelector } from "react-redux";
 import { makeDateString } from "../utils";
 import InputTextComponent from "@components/InputTextComponent";
 import ContentScrollView from "@components/ContentScrollView";
 import SelectComponent from "../components/SelectComponent";
-import { View } from "react-native";
-import { Modal } from "react-native";
 import { boxStyle, leftPaperButton, rightPaperButton } from "../styles";
 
 function CoinAddPage(props) {
@@ -31,7 +17,6 @@ function CoinAddPage(props) {
   const [quantity, setQuantity] = useState(""); // input에서 0을 입력하면 String이더라고. 그래서 초기값도 그냥 "0"으로 줘버림
   const [price, setPrice] = useState("");
   const [date, setDate] = useState(makeDateString(new Date()));
-  const [formData, setFormData] = useState({});
   const { token } = useSelector((state) => state.login);
   const marketList = ["업비트", "빗썸"];
 
@@ -67,7 +52,7 @@ function CoinAddPage(props) {
       price: price,
       date: date,
     };
-    console.log(formData);
+    // console.log(formData);
 
     // 입력값이 유효한 경우 처리 로직
     axios({
@@ -80,7 +65,7 @@ function CoinAddPage(props) {
       data: JSON.stringify(formData),
     })
       .then(function (res) {
-        console.log(formData);
+        // console.log(formData);
         console.log("데이터 전송 성공!!");
 
         // 스프링에서 제대로 Insert 됐는지 check
@@ -163,11 +148,6 @@ function CoinAddPage(props) {
     }
   };
   // ★★★★★ 검색 기능을 위한 코드 끝
-
-  const maxTextCount = 5; // 보여질 최대 텍스트 개수
-  const showMoreText = () => {
-    setTextData(textData.slice(0, maxTextCount));
-  };
 
   return (
     <ContentScrollView>
@@ -276,19 +256,5 @@ function CoinAddPage(props) {
     </ContentScrollView>
   );
 }
-
-// 가격표시 코드 (3자리마다 콤마 넣기) => onChangeText={(price) => setPrice(inputPriceFormat(price))}
-const inputPriceFormat = (str) => {
-  //console.log("s", str);
-  const comma = (str) => {
-    str = String(str);
-    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
-  };
-  const uncomma = (str) => {
-    str = String(str);
-    return str.replace(/[^\d]+/g, "");
-  };
-  return comma(uncomma(str));
-};
 
 export default CoinAddPage;

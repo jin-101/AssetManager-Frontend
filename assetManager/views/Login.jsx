@@ -2,7 +2,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
 import {
   Box,
-  //Button,
   HStack,
   Icon,
   Input,

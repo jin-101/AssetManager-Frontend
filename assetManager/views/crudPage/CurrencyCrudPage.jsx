@@ -69,7 +69,7 @@ function CurrencyCrudPage({ parentLoading }) {
           gainMutipleByInvestedAmount +=
             response.data[i]["investedAmount"] * response.data[i]["gain"];
         }
-        setAvergeGain(gainMutipleByInvestedAmount / totalInvestedAmount);
+        setAvergeGain(gainMutipleByInvestedAmount / (totalInvestedAmount || 1));
       } catch (e) {
         console.log(e);
       }

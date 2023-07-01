@@ -141,7 +141,6 @@ class DatePicker extends Component {
         cancelText={cancelText}
         cancel={() => cancel && typeof cancel === "function" && cancel()}
         confirm={() => {
-          console.log(selectedYear, selectedMonth, selectedDay);
           const _selectedDate = `${selectedYear}-${selectedMonth}-${selectedDay}`;
           const selectedDate = Constants.toStandardStringWith(
             _selectedDate,

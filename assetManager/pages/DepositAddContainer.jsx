@@ -11,8 +11,6 @@ import { makeDateString } from "../utils";
 import { boxStyle } from "../styles";
 
 function DepositAddContainer({ item, isOnlyOne, bankList }) {
-  console.log("DepoAddContainer >>", item);
-
   const dispatch = useDispatch();
   const startDate = item["startDate"];
   const endDate = item["endDate"];
