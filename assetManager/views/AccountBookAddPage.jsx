@@ -79,6 +79,7 @@ function AccountBookAddPage({ route }) {
   const [selectedTime, setSelectedTime] = useState(currentTimeData);
 
   //시간만 스트링 형태로 출력 12:00:00 AM
+  // 시간 변환을 미국시간으로 변경 - 오전/오후 나와서 오류나오던 부분 수정?
   const selectedTimeString = selectedTime.toLocaleTimeString("en-US"); //미국시간으로 변경
   console.log(selectedTimeString);
 

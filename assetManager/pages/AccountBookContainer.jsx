@@ -299,7 +299,7 @@ function AccountBookContainer() {
         {itemList?.map((item, index) => {
           let condition = true;
           if (viewType === "수입" && item?.deposit === 0) {
-            console.log(item?.exchangeDate, itemList[index - 1]?.exchangeDate);
+            // console.log(item?.exchangeDate, itemList[index - 1]?.exchangeDate);
             condition = false;
           } else if (viewType === "지출" && item?.withdraw === 0) {
             condition = false;
