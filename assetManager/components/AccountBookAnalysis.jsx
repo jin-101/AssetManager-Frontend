@@ -161,17 +161,18 @@ function AccountBookAnalysis() {
           assetData={assetData}
         />
       </Box>
-      <Box mb={5} w={"100%"} alignItems={"center"} justifyContent={"center"}>
-        <Text>가계수지지표</Text>
-        {extractedData.length > 0 && (
+      {extractedData.length > 0 && (
+        <Box mb={5} w={"100%"} alignItems={"center"} justifyContent={"center"}>
+          <Text>가계수지지표</Text>
+
           <LineChart
             data={chartData}
             width={screenWidth}
             height={275}
             chartConfig={chartConfig}
           />
-        )}
-      </Box>
+        </Box>
+      )}
     </>
   );
 }
