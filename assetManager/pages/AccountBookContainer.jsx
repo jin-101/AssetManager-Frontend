@@ -25,6 +25,7 @@ import { footerHeight, leftPaperButton, windowWidth } from "../styles";
 import { Button } from "react-native-paper";
 import SelectComponent from "../components/SelectComponent";
 import DropdownModal from "../components/DropdownModal";
+import { height } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
 
 const styles = StyleSheet.create({
   depositandwithdraw: {
@@ -204,10 +205,11 @@ function AccountBookContainer() {
         position: "relative",
         alignSelf: "center",
         width: windowWidth * 0.9,
+        paddingBottom: footerHeight + 180,
       }}
     >
       {/* {itemList.length === 0 && <Loading isMainPage={true} />} */}
-      <View>
+      <View style={{ height: 180 }}>
         <HStack mt={5} alignSelf="center">
           <View
             style={{
@@ -297,7 +299,12 @@ function AccountBookContainer() {
       </View>
 
       {/* 카드내역 스크롤 뷰 자리 */}
-      <ScrollView style={{ alignSelf: "center", width: "90%" }}>
+      <ScrollView
+        style={{
+          alignSelf: "center",
+          width: "90%",
+        }}
+      >
         {itemList?.map((item, index) => {
           let condition = true;
           if (viewType === "수입" && item?.deposit === 0) {
@@ -319,7 +326,7 @@ function AccountBookContainer() {
           );
         })}
       </ScrollView>
-      <View style={{ height: footerHeight + 50 }}></View>
+      <View style={{ height: footerHeight }}></View>
     </View>
   );
 }
