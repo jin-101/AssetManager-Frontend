@@ -75,6 +75,14 @@ function YearAndMonthSelect({ parentCallback }) {
                 minDate: `${year - 5}-01-01`,
                 maxDate: `${year}-${month}-31`,
               }}
+              customProps={{
+                parentSetState: (val, id, name) => {
+                  const ym = val.split("-");
+                  parentCallback(ym[0], ym[1]);
+                  setCurrentYear(ym[0]);
+                  setCurrentMonth(Number(ym[1]));
+                },
+              }}
             />
           )}
           {/* 월별 선택 모달 */}

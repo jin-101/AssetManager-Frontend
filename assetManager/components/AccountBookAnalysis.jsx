@@ -128,11 +128,14 @@ function AccountBookAnalysis() {
         categoryExpenses[item.category] = item.withdraw;
       }
     });
-
+    console.log(categoryExpenses);
     // 카테고리 없는 경우 미분류 처리
     if (categoryExpenses[""]) {
       categoryExpenses["미분류"] = categoryExpenses[""];
       delete categoryExpenses[""];
+    } else if (categoryExpenses["null"]) {
+      categoryExpenses["미분류"] = categoryExpenses["null"];
+      delete categoryExpenses["null"];
     }
 
     Object.keys(categoryExpenses)

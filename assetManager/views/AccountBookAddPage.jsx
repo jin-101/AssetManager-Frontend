@@ -87,15 +87,23 @@ function AccountBookAddPage({ route }) {
   const TimeLength = selectedTimeString.length;
 
   //DB 저장을 위해 12:00:00 형식으로 출력
-  const TimeForSaveData = selectedTimeString.substring(0, TimeLength - 3);
+  const isPM = selectedTimeString.substring(TimeLength - 2) === "PM";
+  let TimeForSaveData = selectedTimeString.substring(0, TimeLength - 3);
+  if (isPM) {
+    const index = TimeForSaveData.indexOf(":");
+    TimeForSaveData =
+      Number(TimeForSaveData.substring(0, index)) +
+      12 +
+      TimeForSaveData.substring(index);
+  }
   const TimeForSaveLength = TimeForSaveData.length;
   const TimeForSave =
     TimeForSaveLength == 7 ? "0" + TimeForSaveData : TimeForSaveData;
 
-  // console.log("db저장용!!!" + TimeForSave);
+  console.log("db저장용!!!" + TimeForSave);
 
   //화면에 보여주기 위한 시간 12:00 형식
-  const TimeforValue = selectedTimeString.substring(0, TimeLength - 6);
+  const TimeforValue = TimeForSave.substring(0, 5);
   // console.log("화면출력용!" + TimeforValue);
 
   const SaveOneAccount = () => {
