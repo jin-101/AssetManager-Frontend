@@ -23,21 +23,25 @@ function StatisticsContainer() {
   const [isLoading, setIsLoading] = useState(false);
   const [tab, setTab] = useState(0);
   const changeTab = (index) => setTab(index);
+  const convertUndefinedValue = (val) => {
+    if (val === undefined) return 0;
+    else return val;
+  };
   // 재무지표 graph data
   const data = {
     labels: ["A", "B", "C", "D"],
     datasets: [
       {
         data: [
-          fiInd.totalDebtBurdenInd, // "총부채부담",
-          fiInd.mortgageLoanBurdenInd, // "거주주택마련부채부담"
-          fiInd.fiInvestInd, // "금융투자성향",
-          fiInd.fiAssetInd, // "금융투자비중",
+          convertUndefinedValue(fiInd.totalDebtBurdenInd), // "총부채부담",
+          convertUndefinedValue(fiInd.mortgageLoanBurdenInd), // "거주주택마련부채부담"
+          convertUndefinedValue(fiInd.fiInvestInd), // "금융투자성향",
+          convertUndefinedValue(fiInd.fiAssetInd), // "금융투자비중",
         ],
       },
     ],
   };
-
+  console.log(data.datasets[0]);
   // ★ 통계 탭 입장시 => 지표 데이터 전부 불러오기
   useEffect(() => {
     setIsLoading(true);
@@ -61,10 +65,6 @@ function StatisticsContainer() {
   }, []);
 
   console.log(fiInd);
-  const convertUndefinedValue = (val) => {
-    if (val === undefined) return 0;
-    else return val;
-  };
 
   if (isLoading) return <Loading isMainPage={true} />;
   return (
