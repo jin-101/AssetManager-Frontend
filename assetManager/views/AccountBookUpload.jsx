@@ -98,7 +98,7 @@ function AccountBookUpload(props) {
 
       {fileExtension !== "csv" &&
         !isFisrt &&
-        Alert.alert("잘못된 확장자입니다.", "파일 유형을 다시 확인해주세요.")}
+        Alert.alert("잘못된 확장자입니다.", "csv 파일 유형으로 등록해주세요.")}
 
       {selectedFile && fileExtension === "csv" && (
         <>
