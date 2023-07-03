@@ -128,10 +128,25 @@ function AccountBookAddPage({ route }) {
       },
       headers: { "Content-Type": `application/json` },
     })
-      .then((response) => {
-        console.log("axios 가계부 한건 추가 성공 : " + response.data);
-        dispatch(isAddDeleteData("Add"));
-        navigation.goBack();
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === "잔액부족") {
+          Alert.alert(
+            "경고",
+            "지출금액이 잔액을 초과합니다.\n확인 후 다시 입력해주세요."
+          );
+        } else {
+          Alert.alert("입력성공", "가계부에 추가하였습니다.", [
+            {
+              text: "확인",
+              onPress: () => {
+                // console.log("axios 가계부 한건 추가 성공");
+                dispatch(isAddDeleteData("Add"));
+                navigation.goBack();
+              },
+            },
+          ]);
+        }
       })
       .catch((err) => {
         console.log("가계부 add error", err);
