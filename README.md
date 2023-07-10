@@ -1,11 +1,6 @@
 # Asset Manager _ [자산관리] 하이브리드 앱
-![badge](https://img.shields.io/github/repo-size/ITEM-FARM/itemFarmProject)
-![badge](https://img.shields.io/github/languages/top/ITEM-FARM/itemFarmProject)
-![GitHub contributors](https://img.shields.io/github/contributors/ITEM-FARM/itemFarmProject)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/w/ITEM-FARM/itemFarmProject) <br/>
-<img src="https://img.shields.io/github/forks/ITEM-FARM/itemFarmProject?style=social" />
-<img src="https://img.shields.io/github/watchers/ITEM-FARM/itemFarmProject?style=social" />
-![GitHub Repo stars](https://img.shields.io/github/stars/ITEM-FARM/itemFarmProject?style=social)
+개발 기간 : 6주 (23.05.29 ~ 23.07.03)
+개발 인원 : 4명
 
 ## 목차
 - [1️⃣프로젝트 개요](#1️⃣프로젝트-개요)
